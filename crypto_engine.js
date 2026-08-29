@@ -22,21 +22,33 @@ const Rubik4DCrypto = (() => {
     SBOX.forEach((val, idx) => INV_SBOX[val] = idx);
 
     const P_FWD = [3, 1, 11, 9, 7, 5, 15, 13, 2, 0, 10, 8, 6, 4, 14, 12];
-    const P_INV = new Uint8Array(16);
-    for (let i = 0; i < 16; i++) {
-        P_INV[P_FWD[i]] = i;
-    }
 
     function rotate4D(arr16, invert = false) {
         const out = new Uint8Array(16);
         if (!invert) {
-            for (let i = 0; i < 16; i++) {
-                out[i] = arr16[P_FWD[i]];
-            }
+            for (let i = 0; i < 16; i++) out[i] = arr16[P_FWD[i]];
         } else {
-            for (let i = 0; i < 16; i++) {
-                out[P_FWD[i]] = arr16[i];
-            }
+            for (let i = 0; i < 16; i++) out[P_FWD[i]] = arr16[i];
+        }
+        return out;
+    }
+
+    // Tầng khuếch tán Modulo-Cộng & XOR ARX trên 4 chiều
+    function mixDiffusion(state) {
+        const out = new Uint8Array(state);
+        for (let i = 0; i < 16; i++) {
+            const nextIdx = (i + 1) % 16;
+            out[nextIdx] = (out[nextIdx] ^ (out[i] + 0x5a)) & 0xff;
+        }
+        return out;
+    }
+
+    // Nghịch đảo chính xác tầng khuếch tán ARX
+    function invMixDiffusion(state) {
+        const out = new Uint8Array(state);
+        for (let i = 15; i >= 0; i--) {
+            const nextIdx = (i + 1) % 16;
+            out[nextIdx] = (out[nextIdx] ^ (out[i] + 0x5a)) & 0xff;
         }
         return out;
     }
@@ -63,13 +75,12 @@ const Rubik4DCrypto = (() => {
 
     function encryptBlock(block16, roundKeys, rounds = 12) {
         let state = new Uint8Array(16);
-        // Khóa khởi tạo (Round 0)
         for (let i = 0; i < 16; i++) state[i] = block16[i] ^ roundKeys[0][i];
 
-        // Các vòng biến đổi
         for (let r = 1; r <= rounds; r++) {
             for (let i = 0; i < 16; i++) state[i] = SBOX[state[i]];
             state = rotate4D(state, false);
+            state = mixDiffusion(state); // Khuếch tán bit liên byte
             for (let i = 0; i < 16; i++) state[i] ^= roundKeys[r][i];
         }
         return state;
@@ -77,18 +88,12 @@ const Rubik4DCrypto = (() => {
 
     function decryptBlock(block16, roundKeys, rounds = 12) {
         let state = new Uint8Array(block16);
-
-        // Đảo ngược thứ tự các vòng
         for (let r = rounds; r >= 1; r--) {
-            // 1. Gỡ Round Key
             for (let i = 0; i < 16; i++) state[i] ^= roundKeys[r][i];
-            // 2. Nghịch đảo Hoán vị 4D trước
+            state = invMixDiffusion(state); // Nghịch đảo khuếch tán
             state = rotate4D(state, true);
-            // 3. Nghịch đảo S-Box sau
             for (let i = 0; i < 16; i++) state[i] = INV_SBOX[state[i]];
         }
-
-        // Gỡ khóa khởi tạo (Round 0)
         for (let i = 0; i < 16; i++) state[i] ^= roundKeys[0][i];
         return state;
     }
@@ -102,17 +107,14 @@ const Rubik4DCrypto = (() => {
         for (let i = rawBytes.length; i < padded.length; i++) padded[i] = padLen;
 
         const hexOut = [];
-        let firstBlockCipher = null;
-
         for (let i = 0; i < padded.length; i += 16) {
             const block = padded.slice(i, i + 16);
             const enc = encryptBlock(block, rkeys, rounds);
-            if (i === 0) firstBlockCipher = enc;
             for (let j = 0; j < 16; j++) {
                 hexOut.push(enc[j].toString(16).padStart(2, '0'));
             }
         }
-        return { hex: hexOut.join(''), firstBlock: firstBlockCipher };
+        return hexOut.join('');
     }
 
     function decrypt(hex, password, rounds = 12) {
@@ -136,17 +138,13 @@ const Rubik4DCrypto = (() => {
         }
 
         const padLen = decrypted[decrypted.length - 1];
-        if (padLen < 1 || padLen > 16) {
-            throw new Error("Mật khẩu không đúng hoặc bản mã bị hỏng!");
-        }
+        if (padLen < 1 || padLen > 16) throw new Error("Khóa sai hoặc bản mã hỏng!");
         for (let i = decrypted.length - padLen; i < decrypted.length; i++) {
-            if (decrypted[i] !== padLen) {
-                throw new Error("Padding không hợp lệ!");
-            }
+            if (decrypted[i] !== padLen) throw new Error("Padding không hợp lệ!");
         }
 
         return new TextDecoder().decode(decrypted.slice(0, decrypted.length - padLen));
     }
 
-    return { encrypt, decrypt, encryptBlock, generateRoundKeys, rotate4D };
+    return { encrypt, decrypt, encryptBlock, generateRoundKeys };
 })();

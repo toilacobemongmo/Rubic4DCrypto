@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Rubik-4D Cipher & Avalanche Benchmark (ARX Diffusion)</title>
+    <style>
+        body { font-family: sans-serif; max-width: 850px; margin: 20px auto; padding: 0 15px; }
+        .row { margin-bottom: 12px; }
+        label { font-weight: bold; display: block; margin-bottom: 4px; }
+        input, textarea { width: 100%; box-sizing: border-box; padding: 8px; font-family: monospace; font-size: 13px; }
+        textarea { height: 60px; }
+        button { padding: 8px 16px; font-weight: bold; cursor: pointer; background: #007acc; color: #fff; border: none; border-radius: 4px; }
+        button:hover { background: #005999; }
+        .box { border: 1px solid #ccc; padding: 15px; border-radius: 6px; margin-bottom: 15px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 13px; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f4f4f4; }
+        .bar-container { background-color: #eee; width: 100%; height: 16px; border-radius: 8px; overflow: hidden; }
+        .bar-fill { height: 100%; background-color: #28a745; }
+    </style>
+</head>
+<body>
+
+    <h2>Rubik-4D Cipher & Hiệu Ứng Thác Lũ (SAC ~50%)</h2>
+
+    <div class="row">
+        <label>Khóa bí mật (Password / Key):</label>
+        <input type="text" id="key" value="PTIT_ATTT_B24DCAT088">
+    </div>
+
+    <!-- 1. MÃ HÓA & GIẢI MÃ -->
+    <div class="box">
+        <h3>1. Mã Hóa & Giải Mã</h3>
+        <div class="row">
+            <label>Bản rõ (Plaintext):</label>
+            <textarea id="plainIn">Hello Tesseract 4D!</textarea>
+        </div>
+        <button id="btnEncrypt">Mã Hóa (12 Vòng)</button>
+        <div class="row" style="margin-top: 10px;">
+            <label>Kết quả Hex (Ciphertext):</label>
+            <textarea id="cipherOut" readonly></textarea>
+        </div>
+        <button id="btnDecrypt" style="margin-top: 10px; background: #28a745;">Giải Mã (12 Vòng)</button>
+        <div class="row" style="margin-top: 10px;">
+            <label>Bản rõ giải mã (Recovered Plaintext):</label>
+            <textarea id="plainOut" readonly></textarea>
+        </div>
+    </div>
+
+    <!-- 2. PHÂN TÍCH AVALANCHE EFFECT -->
+    <div class="box">
+        <h3>2. Đo Hiệu Ứng Thác Lũ (Lật 1 bit đầu tiên của Plaintext)</h3>
+        <button id="btnAvalanche" style="background: #e06c75;">Chạy Phân Tích SAC (Vòng 1 -> 12)</button>
+        
+        <table id="avalancheTable" style="display: none;">
+            <thead>
+                <tr>
+                    <th>Vòng (Round)</th>
+                    <th>Số bit khác biệt (C1 ⊕ C2)</th>
+                    <th>Tỷ lệ (% / 128 bit)</th>
+                    <th>Trực quan (Mục tiêu ~50%)</th>
+                </tr>
+            </thead>
+            <tbody id="avalancheTbody"></tbody>
+        </table>
+    </div>
+
+    <!-- Nạp Crypto Engine -->
+    <script src="crypto_engine.js"></script>
+
+    <!-- Script xử lý sự kiện UI -->
+    <script>
+    document.getElementById('btnEncrypt').addEventListener('click', () => {
+        const text = document.getElementById('plainIn').value;
+        const key = document.getElementById('key').value.trim();
+        const hex = Rubik4DCrypto.encrypt(text, key, 12);
+        document.getElementById('cipherOut').value = hex;
+    });
+
+    document.getElementById('btnDecrypt').addEventListener('click', () => {
+        const hex = document.getElementById('cipherOut').value.trim();
+        const key = document.getElementById('key').value.trim();
+        try {
+            const plain = Rubik4DCrypto.decrypt(hex, key, 12);
+            document.getElementById('plainOut').value = plain;
+        } catch (err) {
+            alert(err.message);
+        }
+    });
+
+    document.getElementById('btnAvalanche').addEventListener('click', () => {
+        const key = document.getElementById('key').value.trim() || 'PTIT_ATTT_B24DCAT088';
+        const text = document.getElementById('plainIn').value || 'Hello Tesseract 4D!';
+        
+        const raw = new TextEncoder().encode(text);
+        const p1 = new Uint8Array(16);
+        p1.set(raw.slice(0, 16));
+        
+        const p2 = new Uint8Array(p1);
+        p2[0] ^= 1; // Lật 1 bit ở byte đầu tiên
+
+        const tbody = document.getElementById('avalancheTbody');
+        tbody.innerHTML = '';
+        document.getElementById('avalancheTable').style.display = 'table';
+
+        for (let r = 1; r <= 12; r++) {
+            const rkeys = Rubik4DCrypto.generateRoundKeys(key, r);
+            const c1 = Rubik4DCrypto.encryptBlock(p1, rkeys, r);
+            const c2 = Rubik4DCrypto.encryptBlock(p2, rkeys, r);
+
+            let diffBits = 0;
+            for (let i = 0; i < 16; i++) {
+                let xor = c1[i] ^ c2[i];
+                while (xor > 0) {
+                    diffBits += (xor & 1);
+                    xor >>= 1;
+                }
+            }
+
+            const percent = ((diffBits / 128) * 100).toFixed(2);
+            const barColor = (percent >= 40 && percent <= 60) ? '#28a745' : '#e0a800';
+
+            tbody.innerHTML += `
+                <tr>
+                    <td><b>Vòng ${r}</b></td>
+                    <td>${diffBits} / 128 bits</td>
+                    <td><b>${percent}%</b></td>
+                    <td>
+                        <div class="bar-container">
+                            <div class="bar-fill" style="width: ${percent}%; background-color: ${barColor};"></div>
+                        </div>
+                    </td>
+                </tr>
+            `;
+        }
+    });
+    </script>
+</body>
+</html>
