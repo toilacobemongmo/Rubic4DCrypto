@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rubik-4D Cipher Tool & Cryptanalysis Suite</title>
+    <style>
+        :root {
+            --bg-color: #0d1117;
+            --card-bg: #161b22;
+            --border-color: #30363d;
+            --accent: #58a6ff;
+            --accent-hover: #1f6feb;
+            --text: #c9d1d9;
+            --text-heading: #f0f6fc;
+            --success: #2ea043;
+            --warning: #d29922;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text);
+            margin: 0;
+            padding: 24px;
+            line-height: 1.5;
+        }
+
+        .container {
+            max-width: 1080px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 24px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 16px;
+        }
+
+        header h1 {
+            color: var(--text-heading);
+            margin: 0 0 8px 0;
+            font-size: 22px;
+        }
+
+        header p {
+            margin: 0;
+            color: #8b949e;
+            font-size: 14px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 16px;
+        }
+
+        .card h2 {
+            font-size: 16px;
+            color: var(--text-heading);
+            margin-top: 0;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        label {
+            display: block;
+            font-size: 13px;
+            margin-bottom: 6px;
+            font-weight: 600;
+        }
+
+        textarea, input[type="text"] {
+            width: 100%;
+            background-color: #090d13;
+            border: 1px solid var(--border-color);
+            color: #fff;
+            padding: 8px 10px;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-family: monospace;
+            font-size: 13px;
+            margin-bottom: 12px;
+        }
+
+        textarea {
+            resize: vertical;
+            height: 75px;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        button {
+            flex: 1;
+            background-color: var(--accent);
+            color: #fff;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 13px;
+        }
+
+        button:hover {
+            background-color: var(--accent-hover);
+        }
+
+        button.btn-sec {
+            background-color: #21262d;
+            border: 1px solid var(--border-color);
+            color: var(--text);
+        }
+
+        button.btn-sec:hover {
+            background-color: #30363d;
+        }
+
+        .result-box {
+            margin-top: 12px;
+            background: #090d13;
+            border: 1px solid var(--border-color);
+            padding: 10px;
+            border-radius: 6px;
+            font-family: monospace;
+            font-size: 12px;
+            word-break: break-all;
+            min-height: 28px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+            margin-top: 12px;
+        }
+
+        th, td {
+            border: 1px solid var(--border-color);
+            padding: 8px 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #21262d;
+            color: var(--text-heading);
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: bold;
+        }
+
+        .badge-success { background: rgba(46, 160, 67, 0.2); color: #3fb950; }
+        .badge-warning { background: rgba(210, 153, 34, 0.2); color: #d29922; }
+
+        .progress-bar-bg {
+            background-color: #21262d;
+            height: 8px;
+            border-radius: 4px;
+            overflow: hidden;
+            width: 80px;
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 8px;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background-color: var(--accent);
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>RUBIK-4D CIPHER: CRYPTOGRAPHIC TESTING BENCH</h1>
+        <p>Thuật toán mã hóa khối SPN Tesseract 4D 128-bit & Bộ công cụ phân tích mật mã thực nghiệm</p>
+    </header>
+
+    <!-- SECTION 1: MÃ HÓA & GIẢI MÃ -->
+    <div class="grid">
+        <!-- Khối Mã Hóa -->
+        <div class="card">
+            <h2>Mã Hóa (Encryption)</h2>
+            <label>Plaintext (Bản rõ):</label>
+            <textarea id="enc-pt" placeholder="Nhập chuỗi văn bản cần mã hóa...">Hello Tesseract 4D!</textarea>
+            
+            <label>Master Key (Khóa bí mật):</label>
+            <input type="text" id="enc-key" value="PTIT_ATTT_B24DCAT088">
+            
+            <button onclick="handleEncrypt()">Tiến hành Mã Hóa (12 Vòng)</button>
+            
+            <label style="margin-top:12px;">Ciphertext (Hex Output):</label>
+            <div id="enc-res" class="result-box">---</div>
+        </div>
+
+        <!-- Khối Giải Mã -->
+        <div class="card">
+            <h2>Giải Mã (Decryption)</h2>
+            <label>Ciphertext (Chuỗi Hex):</label>
+            <textarea id="dec-ct" placeholder="Dán mã Hex vào đây..."></textarea>
+            
+            <label>Master Key (Khóa bí mật):</label>
+            <input type="text" id="dec-key" value="PTIT_ATTT_B24DCAT088">
+            
+            <button onclick="handleDecrypt()" class="btn-sec">Tiến hành Giải Mã</button>
+            
+            <label style="margin-top:12px;">Recovered Plaintext (Bản rõ giải mã):</label>
+            <div id="dec-res" class="result-box">---</div>
+        </div>
+    </div>
+
+    <!-- SECTION 2: BỘ CÔNG CỤ ĐO LƯỜNG AN TOÀN (ANALYSIS) -->
+    <div class="grid">
+        <!-- Đo Shannon Entropy -->
+        <div class="card">
+            <h2>Phân Tích Shannon Entropy</h2>
+            <p style="font-size: 12px; color: #8b949e;">Đo mức độ ngẫu nhiên của phân phối byte trong bản mã (Lý tưởng = 8.0 bits/byte).</p>
+            
+            <label>Dữ liệu mẫu kiểm tra:</label>
+            <textarea id="entropy-input">AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</textarea>
+            
+            <button onclick="handleEntropyTest()">Đo Entropy Thực Nghiệm</button>
+            
+            <div id="entropy-res" style="margin-top: 12px; display: none;">
+                <table>
+                    <tr>
+                        <td><strong>Shannon Entropy H(X):</strong></td>
+                        <td><span id="entropy-val" style="font-size: 16px; font-weight: bold; color: var(--accent);">--</span> / 8.0000</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Đánh giá ngẫu nhiên:</strong></td>
+                        <td><span id="entropy-status" class="badge">--</span></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <!-- Đo Hiệu Ứng Thác Lũ (SAC) -->
+        <div class="card">
+            <h2>Đo Hiệu Ứng Thác Lũ (SAC Metric)</h2>
+            <p style="font-size: 12px; color: #8b949e;">Đo khoảng cách Hamming giữa $C_1$ và $C_2$ khi lật đúng 1 bit ở Plaintext qua từng vòng (Lý tưởng = 50%).</p>
+            
+            <button onclick="handleSACTest()">Chạy Phân Tích SAC (Vòng 1 -> 12)</button>
+            
+            <div id="sac-res" style="margin-top: 12px; max-height: 230px; overflow-y: auto;">
+                <table id="sac-table" style="display: none;">
+                    <thead>
+                        <tr>
+                            <th>Vòng</th>
+                            <th>Hamming (Bits)</th>
+                            <th>Tỷ lệ SAC (%)</th>
+                            <th>Độ phủ</th>
+                        </tr>
+                    </thead>
+                    <tbody id="sac-tbody"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+/**
+ * ===================================================================
+ * CORE CRYPTOGRAPHIC ENGINE: RUBIK-4D BLOCK CIPHER
+ * ===================================================================
+ */
+
+// AES S-Box chuẩn hóa (Confusion Layer)
+const SBOX = [
+    0x63, 0x7c, 0x77, 0x7b, 0xf2, 0x6b, 0x6f, 0xc5, 0x30, 0x01, 0x67, 0x2b, 0xfe, 0xd7, 0xab, 0x76,
+    0xca, 0x82, 0xc9, 0x7d, 0xfa, 0x59, 0x47, 0xf0, 0xad, 0xd4, 0xa2, 0xaf, 0x9c, 0xa4, 0x72, 0xc0,
+    0xb7, 0xfd, 0x93, 0x26, 0x36, 0x3f, 0xf7, 0xcc, 0x34, 0xa5, 0xe5, 0xf1, 0x71, 0xd8, 0x31, 0x15,
+    0x04, 0xc7, 0x23, 0xc3, 0x18, 0x96, 0x05, 0x9a, 0x07, 0x12, 0x80, 0xe2, 0xeb, 0x27, 0xb2, 0x75,
+    0x09, 0x83, 0x2c, 0x1a, 0x1b, 0x6e, 0x5a, 0xa0, 0x52, 0x3b, 0xd6, 0xb3, 0x29, 0xe3, 0x2f, 0x84,
+    0x53, 0xd1, 0x00, 0xed, 0x20, 0xfc, 0xb1, 0x5b, 0x6a, 0xcb, 0xbe, 0x39, 0x4a, 0x4c, 0x58, 0xcf,
+    0xd0, 0xef, 0xaa, 0xfb, 0x43, 0x4d, 0x33, 0x85, 0x45, 0xf9, 0x02, 0x7f, 0x50, 0x3c, 0x9f, 0xa8,
+    0x51, 0xa3, 0x40, 0x8f, 0x92, 0x9d, 0x38, 0xf5, 0xbc, 0xb6, 0xda, 0x21, 0x10, 0xff, 0xf3, 0xd2,
+    0xcd, 0x0c, 0x13, 0xec, 0x5f, 0x97, 0x44, 0x17, 0xc4, 0xa7, 0x7e, 0x3d, 0x64, 0x5d, 0x19, 0x73,
+    0x60, 0x81, 0x4f, 0xdc, 0x22, 0x2a, 0x90, 0x88, 0x46, 0xee, 0xb8, 0x14, 0xde, 0x5e, 0x0b, 0xdb,
+    0xe0, 0x32, 0x3a, 0x0a, 0x49, 0x06, 0x24, 0x5e, 0xc2, 0xd3, 0xac, 0x62, 0x91, 0x95, 0xe4, 0x79,
+    0xe7, 0xc8, 0x37, 0x6d, 0x8d, 0xd5, 0x4e, 0xa9, 0x6c, 0x56, 0xf4, 0xea, 0x65, 0x7a, 0xae, 0x08,
+    0xba, 0x78, 0x25, 0x2e, 0x1c, 0xa6, 0xb4, 0xc6, 0xe8, 0xdd, 0x74, 0x1f, 0x4b, 0xbd, 0x8b, 0x8a,
+    0x70, 0x3e, 0xb5, 0x66, 0x48, 0x03, 0xf6, 0x0e, 0x61, 0x35, 0x57, 0xb9, 0x86, 0xc1, 0x1d, 0x9e,
+    0xe1, 0xf8, 0x98, 0x11, 0x69, 0xd9, 0x8e, 0x94, 0x9b, 0x1e, 0x87, 0xe9, 0xce, 0x55, 0x28, 0xdf,
+    0x8c, 0xa1, 0x89, 0x0d, 0xbf, 0xe6, 0x42, 0x68, 0x41, 0x99, 0x2d, 0x0f, 0xb0, 0x54, 0xbb, 0x16
+];
+
+// Bảng InvSBox cho giải mã
+const INVSBOX = new Array(256);
+for (let i = 0; i < 256; i++) INVSBOX[SBOX[i]] = i;
+
+// 6 Mặt phẳng quay trực giao trong không gian 4D
+const PLANES_4D = [
+    [0, 1], [0, 2], [0, 3], // XY, XZ, XW
+    [1, 2], [1, 3],         // YZ, YW
+    [2, 3]                  // ZW
+];
+
+// Chuyển Linear Index <-> Vector Tọa độ 4D (x,y,z,w)
+function idxToCoord(idx) {
+    return [
+        Math.floor(idx / 8) % 2,
+        Math.floor(idx / 4) % 2,
+        Math.floor(idx / 2) % 2,
+        idx % 2
+    ];
+}
+
+function coordToIdx(c) {
+    return c[0] * 8 + c[1] * 4 + c[2] * 2 + c[3];
+}
+
+// Tầng Khuếch tán O(1): Xoay 6 mặt phẳng Tesseract
+function tesseractRotate(state, dir = 1) {
+    let cur = [...state];
+    let nxt = new Array(16);
+
+    for (let p of PLANES_4D) {
+        let [u_axis, v_axis] = p;
+        for (let i = 0; i < 16; i++) {
+            let c = idxToCoord(i);
+            let u = c[u_axis];
+            let v = c[v_axis];
+
+            if (dir === 1) {
+                // Quay xuôi 90 độ (Mã hóa)
+                c[u_axis] = v;
+                c[v_axis] = 1 - u;
+            } else {
+                // Quay ngược 90 độ (Giải mã)
+                c[u_axis] = 1 - v;
+                c[v_axis] = u;
+            }
+            nxt[coordToIdx(c)] = cur[i];
+        }
+        cur = [...nxt];
+    }
+    return cur;
+}
+
+// Key Schedule: Sinh 13 khóa vòng 128-bit
+function keySchedule(keyStr) {
+    let seed = 0;
+    for (let i = 0; i < keyStr.length; i++) {
+        seed = (seed * 31 + keyStr.charCodeAt(i)) & 0xFFFFFFFF;
+    }
+
+    let roundKeys = [];
+    for (let r = 0; r <= 12; r++) {
+        let rk = [];
+        for (let b = 0; b < 16; b++) {
+            seed = (1664525 * seed + 1013904223) & 0xFFFFFFFF;
+            rk.push((seed >>> 16) & 0xFF);
+        }
+        roundKeys.push(rk);
+    }
+    return roundKeys;
+}
+
+// Mã hóa 1 khối 128-bit (Cho phép tùy chọn số vòng để đo SAC)
+function encryptBlock(block, roundKeys, rounds = 12) {
+    let state = [...block];
+    
+    // Khởi tạo: AddRoundKey 0
+    for (let i = 0; i < 16; i++) state[i] ^= roundKeys[0][i];
+
+    for (let r = 1; r <= rounds; r++) {
+        // 1. SubBytes
+        for (let i = 0; i < 16; i++) state[i] = SBOX[state[i]];
+
+        // 2. TesseractRotate 4D
+        state = tesseractRotate(state, 1);
+
+        // 3. AddRoundKey
+        for (let i = 0; i < 16; i++) state[i] ^= roundKeys[r][i];
+    }
+    return state;
+}
+
+// Giải mã 1 khối 128-bit
+function decryptBlock(block, roundKeys) {
+    let state = [...block];
+
+    for (let r = 12; r >= 1; r--) {
+        // 1. Inv AddRoundKey
+        for (let i = 0; i < 16; i++) state[i] ^= roundKeys[r][i];
+
+        // 2. Inv TesseractRotate 4D
+        state = tesseractRotate(state, -1);
+
+        // 3. Inv SubBytes
+        for (let i = 0; i < 16; i++) state[i] = INVSBOX[state[i]];
+    }
+
+    // Kết thúc: Inv AddRoundKey 0
+    for (let i = 0; i < 16; i++) state[i] ^= roundKeys[0][i];
+    return state;
+}
+
+/**
+ * ===================================================================
+ * UI HANDLERS & CRYPTANALYSIS FUNCTIONS
+ * ===================================================================
+ */
+
+function strToBytes(str) {
+    let bytes = [];
+    for (let i = 0; i < str.length; i++) bytes.push(str.charCodeAt(i) & 0xFF);
+    return bytes;
+}
+
+function bytesToStr(bytes) {
+    return String.fromCharCode(...bytes.filter(b => b !== 0));
+}
+
+function bytesToHex(bytes) {
+    return bytes.map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
+function hexToBytes(hex) {
+    let bytes = [];
+    for (let i = 0; i < hex.length; i += 2) {
+        bytes.push(parseInt(hex.substr(i, 2), 16));
+    }
+    return bytes;
+}
+
+function handleEncrypt() {
+    let pt = document.getElementById('enc-pt').value;
+    let key = document.getElementById('enc-key').value;
+    if (!pt || !key) return alert("Vui lòng nhập đầy đủ Plaintext và Key!");
+
+    let rks = keySchedule(key);
+    let ptBytes = strToBytes(pt);
+    
+    // Padding 16 bytes (PKCS#7 đơn giản hóa)
+    while (ptBytes.length % 16 !== 0) ptBytes.push(0);
+
+    let ctBytes = [];
+    for (let i = 0; i < ptBytes.length; i += 16) {
+        let block = ptBytes.slice(i, i + 16);
+        ctBytes.push(...encryptBlock(block, rks, 12));
+    }
+
+    let hexRes = bytesToHex(ctBytes);
+    document.getElementById('enc-res').innerText = hexRes;
+    document.getElementById('dec-ct').value = hexRes;
+}
+
+function handleDecrypt() {
+    let hex = document.getElementById('dec-ct').value.trim();
+    let key = document.getElementById('dec-key').value;
+    if (!hex || !key) return alert("Vui lòng nhập đầy đủ Ciphertext và Key!");
+
+    let rks = keySchedule(key);
+    let ctBytes = hexToBytes(hex);
+    
+    let ptBytes = [];
+    for (let i = 0; i < ctBytes.length; i += 16) {
+        let block = ctBytes.slice(i, i + 16);
+        ptBytes.push(...decryptBlock(block, rks));
+    }
+
+    document.getElementById('dec-res').innerText = bytesToStr(ptBytes);
+}
+
+// Đo Shannon Entropy: H(X) = -sum(P(x) * log2(P(x)))
+function handleEntropyTest() {
+    let text = document.getElementById('entropy-input').value;
+    let key = "ANALYZE_KEY_4D";
+    let rks = keySchedule(key);
+    let ptBytes = strToBytes(text);
+    while (ptBytes.length % 16 !== 0) ptBytes.push(0);
+
+    let ctBytes = [];
+    for (let i = 0; i < ptBytes.length; i += 16) {
+        let block = ptBytes.slice(i, i + 16);
+        ctBytes.push(...encryptBlock(block, rks, 12));
+    }
+
+    // Đếm tần suất byte
+    let freq = {};
+    for (let b of ctBytes) freq[b] = (freq[b] || 0) + 1;
+
+    let entropy = 0;
+    let total = ctBytes.length;
+    for (let b in freq) {
+        let p = freq[b] / total;
+        entropy -= p * Math.log2(p);
+    }
+
+    document.getElementById('entropy-res').style.display = 'block';
+    document.getElementById('entropy-val').innerText = entropy.toFixed(4);
+    
+    let statusBadge = document.getElementById('entropy-status');
+    if (entropy > 7.9) {
+        statusBadge.innerText = "Tuyệt vời (Phân phối ngẫu nhiên đều)";
+        statusBadge.className = "badge badge-success";
+    } else {
+        statusBadge.innerText = "Khá (Cần tăng số lượng mẫu test)";
+        statusBadge.className = "badge badge-warning";
+    }
+}
+
+// Đo khoảng cách Hamming cho Strict Avalanche Criterion
+function countBitDiff(b1, b2) {
+    let diff = 0;
+    for (let i = 0; i < 16; i++) {
+        let xor = b1[i] ^ b2[i];
+        while (xor > 0) {
+            diff += (xor & 1);
+            xor >>= 1;
+        }
+    }
+    return diff;
+}
+
+function handleSACTest() {
+    let key = "SAC_TEST_MASTER_KEY";
+    let rks = keySchedule(key);
+
+    // Chuẩn bị 2 block khác nhau đúng 1 bit
+    let block1 = new Array(16).fill(0x00);
+    let block2 = new Array(16).fill(0x00);
+    block2[0] = 0x01; // Đảo bit đầu tiên
+
+    let tbody = document.getElementById('sac-tbody');
+    tbody.innerHTML = "";
+
+    for (let r = 1; r <= 12; r++) {
+        let c1 = encryptBlock(block1, rks, r);
+        let c2 = encryptBlock(block2, rks, r);
+        let hamming = countBitDiff(c1, c2);
+        let percent = ((hamming / 128) * 100).toFixed(2);
+
+        let row = `<tr>
+            <td><strong>Vòng ${r}</strong></td>
+            <td>${hamming} / 128</td>
+            <td><strong>${percent}%</strong></td>
+            <td>
+                <div class="progress-bar-bg">
+                    <div class="progress-bar-fill" style="width: ${percent}%;"></div>
+                </div>
+            </td>
+        </tr>`;
+        tbody.innerHTML += row;
+    }
+
+    document.getElementById('sac-table').style.display = 'table';
+}
+</script>
+
+<!-- Đặt crypto_engine.js lên đầu để khởi tạo thuật toán trước -->
+    <script src="js/crypto_engine.js"></script>
+    <script src="js/storage.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
