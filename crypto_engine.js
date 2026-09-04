@@ -21,19 +21,71 @@ const Rubik4DCrypto = (() => {
     const INV_SBOX = new Uint8Array(256);
     SBOX.forEach((val, idx) => INV_SBOX[val] = idx);
 
-    const P_FWD = [3, 1, 11, 9, 7, 5, 15, 13, 2, 0, 10, 8, 6, 4, 14, 12];
+    // --- KHỞI TẠO VÀ TÍNH TRƯỚC 12 BẢNG HOÁN VỊ HÌNH HỌC RUBIK-4D ---
+    // 6 mặt phẳng quay: 0:XY, 1:XZ, 2:XW, 3:YZ, 4:YW, 5:ZW
+    // Mỗi mặt phẳng có 2 hướng: 0: Thuận chiều kim đồng hồ, 1: Ngược chiều
+    // PERM_TABLES[planeIdx * 2 + dir]
+    const PERM_TABLES = [];
+    const INV_PERM_TABLES = [];
 
-    function rotate4D(arr16, invert = false) {
+    (() => {
+        function toIdx(x, y, z, w) { return (x << 3) | (y << 2) | (z << 1) | w; }
+        function fromIdx(i) { return [(i >> 3) & 1, (i >> 2) & 1, (i >> 1) & 1, i & 1]; }
+        
+        function rot2D(u, v, cw) {
+            if (cw) {
+                if (u === 0 && v === 0) return [0, 1];
+                if (u === 0 && v === 1) return [1, 1];
+                if (u === 1 && v === 1) return [1, 0];
+                if (u === 1 && v === 0) return [0, 0];
+            } else {
+                if (u === 0 && v === 0) return [1, 0];
+                if (u === 1 && v === 0) return [1, 1];
+                if (u === 1 && v === 1) return [0, 1];
+                if (u === 0 && v === 1) return [0, 0];
+            }
+            return [u, v];
+        }
+
+        for (let p = 0; p < 6; p++) {
+            for (let d = 0; d < 2; d++) {
+                const cw = (d === 0);
+                const table = new Uint8Array(16);
+                const invTable = new Uint8Array(16);
+
+                for (let i = 0; i < 16; i++) {
+                    let [x, y, z, w] = fromIdx(i);
+                    switch (p) {
+                        case 0: [x, y] = rot2D(x, y, cw); break; // XY
+                        case 1: [x, z] = rot2D(x, z, cw); break; // XZ
+                        case 2: [x, w] = rot2D(x, w, cw); break; // XW
+                        case 3: [y, z] = rot2D(y, z, cw); break; // YZ
+                        case 4: [y, w] = rot2D(y, w, cw); break; // YW
+                        case 5: [z, w] = rot2D(z, w, cw); break; // ZW
+                    }
+                    const dest = toIdx(x, y, z, w);
+                    table[dest] = i;        // i chuyển tới vị trí dest
+                    invTable[i] = dest;     // Bảng nghịch đảo phục vụ giải mã
+                }
+                PERM_TABLES.push(table);
+                INV_PERM_TABLES.push(invTable);
+            }
+        }
+    })();
+
+    // Hàm xoay Rubik-4D tốc độ cao (chỉ tra bảng O(1))
+    function rotateRubik4DFast(state, planeIdx, dir, invert = false) {
         const out = new Uint8Array(16);
-        if (!invert) {
-            for (let i = 0; i < 16; i++) out[i] = arr16[P_FWD[i]];
-        } else {
-            for (let i = 0; i < 16; i++) out[P_FWD[i]] = arr16[i];
+        const tableIdx = (planeIdx % 6) * 2 + (dir & 1);
+        const lut = invert ? INV_PERM_TABLES[tableIdx] : PERM_TABLES[tableIdx];
+        
+        for (let i = 0; i < 16; i++) {
+            out[i] = state[lut[i]];
         }
         return out;
     }
 
-    // Tầng khuếch tán Modulo-Cộng & XOR ARX trên 4 chiều
+    // Tầng khuếch tán Modulo-Cộng & XOR
     function mixDiffusion(state) {
         const out = new Uint8Array(state);
         for (let i = 0; i < 16; i++) {
@@ -43,7 +95,6 @@ const Rubik4DCrypto = (() => {
         return out;
     }
 
-    // Nghịch đảo chính xác tầng khuếch tán ARX
     function invMixDiffusion(state) {
         const out = new Uint8Array(state);
         for (let i = 15; i >= 0; i--) {
@@ -78,9 +129,19 @@ const Rubik4DCrypto = (() => {
         for (let i = 0; i < 16; i++) state[i] = block16[i] ^ roundKeys[0][i];
 
         for (let r = 1; r <= rounds; r++) {
+            // 1. S-box phi tuyến
             for (let i = 0; i < 16; i++) state[i] = SBOX[state[i]];
-            state = rotate4D(state, false);
-            state = mixDiffusion(state); // Khuếch tán bit liên byte
+
+            // 2. Xoay Rubik-4D động (khóa quyết định mặt phẳng và chiều quay)
+            const kByte = roundKeys[r][0]; // Lấy byte đầu của khóa con điều khiển quay
+            const planeIdx = (r + (kByte & 7)) % 6; // Luân chuyển mặt phẳng, tránh kẹt trục
+            const dir = (kByte >> 3) & 1;          // Hướng quay (0 hoặc 1)
+            state = rotateRubik4DFast(state, planeIdx, dir, false);
+
+            // 3. Tầng khuếch tán liên byte
+            state = mixDiffusion(state);
+
+            // 4. Trộn khóa con
             for (let i = 0; i < 16; i++) state[i] ^= roundKeys[r][i];
         }
         return state;
@@ -89,11 +150,22 @@ const Rubik4DCrypto = (() => {
     function decryptBlock(block16, roundKeys, rounds = 12) {
         let state = new Uint8Array(block16);
         for (let r = rounds; r >= 1; r--) {
+            // 1. Gỡ khóa con
             for (let i = 0; i < 16; i++) state[i] ^= roundKeys[r][i];
-            state = invMixDiffusion(state); // Nghịch đảo khuếch tán
-            state = rotate4D(state, true);
+
+            // 2. Gỡ khuếch tán
+            state = invMixDiffusion(state);
+
+            // 3. Xoay ngược Rubik-4D
+            const kByte = roundKeys[r][0];
+            const planeIdx = (r + (kByte & 7)) % 6;
+            const dir = (kByte >> 3) & 1;
+            state = rotateRubik4DFast(state, planeIdx, dir, true);
+
+            // 4. Tra ngược S-box
             for (let i = 0; i < 16; i++) state[i] = INV_SBOX[state[i]];
         }
+        // Gỡ khóa vòng 0 ban đầu
         for (let i = 0; i < 16; i++) state[i] ^= roundKeys[0][i];
         return state;
     }
