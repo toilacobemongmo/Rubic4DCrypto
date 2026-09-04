@@ -45,16 +45,16 @@ Thuật toán xử lý khối dữ liệu 128-bit qua **12 vòng lặp (rounds)*
   * `State[i] = SBOX[State[i]]` với $0 \le i < 16$.
 
 * **Tầng 2 - Ánh xạ tọa độ & Xoay 4D động (Diffusion qua vị trí):**
-  * Mỗi chỉ số byte $i$ được bóc tách thành 4 bit tọa độ $(x, y, z, w) \in \{0, 1\}^4$:
-    * $x = (i \gg 3) \ \& \ 1$
-    * $y = (i \gg 2) \ \& \ 1$
-    * $z = (i \gg 1) \ \& \ 1$
-    * $w = i \ \& \ 1$
-  * Thực hiện phép quay 90 độ trên một trong 6 mặt phẳng trực giao ($XY, XZ, XW, YZ, YW, ZW$).
+  * Mỗi chỉ số byte `i` (0 ≤ i < 16) được bóc tách thành 4 bit tọa độ `(x, y, z, w)`:
+    * `x = (i >> 3) & 1`
+    * `y = (i >> 2) & 1`
+    * `z = (i >> 1) & 1`
+    * `w = i & 1`
+  * Thực hiện phép quay 90° trên một trong 6 mặt phẳng trực giao (XY, XZ, XW, YZ, YW, ZW).
   * Khóa con của vòng trực tiếp điều khiển trục xoay và chiều xoay:
-    * `Mặt phẳng = (Round + (KeyByte & 7)) % 6`
-    * `Chiều quay = (KeyByte >> 3) & 1`
-  * Dữ liệu được trích xuất qua 12 bảng hoán vị tính sẵn (`PERM_TABLES`) đạt tốc độ $O(1)$.
+    * Mặt phẳng quay: `(Round + (KeyByte & 7)) % 6`
+    * Chiều quay: `(KeyByte >> 3) & 1`
+  * Dữ liệu được trích xuất qua 12 bảng hoán vị tính sẵn (`PERM_TABLES`) đạt tốc độ O(1).
 
 * **Tầng 3 - Khuếch tán liên byte ARX (Inter-byte Diffusion):**
   * Dùng phép cộng modulo kết hợp bitwise XOR để kích hoạt hiệu ứng thác lũ:
