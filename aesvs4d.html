@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Benchmark: AES-128 vs Rubik-4D</title>
+    <!-- Nạp 2 thư viện mã hóa độc lập -->
+    <script src="aes128.js"></script>
+    <script src="rubik4d.js"></script>
+    <style>
+        :root {
+            --bg: #0d1117;
+            --card: #161b22;
+            --border: #30363d;
+            --text: #c9d1d9;
+            --accent-aes: #58a6ff;
+            --accent-rubik: #3fb950;
+            --code-bg: #090d13;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, monospace;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 24px;
+        }
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 24px;
+            color: #f0f6fc;
+        }
+        .input-card {
+            background-color: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 24px;
+        }
+        .mode-selector {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 18px;
+            background: var(--code-bg);
+            padding: 4px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+        .tab-btn {
+            flex: 1;
+            padding: 10px;
+            background: transparent;
+            color: #8b949e;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .tab-btn.active {
+            background: #21262d;
+            color: #f0f6fc;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+        }
+        .form-group {
+            margin-bottom: 16px;
+        }
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        input, textarea {
+            width: 100%;
+            background-color: var(--code-bg);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: #f0f6fc;
+            padding: 10px;
+            font-family: inherit;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+        .file-upload-zone {
+            border: 2px dashed var(--border);
+            border-radius: 6px;
+            padding: 24px;
+            text-align: center;
+            background-color: var(--code-bg);
+            cursor: pointer;
+        }
+        .btn-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 16px;
+        }
+        button.action-btn {
+            color: #ffffff;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 6px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+        button.action-btn:hover { opacity: 0.85; }
+        .btn-benchmark { background-color: #1f6feb; grid-column: span 2; }
+        .btn-enc { background-color: #238636; }
+        .btn-dec { background-color: #da3633; }
+        .btn-download {
+            background-color: #21262d;
+            border: 1px solid var(--border);
+            color: #f0f6fc;
+            padding: 8px 12px;
+            font-size: 12px;
+            margin-top: 8px;
+            width: 100%;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        .btn-download:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .cipher-box {
+            background-color: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 20px;
+        }
+        .cipher-box.aes { border-top: 4px solid var(--accent-aes); }
+        .cipher-box.rubik { border-top: 4px solid var(--accent-rubik); }
+        .cipher-title {
+            font-size: 18px;
+            margin-top: 0;
+            margin-bottom: 14px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .cipher-title.aes { color: var(--accent-aes); }
+        .cipher-title.rubik { color: var(--accent-rubik); }
+        .stat-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 14px;
+        }
+        .stat-item {
+            background: var(--code-bg);
+            padding: 8px 12px;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+        }
+        .stat-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            color: #8b949e;
+        }
+        .stat-val {
+            font-size: 16px;
+            font-weight: bold;
+            color: #f0f6fc;
+            margin-top: 2px;
+        }
+        .output-box {
+            background-color: var(--code-bg);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 10px;
+            font-size: 11px;
+            word-break: break-all;
+            height: 70px;
+            overflow-y: auto;
+            color: #79c0ff;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>⚔️ So Sánh Trực Diện: AES-128 vs Rubik-4D</h1>
+
+    <div class="input-card">
+        <div class="mode-selector">
+            <button class="tab-btn active" id="tabText" onclick="switchMode('text')">📝 Nhập Văn Bản (Text)</button>
+            <button class="tab-btn" id="tabFile" onclick="switchMode('file')">📁 Chọn Tập Tin (File)</button>
+        </div>
+
+        <div id="sectionText" class="form-group">
+            <label for="plainText">Nội dung văn bản thử nghiệm:</label>
+            <textarea id="plainText" rows="3">Khoa học mật mã ứng dụng: Đo lường tốc độ khuếch tán và tính chất nhiệt động học của khối Rubik-4D siêu lập phương.</textarea>
+        </div>
+
+        <div id="sectionFile" class="form-group" style="display: none;">
+            <label>Chọn tập tin từ máy tính (Ảnh, PDF, ZIP, Binary...):</label>
+            <div class="file-upload-zone" onclick="document.getElementById('fileInput').click()">
+                <span id="fileLabel">📁 Bấm vào đây để chọn file từ máy...</span>
+                <input type="file" id="fileInput" style="display: none;" onchange="handleFileSelect(event)">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="password">Mật khẩu khóa chung (Key / Password):</label>
+            <input type="text" id="password" value="MasterPassword128BitKey">
+        </div>
+
+        <div id="benchmarkItersGroup" class="form-group">
+            <label for="iterations">Số lần lặp thử nghiệm Benchmark (khi chọn Text):</label>
+            <input type="number" id="iterations" value="50000" min="100" max="100000">
+        </div>
+
+        <div class="btn-group">
+            <button id="btnBenchmark" class="action-btn btn-benchmark" onclick="runBenchmark()">⚡ Chạy Benchmark Tốc Độ (Lặp nhiều lần)</button>
+            <button class="action-btn btn-enc" onclick="executeProcess(true)">🔒 1. Mã hóa</button>
+            <button class="action-btn btn-dec" onclick="executeProcess(false)">🔓 2. Giải mã</button>
+        </div>
+    </div>
+
+    <div class="comparison-grid">
+        <!-- CỘT AES-128 -->
+        <div class="cipher-box aes">
+            <h2 class="cipher-title aes">
+                <span>AES-128 Standard</span>
+                <span style="font-size: 12px; color: #8b949e;">FIPS-197</span>
+            </h2>
+            <div class="stat-grid">
+                <div class="stat-item">
+                    <div class="stat-label">Thời gian chạy</div>
+                    <div class="stat-val" id="aesTime">- ms</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Shannon Entropy</div>
+                    <div class="stat-val" id="aesEntropy">- / 8.0</div>
+                </div>
+            </div>
+            <label>Bản mã Hex (Preview):</label>
+            <div class="output-box" id="aesCiphertext">Chưa chạy</div>
+            <button class="btn-download" id="btnDownloadAES" disabled onclick="downloadResult('aes')">💾 Tải file đầu ra (AES)</button>
+            <label style="margin-top: 10px;">Chuỗi giải mã kiểm chứng:</label>
+            <div class="output-box" style="height: 35px; color: #56d364;" id="aesDecrypted">Chưa chạy</div>
+        </div>
+
+        <!-- CỘT RUBIK-4D -->
+        <div class="cipher-box rubik">
+            <h2 class="cipher-title rubik">
+                <span>Rubik-4D (Pre-computed)</span>
+                <span style="font-size: 12px; color: #8b949e;">SO(4) + ARX</span>
+            </h2>
+            <div class="stat-grid">
+                <div class="stat-item">
+                    <div class="stat-label">Thời gian chạy</div>
+                    <div class="stat-val" id="rubikTime">- ms</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Shannon Entropy</div>
+                    <div class="stat-val" id="rubikEntropy">- / 8.0</div>
+                </div>
+            </div>
+            <label>Bản mã Hex (Preview):</label>
+            <div class="output-box" id="rubikCiphertext" style="color: #7ee787;">Chưa chạy</div>
+            <button class="btn-download" id="btnDownloadRubik" disabled onclick="downloadResult('rubik')">💾 Tải file đầu ra (Rubik-4D)</button>
+            <label style="margin-top: 10px;">Chuỗi giải mã kiểm chứng:</label>
+            <div class="output-box" style="height: 35px; color: #56d364;" id="rubikDecrypted">Chưa chạy</div>
+        </div>
+    </div>
+</div>
+
+<script>
+let currentMode = 'text';
+let uploadedFileBytes = null;
+let uploadedFileName = "data.bin";
+let lastAESResult = null;
+let lastRubikResult = null;
+
+function switchMode(mode) {
+    currentMode = mode;
+    const isText = (mode === 'text');
+    
+    document.getElementById('tabText').classList.toggle('active', isText);
+    document.getElementById('tabFile').classList.toggle('active', !isText);
+    
+    document.getElementById('sectionText').style.display = isText ? 'block' : 'none';
+    document.getElementById('sectionFile').style.display = isText ? 'none' : 'block';
+    document.getElementById('benchmarkItersGroup').style.display = isText ? 'block' : 'none';
+    document.getElementById('btnBenchmark').style.display = isText ? 'block' : 'none';
+}
+
+function handleFileSelect(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    uploadedFileName = file.name;
+    document.getElementById("fileLabel").innerText = `📄 ${file.name} (${(file.size / 1024).toFixed(2)} KB)`;
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+        uploadedFileBytes = new Uint8Array(e.target.result);
+    };
+    reader.readAsArrayBuffer(file);
+}
+
+function bytesToHex(bytes, limit = 256) {
+    const slice = bytes.subarray(0, limit);
+    let hex = Array.from(slice).map(b => b.toString(16).padStart(2, '0')).join('');
+    if (bytes.length > limit) hex += `... [${bytes.length} bytes]`;
+    return hex;
+}
+
+function calculateEntropy(bytes) {
+    const freq = new Array(256).fill(0);
+    for (let i = 0; i < bytes.length; i++) freq[bytes[i]]++;
+    let entropy = 0;
+    for (let i = 0; i < 256; i++) {
+        if (freq[i] > 0) {
+            const p = freq[i] / bytes.length;
+            entropy -= p * Math.log2(p);
+        }
+    }
+    return entropy.toFixed(4);
+}
+
+function downloadBlob(bytes, filename) {
+    const blob = new Blob([bytes], { type: "application/octet-stream" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+}
+
+function downloadResult(type) {
+    if (type === 'aes' && lastAESResult) {
+        downloadBlob(lastAESResult, `aes_${uploadedFileName}`);
+    } else if (type === 'rubik' && lastRubikResult) {
+        downloadBlob(lastRubikResult, `rubik4d_${uploadedFileName}`);
+    }
+}
+
+function getSelectedBytes() {
+    if (currentMode === 'file') {
+        if (!uploadedFileBytes) {
+            alert("Vui lòng chọn file trước!");
+            return null;
+        }
+        return uploadedFileBytes;
+    } else {
+        const text = document.getElementById("plainText").value;
+        if (!text) {
+            alert("Vui lòng nhập văn bản!");
+            return null;
+        }
+        uploadedFileName = "text_data.txt";
+        return new TextEncoder().encode(text);
+    }
+}
+
+function executeProcess(isEncrypt) {
+    const inputBytes = getSelectedBytes();
+    const password = document.getElementById("password").value;
+
+    if (!inputBytes || !password) return;
+
+    try {
+        // Xử lý AES
+        const t0AES = performance.now();
+        lastAESResult = isEncrypt ? AES128.encryptBytes(inputBytes, password) : AES128.decryptBytes(inputBytes, password);
+        const t1AES = performance.now();
+
+        document.getElementById("aesTime").innerText = `${(t1AES - t0AES).toFixed(2)} ms`;
+        document.getElementById("aesEntropy").innerText = calculateEntropy(lastAESResult);
+        document.getElementById("aesCiphertext").innerText = bytesToHex(lastAESResult);
+        document.getElementById("btnDownloadAES").disabled = false;
+        
+        try {
+            document.getElementById("aesDecrypted").innerText = new TextDecoder().decode(lastAESResult).substring(0, 100);
+        } catch {
+            document.getElementById("aesDecrypted").innerText = "[Dữ liệu nhị phân không phải chuỗi UTF-8]";
+        }
+
+        // Xử lý Rubik-4D
+        const t0Rubik = performance.now();
+        lastRubikResult = isEncrypt ? Rubik4DCrypto.encryptBytes(inputBytes, password) : Rubik4DCrypto.decryptBytes(inputBytes, password);
+        const t1Rubik = performance.now();
+
+        document.getElementById("rubikTime").innerText = `${(t1Rubik - t0Rubik).toFixed(2)} ms`;
+        document.getElementById("rubikEntropy").innerText = calculateEntropy(lastRubikResult);
+        document.getElementById("rubikCiphertext").innerText = bytesToHex(lastRubikResult);
+        document.getElementById("btnDownloadRubik").disabled = false;
+
+        try {
+            document.getElementById("rubikDecrypted").innerText = new TextDecoder().decode(lastRubikResult).substring(0, 100);
+        } catch {
+            document.getElementById("rubikDecrypted").innerText = "[Dữ liệu nhị phân không phải chuỗi UTF-8]";
+        }
+
+    } catch (err) {
+        alert("Lỗi thực thi: " + err.message);
+    }
+}
+
+function runBenchmark() {
+    const text = document.getElementById("plainText").value;
+    const password = document.getElementById("password").value;
+    const iters = parseInt(document.getElementById("iterations").value, 10);
+
+    if (!text || !password) {
+        alert("Vui lòng nhập Text và Mật khẩu!");
+        return;
+    }
+
+    const rawBytes = new TextEncoder().encode(text);
+    uploadedFileName = "benchmark_text.txt";
+
+    // Benchmark AES
+    const t0AES = performance.now();
+    for (let i = 0; i < iters; i++) {
+        lastAESResult = AES128.encryptBytes(rawBytes, password);
+    }
+    const t1AES = performance.now();
+
+    document.getElementById("aesTime").innerText = `${(t1AES - t0AES).toFixed(2)} ms (${iters} lần)`;
+    document.getElementById("aesEntropy").innerText = calculateEntropy(lastAESResult);
+    document.getElementById("aesCiphertext").innerText = bytesToHex(lastAESResult);
+    document.getElementById("aesDecrypted").innerText = new TextDecoder().decode(AES128.decryptBytes(lastAESResult, password));
+    document.getElementById("btnDownloadAES").disabled = false;
+
+    // Benchmark Rubik-4D
+    const t0Rubik = performance.now();
+    for (let i = 0; i < iters; i++) {
+        lastRubikResult = Rubik4DCrypto.encryptBytes(rawBytes, password);
+    }
+    const t1Rubik = performance.now();
+
+    document.getElementById("rubikTime").innerText = `${(t1Rubik - t0Rubik).toFixed(2)} ms (${iters} lần)`;
+    document.getElementById("rubikEntropy").innerText = calculateEntropy(lastRubikResult);
+    document.getElementById("rubikCiphertext").innerText = bytesToHex(lastRubikResult);
+    document.getElementById("rubikDecrypted").innerText = new TextDecoder().decode(Rubik4DCrypto.decryptBytes(lastRubikResult, password));
+    document.getElementById("btnDownloadRubik").disabled = false;
+}
+</script>
+
+</body>
+</html>
