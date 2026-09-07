@@ -61,15 +61,23 @@ static std::string GenerateSmartPath(const std::string& path, int algo, bool is_
 }
 
 static size_t DispatchEncrypt(int algo, const uint8_t* in, size_t in_len, uint8_t* out, const uint8_t* key, size_t key_len) {
-    if (algo == 0) return rubik4d_encrypt(in, in_len, out, key, key_len);
+    if (algo == 0) {
+        uint8_t default_iv[16] = {0x00, 0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 
+                                  0x88, 0x99, 0xaa, 0xbb, 0xcc, 0xdd, 0xee, 0xff};
+        return rubik4d_encrypt(in, in_len, out, key, key_len, default_iv);
+    }
     if (algo == 1) return aes128_encrypt(in, in_len, out, key, key_len);
     return speck128_encrypt(in, in_len, out, key, key_len);
 }
 
 static size_t DispatchDecrypt(int algo, const uint8_t* in, size_t in_len, uint8_t* out, const uint8_t* key, size_t key_len) {
-    if (algo == 0) return rubik4d_decrypt(in, in_len, out, key, key_len);
+    if (algo == 0) {
+        uint8_t default_iv[16] = {0x00, 0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 
+                                  0x88, 0x99, 0xaa, 0xbb, 0xcc, 0xdd, 0xee, 0xff};
+        return rubik4d_decrypt(in, in_len, out, key, key_len, default_iv);
+    }
     if (algo == 1) return aes128_decrypt(in, in_len, out, key, key_len);
-    return speck128_decrypt(in, in_len, out, key, key_len);
+    return speck128_decrypt(in, in_len, out, key, key_len); // Đã sửa thành decrypt chuẩn xác
 }
 
 // ==========================================
