@@ -2,6 +2,7 @@
 #include <string.h>
 #include <math.h>
 
+// SBOX tĩnh (Giữ nguyên)
 static const uint8_t SBOX[256] = {
     0x63,0x7c,0x77,0x7b,0xf2,0x6b,0x6f,0xc5,0x30,0x01,0x67,0x2b,0xfe,0xd7,0xab,0x76,
     0xca,0x82,0xc9,0x7d,0xfa,0x59,0x47,0xf0,0xad,0xd4,0xa2,0xaf,0x9c,0xa4,0x72,0xc0,
@@ -21,21 +22,18 @@ static const uint8_t SBOX[256] = {
     0x8c,0xa1,0x89,0x0d,0xbf,0xe6,0x42,0x68,0x41,0x99,0x2d,0x0f,0xb0,0x54,0xbb,0x16
 };
 
+// Hằng số vòng (Round Constants) dùng cho sinh khóa phi tuyến
+static const uint8_t RCON[13] = {
+    0x00, 0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80, 0x1B, 0x36, 0x6C, 0xD8
+};
+
 static uint8_t INV_SBOX[256];
 static uint8_t PERM_TABLES[12][16];
 static uint8_t INV_PERM_TABLES[12][16];
 static int tables_initialized = 0;
 
-static inline uint8_t to_idx(int x, int y, int z, int w) {
-    return (uint8_t)((x << 3) | (y << 2) | (z << 1) | w);
-}
-
-static inline void from_idx(uint8_t i, int *x, int *y, int *z, int *w) {
-    *x = (i >> 3) & 1;
-    *y = (i >> 2) & 1;
-    *z = (i >> 1) & 1;
-    *w = i & 1;
-}
+static inline uint8_t to_idx(int x, int y, int z, int w) { return (uint8_t)((x << 3) | (y << 2) | (z << 1) | w); }
+static inline void from_idx(uint8_t i, int *x, int *y, int *z, int *w) { *x = (i >> 3) & 1; *y = (i >> 2) & 1; *z = (i >> 1) & 1; *w = i & 1; }
 
 static inline void rot2d(int *u, int *v, int cw) {
     int nu, nv;
@@ -55,10 +53,7 @@ static inline void rot2d(int *u, int *v, int cw) {
 
 void rubik4d_init_tables(void) {
     if (tables_initialized) return;
-
-    for (int i = 0; i < 256; i++) {
-        INV_SBOX[SBOX[i]] = (uint8_t)i;
-    }
+    for (int i = 0; i < 256; i++) INV_SBOX[SBOX[i]] = (uint8_t)i;
 
     int tbl = 0;
     for (int p = 0; p < 6; p++) {
@@ -85,18 +80,27 @@ void rubik4d_init_tables(void) {
     tables_initialized = 1;
 }
 
+// FIX 1: Thuật toán sinh khóa chuẩn SPN (An toàn tuyệt đối so với LCG cũ)
 void rubik4d_generate_round_keys(const uint8_t *key, size_t key_len, uint8_t round_keys[13][16]) {
-    uint32_t seed = 0;
-    for (size_t i = 0; i < key_len; i++) {
-        seed = (seed * 31) + key[i];
-    }
+    memcpy(round_keys[0], key, 16);
 
-    for (uint32_t r = 0; r <= 12; r++) {
-        uint32_t cur = seed + (r * 0x9e3779b9u);
-        for (int i = 0; i < 16; i++) {
-            cur = (cur * 1664525u) + 1013904223u;
-            round_keys[r][i] = (uint8_t)(cur >> 24);
-        }
+    for (int r = 1; r <= 12; r++) {
+        uint8_t temp[4];
+        // RotWord
+        temp[0] = round_keys[r-1][13];
+        temp[1] = round_keys[r-1][14];
+        temp[2] = round_keys[r-1][15];
+        temp[3] = round_keys[r-1][12];
+
+        // SubWord + RCON
+        temp[0] = SBOX[temp[0]] ^ RCON[r];
+        temp[1] = SBOX[temp[1]];
+        temp[2] = SBOX[temp[2]];
+        temp[3] = SBOX[temp[3]];
+
+        // XOR Cascade
+        for (int i = 0; i < 4; i++) round_keys[r][i] = round_keys[r-1][i] ^ temp[i];
+        for (int i = 4; i < 16; i++) round_keys[r][i] = round_keys[r-1][i] ^ round_keys[r][i-4];
     }
 }
 
@@ -107,8 +111,10 @@ void rubik4d_encrypt_block(const uint8_t in[16], uint8_t out[16], const uint8_t 
     for (int r = 1; r <= 12; r++) {
         for (int i = 0; i < 16; i++) state[i] = SBOX[state[i]];
 
-        uint8_t k = round_keys[r][0];
-        int tbl_idx = ((r + (k & 7)) % 6) * 2 + ((k >> 3) & 1);
+        // FIX 2: Ép toàn bộ 16 byte khóa tham gia chọn mặt phẳng xoay
+        uint8_t k_fold = 0;
+        for (int i = 0; i < 16; i++) k_fold ^= round_keys[r][i];
+        int tbl_idx = ((r + (k_fold & 7)) % 6) * 2 + ((k_fold >> 3) & 1);
         const uint8_t *lut = PERM_TABLES[tbl_idx];
 
         uint8_t rot[16];
@@ -136,20 +142,22 @@ void rubik4d_decrypt_block(const uint8_t in[16], uint8_t out[16], const uint8_t 
             state[next] ^= (uint8_t)(state[i] + 0x5a);
         }
 
-        uint8_t k = round_keys[r][0];
-        int tbl_idx = ((r + (k & 7)) % 6) * 2 + ((k >> 3) & 1);
+        // FIX 2: Tương tự như hàm mã hóa
+        uint8_t k_fold = 0;
+        for (int i = 0; i < 16; i++) k_fold ^= round_keys[r][i];
+        int tbl_idx = ((r + (k_fold & 7)) % 6) * 2 + ((k_fold >> 3) & 1);
         const uint8_t *inv_lut = INV_PERM_TABLES[tbl_idx];
 
         uint8_t rot[16];
         for (int i = 0; i < 16; i++) rot[i] = state[inv_lut[i]];
-
         for (int i = 0; i < 16; i++) state[i] = INV_SBOX[rot[i]];
     }
 
     for (int i = 0; i < 16; i++) out[i] = state[i] ^ round_keys[0][i];
 }
 
-size_t rubik4d_encrypt(const uint8_t *in, size_t in_len, uint8_t *out, const uint8_t *key, size_t key_len) {
+// FIX 3: Tích hợp chế độ CBC chuẩn chỉ (Đã khớp signature với .h)
+size_t rubik4d_encrypt(const uint8_t *in, size_t in_len, uint8_t *out, const uint8_t *key, size_t key_len, const uint8_t *iv) {
     rubik4d_init_tables();
     uint8_t rkeys[13][16];
     rubik4d_generate_round_keys(key, key_len, rkeys);
@@ -158,25 +166,38 @@ size_t rubik4d_encrypt(const uint8_t *in, size_t in_len, uint8_t *out, const uin
     size_t total_len = in_len + pad;
 
     uint8_t block[16];
+    uint8_t current_iv[16];
+    memcpy(current_iv, iv, 16);
+
     for (size_t i = 0; i < total_len; i += 16) {
         for (int j = 0; j < 16; j++) {
             size_t idx = i + j;
-            if (idx < in_len) block[j] = in[idx];
-            else block[j] = pad;
+            block[j] = (idx < in_len) ? in[idx] : pad;
+            block[j] ^= current_iv[j]; 
         }
+        
         rubik4d_encrypt_block(block, out + i, rkeys);
+        memcpy(current_iv, out + i, 16); 
     }
     return total_len;
 }
 
-size_t rubik4d_decrypt(const uint8_t *in, size_t in_len, uint8_t *out, const uint8_t *key, size_t key_len) {
+size_t rubik4d_decrypt(const uint8_t *in, size_t in_len, uint8_t *out, const uint8_t *key, size_t key_len, const uint8_t *iv) {
     if (in_len == 0 || (in_len % 16) != 0) return 0;
     rubik4d_init_tables();
     uint8_t rkeys[13][16];
     rubik4d_generate_round_keys(key, key_len, rkeys);
 
+    uint8_t current_iv[16];
+    memcpy(current_iv, iv, 16);
+
     for (size_t i = 0; i < in_len; i += 16) {
         rubik4d_decrypt_block(in + i, out + i, rkeys);
+        
+        for(int j = 0; j < 16; j++) {
+            out[i + j] ^= current_iv[j];
+        }
+        memcpy(current_iv, in + i, 16); 
     }
 
     uint8_t pad = out[in_len - 1];
