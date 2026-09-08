@@ -23,8 +23,8 @@ static const uint8_t SBOX[256] = {
 };
 
 // Hằng số vòng (Round Constants) dùng cho sinh khóa phi tuyến
-static const uint8_t RCON[13] = {
-    0x00, 0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80, 0x1B, 0x36, 0x6C, 0xD8
+static const uint8_t RCON[7] = {
+    0x00, 0x01, 0x02, 0x04, 0x08, 0x10, 0x20 //0x40, 0x80, 0x1B, 0x36, 0x6C, 0xD8
 };
 
 static uint8_t INV_SBOX[256];
@@ -84,7 +84,7 @@ void rubik4d_init_tables(void) {
 void rubik4d_generate_round_keys(const uint8_t *key, size_t key_len, uint8_t round_keys[13][16]) {
     memcpy(round_keys[0], key, 16);
 
-    for (int r = 1; r <= 12; r++) {
+    for (int r = 1; r <= 6; r++) {
         uint8_t temp[4];
         // RotWord
         temp[0] = round_keys[r-1][13];
@@ -108,7 +108,7 @@ void rubik4d_encrypt_block(const uint8_t in[16], uint8_t out[16], const uint8_t 
     uint8_t state[16];
     for (int i = 0; i < 16; i++) state[i] = in[i] ^ round_keys[0][i];
 
-    for (int r = 1; r <= 12; r++) {
+    for (int r = 1; r <= 6; r++) {
         for (int i = 0; i < 16; i++) state[i] = SBOX[state[i]];
 
         // FIX 2: Ép toàn bộ 16 byte khóa tham gia chọn mặt phẳng xoay
@@ -134,7 +134,7 @@ void rubik4d_decrypt_block(const uint8_t in[16], uint8_t out[16], const uint8_t 
     uint8_t state[16];
     memcpy(state, in, 16);
 
-    for (int r = 12; r >= 1; r--) {
+    for (int r = 6; r >= 1; r--) {
         for (int i = 0; i < 16; i++) state[i] ^= round_keys[r][i];
 
         for (int i = 15; i >= 0; i--) {
@@ -159,7 +159,7 @@ void rubik4d_decrypt_block(const uint8_t in[16], uint8_t out[16], const uint8_t 
 // FIX 3: Tích hợp chế độ CBC chuẩn chỉ (Đã khớp signature với .h)
 size_t rubik4d_encrypt(const uint8_t *in, size_t in_len, uint8_t *out, const uint8_t *key, size_t key_len, const uint8_t *iv) {
     rubik4d_init_tables();
-    uint8_t rkeys[13][16];
+    uint8_t rkeys[7][16];
     rubik4d_generate_round_keys(key, key_len, rkeys);
 
     uint8_t pad = 16 - (in_len % 16);
@@ -185,7 +185,7 @@ size_t rubik4d_encrypt(const uint8_t *in, size_t in_len, uint8_t *out, const uin
 size_t rubik4d_decrypt(const uint8_t *in, size_t in_len, uint8_t *out, const uint8_t *key, size_t key_len, const uint8_t *iv) {
     if (in_len == 0 || (in_len % 16) != 0) return 0;
     rubik4d_init_tables();
-    uint8_t rkeys[13][16];
+    uint8_t rkeys[7][16];
     rubik4d_generate_round_keys(key, key_len, rkeys);
 
     uint8_t current_iv[16];

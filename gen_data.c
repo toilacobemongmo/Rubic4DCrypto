@@ -2,6 +2,17 @@
 #include <stdlib.h>
 #include "rubik4d.h"
 
+//gcc gen_data.c rubik4d.c -o gen_data.exe -O3
+//./gen_data.exe
+
+//sudo apt update && sudo apt install -y build-essential git
+//git clone https://github.com/arcetri/sts.git
+// cd sts 
+// make
+
+// IN NIST:
+// ./sts -i 95 -w . -F r rubik_data.bin
+
 int main() {
     size_t size = 12500000; // 12.5 MB = 100 triệu bit
     uint8_t *plain = calloc(size, 1); // Dữ liệu toàn 0x00 để thử thách độ xáo trộn
