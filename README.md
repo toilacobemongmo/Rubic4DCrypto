@@ -32,7 +32,7 @@ The cipher processes a 128-bit block through **6 rounds** using the following pi
         │  1. Non-linear S-Box (AES Substitution)  │
         │  2. 4D Tesseract Rotation (SO(4))        │
         │  3. Ripple-Carry Diffusion (ARX)         │
-        │  4. Subkey Mixing (⊕ AddRoundKey)        │
+        │  4. Subkey Mixing (⊕ AddRoundKey)       │
         └─────────────────────┬────────────────────┘
                              │
                              ▼
