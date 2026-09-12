@@ -66,7 +66,6 @@ cd Rubic4DCrypto
 ### 4.2. Biên dịch & Chạy GUI Benchmark (C++ / ImGui)
 Ứng dụng Benchmark trực quan so sánh trực tiếp hiệu năng giữa Rubik-4D, AES và Speck:
 ```bash
-git clone https://github.com/ocornut/imgui
 g++ -O3 -std=c++17 src/main.cpp src/rubik4d.c src/aes128.c src/speck128.c src/analysis.cpp imgui/imgui.cpp imgui/imgui_draw.cpp imgui/imgui_tables.cpp imgui/imgui_widgets.cpp imgui/backends/imgui_impl_glfw.cpp imgui/backends/imgui_impl_opengl3.cpp -I. -Iinclude -Iimgui -Iimgui/backends libglfw3.a -lopengl32 -lgdi32 -o Crypto_Benchmark.exe -static-libstdc++
 ./Crypto_Benchmark.exe
 ```
