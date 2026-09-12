@@ -1,8 +1,8 @@
-#include "rubik4d.h"
+#include "../include/rubik4d.h"
 #include <string.h>
 #include <math.h>
 
-// SBOX tĩnh (Giữ nguyên)
+// SBOX
 static const uint8_t SBOX[256] = {
     0x63,0x7c,0x77,0x7b,0xf2,0x6b,0x6f,0xc5,0x30,0x01,0x67,0x2b,0xfe,0xd7,0xab,0x76,
     0xca,0x82,0xc9,0x7d,0xfa,0x59,0x47,0xf0,0xad,0xd4,0xa2,0xaf,0x9c,0xa4,0x72,0xc0,
@@ -22,7 +22,7 @@ static const uint8_t SBOX[256] = {
     0x8c,0xa1,0x89,0x0d,0xbf,0xe6,0x42,0x68,0x41,0x99,0x2d,0x0f,0xb0,0x54,0xbb,0x16
 };
 
-// Hằng số vòng (Round Constants) dùng cho sinh khóa phi tuyến
+//RCON
 static const uint8_t RCON[7] = {
     0x00, 0x01, 0x02, 0x04, 0x08, 0x10, 0x20 //0x40, 0x80, 0x1B, 0x36, 0x6C, 0xD8
 };
@@ -80,25 +80,21 @@ void rubik4d_init_tables(void) {
     tables_initialized = 1;
 }
 
-// FIX 1: Thuật toán sinh khóa chuẩn SPN (An toàn tuyệt đối so với LCG cũ)
 void rubik4d_generate_round_keys(const uint8_t *key, size_t key_len, uint8_t round_keys[13][16]) {
     memcpy(round_keys[0], key, 16);
 
     for (int r = 1; r <= 6; r++) {
         uint8_t temp[4];
-        // RotWord
         temp[0] = round_keys[r-1][13];
         temp[1] = round_keys[r-1][14];
         temp[2] = round_keys[r-1][15];
         temp[3] = round_keys[r-1][12];
 
-        // SubWord + RCON
         temp[0] = SBOX[temp[0]] ^ RCON[r];
         temp[1] = SBOX[temp[1]];
         temp[2] = SBOX[temp[2]];
         temp[3] = SBOX[temp[3]];
 
-        // XOR Cascade
         for (int i = 0; i < 4; i++) round_keys[r][i] = round_keys[r-1][i] ^ temp[i];
         for (int i = 4; i < 16; i++) round_keys[r][i] = round_keys[r-1][i] ^ round_keys[r][i-4];
     }
@@ -111,7 +107,6 @@ void rubik4d_encrypt_block(const uint8_t in[16], uint8_t out[16], const uint8_t 
     for (int r = 1; r <= 6; r++) {
         for (int i = 0; i < 16; i++) state[i] = SBOX[state[i]];
 
-        // FIX 2: Ép toàn bộ 16 byte khóa tham gia chọn mặt phẳng xoay
         uint8_t k_fold = 0;
         for (int i = 0; i < 16; i++) k_fold ^= round_keys[r][i];
         int tbl_idx = ((r + (k_fold & 7)) % 6) * 2 + ((k_fold >> 3) & 1);
@@ -142,7 +137,6 @@ void rubik4d_decrypt_block(const uint8_t in[16], uint8_t out[16], const uint8_t 
             state[next] ^= (uint8_t)(state[i] + 0x5a);
         }
 
-        // FIX 2: Tương tự như hàm mã hóa
         uint8_t k_fold = 0;
         for (int i = 0; i < 16; i++) k_fold ^= round_keys[r][i];
         int tbl_idx = ((r + (k_fold & 7)) % 6) * 2 + ((k_fold >> 3) & 1);
@@ -156,7 +150,6 @@ void rubik4d_decrypt_block(const uint8_t in[16], uint8_t out[16], const uint8_t 
     for (int i = 0; i < 16; i++) out[i] = state[i] ^ round_keys[0][i];
 }
 
-// FIX 3: Tích hợp chế độ CBC chuẩn chỉ (Đã khớp signature với .h)
 size_t rubik4d_encrypt(const uint8_t *in, size_t in_len, uint8_t *out, const uint8_t *key, size_t key_len, const uint8_t *iv) {
     rubik4d_init_tables();
     uint8_t rkeys[7][16];
