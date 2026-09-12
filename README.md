@@ -3,102 +3,112 @@
 
 ---
 
-## 📌 1. Tổng quan (Overview)
+## 📌 1. Overview
 
-**Rubik-4D Cipher** là thuật toán mã hóa khối đối xứng hạng nhẹ (Lightweight Symmetric Block Cipher) được thiết kế cho các hệ thống nhúng, vi điều khiển IoT và mạch phần cứng chuyên dụng.
+**Rubik-4D Cipher** is a lightweight symmetric block cipher designed for embedded systems, IoT microcontrollers, and application-specific hardware circuits.
 
-### Bài toán giải quyết:
-* Các thuật toán như AES sử dụng phép nhân ma trận trên trường hữu hạn $GF(2^8)$ (`MixColumns`) gây tốn diện tích mạch bán dẫn (Gate Equivalents) và tiêu hao nhiều năng lượng.
-* Mạng ARX thuần túy (như Speck/Simon) tuy nhẹ nhưng tốc độ khuếch tán dữ liệu (diffusion) giữa các nhánh bit khá chậm, đòi hỏi nhiều vòng lặp.
+### Problem Statement:
+* Standard algorithms such as AES rely on finite field matrix multiplication over $GF(2^8)$ (`MixColumns`), incurring high hardware area overhead (Gate Equivalents) and power consumption.
+* Pure ARX networks (such as Speck/Simon) are computationally lightweight, but their bit diffusion across branches is relatively slow, requiring a high round count.
 
-### Giải pháp của Rubik-4D:
-* **Ánh xạ siêu lập phương 4D (Tesseract):** 128 bit (16 byte) được khớp chính xác vào 16 đỉnh của không gian nhị phân 4 chiều $2 \times 2 \times 2 \times 2$.
-* **Hoán vị nhóm quay $SO(4)$ tốc độ $O(1)$:** 12 phép quay trực giao được tính trước thành bảng tra cứu, giúp xáo trộn vị trí byte tức thì mà không tốn tài nguyên tính toán.
-* **Tầng khuếch tán cộng dồn ARX:** Tận dụng hiện tượng dội sóng bit nhớ (carry propagation) của phép cộng modulo-256 để lan truyền biến động sang các byte lân cận.
-* **Hiệu suất cực đại với 6 vòng lặp (6 Rounds):** Tối ưu hóa điểm nghẽn, đẩy thông lượng phần mềm (Software Throughput) lên mức ~79 MB/s, vượt qua AES trên các bài test phần mềm thuần túy mà vẫn giữ nguyên độ an toàn.
+### The Rubik-4D Approach:
+* **4D Hypercube (Tesseract) Mapping:** 128 bits (16 bytes) map directly onto the 16 vertices of a 4-dimensional binary hypercube space $2 \times 2 \times 2 \times 2$.
+* **$O(1)$ Permutation via the $SO(4)$ Rotation Group:** 12 orthogonal rotations are precomputed into lookup tables, achieving instantaneous byte transposition with zero computational overhead.
+* **ARX Ripple-Carry Diffusion Layer:** Leverages modulo-256 addition carry propagation to rapidly diffuse differential changes across adjacent bytes.
+* **Maximum Throughput with 6 Rounds:** Eliminates performance bottlenecks, boosting pure software throughput to ~79 MB/s—outperforming AES in software benchmarks while maintaining strong cryptographic security.
 
 ---
 
-## 📐 2. Kiến trúc giải thuật (Architecture)
+## 📐 2. Algorithm Architecture
 
-Thuật toán xử lý khối dữ liệu 128-bit qua **6 vòng lặp (rounds)** theo sơ đồ:
+The cipher processes a 128-bit block through **6 rounds** using the following pipeline:
 
 ```text
 [Plaintext 128-bit] ──> ⊕ AddRoundKey(0)
                              │
-       ┌─────────────────────┴────────────────────┐
-       │             VÒNG LẶP (ROUND 1 - 6)       │
-       │                                          │
-       │  1. S-Box phi tuyến (AES Substitution)   │
-       │  2. Xoay siêu lập phương 4D (SO(4))      │
-       │  3. Khuếch tán cộng dồn bit nhớ (ARX)    │
-       │  4. Trộn khóa con (⊕ AddRoundKey)        │
-       └─────────────────────┬────────────────────┘
+        ┌─────────────────────┴────────────────────┐
+        │               ROUND (1 - 6)              │
+        │                                          │
+        │  1. Non-linear S-Box (AES Substitution)  │
+        │  2. 4D Tesseract Rotation (SO(4))        │
+        │  3. Ripple-Carry Diffusion (ARX)         │
+        │  4. Subkey Mixing (⊕ AddRoundKey)        │
+        └─────────────────────┬────────────────────┘
                              │
                              ▼
                     [Ciphertext 128-bit]
 ```
 
-**Đặc tính bảo mật cốt lõi:**
-* **Key Schedule SPN (Substitution-Permutation Network):** Lịch trình khóa phi tuyến tính mạnh mẽ, loại bỏ hoàn toàn điểm yếu của LCG, chống lại Related-Key Attack.
-* **Chế độ vận hành CBC (Cipher Block Chaining):** Hỗ trợ chuẩn xác chế độ CBC với IV để đảm bảo an toàn cho các luồng dữ liệu lớn.
+**Core Security Features:**
+* **SPN (Substitution-Permutation Network) Key Schedule:** A robust non-linear key expansion schedule that eliminates LCG-based weaknesses and resists related-key attacks.
+* **CBC (Cipher Block Chaining) Mode:** Fully supports standard CBC mode with initialization vectors (IV) for secure bulk data processing.
 
-## 📊 3. Bảng thông số & So sánh
+---
 
-| Tiêu chí | AES-128 | Speck / Simon | Rubik-4D (Đề xuất) |
+## 📊 3. Specifications & Comparison
+
+| Metric | AES-128 | Speck / Simon | Rubik-4D (Proposed) |
 | :--- | :--- | :--- | :--- |
-| **Kích thước khối** | 128 bits | 64 / 128 bits | 128 bits |
-| **Độ dài khóa** | 128 bits | 128 bits | 128 bits |
-| **Số vòng lặp (Rounds)** | 10 | 32 | 6 |
-| **Cấu trúc mạng** | SPN thuần | Feistel / ARX | SPN kết hợp ARX & Hình học 4D |
-| **Cơ chế hoán vị (P-box)** | ShiftRows cố định | Dịch bit tuần hoàn | Xoay Tesseract 4D động theo khóa |
-| **Thông lượng (x86 SW)** | ~ 45 MB/s | Rất cao | ~ 79 MB/s |
+| **Block Size** | 128 bits | 64 / 128 bits | 128 bits |
+| **Key Size** | 128 bits | 128 bits | 128 bits |
+| **Rounds** | 10 | 32 | 6 |
+| **Network Structure** | Pure SPN | Feistel / ARX | SPN combined with ARX & 4D Geometry |
+| **Permutation Layer (P-box)** | Static ShiftRows | Cyclic Bit Shifts | Key-Dependent Dynamic 4D Tesseract Rotation |
+| **Throughput (x86 SW)** | ~ 45 MB/s | Very High | ~ 79 MB/s |
 | **NIST SP 800-22** | Passed | Passed | Passed (186/188 tests) |
 
-## 🚀 4. Hướng dẫn sử dụng (Quick Start)
+---
 
-### 4.1. Tải mã nguồn
+## 🚀 4. Quick Start
+
+### 4.1. Clone Repository
 ```bash
-git clone https://github.com/toilacobemongmo/Rubic4DCrypto.git
+git clone [https://github.com/toilacobemongmo/Rubic4DCrypto.git](https://github.com/toilacobemongmo/Rubic4DCrypto.git)
 cd Rubic4DCrypto
 ```
 
-### 4.2. Biên dịch & Chạy GUI Benchmark (C++ / ImGui)
-Ứng dụng Benchmark trực quan so sánh trực tiếp hiệu năng giữa Rubik-4D, AES và Speck:
+### 4.2. Build & Run GUI Benchmark (C++ / ImGui)
+A real-time GUI application to benchmark Rubik-4D against AES and Speck:
 ```bash
 g++ -O3 -std=c++17 src/main.cpp src/rubik4d.c src/aes128.c src/speck128.c src/analysis.cpp imgui/imgui.cpp imgui/imgui_draw.cpp imgui/imgui_tables.cpp imgui/imgui_widgets.cpp imgui/backends/imgui_impl_glfw.cpp imgui/backends/imgui_impl_opengl3.cpp -I. -Iinclude -Iimgui -Iimgui/backends libglfw3.a -lopengl32 -lgdi32 -o Crypto_Benchmark.exe -static-libstdc++
 ./Crypto_Benchmark.exe
 ```
 
-### 4.3. Chạy kiểm định NIST Statistical Test Suite (Linux/WSL)
-Để xác thực độ an toàn thống kê, sinh file dữ liệu `rubik_data.bin` và đẩy vào bộ test NIST:
+### 4.3. Run NIST Statistical Test Suite (Linux/WSL)
+To verify statistical randomness, generate the `rubik_data.bin` stream and run the NIST test suite:
 
-**Sinh dữ liệu test (12.5 MB):**
+**Generate test stream (12.5 MB):**
 ```bash
 gcc ./tests/gen_data.c ./src/rubik4d.c -Iinclude -o ./tests/gen_data.exe -O3 
->> ./tests/gen_data.exe
+./tests/gen_data.exe
 ```
 
-**Cài đặt & chạy NIST STS:**
+**Install & execute NIST STS:**
 ```bash
 sudo apt update && sudo apt install -y build-essential git libfftw3-dev
-git clone https://github.com/arcetri/sts.git
+git clone [https://github.com/arcetri/sts.git](https://github.com/arcetri/sts.git)
 cd sts 
 make
 
-# Chạy test với luồng dữ liệu của Rubik-4D
+# Run the test against the Rubik-4D binary output
 ./sts -i 95 -w . -F r ../rubik_data.bin
 ```
 
-## 🛠 5. Kế hoạch nghiên cứu & Nâng cấp (Roadmap)
-- [x] **Xây dựng lõi C/C++ hoàn chỉnh:** Hiện thực hóa bảng hoán vị Rubik-4D tối ưu $O(1)$ và GUI Benchmark.
-- [x] **Nâng cấp Key Schedule & Chế độ hoạt động:** Thay thế LCG bằng mạng SPN an toàn tuyệt đối và tích hợp chế độ CBC chuẩn mực.
-- [x] **Tối ưu hóa vòng lặp (Round Reduction):** Phân tích và rút gọn thành công từ 12 vòng xuống 6 vòng, đẩy thông lượng phần mềm vượt mốc 75 MB/s.
-- [x] **Kiểm định thống kê:** Vượt qua bộ tiêu chuẩn NIST SP 800-22 (186/188 sub-tests passed).
-- [ ] **Chứng minh an toàn bằng MILP / SAT Solver:** Mô hình hóa toán học hệ phương trình vi sai/tuyến tính để xác định số hộp Active S-boxes tối thiểu.
-- [ ] **Benchmark phần cứng (Hardware Synthesis):** Viết lại thuật toán bằng Verilog để tổng hợp lên FPGA, đo lường chính xác diện tích mạch (Gate Equivalents) và năng lượng tiêu thụ.
+---
 
-## 📄 6. Giấy phép & Tuyên bố học thuật
-* Dự án được phân phối dưới giấy phép **MIT License**.
-* Thiết kế tuân thủ nghiêm ngặt **Nguyên lý Kerckhoffs**: Độ an toàn của hệ thống hoàn toàn dựa vào tính bí mật của khóa, không phụ thuộc vào việc che giấu thuật toán
-* Link bài báo dự án **https://www.overleaf.com/read/tdbnmfjskpmj#8dd4cd**
+## 🛠 5. Research Roadmap
+
+- [x] **Complete C/C++ Core Engine:** Implement the $O(1)$ Rubik-4D permutation lookup tables and GUI Benchmark.
+- [x] **Key Schedule & Cipher Mode Hardening:** Replace LCG with a cryptographically sound SPN key schedule and integrate standard CBC mode.
+- [x] **Round Optimization:** Analyze differential bounds and reduce rounds from 12 to 6, achieving software throughput in excess of 75 MB/s.
+- [x] **Statistical Validation:** Pass the NIST SP 800-22 test suite (186/188 sub-tests passed).
+- [ ] **MILP / SAT-Based Cryptanalysis:** Construct mathematical programming models for differential and linear characteristics to prove lower bounds on active S-boxes.
+- [ ] **Hardware Synthesis & Benchmarking:** Implement the cipher in synthesizable Verilog for FPGA/ASIC targets to evaluate exact Gate Equivalents (GE) and power efficiency.
+
+---
+
+## 📄 6. License & Academic Disclaimer
+
+* Distributed under the **MIT License**.
+* The design strictly adheres to **Kerckhoffs's Principle**: cryptographic security rests entirely on key confidentiality, not on the secrecy of the algorithm.
+* Project Preprint / Paper: **https://www.overleaf.com/read/tdbnmfjskpmj#8dd4cd**
