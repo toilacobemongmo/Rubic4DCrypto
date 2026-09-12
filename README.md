@@ -76,8 +76,8 @@ g++ -O3 -std=c++17 src/main.cpp src/rubik4d.c src/aes128.c src/speck128.c src/an
 
 **Sinh dữ liệu test (12.5 MB):**
 ```bash
-gcc gen_data.c rubik4d.c -o gen_data.exe -O3
-./gen_data.exe
+gcc ./tests/gen_data.c ./src/rubik4d.c -Iinclude -o ./tests/gen_data.exe -O3 
+>> ./tests/gen_data.exe
 ```
 
 **Cài đặt & chạy NIST STS:**
