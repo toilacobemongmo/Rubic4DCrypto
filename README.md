@@ -100,4 +100,5 @@ make
 
 ## 📄 6. Giấy phép & Tuyên bố học thuật
 * Dự án được phân phối dưới giấy phép **MIT License**.
-* Thiết kế tuân thủ nghiêm ngặt **Nguyên lý Kerckhoffs**: Độ an toàn của hệ thống hoàn toàn dựa vào tính bí mật của khóa, không phụ thuộc vào việc che giấu thuật toán.
+* Thiết kế tuân thủ nghiêm ngặt **Nguyên lý Kerckhoffs**: Độ an toàn của hệ thống hoàn toàn dựa vào tính bí mật của khóa, không phụ thuộc vào việc che giấu thuật toán
+* Link bài báo dự án **https://www.overleaf.com/read/tdbnmfjskpmj#8dd4cd**
