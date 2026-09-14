@@ -22,9 +22,9 @@ static const uint8_t SBOX[256] = {
     0x8c,0xa1,0x89,0x0d,0xbf,0xe6,0x42,0x68,0x41,0x99,0x2d,0x0f,0xb0,0x54,0xbb,0x16
 };
 
-//RCON
+// RCON cho 6 vong
 static const uint8_t RCON[7] = {
-    0x00, 0x01, 0x02, 0x04, 0x08, 0x10, 0x20 //0x40, 0x80, 0x1B, 0x36, 0x6C, 0xD8
+    0x00, 0x01, 0x02, 0x04, 0x08, 0x10, 0x20
 };
 
 static uint8_t INV_SBOX[256];
@@ -80,7 +80,8 @@ void rubik4d_init_tables(void) {
     tables_initialized = 1;
 }
 
-void rubik4d_generate_round_keys(const uint8_t *key, size_t key_len, uint8_t round_keys[13][16]) {
+void rubik4d_generate_round_keys(const uint8_t *key, size_t key_len, uint8_t round_keys[7][16]) {
+    (void)key_len;
     memcpy(round_keys[0], key, 16);
 
     for (int r = 1; r <= 6; r++) {
@@ -100,7 +101,7 @@ void rubik4d_generate_round_keys(const uint8_t *key, size_t key_len, uint8_t rou
     }
 }
 
-void rubik4d_encrypt_block(const uint8_t in[16], uint8_t out[16], const uint8_t round_keys[13][16]) {
+void rubik4d_encrypt_block(const uint8_t in[16], uint8_t out[16], const uint8_t round_keys[7][16]) {
     uint8_t state[16];
     for (int i = 0; i < 16; i++) state[i] = in[i] ^ round_keys[0][i];
 
@@ -125,16 +126,17 @@ void rubik4d_encrypt_block(const uint8_t in[16], uint8_t out[16], const uint8_t 
     memcpy(out, state, 16);
 }
 
-void rubik4d_decrypt_block(const uint8_t in[16], uint8_t out[16], const uint8_t round_keys[13][16]) {
+void rubik4d_decrypt_block(const uint8_t in[16], uint8_t out[16], const uint8_t round_keys[7][16]) {
     uint8_t state[16];
     memcpy(state, in, 16);
 
     for (int r = 6; r >= 1; r--) {
         for (int i = 0; i < 16; i++) state[i] ^= round_keys[r][i];
 
-        for (int i = 15; i >= 0; i--) {
-            int next = (i + 1) & 15;
-            state[next] ^= (uint8_t)(state[i] + 0x5a);
+        // Sửa lỗi đảo ngược Ripple-ARX chính xác:
+        state[0] ^= (uint8_t)(state[15] + 0x5a);
+        for (int i = 14; i >= 0; i--) {
+            state[i + 1] ^= (uint8_t)(state[i] + 0x5a);
         }
 
         uint8_t k_fold = 0;
