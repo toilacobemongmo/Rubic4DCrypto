@@ -11,8 +11,8 @@ extern "C" {
 // Định nghĩa các tham số mật mã cơ sở của Rubik-4D
 #define RUBIK4D_BLOCK_SIZE  16   // 128 bit = 16 byte
 #define RUBIK4D_KEY_SIZE    16   // 128 bit master key
-#define RUBIK4D_ROUNDS      6    // Cấu trúc 6 vòng
-#define RUBIK4D_NUM_KEYS    7    // Khóa tiền trắng hóa K0 + 6 khóa vòng (K1..K6)
+#define RUBIK4D_ROUNDS      8    // Cấu trúc 8 vòng mã hóa
+#define RUBIK4D_NUM_KEYS    9    // Khóa tiền trắng hóa K0 + 8 khóa vòng (K1..K8)
 #define RUBIK4D_IV_SIZE     16   // Kích thước vector khởi tạo CBC
 
 /**
@@ -22,22 +22,22 @@ extern "C" {
 void rubik4d_init_tables(void);
 
 /**
- * @brief Sinh 7 khóa vòng 128-bit từ khóa chính (Master Key).
+ * @brief Sinh 9 khóa vòng 128-bit từ khóa chính (Master Key).
  * @param key Con trỏ tới mảng khóa chính 16 byte.
  * @param key_len Độ dài khóa (mặc định 16 byte).
- * @param round_keys Mảng đầu ra chứa 7 khóa vòng [7][16].
+ * @param round_keys Mảng đầu ra chứa 9 khóa vòng [9][16].
  */
 void rubik4d_generate_round_keys(const uint8_t *key, size_t key_len, uint8_t round_keys[RUBIK4D_NUM_KEYS][RUBIK4D_BLOCK_SIZE]);
 
 /**
- * @brief Mã hóa một khối đơn lẻ 16-byte (ECB primitive).
+ * @brief Mã hóa một khối đơn lẻ 16-byte (ECB primitive) qua 8 vòng.
  */
 void rubik4d_encrypt_block(const uint8_t in[RUBIK4D_BLOCK_SIZE], 
                            uint8_t out[RUBIK4D_BLOCK_SIZE], 
                            const uint8_t round_keys[RUBIK4D_NUM_KEYS][RUBIK4D_BLOCK_SIZE]);
 
 /**
- * @brief Giải mã một khối đơn lẻ 16-byte (ECB primitive).
+ * @brief Giải mã một khối đơn lẻ 16-byte (ECB primitive) qua 8 vòng.
  */
 void rubik4d_decrypt_block(const uint8_t in[RUBIK4D_BLOCK_SIZE], 
                            uint8_t out[RUBIK4D_BLOCK_SIZE], 
