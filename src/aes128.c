@@ -142,7 +142,7 @@ static void derive_128bit_key(const uint8_t *key_in, size_t len, uint8_t key_out
     }
 }
 
-size_t aes128_encrypt(const uint8_t *in, size_t in_len, uint8_t *out, const uint8_t *key, size_t key_len) {
+size_t aes128_encrypt(const uint8_t *in, size_t in_len, uint8_t *out, const uint8_t *key, size_t key_len, const uint8_t *iv) {
     uint8_t formatted_key[16];
     derive_128bit_key(key, key_len, formatted_key);
 
@@ -153,18 +153,22 @@ size_t aes128_encrypt(const uint8_t *in, size_t in_len, uint8_t *out, const uint
     size_t total_len = in_len + pad;
 
     uint8_t block[16];
+    uint8_t current_iv[16];
+    memcpy(current_iv, iv, 16);
+
     for (size_t i = 0; i < total_len; i += 16) {
         for (int j = 0; j < 16; j++) {
             size_t idx = i + j;
-            if (idx < in_len) block[j] = in[idx];
-            else block[j] = pad;
+            block[j] = (idx < in_len) ? in[idx] : pad;
+            block[j] ^= current_iv[j]; // Chuỗi khối CBC
         }
         aes128_encrypt_block(block, out + i, round_keys);
+        memcpy(current_iv, out + i, 16);
     }
     return total_len;
 }
 
-size_t aes128_decrypt(const uint8_t *in, size_t in_len, uint8_t *out, const uint8_t *key, size_t key_len) {
+size_t aes128_decrypt(const uint8_t *in, size_t in_len, uint8_t *out, const uint8_t *key, size_t key_len, const uint8_t *iv) {
     if (in_len == 0 || (in_len % 16) != 0) return 0;
 
     uint8_t formatted_key[16];
@@ -173,8 +177,15 @@ size_t aes128_decrypt(const uint8_t *in, size_t in_len, uint8_t *out, const uint
     uint8_t round_keys[176];
     aes128_key_expansion(formatted_key, round_keys);
 
+    uint8_t current_iv[16];
+    memcpy(current_iv, iv, 16);
+
     for (size_t i = 0; i < in_len; i += 16) {
         aes128_decrypt_block(in + i, out + i, round_keys);
+        for (int j = 0; j < 16; j++) {
+            out[i + j] ^= current_iv[j]; // Giải mã chuỗi khối CBC
+        }
+        memcpy(current_iv, in + i, 16);
     }
 
     uint8_t pad = out[in_len - 1];

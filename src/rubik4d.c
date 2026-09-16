@@ -2,8 +2,11 @@
 #include <string.h>
 #include <math.h>
 
-// SBOX AES
-static const uint8_t SBOX[256] = {
+#define ROTL32(v, n) (((v) << (n)) | ((v) >> (32 - (n))))
+#define ROTR32(v, n) (((v) >> (n)) | ((v) << (32 - (n))))
+
+// AES S-box chuẩn
+static const uint8_t AES_SBOX[256] = {
     0x63,0x7c,0x77,0x7b,0xf2,0x6b,0x6f,0xc5,0x30,0x01,0x67,0x2b,0xfe,0xd7,0xab,0x76,
     0xca,0x82,0xc9,0x7d,0xfa,0x59,0x47,0xf0,0xad,0xd4,0xa2,0xaf,0x9c,0xa4,0x72,0xc0,
     0xb7,0xfd,0x93,0x26,0x36,0x3f,0xf7,0xcc,0x34,0xa5,0xe5,0xf1,0x71,0xd8,0x31,0x15,
@@ -22,183 +25,210 @@ static const uint8_t SBOX[256] = {
     0x8c,0xa1,0x89,0x0d,0xbf,0xe6,0x42,0x68,0x41,0x99,0x2d,0x0f,0xb0,0x54,0xbb,0x16
 };
 
-static const uint8_t RCON[9] = {
-    0x00, 0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80
+static const uint8_t AES_INV_SBOX[256] = {
+    0x52,0x09,0x6a,0xd5,0x30,0x36,0xa5,0x38,0xbf,0x40,0xa3,0x9e,0x81,0xf3,0xd7,0xfb,
+    0x7c,0xe3,0x39,0x82,0x9b,0x2f,0xff,0x87,0x34,0x8e,0x43,0x44,0xc4,0xde,0xe9,0xcb,
+    0x54,0x7b,0x94,0x32,0xa6,0xc2,0x23,0x3d,0xee,0x4c,0x95,0x0b,0x42,0xfa,0xc3,0x4e,
+    0x08,0x2e,0xa1,0x66,0x28,0xd9,0x24,0xb2,0x76,0x5b,0xa2,0x49,0x6d,0x8b,0xd1,0x25,
+    0x72,0xf8,0xf6,0x64,0x86,0x68,0x98,0x16,0xd4,0xa4,0x5c,0xcc,0x5d,0x65,0xb6,0x92,
+    0x6c,0x70,0x48,0x50,0xfd,0xed,0xb9,0xda,0x5e,0x15,0x46,0x57,0xa7,0x8d,0x9d,0x84,
+    0x90,0xd8,0xab,0x00,0x8c,0xbc,0xd3,0x0a,0xf7,0xe4,0x58,0x05,0xb8,0xb3,0x45,0x06,
+    0xd0,0x2c,0x1e,0x8f,0xca,0x3f,0x0f,0x02,0xc1,0xaf,0xbd,0x03,0x01,0x13,0x8a,0x6b,
+    0x3a,0x91,0x11,0x41,0x4f,0x67,0xdc,0xea,0x97,0xf2,0xcf,0xce,0xf0,0xb4,0xe6,0x73,
+    0x96,0xac,0x74,0x22,0xe7,0xad,0x35,0x85,0xe2,0xf9,0x37,0xe8,0x1c,0x75,0xdf,0x6e,
+    0x47,0xf1,0x1a,0x71,0x1d,0x29,0xc5,0x89,0x6f,0xb7,0x62,0x0e,0xaa,0x18,0xbe,0x1b,
+    0xfc,0x56,0x3e,0x4b,0xc6,0xd2,0x79,0x20,0x9a,0xdb,0xc0,0xfe,0x78,0xcd,0x5a,0xf4,
+    0x1f,0xdd,0xa8,0x33,0x88,0x07,0xc7,0x31,0xb1,0x12,0x10,0x59,0x27,0x80,0xec,0x5f,
+    0x60,0x51,0x7f,0xa9,0x19,0xb5,0x4a,0x0d,0x2d,0xe5,0x7a,0x9f,0x93,0xc9,0x9c,0xef,
+    0xa0,0xe0,0x3b,0x4d,0xae,0x2a,0xf5,0xb0,0xc8,0xeb,0xbb,0x3c,0x83,0x53,0x99,0x61,
+    0x17,0x2b,0x04,0x7e,0xba,0x77,0xd6,0x26,0xe1,0x69,0x14,0x63,0x55,0x21,0x0c,0x7d
 };
 
-static uint8_t INV_SBOX[256];
-static uint8_t PERM_TABLES[12][16];
+// 12 Mặt hoán vị 16 phần tử
+static const uint8_t PERM_TABLES[12][16] = {
+    { 1, 3, 0, 2,  5, 7, 4, 6,  9,11, 8,10, 13,15,12,14}, // XY
+    { 2, 0, 3, 1,  6, 4, 7, 5, 10, 8,11, 9, 14,12,15,13},
+    { 4, 5, 6, 7,  1, 0, 3, 2, 12,13,14,15,  9, 8,11,10}, // XZ
+    { 5, 4, 7, 6,  0, 1, 2, 3, 13,12,15,14,  8, 9,10,11},
+    { 8, 9,10,11, 12,13,14,15,  1, 0, 3, 2,  5, 4, 7, 6}, // XW
+    { 9, 8,11,10, 13,12,15,14,  0, 1, 2, 3,  4, 5, 6, 7},
+    { 2, 3, 1, 0,  6, 7, 5, 4, 10,11, 9, 8, 14,15,13,12}, // YZ
+    { 3, 2, 0, 1,  7, 6, 4, 5, 11,10, 8, 9, 15,14,12,13},
+    { 4, 6, 5, 7,  0, 2, 1, 3, 12,14,13,15,  8,10, 9,11}, // YW
+    { 6, 4, 7, 5,  2, 0, 3, 1, 14,12,15,13, 10, 8,11, 9},
+    { 8,10, 9,11,  0, 2, 1, 3,  4, 6, 5, 7, 12,14,13,15}, // ZW
+    {10, 8,11, 9,  2, 0, 3, 1,  6, 4, 7, 5, 14,12,15,13}
+};
+
 static uint8_t INV_PERM_TABLES[12][16];
 static int tables_initialized = 0;
 
-static inline uint8_t to_idx(int x, int y, int z, int w) { 
-    return (uint8_t)((x << 3) | (y << 2) | (z << 1) | w); 
-}
-
-static inline void from_idx(uint8_t i, int *x, int *y, int *z, int *w) { 
-    *x = (i >> 3) & 1; 
-    *y = (i >> 2) & 1; 
-    *z = (i >> 1) & 1; 
-    *w = i & 1; 
-}
-
-static inline void rot2d(int *u, int *v, int cw) {
-    int nu, nv;
-    if (cw) {
-        if (*u == 0 && *v == 0) { nu = 0; nv = 1; }
-        else if (*u == 0 && *v == 1) { nu = 1; nv = 1; }
-        else if (*u == 1 && *v == 1) { nu = 1; nv = 0; }
-        else { nu = 0; nv = 0; }
-    } else {
-        if (*u == 0 && *v == 0) { nu = 1; nv = 0; }
-        else if (*u == 1 && *v == 0) { nu = 1; nv = 1; }
-        else if (*u == 1 && *v == 1) { nu = 0; nv = 1; }
-        else { nu = 0; nv = 0; }
-    }
-    *u = nu; *v = nv;
-}
-
 void rubik4d_init_tables(void) {
     if (tables_initialized) return;
-    for (int i = 0; i < 256; i++) INV_SBOX[SBOX[i]] = (uint8_t)i;
-
-    int tbl = 0;
-    for (int p = 0; p < 6; p++) {
-        for (int d = 0; d < 2; d++) {
-            int cw = (d == 0);
-            for (uint8_t i = 0; i < 16; i++) {
-                int x, y, z, w;
-                from_idx(i, &x, &y, &z, &w);
-                switch (p) {
-                    case 0: rot2d(&x, &y, cw); break;
-                    case 1: rot2d(&x, &z, cw); break;
-                    case 2: rot2d(&x, &w, cw); break;
-                    case 3: rot2d(&y, &z, cw); break;
-                    case 4: rot2d(&y, &w, cw); break;
-                    case 5: rot2d(&z, &w, cw); break;
-                }
-                uint8_t dest = to_idx(x, y, z, w);
-                PERM_TABLES[tbl][dest] = i;
-                INV_PERM_TABLES[tbl][i] = dest;
-            }
-            tbl++;
+    for (int t = 0; t < 12; t++) {
+        for (int i = 0; i < 16; i++) {
+            INV_PERM_TABLES[t][PERM_TABLES[t][i]] = (uint8_t)i;
         }
     }
     tables_initialized = 1;
 }
 
-void rubik4d_generate_round_keys(const uint8_t *key, size_t key_len, uint8_t round_keys[9][16]) {
-    (void)key_len;
-    memcpy(round_keys[0], key, 16);
-
-    for (int r = 1; r <= 8; r++) {
-        uint8_t temp[4];
-        temp[0] = round_keys[r-1][13];
-        temp[1] = round_keys[r-1][14];
-        temp[2] = round_keys[r-1][15];
-        temp[3] = round_keys[r-1][12];
-
-        temp[0] = SBOX[temp[0]] ^ RCON[r];
-        temp[1] = SBOX[temp[1]];
-        temp[2] = SBOX[temp[2]];
-        temp[3] = SBOX[temp[3]];
-
-        for (int i = 0; i < 4; i++) round_keys[r][i] = round_keys[r-1][i] ^ temp[i];
-        for (int i = 4; i < 16; i++) round_keys[r][i] = round_keys[r-1][i] ^ round_keys[r][i-4];
+double rubik4d_calculate_entropy(const uint8_t *data, size_t len) {
+    if (len == 0) return 0.0;
+    uint64_t counts[256] = {0};
+    for (size_t i = 0; i < len; i++) counts[data[i]]++;
+    double entropy = 0.0;
+    double dlen = (double)len;
+    for (int i = 0; i < 256; i++) {
+        if (counts[i] > 0) {
+            double p = (double)counts[i] / dlen;
+            entropy -= p * (log(p) / log(2.0));
+        }
     }
+    return entropy;
+}
+
+// Thiết lập khóa và tiền tính toán bảng hoán vị
+void rubik4d_key_setup(rubik4d_ctx *ctx, const uint8_t *key, size_t key_len) {
+    rubik4d_init_tables();
+    uint8_t master[16] = {0};
+    for (size_t i = 0; i < key_len; i++) master[i % 16] ^= key[i];
+
+    uint8_t k_fold = 0;
+    for (int i = 0; i < 16; i++) k_fold ^= master[i];
+
+    memcpy(ctx->round_keys[0], master, 16);
+    for (int r = 1; r <= 8; r++) {
+        for (int i = 0; i < 16; i++) {
+            ctx->round_keys[r][i] = AES_SBOX[ctx->round_keys[r - 1][(i + 3) % 16]] ^ (uint8_t)(r * 0x1B);
+        }
+        int tbl_idx = ((r + (k_fold & 7)) % 6) * 2 + ((k_fold >> 3) & 1);
+        ctx->perm_lut[r] = PERM_TABLES[tbl_idx];
+    }
+}
+
+void rubik4d_generate_round_keys(const uint8_t *key, size_t key_len, uint8_t round_keys[9][16]) {
+    rubik4d_ctx ctx;
+    rubik4d_key_setup(&ctx, key, key_len);
+    memcpy(round_keys, ctx.round_keys, sizeof(ctx.round_keys));
 }
 
 void rubik4d_encrypt_block(const uint8_t in[16], uint8_t out[16], const uint8_t round_keys[9][16]) {
+    rubik4d_ctx ctx;
+    memcpy(ctx.round_keys, round_keys, sizeof(ctx.round_keys));
+    
+    // Tính k_fold từ round_keys[0] (Master Key)
+    uint8_t k_fold = 0;
+    for (int i = 0; i < 16; i++) k_fold ^= ctx.round_keys[0][i];
+    
+    rubik4d_init_tables();
+    for (int r = 1; r <= 8; r++) {
+        int tbl_idx = ((r + (k_fold & 7)) % 6) * 2 + ((k_fold >> 3) & 1);
+        ctx.perm_lut[r] = PERM_TABLES[tbl_idx];
+    }
+    
+    rubik4d_encrypt_block_fast(&ctx, in, out);
+}
+
+// Hàm mã hóa khối 128-bit tốc độ cao
+void rubik4d_encrypt_block_fast(const rubik4d_ctx *ctx, const uint8_t in[16], uint8_t out[16]) {
     uint8_t state[16];
-    for (int i = 0; i < 16; i++) state[i] = in[i] ^ round_keys[0][i];
+    
+    // Pre-whitening
+    for (int i = 0; i < 16; i++) state[i] = in[i] ^ ctx->round_keys[0][i];
 
     for (int r = 1; r <= 8; r++) {
-        for (int i = 0; i < 16; i++) state[i] = SBOX[state[i]];
+        // 1. SubBytes (AES S-box)
+        for (int i = 0; i < 16; i++) state[i] = AES_SBOX[state[i]];
 
-        uint8_t k_fold = 0;
-        for (int i = 0; i < 16; i++) k_fold ^= round_keys[r][i];
-        int tbl_idx = ((r + (k_fold & 7)) % 6) * 2 + ((k_fold >> 3) & 1);
-        const uint8_t *lut = PERM_TABLES[tbl_idx];
-
+        // 2. SO(4) Hypercube Permutation (Mở phẳng từ LUT tiền tính)
+        const uint8_t* lut = ctx->perm_lut[r];
         uint8_t rot[16];
-        for (int i = 0; i < 16; i++) rot[i] = state[lut[i]];
+        rot[0]  = state[lut[0]];  rot[1]  = state[lut[1]];
+        rot[2]  = state[lut[2]];  rot[3]  = state[lut[3]];
+        rot[4]  = state[lut[4]];  rot[5]  = state[lut[5]];
+        rot[6]  = state[lut[6]];  rot[7]  = state[lut[7]];
+        rot[8]  = state[lut[8]];  rot[9]  = state[lut[9]];
+        rot[10] = state[lut[10]]; rot[11] = state[lut[11]];
+        rot[12] = state[lut[12]]; rot[13] = state[lut[13]];
+        rot[14] = state[lut[14]]; rot[15] = state[lut[15]];
 
-        for (int i = 0; i < 16; i++) {
-            int next = (i + 1) & 15;
-            rot[next] ^= (uint8_t)(rot[i] + 0x5a);
-        }
+        // 3. Tầng ARX Ripple 32-bit (Khuếch tán Word-level cực nhanh)
+        uint32_t* w = (uint32_t*)rot;
+        w[1] ^= ROTL32(w[0] + 0x5A5A5A5AU, 7);
+        w[2] ^= ROTL32(w[1] + 0x5A5A5A5AU, 11);
+        w[3] ^= ROTL32(w[2] + 0x5A5A5A5AU, 13);
+        w[0] ^= ROTL32(w[3] + 0x5A5A5A5AU, 17);
 
-        for (int i = 0; i < 16; i++) state[i] = rot[i] ^ round_keys[r][i];
+        for (int i = 0; i < 16; i++) state[i] = rot[i] ^ ctx->round_keys[r][i];
     }
+
     memcpy(out, state, 16);
 }
 
-void rubik4d_decrypt_block(const uint8_t in[16], uint8_t out[16], const uint8_t round_keys[9][16]) {
+void rubik4d_decrypt_block_fast(const rubik4d_ctx *ctx, const uint8_t in[16], uint8_t out[16]) {
     uint8_t state[16];
     memcpy(state, in, 16);
 
     for (int r = 8; r >= 1; r--) {
-        for (int i = 0; i < 16; i++) state[i] ^= round_keys[r][i];
+        for (int i = 0; i < 16; i++) state[i] ^= ctx->round_keys[r][i];
 
-        state[0] ^= (uint8_t)(state[15] + 0x5a);
-        for (int i = 14; i >= 0; i--) {
-            state[i + 1] ^= (uint8_t)(state[i] + 0x5a);
-        }
+        uint32_t* w = (uint32_t*)state;
+        w[0] ^= ROTL32(w[3] + 0x5A5A5A5AU, 17);
+        w[3] ^= ROTL32(w[2] + 0x5A5A5A5AU, 13);
+        w[2] ^= ROTL32(w[1] + 0x5A5A5A5AU, 11);
+        w[1] ^= ROTL32(w[0] + 0x5A5A5A5AU, 7);
 
-        uint8_t k_fold = 0;
-        for (int i = 0; i < 16; i++) k_fold ^= round_keys[r][i];
-        int tbl_idx = ((r + (k_fold & 7)) % 6) * 2 + ((k_fold >> 3) & 1);
-        const uint8_t *inv_lut = INV_PERM_TABLES[tbl_idx];
+        uint8_t unperm[16];
+        const uint8_t* lut = ctx->perm_lut[r];
+        for (int i = 0; i < 16; i++) unperm[lut[i]] = state[i];
 
-        uint8_t rot[16];
-        for (int i = 0; i < 16; i++) rot[i] = state[inv_lut[i]];
-        for (int i = 0; i < 16; i++) state[i] = INV_SBOX[rot[i]];
+        for (int i = 0; i < 16; i++) state[i] = AES_INV_SBOX[unperm[i]];
     }
 
-    for (int i = 0; i < 16; i++) out[i] = state[i] ^ round_keys[0][i];
+    // Post-whitening
+    for (int i = 0; i < 16; i++) out[i] = state[i] ^ ctx->round_keys[0][i];
 }
 
-size_t rubik4d_encrypt(const uint8_t *in, size_t in_len, uint8_t *out, const uint8_t *key, size_t key_len, const uint8_t *iv) {
-    rubik4d_init_tables();
-    uint8_t rkeys[9][16];
-    rubik4d_generate_round_keys(key, key_len, rkeys);
+size_t rubik4d_encrypt(const uint8_t *in, size_t in_len, uint8_t *out, 
+                       const uint8_t *key, size_t key_len, const uint8_t *iv) {
+    rubik4d_ctx ctx;
+    rubik4d_key_setup(&ctx, key, key_len);
 
     uint8_t pad = 16 - (in_len % 16);
     size_t total_len = in_len + pad;
-
     uint8_t block[16];
-    uint8_t current_iv[16];
-    memcpy(current_iv, iv, 16);
+    uint8_t cur_iv[16];
+    memcpy(cur_iv, iv, 16);
 
     for (size_t i = 0; i < total_len; i += 16) {
         for (int j = 0; j < 16; j++) {
             size_t idx = i + j;
             block[j] = (idx < in_len) ? in[idx] : pad;
-            block[j] ^= current_iv[j]; 
+            block[j] ^= cur_iv[j];
         }
-        
-        rubik4d_encrypt_block(block, out + i, rkeys);
-        memcpy(current_iv, out + i, 16); 
+        rubik4d_encrypt_block_fast(&ctx, block, out + i);
+        memcpy(cur_iv, out + i, 16);
     }
     return total_len;
 }
 
-size_t rubik4d_decrypt(const uint8_t *in, size_t in_len, uint8_t *out, const uint8_t *key, size_t key_len, const uint8_t *iv) {
+size_t rubik4d_decrypt(const uint8_t *in, size_t in_len, uint8_t *out, 
+                       const uint8_t *key, size_t key_len, const uint8_t *iv) {
     if (in_len == 0 || (in_len % 16) != 0) return 0;
-    rubik4d_init_tables();
-    uint8_t rkeys[9][16];
-    rubik4d_generate_round_keys(key, key_len, rkeys);
 
-    uint8_t current_iv[16];
-    memcpy(current_iv, iv, 16);
+    rubik4d_ctx ctx;
+    rubik4d_key_setup(&ctx, key, key_len);
+
+    uint8_t cur_iv[16];
+    memcpy(cur_iv, iv, 16);
 
     for (size_t i = 0; i < in_len; i += 16) {
-        rubik4d_decrypt_block(in + i, out + i, rkeys);
-        
+        rubik4d_decrypt_block_fast(&ctx, in + i, out + i);
         for (int j = 0; j < 16; j++) {
-            out[i + j] ^= current_iv[j];
+            out[i + j] ^= cur_iv[j];
         }
-        memcpy(current_iv, in + i, 16); 
+        memcpy(cur_iv, in + i, 16);
     }
 
     uint8_t pad = out[in_len - 1];
@@ -207,19 +237,4 @@ size_t rubik4d_decrypt(const uint8_t *in, size_t in_len, uint8_t *out, const uin
         if (out[i] != pad) return 0;
     }
     return in_len - pad;
-}
-
-double rubik4d_calculate_entropy(const uint8_t *data, size_t len) {
-    if (len == 0) return 0.0;
-    size_t freq[256] = {0};
-    for (size_t i = 0; i < len; i++) freq[data[i]]++;
-
-    double entropy = 0.0;
-    for (int i = 0; i < 256; i++) {
-        if (freq[i] > 0) {
-            double p = (double)freq[i] / (double)len;
-            entropy -= p * log2(p);
-        }
-    }
-    return entropy;
 }

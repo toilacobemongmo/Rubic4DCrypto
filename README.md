@@ -70,7 +70,7 @@ cd Rubic4DCrypto
 ### 4.2. Build & Run GUI Benchmark (C++ / ImGui)
 A real-time GUI application to benchmark Rubik-4D against AES and Speck:
 ```bash
-g++ -O3 -std=c++17 src/main.cpp src/rubik4d.c src/aes128.c src/speck128.c src/analysis.cpp imgui/imgui.cpp imgui/imgui_draw.cpp imgui/imgui_tables.cpp imgui/imgui_widgets.cpp imgui/backends/imgui_impl_glfw.cpp imgui/backends/imgui_impl_opengl3.cpp -I. -Iinclude -Iimgui -Iimgui/backends libglfw3.a -lopengl32 -lgdi32 -o Crypto_Benchmark.exe -static-libstdc++
+g++ -O3 -std=c++17 src/main.cpp src/analysis.cpp src/rubik4d.c src/aes128.c src/speck128.c src/simon128.c src/chacha20.c imgui/imgui.cpp imgui/imgui_draw.cpp imgui/imgui_tables.cpp imgui/imgui_widgets.cpp imgui/backends/imgui_impl_glfw.cpp imgui/backends/imgui_impl_opengl3.cpp -I. -Iinclude -Iimgui -Iimgui/backends libglfw3.a -lopengl32 -lgdi32 -o Crypto_Benchmark.exe -static-libstdc++
 ./Crypto_Benchmark.exe
 ```
 
