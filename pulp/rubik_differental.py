@@ -1,6 +1,5 @@
 import pulp
 
-# 1. KHỞI TẠO BẢNG HOÁN VỊ
 def rot2d(u, v, cw):
     if cw:
         if u == 0 and v == 0: return 0, 1
@@ -37,31 +36,25 @@ def init_perm_tables():
 
 PERM_TABLES = init_perm_tables()
 
-# 2. MÔ HÌNH HÓA MILP 8 VÒNG
 def solve_n_rounds(num_rounds=8):
     prob = pulp.LpProblem(f"Rubik4D_{num_rounds}R", pulp.LpMinimize)
 
-    # X[r][i]: Trạng thái active byte thứ i ở đầu Round r
     X = [[pulp.LpVariable(f"X_{r}_{i}", cat=pulp.LpBinary) for i in range(16)] for r in range(num_rounds + 1)]
 
-    # Hàm mục tiêu: Tối thiểu hóa tổng active S-boxes
     active_sboxes = []
     for r in range(num_rounds):
         active_sboxes.extend(X[r])
     prob += pulp.lpSum(active_sboxes)
 
-    # Ràng buộc đầu vào không tầm thường
     prob += pulp.lpSum(X[0]) >= 1
 
     for r in range(num_rounds):
         lut = PERM_TABLES[(r * 2) % 12]
 
-        # Tầng SO(4)
         Y = [pulp.LpVariable(f"Y_{r}_{i}", cat=pulp.LpBinary) for i in range(16)]
         for i in range(16):
             prob += Y[i] == X[r][lut[i]]
 
-        # Tầng 1-pass ARX Ripple (16 bước)
         Z = [[pulp.LpVariable(f"Z_{r}_{s}_{i}", cat=pulp.LpBinary) for i in range(16)] for s in range(17)]
         for i in range(16):
             prob += Z[0][i] == Y[i]
@@ -90,14 +83,14 @@ def solve_n_rounds(num_rounds=8):
 
 if __name__ == "__main__":
     print("=" * 80)
-    print(" QUÉT CẬN DƯỚI TOÁN HỌC ACTIVE S-BOXES TỪ 1 ĐẾN 8 VÒNG (MILP / CBC)")
+    print("ACTIVE S-BOX LOWER BOUND SCAN (MILP/CBC)")
     print("=" * 80)
-    print(f"{'Cấu hình':<12} | {'Tổng Active':<12} | {'Phân bố từng vòng (R1 -> Rn)'}")
+    print(f"{'Config ':<12} | {'Nactive':<12} | {'R1 -> Rn'}")
     print("-" * 80)
 
     for n in range(1, 9):
         total, dist = solve_n_rounds(n)
         dist_str = " -> ".join(f"{c}" for c in dist)
-        print(f"{n} Vòng{'':<6} | {total:<12} | {dist_str}")
+        print(f"Round {n}{'':<6} | {total:<12} | {dist_str}")
 
     print("=" * 80)

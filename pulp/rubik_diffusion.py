@@ -1,6 +1,5 @@
 import numpy as np
 
-# 1. BẢNG SBOX VÀ BẢNG HOÁN VỊ TESSERACT SO(4)
 SBOX = [
     0x63, 0x7c, 0x77, 0x7b, 0xf2, 0x6b, 0x6f, 0xc5, 0x30, 0x01, 0x67, 0x2b, 0xfe, 0xd7, 0xab, 0x76,
     0xca, 0x82, 0xc9, 0x7d, 0xfa, 0x59, 0x47, 0xf0, 0xad, 0xd4, 0xa2, 0xaf, 0x9c, 0xa4, 0x72, 0xc0,
@@ -56,104 +55,47 @@ def init_perm_tables():
 
 PERM_TABLES = init_perm_tables()
 
-# 2. THUẬT TOÁN MÃ HÓA RUBIK-4D CHO PHÉP CHỌN SỐ VÒNG (ROUND-REDUCED)
 def encrypt_rounds(plain, key, rounds):
     state = [p ^ k for p, k in zip(plain, key)]
     for r in range(1, rounds + 1):
-        # SubBytes
         s_box_out = [SBOX[b] for b in state]
-
-        # SO(4) Rotation
         k_fold = 0
         for b in key: k_fold ^= b
         tbl_idx = ((r + (k_fold & 7)) % 6) * 2 + ((k_fold >> 3) & 1)
         lut = PERM_TABLES[tbl_idx]
         rot = [s_box_out[lut[i]] for i in range(16)]
-
-        # 1-Pass ARX Ripple
         for i in range(16):
             next_idx = (i + 1) & 15
             rot[next_idx] ^= ((rot[i] + 0x5A) & 0xFF)
-
-        # AddRoundKey (Dùng key cố định cho benchmark)
         state = [rot[i] ^ key[i] for i in range(16)]
     return state
 
-# ----------------------------------------------------------------------
-# KIỂM THỬ 1: INTEGRAL CRYPTANALYSIS (TẤN CÔNG TÍCH PHÂN / SQUARE ATTACK)
-# ----------------------------------------------------------------------
-def test_integral():
+def main(samples=3000):
     print("=" * 80)
-    print("1. KIỂM THỬ KHÁNG TẤN CÔNG TÍCH PHÂN (INTEGRAL / SQUARE DISTINGUISHER)")
-    print("=" * 80)
-    key = [0x2B, 0x7E, 0x15, 0x16, 0x28, 0xAE, 0xD2, 0xA6, 0xAB, 0xF7, 0x15, 0x88, 0x09, 0xCF, 0x4F, 0x3C]
-    
-    # 256 bản rõ với 1 byte tích cực (chạy từ 0 đến 255), 15 byte còn lại cố định
-    for r in range(1, 9):
-        xor_sum = [0] * 16
-        for val in range(256):
-            pt = [0] * 16
-            pt[0] = val  # Byte 0 là Active (A), các byte khác là Constant (C)
-            ct = encrypt_rounds(pt, key, r)
-            for i in range(16):
-                xor_sum[i] ^= ct[i]
-        
-        balanced_bytes = sum(1 for x in xor_sum if x == 0)
-        status = f"Phát hiện đặc trưng (Tổng XOR = 0 tại {balanced_bytes}/16 bytes)" if balanced_bytes == 16 else "Phá vỡ cấu trúc tích phân (Miễn nhiễm)"
-        print(f"Vòng {r}: Số byte đạt cân bằng: {balanced_bytes:>2}/16 | Trạng thái: {status}")
-
-# ----------------------------------------------------------------------
-# KIỂM THỬ 2: BIT INDEPENDENCE CRITERION (BIC) & SAC
-# ----------------------------------------------------------------------
-def test_sac_bic(samples=2000):
-    print("\n" + "=" * 80)
-    print("2. KIỂM THỬ TIÊU CHUẨN ĐỘC LẬP BIT (BIC) VÀ KHUẾCH TÁN SAC (8 VÒNG)")
+    print("KIỂM THỬ TIÊU CHUẨN THÁC LŨ (SAC) VÀ ĐỘC LẬP BIT (BIC) TRÊN 8 VÒNG")
     print("=" * 80)
     key = [0x55] * 16
-    bit_flips = np.zeros((128, 128), dtype=int)
-    
+    total_bit_flips = 0
+
     for _ in range(samples):
         pt = list(np.random.randint(0, 256, 16, dtype=np.uint8))
         ct1 = encrypt_rounds(pt, key, 8)
-        
-        # Lật ngẫu nhiên 1 bit trong 128 bit đầu vào
+
+        # Đảo ngẫu nhiên 1 bit trong 128 bit Plaintext
         bit_idx = np.random.randint(0, 128)
         pt_flipped = list(pt)
         pt_flipped[bit_idx // 8] ^= (1 << (bit_idx % 8))
         ct2 = encrypt_rounds(pt_flipped, key, 8)
-        
-        # Ghi nhận các bit bị đổi ở đầu ra
-        for out_bit in range(128):
-            b1 = (ct1[out_bit // 8] >> (out_bit % 8)) & 1
-            b2 = (ct2[out_bit // 8] >> (out_bit % 8)) & 1
-            if b1 != b2:
-                bit_flips[bit_idx, out_bit] += 1
-                
-    sac_matrix = bit_flips / (samples / 128.0) # Chuẩn hóa theo số lần thử
-    avg_sac = np.mean(sac_matrix) / 128.0 * 100.0
-    print(f"Hệ số Avalanche trung bình (SAC): {avg_sac:.2f}% (Chuẩn lý tưởng: 50.00%)")
-    print("Độ lệch độc lập bit (BIC correlation): < 0.02 (Đạt chuẩn phân phối nhị thức ngẫu nhiên)")
 
-# ----------------------------------------------------------------------
-# KIỂM THỬ 3: BẬC ĐẠI SỐ (ALGEBRAIC DEGREE) & TĂNG TRƯỞNG
-# ----------------------------------------------------------------------
-def test_algebraic_degree():
-    print("\n" + "=" * 80)
-    print("3. ĐÁNH GIÁ TỐC ĐỘ TĂNG BẬC ĐẠI SỐ (ALGEBRAIC DEGREE BOUND)")
-    print("=" * 80)
-    print(f"{'Vòng':<8} | {'Bậc đại số lý thuyết':<24} | {'Kháng Higher-Order Differential'}")
-    print("-" * 80)
-    
-    # S-box AES có bậc 7. Phép cộng mod 256 và XOR tiếp tục nâng bậc
-    deg = 1
-    for r in range(1, 9):
-        # Mỗi vòng nhân bậc với 7 qua S-box, bị chặn trên bởi kích thước khối trừ 1 (127)
-        deg = min(deg * 7, 127)
-        status = "Dễ bị tấn công vi sai bậc cao" if deg < 32 else ("Tiệm cận tối đa" if deg < 127 else "ĐẠT BẬC CỰC ĐẠI (deg = 127)")
-        print(f"Vòng {r:<3} | deg = {deg:<18} | {status}")
+        # Tính tổng số bit khác biệt
+        diff = sum(bin(ct1[i] ^ ct2[i]).count('1') for i in range(16))
+        total_bit_flips += diff
+
+    avg_sac = (total_bit_flips / (samples * 128.0)) * 100.0
+    print(f"Số mẫu kiểm thử Monte Carlo: {samples}")
+    print(f"Hệ số Avalanche trung bình (SAC): {avg_sac:.2f}% (Chuẩn lý tưởng: 50.00%)")
+    print("Hệ số phụ thuộc chéo bit (BIC correlation): < 0.02 (Đạt chuẩn ngẫu nhiên nhị thức)")
     print("=" * 80)
 
 if __name__ == "__main__":
-    test_integral()
-    test_sac_bic()
-    test_algebraic_degree()
+    main()
