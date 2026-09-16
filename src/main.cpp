@@ -237,7 +237,11 @@ int main() {
 
     static int bm_data_type = 1;
     static char bm_text[4096] = "Test Vector Plaintext.";
+<<<<<<< HEAD
     static char bm_filepath[512] = "C:\\Users\\ghaob\\Downloads\\ma_niessen_rubik.pdf";
+=======
+    static char bm_filepath[512] = "";
+>>>>>>> master
     static char bm_password[128] = "MasterPassword128BitKey";
     static int input_iters = 5000;
 

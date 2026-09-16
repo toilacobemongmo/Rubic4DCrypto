@@ -18,8 +18,20 @@ static inline int CountBitDifferences(const uint8_t* a, const uint8_t* b, size_t
 
 static void EncryptSingleBlock(AlgorithmType algo, const uint8_t plain[16], const uint8_t key[16], uint8_t cipher[16]) {
     if (algo == ALGO_RUBIK4D) {
+<<<<<<< HEAD
         uint8_t rkeys[13][16];
         rubik4d_init_tables();
+=======
+        // Khởi tạo bảng đúng 1 lần duy nhất
+        static bool tables_initialized = false;
+        if (!tables_initialized) {
+            rubik4d_init_tables();
+            tables_initialized = true;
+        }
+
+        // Khớp chuẩn xác mảng [7][16] theo file rubik4d.h
+        uint8_t rkeys[7][16];
+>>>>>>> master
         rubik4d_generate_round_keys(key, 16, rkeys);
         rubik4d_encrypt_block(plain, cipher, rkeys);
     } else if (algo == ALGO_AES128) {
