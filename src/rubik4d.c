@@ -133,36 +133,35 @@ void rubik4d_encrypt_block(const uint8_t in[16], uint8_t out[16], const uint8_t 
 // Hàm mã hóa khối 128-bit tốc độ cao
 void rubik4d_encrypt_block_fast(const rubik4d_ctx *ctx, const uint8_t in[16], uint8_t out[16]) {
     uint8_t state[16];
-    
-    // Pre-whitening
-    for (int i = 0; i < 16; i++) state[i] = in[i] ^ ctx->round_keys[0][i];
+    for (int i = 0; i < 16; i++) {
+        state[i] = in[i] ^ ctx->round_keys[0][i];
+    }
 
     for (int r = 1; r <= 8; r++) {
-        // 1. SubBytes (AES S-box)
-        for (int i = 0; i < 16; i++) state[i] = AES_SBOX[state[i]];
+        // 1. SubBytes
+        for (int i = 0; i < 16; i++) {
+            state[i] = AES_SBOX[state[i]];
+        }
 
-        // 2. SO(4) Hypercube Permutation (Mở phẳng từ LUT tiền tính)
+        // 2. SO(4) Hypercube Permutation
         const uint8_t* lut = ctx->perm_lut[r];
         uint8_t rot[16];
-        rot[0]  = state[lut[0]];  rot[1]  = state[lut[1]];
-        rot[2]  = state[lut[2]];  rot[3]  = state[lut[3]];
-        rot[4]  = state[lut[4]];  rot[5]  = state[lut[5]];
-        rot[6]  = state[lut[6]];  rot[7]  = state[lut[7]];
-        rot[8]  = state[lut[8]];  rot[9]  = state[lut[9]];
-        rot[10] = state[lut[10]]; rot[11] = state[lut[11]];
-        rot[12] = state[lut[12]]; rot[13] = state[lut[13]];
-        rot[14] = state[lut[14]]; rot[15] = state[lut[15]];
+        for (int i = 0; i < 16; i++) {
+            rot[i] = state[lut[i]];
+        }
 
-        // 3. Tầng ARX Ripple 32-bit (Khuếch tán Word-level cực nhanh)
+        // 3. Tầng ARX Ripple 32-bit
         uint32_t* w = (uint32_t*)rot;
         w[1] ^= ROTL32(w[0] + 0x5A5A5A5AU, 7);
         w[2] ^= ROTL32(w[1] + 0x5A5A5A5AU, 11);
         w[3] ^= ROTL32(w[2] + 0x5A5A5A5AU, 13);
         w[0] ^= ROTL32(w[3] + 0x5A5A5A5AU, 17);
 
-        for (int i = 0; i < 16; i++) state[i] = rot[i] ^ ctx->round_keys[r][i];
+        // 4. AddRoundKey
+        for (int i = 0; i < 16; i++) {
+            state[i] = rot[i] ^ ctx->round_keys[r][i];
+        }
     }
-
     memcpy(out, state, 16);
 }
 
@@ -171,23 +170,32 @@ void rubik4d_decrypt_block_fast(const rubik4d_ctx *ctx, const uint8_t in[16], ui
     memcpy(state, in, 16);
 
     for (int r = 8; r >= 1; r--) {
-        for (int i = 0; i < 16; i++) state[i] ^= ctx->round_keys[r][i];
+        uint8_t rot[16];
+        for (int i = 0; i < 16; i++) {
+            rot[i] = state[i] ^ ctx->round_keys[r][i];
+        }
 
-        uint32_t* w = (uint32_t*)state;
+        // Đảo ngược tầng ARX Ripple 32-bit
+        uint32_t* w = (uint32_t*)rot;
         w[0] ^= ROTL32(w[3] + 0x5A5A5A5AU, 17);
         w[3] ^= ROTL32(w[2] + 0x5A5A5A5AU, 13);
         w[2] ^= ROTL32(w[1] + 0x5A5A5A5AU, 11);
         w[1] ^= ROTL32(w[0] + 0x5A5A5A5AU, 7);
 
-        uint8_t unperm[16];
+        // Đảo ngược Permutation và Inverse S-Box
         const uint8_t* lut = ctx->perm_lut[r];
-        for (int i = 0; i < 16; i++) unperm[lut[i]] = state[i];
-
-        for (int i = 0; i < 16; i++) state[i] = AES_INV_SBOX[unperm[i]];
+        uint8_t temp[16];
+        for (int i = 0; i < 16; i++) {
+            temp[lut[i]] = rot[i];
+        }
+        for (int i = 0; i < 16; i++) {
+            state[i] = AES_INV_SBOX[temp[i]];
+        }
     }
 
-    // Post-whitening
-    for (int i = 0; i < 16; i++) out[i] = state[i] ^ ctx->round_keys[0][i];
+    for (int i = 0; i < 16; i++) {
+        out[i] = state[i] ^ ctx->round_keys[0][i];
+    }
 }
 
 size_t rubik4d_encrypt(const uint8_t *in, size_t in_len, uint8_t *out, 

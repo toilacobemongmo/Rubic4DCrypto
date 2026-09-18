@@ -36,10 +36,10 @@ def init_perm_tables():
 
 PERM_TABLES = init_perm_tables()
 
-def solve_n_rounds(num_rounds=8):
-    prob = pulp.LpProblem(f"Rubik4D_{num_rounds}R", pulp.LpMinimize)
+def solve_differential_n_rounds(num_rounds=8):
+    prob = pulp.LpProblem(f"Differential_Rubik4D_{num_rounds}R", pulp.LpMinimize)
 
-    X = [[pulp.LpVariable(f"X_{r}_{i}", cat=pulp.LpBinary) for i in range(16)] for r in range(num_rounds + 1)]
+    X = [[pulp.LpVariable(f"DX_{r}_{i}", cat=pulp.LpBinary) for i in range(16)] for r in range(num_rounds + 1)]
 
     active_sboxes = []
     for r in range(num_rounds):
@@ -51,17 +51,18 @@ def solve_n_rounds(num_rounds=8):
     for r in range(num_rounds):
         lut = PERM_TABLES[(r * 2) % 12]
 
-        Y = [pulp.LpVariable(f"Y_{r}_{i}", cat=pulp.LpBinary) for i in range(16)]
+        Y = [pulp.LpVariable(f"DY_{r}_{i}", cat=pulp.LpBinary) for i in range(16)]
         for i in range(16):
             prob += Y[i] == X[r][lut[i]]
 
-        Z = [[pulp.LpVariable(f"Z_{r}_{s}_{i}", cat=pulp.LpBinary) for i in range(16)] for s in range(17)]
+        Z = [[pulp.LpVariable(f"DZ_{r}_{s}_{i}", cat=pulp.LpBinary) for i in range(16)] for s in range(17)]
         for i in range(16):
             prob += Z[0][i] == Y[i]
 
         for s in range(16):
             curr_idx = s
             next_idx = (s + 1) & 15
+
             for i in range(16):
                 if i != next_idx:
                     prob += Z[s + 1][i] == Z[s][i]
@@ -79,18 +80,21 @@ def solve_n_rounds(num_rounds=8):
     if prob.status == pulp.LpStatusOptimal:
         counts = [int(sum(pulp.value(X[r][i]) for i in range(16))) for r in range(num_rounds)]
         return sum(counts), counts
-    return None
+    return None, None
 
 if __name__ == "__main__":
     print("=" * 80)
-    print("ACTIVE S-BOX LOWER BOUND SCAN (MILP/CBC)")
+    print(" ACTIVE S-BOX LOWER BOUND SCAN (DIFFERENTIAL CRYPTANALYSIS)")
     print("=" * 80)
-    print(f"{'Config ':<12} | {'Nactive':<12} | {'R1 -> Rn'}")
+    print(f"{'Config':<12} | {'Nactive':<12} | {'R1 -> Rn'}")
     print("-" * 80)
 
     for n in range(1, 9):
-        total, dist = solve_n_rounds(n)
-        dist_str = " -> ".join(f"{c}" for c in dist)
-        print(f"Round {n}{'':<6} | {total:<12} | {dist_str}")
+        total, dist = solve_differential_n_rounds(n)
+        if total is not None:
+            dist_str = " -> ".join(f"{c}" for c in dist)
+            print(f"{n} Round{'':<6} | {total:<12} | {dist_str}")
+        else:
+            print(f"{n} Round{'':<6} | {'INFEASIBLE':<12} | -")
 
     print("=" * 80)

@@ -1,0 +1,13 @@
+fsutil file createnew test_1MB.bin 1048576         # 1 MB
+fsutil file createnew test_2MB.bin 2097152         # 2 MB
+fsutil file createnew test_5MB.bin 5242880         # 5 MB
+fsutil file createnew test_10MB.bin 10485760       # 10 MB
+fsutil file createnew test_20MB.bin 20971520       # 20 MB
+fsutil file createnew test_50MB.bin 52428800       # 50 MB
+fsutil file createnew test_100MB.bin 104857600     # 100 MB
+fsutil file createnew test_200MB.bin 209715200     # 200 MB
+fsutil file createnew test_500MB.bin 524288000     # 500 MB
+fsutil file createnew test_1GB.bin 1073741824      # 1 GB
+fsutil file createnew test_2GB.bin 2147483648      # 2 GB
+fsutil file createnew test_5GB.bin 5368709120      # 5 GB
+fsutil file createnew test_10GB.bin 10737418240    # 10 GB
