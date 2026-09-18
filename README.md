@@ -24,19 +24,19 @@
 The cipher processes a 128-bit block through **6 rounds** using the following pipeline:
 
 ```text
-[Plaintext 128-bit] ──> ⊕ AddRoundKey(0)
-                             │
-        ┌─────────────────────┴────────────────────┐
-        │               ROUND (1 - 6)              │
-        │                                          │
-        │  1. Non-linear S-Box (AES Substitution)  │
-        │  2. 4D Tesseract Rotation (SO(4))        │
-        │  3. Ripple-Carry Diffusion (ARX)         │
-        │  4. Subkey Mixing (⊕ AddRoundKey)       │
-        └─────────────────────┬────────────────────┘
-                             │
-                             ▼
-                    [Ciphertext 128-bit]
+            [Plaintext 128-bit] 
+                   │
+           ▼ ⊕ AddRoundKey(0)
+┌──────────────────────────────────────────┐
+│              ROUNDS (1 - 8)              │
+│  1. AES S-Box Substitution               │
+│  2. SO(4) Tesseract Rotation             │
+│  3. ARX Ripple-Carry Diffusion           │
+│  4. AddRoundKey Subkey Mixing            │
+└──────────────────┬───────────────────────┘
+                   │
+                   ▼
+            [Ciphertext 128-bit]
 ```
 
 **Core Security Features:**
