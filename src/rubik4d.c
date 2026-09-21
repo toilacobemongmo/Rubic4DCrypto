@@ -44,7 +44,7 @@ static const uint8_t AES_INV_SBOX[256] = {
     0x17,0x2b,0x04,0x7e,0xba,0x77,0xd6,0x26,0xe1,0x69,0x14,0x63,0x55,0x21,0x0c,0x7d
 };
 
-// 12 Mặt hoán vị 16 phần tử
+// 12 PERMUTATION
 static const uint8_t PERM_TABLES[12][16] = {
     { 1, 3, 0, 2,  5, 7, 4, 6,  9,11, 8,10, 13,15,12,14}, // XY
     { 2, 0, 3, 1,  6, 4, 7, 5, 10, 8,11, 9, 14,12,15,13},
