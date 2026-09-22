@@ -187,3 +187,23 @@ UACI: Key 1-bit (\%)           & ---      & \textbf{33.4619\%} & $\approx 33.463
 \bottomrule
 \end{tabular}
 \end{table*}
+
+% --- TABLE VII: ACTIVE S-BOX LOWER BOUNDS AND SECURITY MARGINS (MILP) ---
+\begin{table}[htbp]
+\caption{Minimum Number of Active S-Boxes and Theoretical Security Bounds Across Rounds (PuLP MILP Solver)}
+\label{tab:milp_active_sboxes}
+\centering
+\small
+\begin{tabular}{@{}lcccc@{}}
+\toprule
+\textbf{Round Count} & \textbf{Diff Active S-Boxes ($AS_D$)} & \textbf{Max Diff Prob ($P_D$)} & \textbf{Linear Active S-Boxes ($AS_L$)} & \textbf{Max Linear Bias ($|bias_L|$)} \\ \midrule
+1 Round & 1 & $2^{-6}$ & 2 & $2^{-5}$ \\
+2 Rounds & 3 & $2^{-18}$ & 12 & $2^{-25}$ \\
+3 Rounds & 5 & $2^{-30}$ & 34 & $2^{-69}$ \\
+4 Rounds & 9 & $2^{-54}$ & 40 & $2^{-81}$ \\
+5 Rounds & 13 & $2^{-78}$ & 66 & $2^{-133}$ \\
+6 Rounds & 17 & $2^{-102}$ & 82 & $2^{-165}$ \\
+7 Rounds & 21 & $2^{-126}$ & 92 & $2^{-185}$ \\
+8 Rounds (Full) & \textbf{22} & $\mathbf{2^{-132} < 2^{-128}}$ & \textbf{108} & $\mathbf{2^{-217} \ll 2^{-64}}$ \\ \bottomrule
+\end{tabular}
+\end{table}

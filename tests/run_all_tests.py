@@ -57,7 +57,16 @@ def main():
     raw_bench = os.path.join(reports_dir, "raw_software_benchmark.txt")
     run_cmd(f'"{os.path.join(bin_dir, "test_benchmark.exe")}" > "{raw_bench}"', cwd=root_dir)
 
-    # 6. Generate LaTeX Tables and Markdown Report
+    # 6. Run Test 5: PuLP MILP Mathematical Cryptanalysis Proofs
+    print("\n--- [Step 6/6] Running PuLP MILP Active S-Box & Cryptanalysis Proofs ---")
+    raw_pulp = os.path.join(reports_dir, "raw_pulp_milp.txt")
+    run_cmd(f'python -X utf8 pulp/rubik_differential.py > "{raw_pulp}"', cwd=root_dir)
+    run_cmd(f'python -X utf8 pulp/rubik_linear.py >> "{raw_pulp}"', cwd=root_dir)
+    run_cmd(f'python -X utf8 pulp/rubik_integral.py >> "{raw_pulp}"', cwd=root_dir)
+    run_cmd(f'python -X utf8 pulp/rubik_algebraic.py >> "{raw_pulp}"', cwd=root_dir)
+    run_cmd(f'python -X utf8 pulp/rubik_diffusion.py >> "{raw_pulp}"', cwd=root_dir)
+
+    # 7. Generate LaTeX Tables and Markdown Report
     print("\n--- Generating Consolidated Reports & LaTeX Tables into reports/ ---")
     run_cmd(f"python tests/generate_report.py", cwd=root_dir)
 
