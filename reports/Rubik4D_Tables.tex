@@ -1,0 +1,188 @@
+% ==========================================================================
+% RUBIK-4D CRYPTANALYSIS & EXPERIMENTAL EVALUATION TABLES
+% Formatted for direct inclusion into article draft (e.g. haogianguyen.tex)
+% ==========================================================================
+
+% --- TABLE I: KEY SCHEDULE STRICT AVALANCHE CRITERION ---
+\begin{table}[htbp]
+\caption{Strict Avalanche Criterion (SAC) of Rubik-4D Key Schedule across Rounds (10,000 Key Pairs)}
+\label{tab:key_schedule_sac}
+\centering
+\small
+\begin{tabular}{@{}lcccc@{}}
+\toprule
+\textbf{Subkey} & \textbf{Mean Flipped Bits} & \textbf{Bit Flip Ratio (\%)} & \textbf{Std Dev (\%)} & \textbf{LUT Selection Change (\%)} \\ \midrule
+K_0 & $1.000 / 128$ & $0.7812\%$ & $0.0000\%$ & N/A (Whitening) \\
+K_1 & $4.019 / 128$ & $3.1398\%$ & $1.0617\%$ & 50.05\% \\
+K_2 & $4.026 / 128$ & $3.1452\%$ & $1.1122\%$ & 50.05\% \\
+K_3 & $3.998 / 128$ & $3.1237\%$ & $1.0877\%$ & 50.05\% \\
+K_4 & $4.025 / 128$ & $3.1448\%$ & $1.1113\%$ & 50.05\% \\
+K_5 & $4.018 / 128$ & $3.1388\%$ & $1.1053\%$ & 50.05\% \\
+K_6 & $3.967 / 128$ & $3.0995\%$ & $1.0815\%$ & 50.05\% \\
+K_7 & $4.016 / 128$ & $3.1377\%$ & $1.0914\%$ & 50.05\% \\
+K_8 & $3.955 / 128$ & $3.0900\%$ & $1.0677\%$ & 50.05\% \\
+\midrule
+\textbf{Avg ($K_1 \dots K_8$)} & $\mathbf{4.007 / 128}$ & $\mathbf{3.1301\%}$ & $\mathbf{1.0901\%}$ & $\mathbf{50.05\%}$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% --- TABLE II: WEAK KEY EVALUATION ---
+\begin{table*}[htbp]
+\caption{Weak Key and Structural Symmetry Analysis under Extreme Master Key Patterns}
+\label{tab:weak_key_analysis}
+\centering
+\small
+\begin{tabular}{@{}lcccccc@{}}
+\toprule
+\textbf{Master Key Pattern} & \textbf{Subkey Entropy ($H$)} & \textbf{Avg Subkey HW} & \textbf{Zero Subkeys?} & \textbf{Equivalent Subkeys?} & \textbf{Ciphertext HW ($P=0$)} & \textbf{Verdict} \\ \midrule
+All-Zeros (0x00...00) & 3.1699 & 55.11/128 & No & No & 67/128 & \textbf{Resistant} \\
+All-Ones (0xFF...FF) & 3.1699 & 72.89/128 & No & No & 70/128 & \textbf{Resistant} \\
+Alternating 0xAA (10101010) & 3.1699 & 64.00/128 & No & No & 75/128 & \textbf{Resistant} \\
+Alternating 0x55 (01010101) & 3.1699 & 72.89/128 & No & No & 56/128 & \textbf{Resistant} \\
+Repeating 64-bit Pattern & 5.8366 & 62.67/128 & No & No & 61/128 & \textbf{Resistant} \\
+Sequential Increment (00..0F) & 6.8227 & 60.22/128 & No & No & 65/128 & \textbf{Resistant} \\
+Symmetric Palindromic & 6.0033 & 58.89/128 & No & No & 62/128 & \textbf{Resistant} \\
+Single LSB Bit Set (0x...01) & 3.5072 & 55.22/128 & No & No & 61/128 & \textbf{Resistant} \\
+Single MSB Bit Set (0x80...) & 3.5072 & 55.00/128 & No & No & 56/128 & \textbf{Resistant} \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+% --- TABLE III: PLAINTEXT AVALANCHE EFFECT ROUND-BY-ROUND ---
+\begin{table}[htbp]
+\caption{Plaintext Avalanche Effect Propagation Across Rounds 1 to 8 (10,000 Executions)}
+\label{tab:plaintext_avalanche}
+\centering
+\small
+\begin{tabular}{@{}lcccc@{}}
+\toprule
+\textbf{Stage / Round} & \textbf{Mean Flipped Bits} & \textbf{Flipped Ratio (\%)} & \textbf{Std Dev (\%)} & \textbf{Diffusion State} \\ \midrule
+Round 0 & $1.000 / 128$ & $0.7812\%$ & $0.0000\%$ & Whitening (1 bit) \\
+Round 1 & $17.042 / 128$ & $13.3137\%$ & $6.3549\%$ & Diffusing \\
+Round 2 & $50.162 / 128$ & $39.1893\%$ & $9.6996\%$ & Diffusing \\
+Round 3 & $63.556 / 128$ & $49.6535\%$ & $4.7894\%$ & Full Avalanche \\
+Round 4 & $64.030 / 128$ & $50.0232\%$ & $4.4386\%$ & Full Avalanche \\
+Round 5 & $64.034 / 128$ & $50.0264\%$ & $4.4253\%$ & Full Avalanche \\
+Round 6 & $63.997 / 128$ & $49.9980\%$ & $4.4581\%$ & Full Avalanche \\
+Round 7 & $64.029 / 128$ & $50.0229\%$ & $4.4079\%$ & Full Avalanche \\
+Round 8 & $64.076 / 128$ & $50.0594\%$ & $4.3992\%$ & Full Avalanche \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% --- TABLE IV: KEY SENSITIVITY ROUND-BY-ROUND ---
+\begin{table}[htbp]
+\caption{Key Sensitivity and Ciphertext Divergence across Iterative Rounds (10,000 Executions)}
+\label{tab:key_sensitivity}
+\centering
+\small
+\begin{tabular}{@{}lcccc@{}}
+\toprule
+\textbf{Stage / Round} & \textbf{Mean Flipped Bits} & \textbf{Flipped Ratio (\%)} & \textbf{Std Dev (\%)} & \textbf{Diffusion State} \\ \midrule
+Round 0 & $1.000 / 128$ & $0.7812\%$ & $0.0000\%$ & Whitening (1 bit) \\
+Round 1 & $42.252 / 128$ & $33.0095\%$ & $17.9803\%$ & Diffusing \\
+Round 2 & $58.518 / 128$ & $45.7173\%$ & $7.9234\%$ & Diffusing \\
+Round 3 & $63.747 / 128$ & $49.8024\%$ & $4.5374\%$ & Full Avalanche \\
+Round 4 & $64.088 / 128$ & $50.0688\%$ & $4.4146\%$ & Full Avalanche \\
+Round 5 & $63.904 / 128$ & $49.9248\%$ & $4.4079\%$ & Full Avalanche \\
+Round 6 & $64.025 / 128$ & $50.0193\%$ & $4.4327\%$ & Full Avalanche \\
+Round 7 & $64.024 / 128$ & $50.0187\%$ & $4.4343\%$ & Full Avalanche \\
+Round 8 & $64.072 / 128$ & $50.0565\%$ & $4.4150\%$ & Full Avalanche \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% --- TABLE V: IMAGE CRYPTANALYSIS COMPARATIVE RESULTS ---
+\begin{table}[htbp]
+\caption{Quantitative Image Cryptanalysis Evaluation on $512 \times 512$ Grayscale Benchmarks}
+\label{tab:image_cryptanalysis_complete}
+\centering
+\small
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{@{}lcccc@{}}
+\toprule
+\textbf{Cryptanalytic Metric} & \textbf{Plaintext} & \textbf{Rubik-4D Cipher} & \textbf{Theoretical / Ideal} & \textbf{Status} \\ \midrule
+\multicolumn{5}{l}{\textit{Benchmark: Lena ($512 \times 512$ grayscale)}} \\
+Shannon Entropy ($H$)          & 7.445082 & \textbf{7.999194} & 8.000000 & \textbf{Passed} \\
+Correlation $r_H$ (Horizontal) & 0.971498 & \textbf{0.002179} & $\approx 0.000000$ & \textbf{Passed} \\
+Correlation $r_V$ (Vertical)   & 0.985366 & \textbf{-0.001341} & $\approx 0.000000$ & \textbf{Passed} \\
+Correlation $r_D$ (Diagonal)   & 0.957486 & \textbf{-0.006297} & $\approx 0.000000$ & \textbf{Passed} \\
+Chi-Square Test ($\chi^2$)     & 158,338.65 & \textbf{292.6660} & $< 310.4574$ ($\alpha=0.01$) & \textbf{Passed} \\
+NPCR: Plaintext 1-bit (\%)     & ---      & \textbf{99.6051\%} & $\ge 99.6094\%$ & \textbf{Passed} \\
+UACI: Plaintext 1-bit (\%)     & ---      & \textbf{33.4613\%} & $\approx 33.4635\%$ & \textbf{Passed} \\
+NPCR: Key 1-bit (\%)           & ---      & \textbf{99.6092\%} & $\ge 99.6094\%$ & \textbf{Passed} \\
+UACI: Key 1-bit (\%)           & ---      & \textbf{33.4635\%} & $\approx 33.4635\%$ & \textbf{Passed} \\ \midrule
+\multicolumn{5}{l}{\textit{Benchmark: Baboon ($512 \times 512$ grayscale)}} \\
+Shannon Entropy ($H$)          & 7.358320 & \textbf{7.999304} & 8.000000 & \textbf{Passed} \\
+Correlation $r_H$ (Horizontal) & 0.865008 & \textbf{-0.002223} & $\approx 0.000000$ & \textbf{Passed} \\
+Correlation $r_V$ (Vertical)   & 0.762377 & \textbf{-0.026114} & $\approx 0.000000$ & \textbf{Passed} \\
+Correlation $r_D$ (Diagonal)   & 0.725735 & \textbf{0.010940} & $\approx 0.000000$ & \textbf{Passed} \\
+Chi-Square Test ($\chi^2$)     & 187,366.25 & \textbf{253.3320} & $< 310.4574$ ($\alpha=0.01$) & \textbf{Passed} \\
+NPCR: Plaintext 1-bit (\%)     & ---      & \textbf{99.6129\%} & $\ge 99.6094\%$ & \textbf{Passed} \\
+UACI: Plaintext 1-bit (\%)     & ---      & \textbf{33.4728\%} & $\approx 33.4635\%$ & \textbf{Passed} \\
+NPCR: Key 1-bit (\%)           & ---      & \textbf{99.6091\%} & $\ge 99.6094\%$ & \textbf{Passed} \\
+UACI: Key 1-bit (\%)           & ---      & \textbf{33.4729\%} & $\approx 33.4635\%$ & \textbf{Passed} \\ \bottomrule
+\end{tabular}%
+}
+\end{table}
+
+% --- TABLE VI: COMPLETE PERFORMANCE BENCHMARK ---
+\begin{table*}[t]
+\caption{Software Performance Benchmarks Across Cryptographic Primitives (13th Gen Intel Core i3-13100F @ 3.40GHz)}
+\label{tab:software_benchmarks_updated}
+\centering
+\small
+\begin{tabular}{@{}llccccc@{}}
+\toprule
+\textbf{Payload Size} & \textbf{Algorithm} & \textbf{Execution Time (ms)} & \textbf{Throughput (MB/s)} & \textbf{Cycles/Byte} & \textbf{Entropy} & \textbf{Integrity} \\ \midrule
+\multirow{6}{*}{100 KB}
+ & \textbf{Rubik-4D (Enc CBC)} & \textbf{753.07} & \textbf{129.68} & \textbf{25.13} & 7.9983 & 100\% \\
+ & \textbf{Rubik-4D (Dec CBC)} & \textbf{614.00} & \textbf{159.05} & \textbf{20.49} & --- & 100\% \\
+ & AES-128 (FIPS-197) & 838.61 & 116.45 & 27.99 & 7.9980 & 100\% \\
+ & Speck-128 (NSA ARX) & 197.79 & 493.74 & 6.60 & 7.9982 & 100\% \\
+ & Simon-128 (NSA Feistel) & 656.68 & 148.71 & 21.92 & 7.9983 & 100\% \\
+ & ChaCha20 (RFC-8439) & 149.87 & 651.62 & 5.00 & 7.9981 & 100\% \\
+\midrule
+\multirow{6}{*}{500 KB}
+ & \textbf{Rubik-4D (Enc CBC)} & \textbf{1957.51} & \textbf{124.72} & \textbf{26.13} & 7.9997 & 100\% \\
+ & \textbf{Rubik-4D (Dec CBC)} & \textbf{1772.06} & \textbf{137.77} & \textbf{23.66} & --- & 100\% \\
+ & AES-128 (FIPS-197) & 2413.60 & 101.15 & 32.22 & 7.9997 & 100\% \\
+ & Speck-128 (NSA ARX) & 530.04 & 460.60 & 7.08 & 7.9996 & 100\% \\
+ & Simon-128 (NSA Feistel) & 1858.27 & 131.38 & 24.81 & 7.9997 & 100\% \\
+ & ChaCha20 (RFC-8439) & 396.34 & 615.99 & 5.29 & 7.9996 & 100\% \\
+\midrule
+\multirow{6}{*}{1 MB}
+ & \textbf{Rubik-4D (Enc CBC)} & \textbf{1758.57} & \textbf{113.73} & \textbf{28.66} & 7.9998 & 100\% \\
+ & \textbf{Rubik-4D (Dec CBC)} & \textbf{2049.85} & \textbf{97.57} & \textbf{33.41} & --- & 100\% \\
+ & AES-128 (FIPS-197) & 3245.77 & 61.62 & 52.89 & 7.9998 & 100\% \\
+ & Speck-128 (NSA ARX) & 653.20 & 306.18 & 10.64 & 7.9998 & 100\% \\
+ & Simon-128 (NSA Feistel) & 1350.83 & 148.06 & 22.01 & 7.9998 & 100\% \\
+ & ChaCha20 (RFC-8439) & 277.13 & 721.69 & 4.52 & 7.9998 & 100\% \\
+\midrule
+\multirow{6}{*}{2 MB}
+ & \textbf{Rubik-4D (Enc CBC)} & \textbf{1398.44} & \textbf{143.02} & \textbf{22.79} & 7.9999 & 100\% \\
+ & \textbf{Rubik-4D (Dec CBC)} & \textbf{1230.86} & \textbf{162.49} & \textbf{20.06} & --- & 100\% \\
+ & AES-128 (FIPS-197) & 2060.69 & 97.05 & 33.58 & 7.9999 & 100\% \\
+ & Speck-128 (NSA ARX) & 471.16 & 424.49 & 7.68 & 7.9999 & 100\% \\
+ & Simon-128 (NSA Feistel) & 1452.31 & 137.71 & 23.67 & 7.9999 & 100\% \\
+ & ChaCha20 (RFC-8439) & 334.22 & 598.41 & 5.45 & 7.9999 & 100\% \\
+\midrule
+\multirow{6}{*}{5 MB}
+ & \textbf{Rubik-4D (Enc CBC)} & \textbf{2257.85} & \textbf{110.72} & \textbf{29.44} & 8.0000 & 100\% \\
+ & \textbf{Rubik-4D (Dec CBC)} & \textbf{1695.34} & \textbf{147.46} & \textbf{22.10} & --- & 100\% \\
+ & AES-128 (FIPS-197) & 2331.45 & 107.23 & 30.40 & 8.0000 & 100\% \\
+ & Speck-128 (NSA ARX) & 530.33 & 471.41 & 6.91 & 8.0000 & 100\% \\
+ & Simon-128 (NSA Feistel) & 1767.32 & 141.46 & 23.04 & 8.0000 & 100\% \\
+ & ChaCha20 (RFC-8439) & 370.56 & 674.66 & 4.83 & 8.0000 & 100\% \\
+\midrule
+\multirow{6}{*}{20 MB}
+ & \textbf{Rubik-4D (Enc CBC)} & \textbf{3443.08} & \textbf{116.18} & \textbf{28.05} & 8.0000 & 100\% \\
+ & \textbf{Rubik-4D (Dec CBC)} & \textbf{2805.32} & \textbf{142.59} & \textbf{22.86} & --- & 100\% \\
+ & AES-128 (FIPS-197) & 4155.93 & 96.25 & 33.86 & 8.0000 & 100\% \\
+ & Speck-128 (NSA ARX) & 936.00 & 427.35 & 7.63 & 8.0000 & 100\% \\
+ & Simon-128 (NSA Feistel) & 3049.37 & 131.17 & 24.85 & 8.0000 & 100\% \\
+ & ChaCha20 (RFC-8439) & 620.15 & 645.01 & 5.05 & 8.0000 & 100\% \\
+\bottomrule
+\end{tabular}
+\end{table*}

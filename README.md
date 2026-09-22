@@ -211,6 +211,26 @@ python tests/image_cryptanalysis.py cipher_lena.bin -p lena512.png --cipher2 cip
 
 *Output Figure*: High-resolution figure is automatically exported to `image_cryptanalysis_result.png` (300 DPI).
 
+---
+
+### Step 4.5: Comprehensive Automated Cryptanalysis Battery & Reports
+
+In addition to individual scripts, Rubik-4D provides an end-to-end automated cryptanalysis and benchmarking suite covering:
+1. **Key Schedule SAC & Weak Key Analysis:** Strict Avalanche Criterion across rounds $K_0 \dots K_8$ over 10,000 key pairs, plus exhaustive resistance tests on 9 extreme weak key patterns (all-zero, all-one, alternating, repeating, palindromic).
+2. **Plaintext Avalanche & Key Sensitivity:** Round-by-round bit flip tracking ($r = 1 \dots 8$) across 10,000 samples, reaching the full avalanche threshold ($\approx 50\%$) within only 3 rounds.
+3. **Multimedia Image Cryptanalysis:** Information entropy, 3D adjacent pixel correlations ($r_H, r_V, r_D$), $\chi^2$ histogram goodness-of-fit, and NPCR/UACI under both 1-bit plaintext and 1-bit key modifications on Lena & Baboon $512 \times 512$ benchmarks.
+4. **Hardware-Accurate Software Performance:** Throughput (MB/s) and machine cycles per byte (cpb via `__rdtsc()`) benchmarked against AES-128, Speck-128, Simon-128, and ChaCha20 across payloads from 100 KB to 20 MB.
+
+#### Run the Entire Cryptanalysis Battery in One Command:
+```bash
+python tests/run_all_tests.py
+```
+This automatically compiles test binaries into `tests/bin/`, executes all evaluations, and outputs all reports, LaTeX publication tables, and 300 DPI figures into the dedicated [`reports/`](reports/) directory:
+* [`reports/Rubik4D_Cryptanalysis_Report.md`](reports/Rubik4D_Cryptanalysis_Report.md): Complete Markdown evaluation report.
+* [`reports/Rubik4D_Tables.tex`](reports/Rubik4D_Tables.tex): Ready-to-paste publication-quality LaTeX tables matching IEEE/academic conference styles.
+* [`reports/Lena_cryptanalysis_eval.png`](reports/Lena_cryptanalysis_eval.png) & [`reports/Baboon_cryptanalysis_eval.png`](reports/Baboon_cryptanalysis_eval.png): Side-by-side original/encrypted visual noise and histogram comparisons.
+* [`reports/raw_*.txt`](reports/): Verifiable raw execution terminal logs.
+
 ## 🚀 5. Quick Start & Benchmark GUI
 
 ### 5.1. Clone Repository
