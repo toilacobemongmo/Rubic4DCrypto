@@ -95,7 +95,7 @@ To decisively resolve these drawbacks, \textbf{in this work, the authors propose
 \begin{itemize}
     \item \textbf{High-Dimensional Lie Group Geometry ($SO(4)$):} Rubik-4D projects the 16 state bytes onto the 16 discrete vertices of a 4D hypercube ($2 \times 2 \times 2 \times 2$ Tesseract). Transformations are governed by orthogonal rotations within the special orthogonal Lie group $SO(4)$, exploiting double-rotation properties to disperse relationships across four spatial dimensions concurrently without invariant rotation axes.
     \item \textbf{Rigorous SPN-ARX Fusion:} The cipher seamlessly combines non-linear AES S-boxes over $\text{GF}(2^8)$ with word-level 32-bit Addition-Rotation-XOR (ARX) carry-ripple diffusion, establishing full inter-byte diffusion in only 8 rounds.
-    \item \textbf{Provable Security and Rigorous Standardization:} Rubik-4D provides the first MILP-proven lower bounds for a Rubik-inspired cipher ($P_{\text{diff}} \le 2^{-132}$ and $N_D \approx 2^{434}$), supported by full empirical validations across 1,000 sets of NIST SP 800-22 and 50,000 sets of GM/T 0005-2021.
+    \item \textbf{Provable Security and Rigorous Standardization:} Rubik-4D provides the first MILP-proven lower bounds for a Rubik-inspired cipher ($P_{\text{diff}} \le 2^{-132}$ and $N_D \approx 2^{434}$), supported by full empirical validations across 1,000 sets of NIST SP 800-22 and 10,000 samples of GM/T 0005-2021.
 \end{itemize}
 
 Table~\ref{tab:rubik_comparison} provides a comprehensive qualitative and structural comparison between conventional Rubik-based cryptographic designs and the proposed Rubik-4D cipher.
