@@ -67,7 +67,7 @@ The growth of edge devices and high-speed networks requires block ciphers that c
     \item \textbf{Gradual Carry Propagation in Pure ARX Ciphers:} Lightweight ARX ciphers, including Simon and Speck \cite{beaulieu2015simon}, do not use S-boxes in order to save memory. However, because data spreads slowly through modular addition, these designs need many rounds (32 rounds in Speck-128 and 68 rounds in Simon-128) to reach sufficient security margins.
 \end{enumerate}
 
-To overcome these issues, this paper introduces \textbf{Rubik-4D}, a 128-bit block cipher that combines S-box substitution over $\text{GF}(2^8)$ with spatial permutations based on 4D hypercube geometry and word-level ARX steps. By placing the 16 bytes of data onto the corners of a 4D Tesseract, the cipher mixes data using orthogonal rotations from the $SO(4)$ group. An additional 32-bit modular addition layer spreads data quickly across words within only 8 rounds, achieving a software speed of over $151$~MB/s.
+To overcome these issues, this paper introduces Rubik-4D, a 128-bit block cipher that combines S-box substitution over $\text{GF}(2^8)$ with spatial permutations based on 4D hypercube geometry and word-level ARX steps. By placing the 16 bytes of data onto the corners of a 4D Tesseract, the cipher mixes data using orthogonal rotations from the $SO(4)$ group. An additional 32-bit modular addition layer spreads data quickly across words within only 8 rounds, achieving a software speed of over $151$~MB/s.
 
 The main contributions of this work include:
 \begin{itemize}
@@ -91,7 +91,7 @@ Despite their visual scrambling efficacy for digital images, prior Rubik-inspire
     \item \textbf{High Latency and Platform Dependency:} Relying on floating-point chaotic calculations and complex multidimensional coordinate transformations incurs excessive latency, precluding efficient software execution in high-throughput environments and introducing precision errors across hardware platforms.
 \end{enumerate}
 
-To decisively resolve these drawbacks, \textbf{in this work, the authors propose Rubik-4D}, an entirely novel, formally verified 128-bit symmetric block cipher. Rather than iteratively adapting legacy 3D pixel-shuffling heuristics, Rubik-4D introduces a foundational paradigm shift:
+To decisively resolve these drawbacks, we propose Rubik-4D, an entirely novel, formally verified 128-bit symmetric block cipher. Rather than iteratively adapting legacy 3D pixel-shuffling heuristics, Rubik-4D introduces a foundational paradigm shift:
 \begin{itemize}
     \item \textbf{High-Dimensional Lie Group Geometry ($SO(4)$):} Rubik-4D projects the 16 state bytes onto the 16 discrete vertices of a 4D hypercube ($2 \times 2 \times 2 \times 2$ Tesseract). Transformations are governed by orthogonal rotations within the special orthogonal Lie group $SO(4)$, exploiting double-rotation properties to disperse relationships across four spatial dimensions concurrently without invariant rotation axes.
     \item \textbf{Rigorous SPN-ARX Fusion:} The cipher seamlessly combines non-linear AES S-boxes over $\text{GF}(2^8)$ with word-level 32-bit Addition-Rotation-XOR (ARX) carry-ripple diffusion, establishing full inter-byte diffusion in only 8 rounds.
@@ -109,13 +109,13 @@ Table~\ref{tab:rubik_comparison} provides a comprehensive qualitative and struct
 \begin{tabular}{@{}lcccc@{}}
 \toprule
 \textbf{Architectural Metric} & \textbf{Diaconu (2008) \cite{diaconu2008}} & \textbf{Lin et al. (2010) \cite{lin2010rubik}} & \textbf{Huang et al. (2019) \cite{huang2019rubik}} & \textbf{Rubik-4D (Proposed)} \\ \midrule
-Geometric Dimensionality & 3D Spatial ($3 \times 3 \times 3$) & 3D Spatial ($3 \times 3 \times 3$) & 3D Spatial ($8 \times 8 \times 8$) & \textbf{4D Hypercube Tesseract ($2 \times 2 \times 2 \times 2$)} \\
-Mathematical Lie Group & Discrete Face Cycles & Discrete Face Cycles & Discrete Face Cycles & \textbf{Special Orthogonal Group $SO(4)$} \\
-Non-linear Substitution Layer & None (Permutation Only) & Chaotic Logistic Map & 1D Tent Map & \textbf{AES S-Box over $\text{GF}(2^8)$ ($\delta = 4$)} \\
-Inter-word Diffusion Layer & Heuristic Bit-shuffling & Modular Addition & XOR-Sum Ripple & \textbf{32-bit ARX Modular Carry Diffusion} \\
-Automated MILP Security Bounds & None & None & None & \textbf{Proven ($P_{\text{diff}} \le 2^{-132}$, $N_D \approx 2^{434}$)} \\
-Hardware Precision Dependency & Floating-Point & Floating-Point & Floating-Point & \textbf{Integer-Only ($O(1)$ LUT, Zero Precision Drift)} \\
-Standard Randomness Validation & Empirical Visual Only & Visual + Entropy & NIST SP 800-22 (Subset) & \textbf{NIST SP 800-22 (187/188) + GM/T 0005 (17/18$^\dagger$)} \\ \bottomrule
+Geometric Dimensionality & 3D Spatial ($3 \times 3 \times 3$) & 3D Spatial ($3 \times 3 \times 3$) & 3D Spatial ($8 \times 8 \times 8$) & 4D Hypercube Tesseract ($2 \times 2 \times 2 \times 2$) \\
+Mathematical Lie Group & Discrete Face Cycles & Discrete Face Cycles & Discrete Face Cycles & Special Orthogonal Group $SO(4)$ \\
+Non-linear Substitution Layer & None (Permutation Only) & Chaotic Logistic Map & 1D Tent Map & AES S-Box over $\text{GF}(2^8)$ ($\delta = 4$) \\
+Inter-word Diffusion Layer & Heuristic Bit-shuffling & Modular Addition & XOR-Sum Ripple & 32-bit ARX Modular Carry Diffusion \\
+Automated MILP Security Bounds & None & None & None & Proven ($P_{\text{diff}} \le 2^{-132}$, $N_D \approx 2^{434}$) \\
+Hardware Precision Dependency & Floating-Point & Floating-Point & Floating-Point & Integer-Only ($O(1)$ LUT, Zero Precision Drift) \\
+Standard Randomness Validation & Empirical Visual Only & Visual + Entropy & NIST SP 800-22 (Subset) & NIST SP 800-22 (187/188) + GM/T 0005 (17/18$^\dagger$) \\ \bottomrule
 \end{tabular}%
 }
 \end{table*}
@@ -440,7 +440,7 @@ Round 4 & 9  & $2 \rightarrow 3 \rightarrow 1 \rightarrow 3$ & $2^{-54}$ \\
 Round 5 & 13 & $2 \rightarrow 5 \rightarrow 3 \rightarrow 2 \rightarrow 1$ & $2^{-78}$ \\
 Round 6 & 17 & $4 \rightarrow 4 \rightarrow 2 \rightarrow 4 \rightarrow 2 \rightarrow 1$ & $2^{-102}$ \\
 Round 7 & 21 & $4 \rightarrow 2 \rightarrow 2 \rightarrow 6 \rightarrow 3 \rightarrow 2 \rightarrow 2$ & $2^{-126}$ \\
-\textbf{Round 8} & \textbf{22} & \textbf{$4 \rightarrow 2 \rightarrow 2 \rightarrow 6 \rightarrow 3 \rightarrow 2 \rightarrow 2 \rightarrow 1$} & $\mathbf{2^{-132}}$ \\ \bottomrule
+Round 8 & 22 & $4 \rightarrow 2 \rightarrow 2 \rightarrow 6 \rightarrow 3 \rightarrow 2 \rightarrow 2 \rightarrow 1$ & $2^{-132}$ \\ \bottomrule
 \end{tabular}%
 }
 \end{table}
@@ -476,7 +476,7 @@ Round 4 & 40  & $16 \rightarrow 16 \rightarrow 6 \rightarrow 2$ & $2^{162}$ \\
 Round 5 & 66  & $16 \rightarrow 16 \rightarrow 16 \rightarrow 16 \rightarrow 2$ & $2^{266}$ \\
 Round 6 & 82  & $16 \rightarrow 16 \rightarrow 16 \rightarrow 16 \rightarrow 16 \rightarrow 2$ & $2^{330}$ \\
 Round 7 & 92  & $16 \rightarrow 16 \rightarrow 16 \rightarrow 16 \rightarrow 16 \rightarrow 10 \rightarrow 2$ & $2^{370}$ \\
-\textbf{Round 8} & \textbf{108} & \textbf{$16 \rightarrow 16 \rightarrow 16 \rightarrow 16 \rightarrow 16 \rightarrow 16 \rightarrow 10 \rightarrow 2$} & $\mathbf{2^{434}}$ \\ \bottomrule
+Round 8 & 108 & $16 \rightarrow 16 \rightarrow 16 \rightarrow 16 \rightarrow 16 \rightarrow 16 \rightarrow 10 \rightarrow 2$ & $2^{434}$ \\ \bottomrule
 \end{tabular}
 \end{table*}
 
@@ -491,7 +491,7 @@ While standard AES-128 retains a 4-round integral distinguishing characteristic,
 \begin{itemize}
     \item \textbf{Round 1:} All 16 bytes exhibit the balanced property ($16/16$ bytes satisfy $\sum \oplus = 0$) due to independent S-box bijection.
     \item \textbf{Round 2:} The 32-bit ARX modular carry addition layer introduces non-linear modular carry bits across word boundaries, collapsing the balanced count from $16/16$ down to only $1/16$ bytes.
-    \item \textbf{Rounds 3 to 8:} Across all subsequent rounds, exactly \textbf{0 out of 16 bytes} remain balanced ($\sum \oplus \neq 0$). 
+    \item \textbf{Rounds 3 to 8:} Across all subsequent rounds, exactly 0 out of 16 bytes remain balanced ($\sum \oplus \neq 0$). 
 \end{itemize}
 Consequently, the integral distinguishing characteristic is broken after Round 2, establishing a 6-round safety margin against all variants of higher-order integral and division-property distinguishers.
 
@@ -614,12 +614,12 @@ $K_5$ & $4.018 / 128$ & $3.1388\%$ & $1.1053\%$ & 50.05\% \\
 $K_6$ & $3.967 / 128$ & $3.0995\%$ & $1.0815\%$ & 50.05\% \\
 $K_7$ & $4.016 / 128$ & $3.1377\%$ & $1.0914\%$ & 50.05\% \\
 $K_8$ & $3.955 / 128$ & $3.0900\%$ & $1.0677\%$ & 50.05\% \\ \midrule
-\textbf{Avg ($K_1 \dots K_8$)} & $\mathbf{4.003 / 128}$ & $\mathbf{3.1274\%}$ & $\mathbf{1.0898\%}$ & $\mathbf{50.05\%}$ \\ \bottomrule
+Avg ($K_1 \dots K_8$) & $4.003 / 128$ & $3.1274\%$ & $1.0898\%$ & 50.05\% \\ \bottomrule
 \end{tabular}%
 }
 \end{table}
 
-As documented in Table~\ref{tab:key_schedule_sac}, because the key expansion updates byte-wise through cyclic shifts ($K_r[i] = \text{S-Box}(K_{r-1}[(i+3)\%16]) \oplus (r \times \text{0x1B})$), a 1-bit perturbation in $K_0$ modifies exactly one active byte per round. Within this active byte, the bit-flip ratio achieves $\mu = 4.003 / 8 = 50.24\%$, satisfying perfect byte SAC. Simultaneously, flipping 1 bit in $K_0$ inverts the cumulative XOR checksum $k\_fold = \bigoplus K_0[i]$ with probability 1.0, which subsequently alternates the $SO(4)$ hypercube rotation table selection index ($\text{tbl}_{\text{idx}}$) with an empirical frequency of \textbf{50.05\%}. Thus, slight key differences immediately cause diverging spatial rotation paths across rounds.
+As documented in Table~\ref{tab:key_schedule_sac}, because the key expansion updates byte-wise through cyclic shifts ($K_r[i] = \text{S-Box}(K_{r-1}[(i+3)\%16]) \oplus (r \times \text{0x1B})$), a 1-bit perturbation in $K_0$ modifies exactly one active byte per round. Within this active byte, the bit-flip ratio achieves $\mu = 4.003 / 8 = 50.24\%$, satisfying perfect byte SAC. Simultaneously, flipping 1 bit in $K_0$ inverts the cumulative XOR checksum $k\_fold = \bigoplus K_0[i]$ with probability 1.0, which subsequently alternates the $SO(4)$ hypercube rotation table selection index ($\text{tbl}_{\text{idx}}$) with an empirical frequency of $50.05\%$. Thus, slight key differences immediately cause diverging spatial rotation paths across rounds.
 
 \begin{table*}[htbp]
 \caption{Weak Key and Structural Symmetry Analysis under Extreme Master Key Patterns}
@@ -630,15 +630,15 @@ As documented in Table~\ref{tab:key_schedule_sac}, because the key expansion upd
 \begin{tabular}{@{}lcccccc@{}}
 \toprule
 \textbf{Master Key Pattern} & \textbf{Subkey Entropy ($H$)} & \textbf{Avg Subkey HW} & \textbf{Zero Subkeys?} & \textbf{Equivalent Subkeys?} & \textbf{Ciphertext HW ($P=0$)} & \textbf{Verdict} \\ \midrule
-All-Zeros (\texttt{0x00...00}) & 3.1699 & 55.11/128 & No & No & 67/128 & \textbf{Resistant} \\
-All-Ones (\texttt{0xFF...FF}) & 3.1699 & 72.89/128 & No & No & 70/128 & \textbf{Resistant} \\
-Alternating \texttt{0xAA} ($10101010_2$) & 3.1699 & 64.00/128 & No & No & 75/128 & \textbf{Resistant} \\
-Alternating \texttt{0x55} ($01010101_2$) & 3.1699 & 72.89/128 & No & No & 56/128 & \textbf{Resistant} \\
-Repeating 64-bit Pattern & 5.8366 & 62.67/128 & No & No & 61/128 & \textbf{Resistant} \\
-Sequential Increment (\texttt{00..0F}) & 6.8227 & 60.22/128 & No & No & 65/128 & \textbf{Resistant} \\
-Symmetric Palindromic & 6.0033 & 58.89/128 & No & No & 62/128 & \textbf{Resistant} \\
-Single LSB Bit Set (\texttt{0x...01}) & 3.5072 & 55.22/128 & No & No & 61/128 & \textbf{Resistant} \\
-Single MSB Bit Set (\texttt{0x80...}) & 3.5072 & 55.00/128 & No & No & 56/128 & \textbf{Resistant} \\ \bottomrule
+All-Zeros (\texttt{0x00...00}) & 3.1699 & 55.11/128 & No & No & 67/128 & Resistant \\
+All-Ones (\texttt{0xFF...FF}) & 3.1699 & 72.89/128 & No & No & 70/128 & Resistant \\
+Alternating \texttt{0xAA} ($10101010_2$) & 3.1699 & 64.00/128 & No & No & 75/128 & Resistant \\
+Alternating \texttt{0x55} ($01010101_2$) & 3.1699 & 72.89/128 & No & No & 56/128 & Resistant \\
+Repeating 64-bit Pattern & 5.8366 & 62.67/128 & No & No & 61/128 & Resistant \\
+Sequential Increment (\texttt{00..0F}) & 6.8227 & 60.22/128 & No & No & 65/128 & Resistant \\
+Symmetric Palindromic & 6.0033 & 58.89/128 & No & No & 62/128 & Resistant \\
+Single LSB Bit Set (\texttt{0x...01}) & 3.5072 & 55.22/128 & No & No & 61/128 & Resistant \\
+Single MSB Bit Set (\texttt{0x80...}) & 3.5072 & 55.00/128 & No & No & 56/128 & Resistant \\ \bottomrule
 \end{tabular}%
 }
 \end{table*}
@@ -661,12 +661,12 @@ The avalanche effect requires that flipping a single bit in the input plaintext 
 Round 0 & $1.000 / 128$ & $0.7812\%$ & $0.0000\%$ & Whitening (1 bit) \\
 Round 1 & $17.122 / 128$ & $13.3770\%$ & $6.4251\%$ & Diffusing \\
 Round 2 & $50.210 / 128$ & $39.2266\%$ & $9.6566\%$ & Diffusing \\
-Round 3 & $63.481 / 128$ & $\mathbf{49.5948\%}$ & $4.7835\%$ & \textbf{Full Avalanche} \\
+Round 3 & $63.481 / 128$ & $49.5948\%$ & $4.7835\%$ & Full Avalanche \\
 Round 4 & $63.850 / 128$ & $49.8831\%$ & $4.4280\%$ & Full Avalanche \\
 Round 5 & $64.020 / 128$ & $50.0157\%$ & $4.4267\%$ & Full Avalanche \\
 Round 6 & $64.008 / 128$ & $50.0065\%$ & $4.3676\%$ & Full Avalanche \\
 Round 7 & $64.078 / 128$ & $50.0609\%$ & $4.3845\%$ & Full Avalanche \\
-Round 8 & $63.975 / 128$ & $\mathbf{49.9802\%}$ & $\mathbf{4.4083\%}$ & \textbf{Full Avalanche} \\ \bottomrule
+Round 8 & $63.975 / 128$ & $49.9802\%$ & $4.4083\%$ & Full Avalanche \\ \bottomrule
 \end{tabular}%
 }
 \end{table}
@@ -675,8 +675,8 @@ As detailed in Table~\ref{tab:plaintext_avalanche}, input bit differences rapidl
 \begin{itemize}
     \item At Round 1, the flipped ratio reaches $13.38\%$ ($17.12 / 128$ bits).
     \item At Round 2, the bit difference expands to $39.23\%$ ($50.21 / 128$ bits).
-    \item By \textbf{Round 3}, the flipped ratio reaches \textbf{49.59\%}, achieving the full avalanche threshold five rounds before cipher termination.
-    \item At the final Round 8, the mean flipped bits stabilize at \textbf{63.98 / 128} ($49.98\% \pm 4.41\%$), in exact concordance with the theoretical binomial standard deviation $\sigma_{\text{binom}} = \sqrt{128 \times 0.5 \times 0.5} / 128 = 4.4194\%$.
+    \item By Round 3, the flipped ratio reaches $49.59\%$, achieving the full avalanche threshold five rounds before cipher termination.
+    \item At the final Round 8, the mean flipped bits stabilize at $63.98 / 128$ ($49.98\% \pm 4.41\%$), in exact concordance with the theoretical binomial standard deviation $\sigma_{\text{binom}} = \sqrt{128 \times 0.5 \times 0.5} / 128 = 4.4194\%$.
 \end{itemize}
 
 \begin{table}[htbp]
@@ -696,12 +696,12 @@ Round 4 & $64.088 / 128$ & $50.0688\%$ & $4.4146\%$ & Full Avalanche \\
 Round 5 & $63.904 / 128$ & $49.9248\%$ & $4.4079\%$ & Full Avalanche \\
 Round 6 & $64.025 / 128$ & $50.0193\%$ & $4.4327\%$ & Full Avalanche \\
 Round 7 & $64.024 / 128$ & $50.0187\%$ & $4.4343\%$ & Full Avalanche \\
-Round 8 & $64.072 / 128$ & $\mathbf{50.0565\%}$ & $\mathbf{4.4150\%}$ & \textbf{Full Avalanche} \\ \bottomrule
+Round 8 & $64.072 / 128$ & $50.0565\%$ & $4.4150\%$ & Full Avalanche \\ \bottomrule
 \end{tabular}%
 }
 \end{table}
 
-Similarly, Table~\ref{tab:key_sensitivity} reports ciphertext divergence when encrypting identical plaintexts under two keys differing by 1 bit. Full avalanche is established by Round 3 ($49.80\%$), reaching $\mathbf{50.06\% \pm 4.41\%}$ at Round 8, proving that any partial key recovery does not leak ciphertext information.
+Similarly, Table~\ref{tab:key_sensitivity} reports ciphertext divergence when encrypting identical plaintexts under two keys differing by 1 bit. Full avalanche is established by Round 3 ($49.80\%$), reaching $50.06\% \pm 4.41\%$ at Round 8, proving that any partial key recovery does not leak ciphertext information.
 
 \subsection{Software Performance and Hardware Cycles Benchmarking}
 Information entropy characterizes the distribution uniformity of output byte sequences:
@@ -719,43 +719,43 @@ where $H_{\text{ideal}} = 8.0000$ for an independent identically distributed 8-b
 \toprule
 \textbf{Payload Size} & \textbf{Algorithm} & \textbf{Execution Time (ms)} & \textbf{Throughput (MB/s)} & \textbf{Cycles/Byte} & \textbf{Entropy} & \textbf{Integrity} \\ \midrule
 \multirow{6}{*}{$100$~KB} 
- & \textbf{Rubik-4D (Enc CBC)} & \textbf{660.93}  & \textbf{147.76} & \textbf{22.06} & \textbf{7.9983} & \textbf{100\%} \\
- & \textbf{Rubik-4D (Dec CBC)} & \textbf{586.66}  & \textbf{166.46} & \textbf{19.58} & --- & \textbf{100\%} \\
+ & Rubik-4D (Enc CBC)        & 660.93  & 147.76 & 22.06 & 7.9983 & 100\% \\
+ & Rubik-4D (Dec CBC)        & 586.66  & 166.46 & 19.58 & --- & 100\% \\
  & AES-128 (FIPS-197)          & 795.88  & 122.70 & 26.56 & 7.9980 & 100\% \\
  & Speck-128 (NSA ARX)          & 200.67  & 486.65 & 6.70  & 7.9982 & 100\% \\
  & Simon-128 (NSA Feistel)      & 626.52  & 155.87 & 20.91 & 7.9983 & 100\% \\
  & ChaCha20 (RFC-8439)          & 136.76  & 714.07 & 4.56  & 7.9981 & 100\% \\ \midrule
 \multirow{6}{*}{$500$~KB} 
- & \textbf{Rubik-4D (Enc CBC)} & \textbf{1654.84} & \textbf{147.53} & \textbf{22.09} & \textbf{7.9997} & \textbf{100\%} \\
- & \textbf{Rubik-4D (Dec CBC)} & \textbf{1468.93} & \textbf{166.20} & \textbf{19.61} & --- & \textbf{100\%} \\
+ & Rubik-4D (Enc CBC)        & 1654.84 & 147.53 & 22.09 & 7.9997 & 100\% \\
+ & Rubik-4D (Dec CBC)        & 1468.93 & 166.20 & 19.61 & --- & 100\% \\
  & AES-128 (FIPS-197)          & 2068.15 & 118.05 & 27.61 & 7.9997 & 100\% \\
  & Speck-128 (NSA ARX)          & 477.45  & 511.35 & 6.37  & 7.9996 & 100\% \\
  & Simon-128 (NSA Feistel)      & 1583.05 & 154.22 & 21.13 & 7.9997 & 100\% \\
  & ChaCha20 (RFC-8439)          & 331.15  & 737.24 & 4.42  & 7.9996 & 100\% \\ \midrule
 \multirow{6}{*}{$1$~MB} 
- & \textbf{Rubik-4D (Enc CBC)} & \textbf{1349.21} & \textbf{148.23} & \textbf{21.99} & \textbf{7.9998} & \textbf{100\%} \\
- & \textbf{Rubik-4D (Dec CBC)} & \textbf{1270.67} & \textbf{157.40} & \textbf{20.71} & --- & \textbf{100\%} \\
+ & Rubik-4D (Enc CBC)        & 1349.21 & 148.23 & 21.99 & 7.9998 & 100\% \\
+ & Rubik-4D (Dec CBC)        & 1270.67 & 157.40 & 20.71 & --- & 100\% \\
  & AES-128 (FIPS-197)          & 1634.17 & 122.39 & 26.63 & 7.9998 & 100\% \\
  & Speck-128 (NSA ARX)          & 389.79  & 513.10 & 6.35  & 7.9998 & 100\% \\
  & Simon-128 (NSA Feistel)      & 1275.59 & 156.79 & 20.79 & 7.9998 & 100\% \\
  & ChaCha20 (RFC-8439)          & 263.89  & 757.88 & 4.30  & 7.9998 & 100\% \\ \midrule
 \multirow{6}{*}{$2$~MB} 
- & \textbf{Rubik-4D (Enc CBC)} & \textbf{1346.61} & \textbf{148.52} & \textbf{21.94} & \textbf{7.9999} & \textbf{100\%} \\
- & \textbf{Rubik-4D (Dec CBC)} & \textbf{1196.39} & \textbf{167.17} & \textbf{19.50} & --- & \textbf{100\%} \\
+ & Rubik-4D (Enc CBC)        & 1346.61 & 148.52 & 21.94 & 7.9999 & 100\% \\
+ & Rubik-4D (Dec CBC)        & 1196.39 & 167.17 & 19.50 & --- & 100\% \\
  & AES-128 (FIPS-197)          & 1639.43 & 121.99 & 26.72 & 7.9999 & 100\% \\
  & Speck-128 (NSA ARX)          & 385.81  & 518.39 & 6.29  & 7.9999 & 100\% \\
  & Simon-128 (NSA Feistel)      & 1299.95 & 153.85 & 21.18 & 7.9999 & 100\% \\
  & ChaCha20 (RFC-8439)          & 272.86  & 732.99 & 4.45  & 7.9999 & 100\% \\ \midrule
 \multirow{6}{*}{$5$~MB} 
- & \textbf{Rubik-4D (Enc CBC)} & \textbf{1753.53} & \textbf{142.57} & \textbf{22.86} & \textbf{8.0000} & \textbf{100\%} \\
- & \textbf{Rubik-4D (Dec CBC)} & \textbf{1500.82} & \textbf{166.58} & \textbf{19.57} & --- & \textbf{100\%} \\
+ & Rubik-4D (Enc CBC)        & 1753.53 & 142.57 & 22.86 & 8.0000 & 100\% \\
+ & Rubik-4D (Dec CBC)        & 1500.82 & 166.58 & 19.57 & --- & 100\% \\
  & AES-128 (FIPS-197)          & 2024.48 & 123.49 & 26.39 & 8.0000 & 100\% \\
  & Speck-128 (NSA ARX)          & 492.26  & 507.86 & 6.42  & 8.0000 & 100\% \\
  & Simon-128 (NSA Feistel)      & 1595.39 & 156.70 & 20.80 & 8.0000 & 100\% \\
  & ChaCha20 (RFC-8439)          & 341.93  & 731.15 & 4.46  & 8.0000 & 100\% \\ \midrule
 \multirow{6}{*}{$20$~MB} 
- & \textbf{Rubik-4D (Enc CBC)} & \textbf{2725.73} & \textbf{146.75} & \textbf{22.21} & \textbf{8.0000} & \textbf{100\%} \\
- & \textbf{Rubik-4D (Dec CBC)} & \textbf{2413.87} & \textbf{165.71} & \textbf{19.67} & --- & \textbf{100\%} \\
+ & Rubik-4D (Enc CBC)        & 2725.73 & 146.75 & 22.21 & 8.0000 & 100\% \\
+ & Rubik-4D (Dec CBC)        & 2413.87 & 165.71 & 19.67 & --- & 100\% \\
  & AES-128 (FIPS-197)          & 3243.70 & 123.32 & 26.43 & 8.0000 & 100\% \\
  & Speck-128 (NSA ARX)          & 787.42  & 507.99 & 6.42  & 8.0000 & 100\% \\
  & Simon-128 (NSA Feistel)      & 2548.82 & 156.94 & 20.77 & 8.0000 & 100\% \\
@@ -765,11 +765,11 @@ where $H_{\text{ideal}} = 8.0000$ for an independent identically distributed 8-b
 
 In single-block core execution latency benchmarks ($1,000,000$ iterations):
 \begin{itemize}
-    \item \textbf{Rubik-4D Single Block Encrypt:} $323.20$~cycles/block ($20.20$~cpb).
-    \item \textbf{Rubik-4D Single Block Decrypt:} $339.51$~cycles/block ($21.22$~cpb).
-    \item \textbf{Simon-128 Single Block:} $319.02$~cycles/block ($19.94$~cpb).
-    \item \textbf{AES-128 Software Reference:} $419.73$~cycles/block ($26.23$~cpb).
-    \item \textbf{Speck-128 Single Block:} $93.12$~cycles/block ($5.82$~cpb).
+    \item Rubik-4D Single Block Encrypt: $323.20$~cycles/block ($20.20$~cpb).
+    \item Rubik-4D Single Block Decrypt: $339.51$~cycles/block ($21.22$~cpb).
+    \item Simon-128 Single Block: $319.02$~cycles/block ($19.94$~cpb).
+    \item AES-128 Software Reference: $419.73$~cycles/block ($26.23$~cpb).
+    \item Speck-128 Single Block: $93.12$~cycles/block ($5.82$~cpb).
 \end{itemize}
 
 As shown in Table~\ref{tab:benchmarks_all}, Rubik-4D achieves sustained throughput of $142.57 - 148.52$~MB/s ($21.94 - 22.86$~cpb) for encryption and $157.40 - 167.17$~MB/s ($19.50 - 20.71$~cpb) for decryption, consistently outperforming portable software AES-128 ($118.05 - 123.49$~MB/s, $26.39 - 27.61$~cpb) by $+20.3\%$ to $+35.4\%$.
@@ -817,25 +817,25 @@ where $f_k$ is the observed frequency and $e = 1024$. For degrees of freedom $d 
 \toprule
 \textbf{Cryptanalytic Metric} & \textbf{Plaintext} & \textbf{Rubik-4D} & \textbf{Theoretical / Target} & \textbf{Status} \\ \midrule
 \multicolumn{5}{l}{\textit{Benchmark: Baboon ($512 \times 512$ grayscale)}} \\
-Shannon Entropy ($H$)          & 7.358320 & \textbf{7.999304} & 8.000000 & \textbf{Passed} \\
-Correlation $r_H$ (Horizontal) & 0.865008 & \textbf{-0.002223}& $\approx 0.0000$ & \textbf{Passed} \\
-Correlation $r_V$ (Vertical)   & 0.762377 & \textbf{-0.026114}& $\approx 0.0000$ & \textbf{Passed} \\
-Correlation $r_D$ (Diagonal)   & 0.725735 & \textbf{0.010940} & $\approx 0.0000$ & \textbf{Passed} \\
-Chi-Square Test ($\chi^2$)     & 187,366.25& \textbf{253.3320} & $< 310.46$ ($\alpha = 0.01$) & \textbf{Passed} \\
-NPCR: Plaintext 1-bit (\%)     & ---      & \textbf{99.6094\%}& $\ge 99.6094\%$ & \textbf{Passed} \\
-UACI: Plaintext 1-bit (\%)     & ---      & \textbf{33.4556\%}& $\approx 33.4635\%$ & \textbf{Passed} \\
-NPCR: Key 1-bit (\%)           & ---      & \textbf{99.6089\%}& $\ge 99.6094\%$ & \textbf{Passed} \\
-UACI: Key 1-bit (\%)           & ---      & \textbf{33.4619\%}& $\approx 33.4635\%$ & \textbf{Passed} \\ \midrule
+Shannon Entropy ($H$)          & 7.358320 & 7.999304 & 8.000000 & Passed \\
+Correlation $r_H$ (Horizontal) & 0.865008 & -0.002223& $\approx 0.0000$ & Passed \\
+Correlation $r_V$ (Vertical)   & 0.762377 & -0.026114& $\approx 0.0000$ & Passed \\
+Correlation $r_D$ (Diagonal)   & 0.725735 & 0.010940 & $\approx 0.0000$ & Passed \\
+Chi-Square Test ($\chi^2$)     & 187,366.25& 253.3320 & $< 310.46$ ($\alpha = 0.01$) & Passed \\
+NPCR: Plaintext 1-bit (\%)     & ---      & 99.6094\%& $\ge 99.6094\%$ & Passed \\
+UACI: Plaintext 1-bit (\%)     & ---      & 33.4556\%& $\approx 33.4635\%$ & Passed \\
+NPCR: Key 1-bit (\%)           & ---      & 99.6089\%& $\ge 99.6094\%$ & Passed \\
+UACI: Key 1-bit (\%)           & ---      & 33.4619\%& $\approx 33.4635\%$ & Passed \\ \midrule
 \multicolumn{5}{l}{\textit{Benchmark: Lena ($512 \times 512$ grayscale)}} \\
-Shannon Entropy ($H$)          & 7.445082 & \textbf{7.999194} & 8.000000 & \textbf{Passed} \\
-Correlation $r_H$ (Horizontal) & 0.971498 & \textbf{0.002179} & $\approx 0.0000$ & \textbf{Passed} \\
-Correlation $r_V$ (Vertical)   & 0.985366 & \textbf{-0.001341}& $\approx 0.0000$ & \textbf{Passed} \\
-Correlation $r_D$ (Diagonal)   & 0.957486 & \textbf{-0.006297}& $\approx 0.0000$ & \textbf{Passed} \\
-Chi-Square Test ($\chi^2$)     & 158,338.65& \textbf{292.6660} & $< 310.46$ ($\alpha = 0.01$) & \textbf{Passed} \\
-NPCR: Plaintext 1-bit (\%)     & ---      & \textbf{99.6091\%}& $\ge 99.6094\%$ & \textbf{Passed} \\
-UACI: Plaintext 1-bit (\%)     & ---      & \textbf{33.4553\%}& $\approx 33.4635\%$ & \textbf{Passed} \\
-NPCR: Key 1-bit (\%)           & ---      & \textbf{99.6075\%}& $\ge 99.6094\%$ & \textbf{Passed} \\
-UACI: Key 1-bit (\%)           & ---      & \textbf{33.4679\%}& $\approx 33.4635\%$ & \textbf{Passed} \\ \bottomrule
+Shannon Entropy ($H$)          & 7.445082 & 7.999194 & 8.000000 & Passed \\
+Correlation $r_H$ (Horizontal) & 0.971498 & 0.002179 & $\approx 0.0000$ & Passed \\
+Correlation $r_V$ (Vertical)   & 0.985366 & -0.001341& $\approx 0.0000$ & Passed \\
+Correlation $r_D$ (Diagonal)   & 0.957486 & -0.006297& $\approx 0.0000$ & Passed \\
+Chi-Square Test ($\chi^2$)     & 158,338.65& 292.6660 & $< 310.46$ ($\alpha = 0.01$) & Passed \\
+NPCR: Plaintext 1-bit (\%)     & ---      & 99.6091\%& $\ge 99.6094\%$ & Passed \\
+UACI: Plaintext 1-bit (\%)     & ---      & 33.4553\%& $\approx 33.4635\%$ & Passed \\
+NPCR: Key 1-bit (\%)           & ---      & 99.6075\%& $\ge 99.6094\%$ & Passed \\
+UACI: Key 1-bit (\%)           & ---      & 33.4679\%& $\approx 33.4635\%$ & Passed \\ \bottomrule
 \end{tabular}%
 }
 \end{table}
@@ -860,7 +860,7 @@ The theoretical expectations for an 8-bit random sequence are $\text{NPCR}_{\tex
 
 \section{Conclusion}
 \label{sec:conclusion}
-This paper presented the specification, formal security proofs, and empirical evaluation of \textbf{Rubik-4D}, a 128-bit symmetric block cipher. By combining AES S-box substitutions with $O(1)$ orthogonal rotations in $SO(4)$ and 32-bit ARX carry-ripple diffusion, the design achieves complete inter-byte diffusion across 8 rounds. Automated MILP modeling verified lower bounds of 22 active S-boxes against differential attacks ($P_{\text{diff}} \le 2^{-132}$) and 108 active S-boxes against linear attacks ($N_D \approx 2^{434}$), alongside verified resistance against slide attacks and compliance with both the NIST SP 800-22 and GM/T 0005-2021 randomness test standards. Image cryptanalysis confirmed the removal of spatial correlations ($|r| \le 0.0105$), high Shannon entropy ($7.999$), and differential metrics satisfying $\text{NPCR} \ge 99.61\%$ and $\text{UACI} \approx 33.48\%$. Benchmarks across binary files up to $20$~MB demonstrated sustained software throughput exceeding $151$~MB/s, consistently outperforming reference software AES-128. Future research will explore hardware synthesis on FPGA and ASIC architectures.
+This paper presented the specification, formal security proofs, and empirical evaluation of Rubik-4D, a 128-bit symmetric block cipher. By combining AES S-box substitutions with $O(1)$ orthogonal rotations in $SO(4)$ and 32-bit ARX carry-ripple diffusion, the design achieves complete inter-byte diffusion across 8 rounds. Automated MILP modeling verified lower bounds of 22 active S-boxes against differential attacks ($P_{\text{diff}} \le 2^{-132}$) and 108 active S-boxes against linear attacks ($N_D \approx 2^{434}$), alongside verified resistance against slide attacks and compliance with both the NIST SP 800-22 and GM/T 0005-2021 randomness test standards. Image cryptanalysis confirmed the removal of spatial correlations ($|r| \le 0.0105$), high Shannon entropy ($7.999$), and differential metrics satisfying $\text{NPCR} \ge 99.61\%$ and $\text{UACI} \approx 33.48\%$. Benchmarks across binary files up to $20$~MB demonstrated sustained software throughput exceeding $151$~MB/s, consistently outperforming reference software AES-128. Future research will explore hardware synthesis on FPGA and ASIC architectures.
 
 \begin{thebibliography}{00}
 

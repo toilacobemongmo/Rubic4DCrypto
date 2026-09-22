@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.9.20)  22 SEP 2026 23:36
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.9.20)  23 SEP 2026 00:02
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -799,6 +799,11 @@ Underfull \hbox (badness 1648) in paragraph at lines 89--90
  []
 
 
+Underfull \hbox (badness 1917) in paragraph at lines 94--95
+[]\T1/ptm/m/n/10 To de-ci-sively re-solve these draw-backs, we pro-pose
+ []
+
+
 Underfull \hbox (badness 2393) in paragraph at lines 97--98
 []\T1/ptm/b/n/10 Rigorous SPN-ARX Fu-sion: \T1/ptm/m/n/10 The ci-pher seam-
  []
@@ -870,7 +875,7 @@ Underfull \hbox (badness 2582) in paragraph at lines 622--623
  []
 
 
-Underfull \vbox (badness 5726) has occurred while \output is active []
+Underfull \vbox (badness 5756) has occurred while \output is active []
 
 
 Underfull \hbox (badness 4001) in paragraph at lines 676--677
@@ -889,26 +894,14 @@ Underfull \hbox (badness 3780) in paragraph at lines 766--767
  []
 
 
-Underfull \hbox (badness 5231) in paragraph at lines 768--769
-[]\T1/ptm/b/n/10 Rubik-4D Sin-gle Block En-crypt: $\OT1/ztmcm/m/n/10 323\OML/zt
-mcm/m/it/10 :\OT1/ztmcm/m/n/10 20$ \T1/ptm/m/n/10 cy-
- []
-
-
-Underfull \hbox (badness 5504) in paragraph at lines 769--770
-[]\T1/ptm/b/n/10 Rubik-4D Sin-gle Block De-crypt: $\OT1/ztmcm/m/n/10 339\OML/zt
-mcm/m/it/10 :\OT1/ztmcm/m/n/10 51$ \T1/ptm/m/n/10 cy-
- []
-
-
-Underfull \hbox (badness 6792) in paragraph at lines 770--771
-[]\T1/ptm/b/n/10 Simon-128 Sin-gle Block: $\OT1/ztmcm/m/n/10 319\OML/ztmcm/m/it
+Underfull \hbox (badness 10000) in paragraph at lines 770--771
+[]\T1/ptm/m/n/10 Simon-128 Sin-gle Block: $\OT1/ztmcm/m/n/10 319\OML/ztmcm/m/it
 /10 :\OT1/ztmcm/m/n/10 02$ \T1/ptm/m/n/10 cy-cles/block
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 772--773
-[]\T1/ptm/b/n/10 Speck-128 Sin-gle Block: $\OT1/ztmcm/m/n/10 93\OML/ztmcm/m/it/
+[]\T1/ptm/m/n/10 Speck-128 Sin-gle Block: $\OT1/ztmcm/m/n/10 93\OML/ztmcm/m/it/
 10 :\OT1/ztmcm/m/n/10 12$ \T1/ptm/m/n/10 cy-cles/block
  []
 
@@ -968,7 +961,7 @@ L3 programming layer <2025-12-24>
 Here is how much of TeX's memory you used:
  17803 strings out of 467871
  354004 string characters out of 5418376
- 800641 words of memory out of 5000000
+ 800617 words of memory out of 5000000
  46327 multiletter control sequences out of 15000+600000
  705459 words of font info for 161 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -987,7 +980,7 @@ AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm10.pfb><C
 Users/ghaob/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmb8a.pfb><C:/
 Users/ghaob/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmr8a.pfb><C:/
 Users/ghaob/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmri8a.pfb>
-Output written on haogianguyen.pdf (11 pages, 7376009 bytes).
+Output written on haogianguyen.pdf (11 pages, 7375417 bytes).
 PDF statistics:
  158 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
