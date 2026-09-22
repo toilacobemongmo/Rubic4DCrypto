@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.9.20)  21 SEP 2026 18:27
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.9.20)  22 SEP 2026 23:01
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -789,15 +789,6 @@ LaTeX Font Info:    Trying to load font information for TS1+ptm on input line 7
 (C:\Users\ghaob\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\ts1ptm.fd
 File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
 )
-
-LaTeX Warning: Citation `diaconu2008' on page 1 undefined on input line 85.
-
-
-LaTeX Warning: Citation `lin2010rubik' on page 1 undefined on input line 85.
-
-
-LaTeX Warning: Citation `huang2019rubik' on page 1 undefined on input line 85.
-
 [1{C:/Users/ghaob/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}{C:/Users/gh
 aob/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/base/8r.enc}
 
@@ -818,162 +809,159 @@ Underfull \hbox (badness 4416) in paragraph at lines 98--99
  []
 
 
-LaTeX Warning: Reference `tab:rubik_comparison' on page 2 undefined on input li
-ne 101.
-
-
-Overfull \hbox (17.7837pt too wide) in paragraph at lines 113--131
- [][] 
- []
-
-
-Underfull \hbox (badness 6978) in paragraph at lines 242--244
+Underfull \hbox (badness 6978) in paragraph at lines 264--266
 []\T1/ptm/b/n/10 Input: \T1/ptm/m/n/10 Plain-text block $\OML/ztmcm/m/it/10 P$ 
 \T1/ptm/m/n/10 (128-bit), Round count
  []
 
 
-Underfull \hbox (badness 2564) in paragraph at lines 242--244
+Underfull \hbox (badness 2564) in paragraph at lines 264--266
 \OML/ztmcm/m/it/10 R \OT1/ztmcm/m/n/10 = 8$\T1/ptm/m/n/10 , Mas-ter key $\OML/z
 tmcm/m/it/10 K[]$\T1/ptm/m/n/10 , Sub-keys $\OMS/ztmcm/m/n/10 f\OML/ztmcm/m/it/
 10 K[]; [] ; K[]\OMS/ztmcm/m/n/10 g$\T1/ptm/m/n/10 , Con-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 242--244
+Underfull \hbox (badness 10000) in paragraph at lines 264--266
 \T1/ptm/b/n/10 Output: \T1/ptm/m/n/10 Ci-pher-text block $\OML/ztmcm/m/it/10 C[
 ]$ \T1/ptm/m/n/10 (128-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 253--254
+Underfull \hbox (badness 10000) in paragraph at lines 275--276
 [] []$[][] \OMS/ztmcm/m/n/10   [] ^^B \OT1/ztmcm/m/n/10 2 +
  []
 
 [2] [3]
-Underfull \hbox (badness 2426) in paragraph at lines 309--311
+Underfull \hbox (badness 2426) in paragraph at lines 331--333
 \T1/ptm/m/n/10 where $\U/msa/m/n/10 ^^A$ \T1/ptm/m/n/10 de-notes mod-u-lar ad-d
 i-tion mod-ulo $\OT1/ztmcm/m/n/10 2[]$\T1/ptm/m/n/10 , and
  []
 
 
-Underfull \hbox (badness 2293) in paragraph at lines 320--321
+Underfull \hbox (badness 2293) in paragraph at lines 342--343
 \T1/ptm/m/n/10 Decryption eval-u-ates the in-verse trans-for-ma-tions from
  []
 
 
-Underfull \hbox (badness 1769) in paragraph at lines 338--340
+Underfull \hbox (badness 1769) in paragraph at lines 360--362
 []\T1/ptm/b/n/10 Input: \T1/ptm/m/n/10 Ci-pher-text block $\OML/ztmcm/m/it/10 C
 []$ \T1/ptm/m/n/10 (128-bit), Round count
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 338--340
+Underfull \hbox (badness 10000) in paragraph at lines 360--362
 \T1/ptm/b/n/10 Output: \T1/ptm/m/n/10 Re-stored Plain-text block $\OML/ztmcm/m/
 it/10 P$ \T1/ptm/m/n/10 (128-
  []
 
-! Undefined control sequence.
-<argument> $r = R$ \DOWNTO 
-                           $1$
-l.342 \FOR{$r = R$ \DOWNTO $1$}
-                               
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 354--355
+Underfull \hbox (badness 10000) in paragraph at lines 376--377
 [] []$[][] \OMS/ztmcm/m/n/10   [] ^^B \OT1/ztmcm/m/n/10 2 +
  []
 
-
-Overfull \hbox (26.66295pt too wide) detected at line 379
-[][][] \OT1/ztmcm/m/n/10 = [] \OMS/ztmcm/m/n/10 ^^B \OT1/ztmcm/m/n/10 2 + ((\OM
-L/ztmcm/m/it/10 k[]fold \OMS/ztmcm/m/n/10 ^^] \OT1/ztmcm/m/n/10 3) & 1)
+[4] [5] [6]
+Underfull \hbox (badness 2582) in paragraph at lines 620--621
+\T1/ptm/m/n/10 sion up-dates byte-wise through cyclic shifts ($\OML/ztmcm/m/it/
+10 K[]\OT1/ztmcm/m/n/10 [\OML/ztmcm/m/it/10 i\OT1/ztmcm/m/n/10 ] =
  []
 
 
-Overfull \hbox (38.3943pt too wide) detected at line 384
-[]\OML/ztmcm/m/it/10 K[]\OT1/ztmcm/m/n/10 [\OML/ztmcm/m/it/10 i\OT1/ztmcm/m/n/1
-0 ] = [] [] \OMS/ztmcm/m/n/10 ^^H []
- []
-
-[4]
-Overfull \hbox (17.15628pt too wide) in paragraph at lines 478--500
- [][] 
+Underfull \hbox (badness 4001) in paragraph at lines 674--675
+[]\T1/ptm/m/n/10 At Round 1, the flipped ra-tio reaches $\OT1/ztmcm/m/n/10 13\O
+ML/ztmcm/m/it/10 :\OT1/ztmcm/m/n/10 38%$
  []
 
 
-Overfull \hbox (27.33101pt too wide) in paragraph at lines 508--535
- [][] 
+Underfull \hbox (badness 10000) in paragraph at lines 704--704
+|[]\T1/ptm/b/n/10 Software Per-for-mance and Hard-ware Cy-cles
  []
 
 
-Underfull \hbox (badness 1292) in paragraph at lines 600--601
-[]\T1/ptm/m/n/10 On the $\OT1/ztmcm/m/n/10 20$ \T1/ptm/m/n/10 MB test pay-load,
- Rubik-4D sus-tained
+Underfull \hbox (badness 3780) in paragraph at lines 764--765
+[]\T1/ptm/m/n/10 In single-block core ex-e-cu-tion la-tency bench-marks
  []
 
 
-Underfull \hbox (badness 1708) in paragraph at lines 600--601
-\OT1/ztmcm/m/n/10 140\OML/ztmcm/m/it/10 :\OT1/ztmcm/m/n/10 49$ \T1/ptm/m/n/10 M
-B/s ($\OT1/ztmcm/m/n/10 23\OML/ztmcm/m/it/10 :\OT1/ztmcm/m/n/10 20$ \T1/ptm/m/n
-/10 cpb), whereas AES-128 de-
+Underfull \hbox (badness 5231) in paragraph at lines 766--767
+[]\T1/ptm/b/n/10 Rubik-4D Sin-gle Block En-crypt: $\OT1/ztmcm/m/n/10 323\OML/zt
+mcm/m/it/10 :\OT1/ztmcm/m/n/10 20$ \T1/ptm/m/n/10 cy-
  []
 
-[5]
-<Lena_cryptanalysis_result.png, id=33, 794.97pt x 650.43pt>
+
+Underfull \hbox (badness 5504) in paragraph at lines 767--768
+[]\T1/ptm/b/n/10 Rubik-4D Sin-gle Block De-crypt: $\OT1/ztmcm/m/n/10 339\OML/zt
+mcm/m/it/10 :\OT1/ztmcm/m/n/10 51$ \T1/ptm/m/n/10 cy-
+ []
+
+
+Underfull \hbox (badness 6792) in paragraph at lines 768--769
+[]\T1/ptm/b/n/10 Simon-128 Sin-gle Block: $\OT1/ztmcm/m/n/10 319\OML/ztmcm/m/it
+/10 :\OT1/ztmcm/m/n/10 02$ \T1/ptm/m/n/10 cy-cles/block
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 770--771
+[]\T1/ptm/b/n/10 Speck-128 Sin-gle Block: $\OT1/ztmcm/m/n/10 93\OML/ztmcm/m/it/
+10 :\OT1/ztmcm/m/n/10 12$ \T1/ptm/m/n/10 cy-cles/block
+ []
+
+
+Underfull \hbox (badness 4805) in paragraph at lines 773--775
+\T1/ptm/m/n/10 for en-cryp-tion and $\OT1/ztmcm/m/n/10 157\OML/ztmcm/m/it/10 :\
+OT1/ztmcm/m/n/10 40 \OMS/ztmcm/m/n/10 ^^@ \OT1/ztmcm/m/n/10 167\OML/ztmcm/m/it/
+10 :\OT1/ztmcm/m/n/10 17$ \T1/ptm/m/n/10 MB/s ($\OT1/ztmcm/m/n/10 19\OML/ztmcm/
+m/it/10 :\OT1/ztmcm/m/n/10 50 \OMS/ztmcm/m/n/10 ^^@
+ []
+
+
+Underfull \hbox (badness 6842) in paragraph at lines 773--775
+\OT1/ztmcm/m/n/10 20\OML/ztmcm/m/it/10 :\OT1/ztmcm/m/n/10 71$ \T1/ptm/m/n/10 cp
+b) for de-cryp-tion, con-sis-tently out-per-form-
+ []
+
+[7]
+<Lena_cryptanalysis_result.png, id=40, 794.97pt x 650.43pt>
 File: Lena_cryptanalysis_result.png Graphic file (type png)
 <use Lena_cryptanalysis_result.png>
-Package pdftex.def Info: Lena_cryptanalysis_result.png  used on input line 613.
+Package pdftex.def Info: Lena_cryptanalysis_result.png  used on input line 785.
 
 (pdftex.def)             Requested size: 237.63522pt x 194.42584pt.
-<Baboon_cryptanalysis_result.png, id=35, 794.97pt x 650.43pt>
+<Baboon_cryptanalysis_result.png, id=42, 794.97pt x 650.43pt>
 File: Baboon_cryptanalysis_result.png Graphic file (type png)
 <use Baboon_cryptanalysis_result.png>
-Package pdftex.def Info: Baboon_cryptanalysis_result.png  used on input line 61
-9.
+Package pdftex.def Info: Baboon_cryptanalysis_result.png  used on input line 79
+1.
 (pdftex.def)             Requested size: 237.63522pt x 194.42584pt.
- [6]
-Underfull \hbox (badness 1789) in paragraph at lines 680--682
-\T1/ptm/m/n/10 As de-tailed in Ta-ble 7[], Rubik-4D achieves $[] \OT1/ztmcm/m/n
-/10 =
- []
-
-
-Underfull \hbox (badness 1184) in paragraph at lines 685--686
+ [8]
+Underfull \hbox (badness 1184) in paragraph at lines 861--862
 \T1/ptm/m/n/10 This pa-per pre-sented the spec-i-fi-ca-tion, for-mal se-cu-rity
 
  []
 
-[7]
-Underfull \hbox (badness 1509) in paragraph at lines 717--718
+[9]
+Underfull \hbox (badness 3068) in paragraph at lines 866--867
+[]\T1/ptm/m/n/10 A. V. Di-a-conu and K. Loukhafal-lah, ``Circular-
+ []
+
+
+Underfull \hbox (badness 1509) in paragraph at lines 905--906
 \T1/ptm/m/n/10 al-go-rithms,'' \T1/ptm/m/it/10 GM/T 0005-2021\T1/ptm/m/n/10 , S
 tan-dard Press of
  []
 
-[8 <./Lena_cryptanalysis_result.png> <./Baboon_cryptanalysis_result.png>]
+[10 <./Lena_cryptanalysis_result.png> <./Baboon_cryptanalysis_result.png>]
 (haogianguyen.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2025-12-24>
  ***********
-
-
-LaTeX Warning: There were undefined references.
-
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
  ) 
 Here is how much of TeX's memory you used:
- 17782 strings out of 467871
- 353638 string characters out of 5418376
- 792348 words of memory out of 5000000
- 46309 multiletter control sequences out of 15000+600000
+ 17790 strings out of 467871
+ 353852 string characters out of 5418376
+ 795634 words of memory out of 5000000
+ 46317 multiletter control sequences out of 15000+600000
  701589 words of font info for 150 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  102i,16n,107p,1728b,935s stack positions out of 10000i,1000n,20000p,200000b,200000s
@@ -991,9 +979,9 @@ AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm10.pfb><C
 Users/ghaob/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmb8a.pfb><C:/
 Users/ghaob/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmr8a.pfb><C:/
 Users/ghaob/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmri8a.pfb>
-Output written on haogianguyen.pdf (8 pages, 7356453 bytes).
+Output written on haogianguyen.pdf (10 pages, 7374042 bytes).
 PDF statistics:
- 134 PDF objects out of 1000 (max. 8388607)
+ 155 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  23 words of extra memory for PDF output out of 10000 (max. 10000000)
 
