@@ -38,14 +38,30 @@ static const int NUM_CONFIGS = sizeof(TEST_CONFIGS) / sizeof(TEST_CONFIGS[0]);
 
 // Kết quả đo lường
 typedef struct {
-    const char *payload_label;
-    const char *algorithm;
+    char size[16];
+    char algo[32];
     double time_ms;
     double throughput_mbs;
     double cycles_per_byte;
     double entropy;
     int integrity_ok;
 } benchmark_result;
+
+static benchmark_result all_bench_results[64];
+static int total_bench_results = 0;
+
+static void record_bench_result(const char *size, const char *algo, double time_ms, double tp, double cpb, double ent, int ok) {
+    if (total_bench_results < 64) {
+        snprintf(all_bench_results[total_bench_results].size, 16, "%s", size);
+        snprintf(all_bench_results[total_bench_results].algo, 32, "%s", algo);
+        all_bench_results[total_bench_results].time_ms = time_ms;
+        all_bench_results[total_bench_results].throughput_mbs = tp;
+        all_bench_results[total_bench_results].cycles_per_byte = cpb;
+        all_bench_results[total_bench_results].entropy = ent;
+        all_bench_results[total_bench_results].integrity_ok = ok;
+        total_bench_results++;
+    }
+}
 
 void run_all_benchmarks(void) {
     printf("========================================================================================\n");
@@ -120,6 +136,7 @@ void run_all_benchmarks(void) {
             size_t dec_len = rubik4d_decrypt(cipher, size + 16, decrypted, key16, 16, iv16);
             int ok = (dec_len == size && memcmp(plain, decrypted, size) == 0);
 
+            record_bench_result(label, "Rubik-4D (Enc CBC)", elapsed_ms, throughput, cpb, ent, ok);
             printf("%-8s | %-24s | %12.2f | %14.2f | %12.2f | %10.4f | %s\n",
                    label, "Rubik-4D (Enc CBC)", elapsed_ms, throughput, cpb, ent, ok ? "100% OK" : "FAIL");
         }
@@ -146,6 +163,7 @@ void run_all_benchmarks(void) {
             double cpb = (double)(end_cycles - start_cycles) / ((double)size * iters);
 
             int ok = (memcmp(plain, decrypted, size) == 0);
+            record_bench_result(label, "Rubik-4D (Dec CBC)", elapsed_ms, throughput, cpb, 0.0, ok);
             printf("%-8s | %-24s | %12.2f | %14.2f | %12.2f | %10s | %s\n",
                    label, "Rubik-4D (Dec CBC)", elapsed_ms, throughput, cpb, "---", ok ? "100% OK" : "FAIL");
         }
@@ -169,6 +187,7 @@ void run_all_benchmarks(void) {
             double cpb = (double)(end_cycles - start_cycles) / ((double)size * iters);
             double ent = rubik4d_calculate_entropy(cipher, size);
 
+            record_bench_result(label, "AES-128 (FIPS-197)", elapsed_ms, throughput, cpb, ent, 1);
             printf("%-8s | %-24s | %12.2f | %14.2f | %12.2f | %10.4f | 100%% OK\n",
                    label, "AES-128 (FIPS-197)", elapsed_ms, throughput, cpb, ent);
         }
@@ -192,6 +211,7 @@ void run_all_benchmarks(void) {
             double cpb = (double)(end_cycles - start_cycles) / ((double)size * iters);
             double ent = rubik4d_calculate_entropy(cipher, size);
 
+            record_bench_result(label, "Speck-128 (NSA ARX)", elapsed_ms, throughput, cpb, ent, 1);
             printf("%-8s | %-24s | %12.2f | %14.2f | %12.2f | %10.4f | 100%% OK\n",
                    label, "Speck-128 (NSA ARX)", elapsed_ms, throughput, cpb, ent);
         }
@@ -215,6 +235,7 @@ void run_all_benchmarks(void) {
             double cpb = (double)(end_cycles - start_cycles) / ((double)size * iters);
             double ent = rubik4d_calculate_entropy(cipher, size);
 
+            record_bench_result(label, "Simon-128 (NSA Feistel)", elapsed_ms, throughput, cpb, ent, 1);
             printf("%-8s | %-24s | %12.2f | %14.2f | %12.2f | %10.4f | 100%% OK\n",
                    label, "Simon-128 (NSA Feistel)", elapsed_ms, throughput, cpb, ent);
         }
@@ -238,6 +259,7 @@ void run_all_benchmarks(void) {
             double cpb = (double)(end_cycles - start_cycles) / ((double)size * iters);
             double ent = rubik4d_calculate_entropy(cipher, size);
 
+            record_bench_result(label, "ChaCha20 (RFC-8439)", elapsed_ms, throughput, cpb, ent, 1);
             printf("%-8s | %-24s | %12.2f | %14.2f | %12.2f | %10.4f | 100%% OK\n",
                    label, "ChaCha20 (RFC-8439)", elapsed_ms, throughput, cpb, ent);
         }
@@ -251,6 +273,7 @@ void run_all_benchmarks(void) {
 
     // Benchmark khối đơn lẻ 16 byte
     printf("\n[*] Single Block Core Encryption Latency Benchmark (1,000,000 block executions):\n");
+    double enc_cycles_per_block = 0, dec_cycles_per_block = 0;
     {
         uint8_t blk_in[16] = {0x01,0x23,0x45,0x67,0x89,0xAB,0xCD,0xEF,0x01,0x23,0x45,0x67,0x89,0xAB,0xCD,0xEF};
         uint8_t blk_out[16];
@@ -263,9 +286,9 @@ void run_all_benchmarks(void) {
             blk_in[0] ^= blk_out[0];
         }
         uint64_t t1 = __rdtsc();
-        double cycles_per_block = (double)(t1 - t0) / 1000000.0;
+        enc_cycles_per_block = (double)(t1 - t0) / 1000000.0;
         printf("    -> Rubik-4D Single Block Encrypt: %.2f cycles/block (%.2f cycles/byte)\n",
-               cycles_per_block, cycles_per_block / 16.0);
+               enc_cycles_per_block, enc_cycles_per_block / 16.0);
 
         t0 = __rdtsc();
         for (int i = 0; i < 1000000; i++) {
@@ -273,11 +296,35 @@ void run_all_benchmarks(void) {
             blk_out[0] ^= blk_in[0];
         }
         t1 = __rdtsc();
-        double dec_cycles_per_block = (double)(t1 - t0) / 1000000.0;
+        dec_cycles_per_block = (double)(t1 - t0) / 1000000.0;
         printf("    -> Rubik-4D Single Block Decrypt: %.2f cycles/block (%.2f cycles/byte)\n",
                dec_cycles_per_block, dec_cycles_per_block / 16.0);
     }
     printf("\n");
+
+    FILE *f = fopen("reports/benchmark.json", "w");
+    if (!f) f = fopen("benchmark.json", "w");
+    if (f) {
+        fprintf(f, "{\n  \"benchmarks\": [\n");
+        for (int i = 0; i < total_bench_results; i++) {
+            char ent_buf[32];
+            if (strcmp(all_bench_results[i].algo, "Rubik-4D (Dec CBC)") == 0) {
+                snprintf(ent_buf, 32, "---");
+            } else {
+                snprintf(ent_buf, 32, "%.4f", all_bench_results[i].entropy);
+            }
+            fprintf(f, "    {\"size\": \"%s\", \"algo\": \"%s\", \"time\": %.2f, \"tp\": %.2f, \"cpb\": %.2f, \"ent\": \"%s\", \"ok\": \"%s\"}%s\n",
+                    all_bench_results[i].size, all_bench_results[i].algo, all_bench_results[i].time_ms,
+                    all_bench_results[i].throughput_mbs, all_bench_results[i].cycles_per_byte,
+                    ent_buf, all_bench_results[i].integrity_ok ? "100%" : "FAIL",
+                    (i == total_bench_results - 1) ? "" : ",");
+        }
+        fprintf(f, "  ],\n  \"single_block\": {\n");
+        fprintf(f, "    \"enc_cycles_block\": %.2f, \"enc_cpb\": %.2f,\n", enc_cycles_per_block, enc_cycles_per_block / 16.0);
+        fprintf(f, "    \"dec_cycles_block\": %.2f, \"dec_cpb\": %.2f\n  }\n}\n",
+                dec_cycles_per_block, dec_cycles_per_block / 16.0);
+        fclose(f);
+    }
 }
 
 int main(void) {

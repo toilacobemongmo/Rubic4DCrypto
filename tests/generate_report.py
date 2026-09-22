@@ -2,13 +2,19 @@
 # -*- coding: utf-8 -*-
 """
 Rubik-4D Automated Cryptanalysis Report & LaTeX Table Generator
-Produces:
-  - tests/Rubik4D_Cryptanalysis_Report.md
-  - tests/Rubik4D_Tables.tex
+Dynamically parses experimental results from JSON files produced by C and Python test suites:
+  - reports/key_schedule_sac.json (from tests/test_key_schedule.c)
+  - reports/sensitivity.json      (from tests/test_sensitivity.c)
+  - reports/image_analysis.json   (from tests/test_image_analysis.py)
+  - reports/benchmark.json        (from tests/test_benchmark.c)
+And exports:
+  - reports/Rubik4D_Cryptanalysis_Report.md
+  - reports/Rubik4D_Tables.tex
 """
 
 import os
 import sys
+import json
 
 def generate_report():
     base_dir = os.path.dirname(os.path.abspath(__file__))
@@ -19,131 +25,38 @@ def generate_report():
     md_file = os.path.join(reports_dir, "Rubik4D_Cryptanalysis_Report.md")
     tex_file = os.path.join(reports_dir, "Rubik4D_Tables.tex")
 
-    # =========================================================================
-    # 1. DATA DEFINITIONS
-    # =========================================================================
-    
-    # Key Schedule SAC Data (10,000 pairs)
-    key_sac_data = [
-        {"rk": "K_0", "bits": 1.000, "pct": 0.7812, "std": 0.0000, "min": 1, "max": 1, "lut": "N/A (Whitening)"},
-        {"rk": "K_1", "bits": 4.019, "pct": 3.1398, "std": 1.0617, "min": 1, "max": 8, "lut": "50.05%"},
-        {"rk": "K_2", "bits": 4.026, "pct": 3.1452, "std": 1.1122, "min": 1, "max": 8, "lut": "50.05%"},
-        {"rk": "K_3", "bits": 3.998, "pct": 3.1237, "std": 1.0877, "min": 1, "max": 8, "lut": "50.05%"},
-        {"rk": "K_4", "bits": 4.025, "pct": 3.1448, "std": 1.1113, "min": 1, "max": 8, "lut": "50.05%"},
-        {"rk": "K_5", "bits": 4.018, "pct": 3.1388, "std": 1.1053, "min": 1, "max": 8, "lut": "50.05%"},
-        {"rk": "K_6", "bits": 3.967, "pct": 3.0995, "std": 1.0815, "min": 1, "max": 8, "lut": "50.05%"},
-        {"rk": "K_7", "bits": 4.016, "pct": 3.1377, "std": 1.0914, "min": 1, "max": 8, "lut": "50.05%"},
-        {"rk": "K_8", "bits": 3.955, "pct": 3.0900, "std": 1.0677, "min": 1, "max": 8, "lut": "50.05%"}
-    ]
+    sac_json_path = os.path.join(reports_dir, "key_schedule_sac.json")
+    sens_json_path = os.path.join(reports_dir, "sensitivity.json")
+    img_json_path = os.path.join(reports_dir, "image_analysis.json")
+    bench_json_path = os.path.join(reports_dir, "benchmark.json")
 
-    # Weak Key Analysis Data
-    weak_key_data = [
-        {"pattern": "All-Zeros (0x00...00)", "entropy": 3.1699, "avg_hw": 55.11, "zero_rk": "No", "equiv_rk": "No", "ct_pt0_hw": 67, "ct_ptff_hw": 68, "verdict": "Resistant"},
-        {"pattern": "All-Ones (0xFF...FF)", "entropy": 3.1699, "avg_hw": 72.89, "zero_rk": "No", "equiv_rk": "No", "ct_pt0_hw": 70, "ct_ptff_hw": 57, "verdict": "Resistant"},
-        {"pattern": "Alternating 0xAA (10101010)", "entropy": 3.1699, "avg_hw": 64.00, "zero_rk": "No", "equiv_rk": "No", "ct_pt0_hw": 75, "ct_ptff_hw": 52, "verdict": "Resistant"},
-        {"pattern": "Alternating 0x55 (01010101)", "entropy": 3.1699, "avg_hw": 72.89, "zero_rk": "No", "equiv_rk": "No", "ct_pt0_hw": 56, "ct_ptff_hw": 58, "verdict": "Resistant"},
-        {"pattern": "Repeating 64-bit Pattern", "entropy": 5.8366, "avg_hw": 62.67, "zero_rk": "No", "equiv_rk": "No", "ct_pt0_hw": 61, "ct_ptff_hw": 62, "verdict": "Resistant"},
-        {"pattern": "Sequential Increment (00..0F)", "entropy": 6.8227, "avg_hw": 60.22, "zero_rk": "No", "equiv_rk": "No", "ct_pt0_hw": 65, "ct_ptff_hw": 64, "verdict": "Resistant"},
-        {"pattern": "Symmetric Palindromic", "entropy": 6.0033, "avg_hw": 58.89, "zero_rk": "No", "equiv_rk": "No", "ct_pt0_hw": 62, "ct_ptff_hw": 71, "verdict": "Resistant"},
-        {"pattern": "Single LSB Bit Set (0x...01)", "entropy": 3.5072, "avg_hw": 55.22, "zero_rk": "No", "equiv_rk": "No", "ct_pt0_hw": 61, "ct_ptff_hw": 66, "verdict": "Resistant"},
-        {"pattern": "Single MSB Bit Set (0x80...)", "entropy": 3.5072, "avg_hw": 55.00, "zero_rk": "No", "equiv_rk": "No", "ct_pt0_hw": 56, "ct_ptff_hw": 66, "verdict": "Resistant"}
-    ]
+    # Verify that all test results exist
+    for p in [sac_json_path, sens_json_path, img_json_path, bench_json_path]:
+        if not os.path.exists(p):
+            raise FileNotFoundError(f"[ERROR] Required test result file '{p}' not found. Run tests first.")
 
-    # Plaintext Avalanche Effect Data (Round-by-Round 1 to 8, 10,000 samples)
-    pt_avalanche_data = [
-        {"round": "Round 0", "bits": 1.000, "pct": 0.7812, "std": 0.0000, "min": 1, "max": 1, "status": "Whitening (1 bit)"},
-        {"round": "Round 1", "bits": 17.042, "pct": 13.3137, "std": 6.3549, "min": 2, "max": 56, "status": "Diffusing"},
-        {"round": "Round 2", "bits": 50.162, "pct": 39.1893, "std": 9.6996, "min": 1, "max": 81, "status": "Diffusing"},
-        {"round": "Round 3", "bits": 63.556, "pct": 49.6535, "std": 4.7894, "min": 10, "max": 84, "status": "Full Avalanche"},
-        {"round": "Round 4", "bits": 64.030, "pct": 50.0232, "std": 4.4386, "min": 43, "max": 89, "status": "Full Avalanche"},
-        {"round": "Round 5", "bits": 64.034, "pct": 50.0264, "std": 4.4253, "min": 39, "max": 84, "status": "Full Avalanche"},
-        {"round": "Round 6", "bits": 63.997, "pct": 49.9980, "std": 4.4581, "min": 42, "max": 88, "status": "Full Avalanche"},
-        {"round": "Round 7", "bits": 64.029, "pct": 50.0229, "std": 4.4079, "min": 43, "max": 88, "status": "Full Avalanche"},
-        {"round": "Round 8", "bits": 64.076, "pct": 50.0594, "std": 4.3992, "min": 43, "max": 84, "status": "Full Avalanche"}
-    ]
+    with open(sac_json_path, "r", encoding="utf-8") as f:
+        sac_data_full = json.load(f)
+        key_sac_data = sac_data_full["sac_data"]
+        weak_key_data = sac_data_full["weak_key_data"]
 
-    # Key Sensitivity Data (Round-by-Round 1 to 8, 10,000 samples)
-    key_sensitivity_data = [
-        {"round": "Round 0", "bits": 1.000, "pct": 0.7812, "std": 0.0000, "min": 1, "max": 1, "status": "Whitening (1 bit)"},
-        {"round": "Round 1", "bits": 42.252, "pct": 33.0095, "std": 17.9803, "min": 3, "max": 82, "status": "Diffusing"},
-        {"round": "Round 2", "bits": 58.518, "pct": 45.7173, "std": 7.9234, "min": 14, "max": 83, "status": "Diffusing"},
-        {"round": "Round 3", "bits": 63.747, "pct": 49.8024, "std": 4.5374, "min": 35, "max": 84, "status": "Full Avalanche"},
-        {"round": "Round 4", "bits": 64.088, "pct": 50.0688, "std": 4.4146, "min": 44, "max": 84, "status": "Full Avalanche"},
-        {"round": "Round 5", "bits": 63.904, "pct": 49.9248, "std": 4.4079, "min": 43, "max": 86, "status": "Full Avalanche"},
-        {"round": "Round 6", "bits": 64.025, "pct": 50.0193, "std": 4.4327, "min": 44, "max": 86, "status": "Full Avalanche"},
-        {"round": "Round 7", "bits": 64.024, "pct": 50.0187, "std": 4.4343, "min": 41, "max": 86, "status": "Full Avalanche"},
-        {"round": "Round 8", "bits": 64.072, "pct": 50.0565, "std": 4.4150, "min": 44, "max": 87, "status": "Full Avalanche"}
-    ]
+    with open(sens_json_path, "r", encoding="utf-8") as f:
+        sens_data_full = json.load(f)
+        pt_avalanche_data = sens_data_full["pt_avalanche"]
+        key_sensitivity_data = sens_data_full["key_sensitivity"]
 
-    # Image Cryptanalysis Data (Lena & Baboon 512x512)
-    img_data = {
-        "Lena": {
-            "h_plain": 7.445082, "h_cipher": 7.999194,
-            "rh_p": 0.971498, "rv_p": 0.985366, "rd_p": 0.957486,
-            "rh_c": 0.002179, "rv_c": -0.001341, "rd_c": -0.006297,
-            "chi_p": 158338.65, "chi_c": 292.6660, "pval_c": 0.052470,
-            "npcr_pt_mean": 99.6051, "npcr_pt_std": 0.0036,
-            "uaci_pt_mean": 33.4613, "uaci_pt_std": 0.0461,
-            "npcr_key_mean": 99.6092, "npcr_key_std": 0.0104,
-            "uaci_key_mean": 33.4635, "uaci_key_std": 0.0514
-        },
-        "Baboon": {
-            "h_plain": 7.358320, "h_cipher": 7.999304,
-            "rh_p": 0.865008, "rv_p": 0.762377, "rd_p": 0.725735,
-            "rh_c": -0.002223, "rv_c": -0.026114, "rd_c": 0.010940,
-            "chi_p": 187366.25, "chi_c": 253.3320, "pval_c": 0.517738,
-            "npcr_pt_mean": 99.6129, "npcr_pt_std": 0.0090,
-            "uaci_pt_mean": 33.4728, "uaci_pt_std": 0.0529,
-            "npcr_key_mean": 99.6091, "npcr_key_std": 0.0107,
-            "uaci_key_mean": 33.4729, "uaci_key_std": 0.0406
-        }
-    }
+    with open(img_json_path, "r", encoding="utf-8") as f:
+        img_data = json.load(f)
 
-    # Software Benchmark Data (13th Gen Intel Core i3-13100F)
-    benchmark_data = [
-        # 100 KB
-        {"size": "100 KB", "algo": "Rubik-4D (Enc CBC)", "time": 753.07, "tp": 129.68, "cpb": 25.13, "ent": 7.9983, "ok": "100%"},
-        {"size": "100 KB", "algo": "Rubik-4D (Dec CBC)", "time": 614.00, "tp": 159.05, "cpb": 20.49, "ent": "---", "ok": "100%"},
-        {"size": "100 KB", "algo": "AES-128 (FIPS-197)", "time": 838.61, "tp": 116.45, "cpb": 27.99, "ent": 7.9980, "ok": "100%"},
-        {"size": "100 KB", "algo": "Speck-128 (NSA ARX)", "time": 197.79, "tp": 493.74, "cpb": 6.60, "ent": 7.9982, "ok": "100%"},
-        {"size": "100 KB", "algo": "Simon-128 (NSA Feistel)", "time": 656.68, "tp": 148.71, "cpb": 21.92, "ent": 7.9983, "ok": "100%"},
-        {"size": "100 KB", "algo": "ChaCha20 (RFC-8439)", "time": 149.87, "tp": 651.62, "cpb": 5.00, "ent": 7.9981, "ok": "100%"},
-        # 500 KB
-        {"size": "500 KB", "algo": "Rubik-4D (Enc CBC)", "time": 1957.51, "tp": 124.72, "cpb": 26.13, "ent": 7.9997, "ok": "100%"},
-        {"size": "500 KB", "algo": "Rubik-4D (Dec CBC)", "time": 1772.06, "tp": 137.77, "cpb": 23.66, "ent": "---", "ok": "100%"},
-        {"size": "500 KB", "algo": "AES-128 (FIPS-197)", "time": 2413.60, "tp": 101.15, "cpb": 32.22, "ent": 7.9997, "ok": "100%"},
-        {"size": "500 KB", "algo": "Speck-128 (NSA ARX)", "time": 530.04, "tp": 460.60, "cpb": 7.08, "ent": 7.9996, "ok": "100%"},
-        {"size": "500 KB", "algo": "Simon-128 (NSA Feistel)", "time": 1858.27, "tp": 131.38, "cpb": 24.81, "ent": 7.9997, "ok": "100%"},
-        {"size": "500 KB", "algo": "ChaCha20 (RFC-8439)", "time": 396.34, "tp": 615.99, "cpb": 5.29, "ent": 7.9996, "ok": "100%"},
-        # 1 MB
-        {"size": "1 MB", "algo": "Rubik-4D (Enc CBC)", "time": 1758.57, "tp": 113.73, "cpb": 28.66, "ent": 7.9998, "ok": "100%"},
-        {"size": "1 MB", "algo": "Rubik-4D (Dec CBC)", "time": 2049.85, "tp": 97.57, "cpb": 33.41, "ent": "---", "ok": "100%"},
-        {"size": "1 MB", "algo": "AES-128 (FIPS-197)", "time": 3245.77, "tp": 61.62, "cpb": 52.89, "ent": 7.9998, "ok": "100%"},
-        {"size": "1 MB", "algo": "Speck-128 (NSA ARX)", "time": 653.20, "tp": 306.18, "cpb": 10.64, "ent": 7.9998, "ok": "100%"},
-        {"size": "1 MB", "algo": "Simon-128 (NSA Feistel)", "time": 1350.83, "tp": 148.06, "cpb": 22.01, "ent": 7.9998, "ok": "100%"},
-        {"size": "1 MB", "algo": "ChaCha20 (RFC-8439)", "time": 277.13, "tp": 721.69, "cpb": 4.52, "ent": 7.9998, "ok": "100%"},
-        # 2 MB
-        {"size": "2 MB", "algo": "Rubik-4D (Enc CBC)", "time": 1398.44, "tp": 143.02, "cpb": 22.79, "ent": 7.9999, "ok": "100%"},
-        {"size": "2 MB", "algo": "Rubik-4D (Dec CBC)", "time": 1230.86, "tp": 162.49, "cpb": 20.06, "ent": "---", "ok": "100%"},
-        {"size": "2 MB", "algo": "AES-128 (FIPS-197)", "time": 2060.69, "tp": 97.05, "cpb": 33.58, "ent": 7.9999, "ok": "100%"},
-        {"size": "2 MB", "algo": "Speck-128 (NSA ARX)", "time": 471.16, "tp": 424.49, "cpb": 7.68, "ent": 7.9999, "ok": "100%"},
-        {"size": "2 MB", "algo": "Simon-128 (NSA Feistel)", "time": 1452.31, "tp": 137.71, "cpb": 23.67, "ent": 7.9999, "ok": "100%"},
-        {"size": "2 MB", "algo": "ChaCha20 (RFC-8439)", "time": 334.22, "tp": 598.41, "cpb": 5.45, "ent": 7.9999, "ok": "100%"},
-        # 5 MB
-        {"size": "5 MB", "algo": "Rubik-4D (Enc CBC)", "time": 2257.85, "tp": 110.72, "cpb": 29.44, "ent": 8.0000, "ok": "100%"},
-        {"size": "5 MB", "algo": "Rubik-4D (Dec CBC)", "time": 1695.34, "tp": 147.46, "cpb": 22.10, "ent": "---", "ok": "100%"},
-        {"size": "5 MB", "algo": "AES-128 (FIPS-197)", "time": 2331.45, "tp": 107.23, "cpb": 30.40, "ent": 8.0000, "ok": "100%"},
-        {"size": "5 MB", "algo": "Speck-128 (NSA ARX)", "time": 530.33, "tp": 471.41, "cpb": 6.91, "ent": 8.0000, "ok": "100%"},
-        {"size": "5 MB", "algo": "Simon-128 (NSA Feistel)", "time": 1767.32, "tp": 141.46, "cpb": 23.04, "ent": 8.0000, "ok": "100%"},
-        {"size": "5 MB", "algo": "ChaCha20 (RFC-8439)", "time": 370.56, "tp": 674.66, "cpb": 4.83, "ent": 8.0000, "ok": "100%"},
-        # 20 MB
-        {"size": "20 MB", "algo": "Rubik-4D (Enc CBC)", "time": 3443.08, "tp": 116.18, "cpb": 28.05, "ent": 8.0000, "ok": "100%"},
-        {"size": "20 MB", "algo": "Rubik-4D (Dec CBC)", "time": 2805.32, "tp": 142.59, "cpb": 22.86, "ent": "---", "ok": "100%"},
-        {"size": "20 MB", "algo": "AES-128 (FIPS-197)", "time": 4155.93, "tp": 96.25, "cpb": 33.86, "ent": 8.0000, "ok": "100%"},
-        {"size": "20 MB", "algo": "Speck-128 (NSA ARX)", "time": 936.00, "tp": 427.35, "cpb": 7.63, "ent": 8.0000, "ok": "100%"},
-        {"size": "20 MB", "algo": "Simon-128 (NSA Feistel)", "time": 3049.37, "tp": 131.17, "cpb": 24.85, "ent": 8.0000, "ok": "100%"},
-        {"size": "20 MB", "algo": "ChaCha20 (RFC-8439)", "time": 620.15, "tp": 645.01, "cpb": 5.05, "ent": 8.0000, "ok": "100%"}
-    ]
+    with open(bench_json_path, "r", encoding="utf-8") as f:
+        bench_data_full = json.load(f)
+        benchmark_data = bench_data_full["benchmarks"]
+        single_block_data = bench_data_full["single_block"]
+
+    # Calculate average SAC for K_1..K_8 dynamically
+    avg_bits_k1_k8 = sum(r["bits"] for r in key_sac_data[1:]) / 8.0
+    avg_pct_k1_k8 = sum(r["pct"] for r in key_sac_data[1:]) / 8.0
+    avg_std_k1_k8 = sum(r["std"] for r in key_sac_data[1:]) / 8.0
 
     # =========================================================================
     # 2. GENERATE LATEX TABLES
@@ -151,6 +64,7 @@ def generate_report():
     tex_content = []
     tex_content.append("% ==========================================================================")
     tex_content.append("% RUBIK-4D CRYPTANALYSIS & EXPERIMENTAL EVALUATION TABLES")
+    tex_content.append("% Dynamically generated from real hardware test runs on 13th Gen Intel Core i3-13100F")
     tex_content.append("% Formatted for direct inclusion into article draft (e.g. haogianguyen.tex)")
     tex_content.append("% ==========================================================================\n")
 
@@ -168,7 +82,7 @@ def generate_report():
         lut_str = r['lut'].replace("%", "\\%")
         tex_content.append(f"{r['rk']} & ${r['bits']:.3f} / 128$ & ${r['pct']:.4f}\\%$ & ${r['std']:.4f}\\%$ & {lut_str} \\\\")
     tex_content.append("\\midrule")
-    tex_content.append("\\textbf{Avg ($K_1 \\dots K_8$)} & $\\mathbf{4.007 / 128}$ & $\\mathbf{3.1301\\%}$ & $\\mathbf{1.0901\\%}$ & $\\mathbf{50.05\\%}$ \\\\")
+    tex_content.append(f"\\textbf{{Avg ($K_1 \\dots K_8$)}} & $\\mathbf{{{avg_bits_k1_k8:.3f} / 128}}$ & $\\mathbf{{{avg_pct_k1_k8:.4f}\\%}}$ & $\\mathbf{{{avg_std_k1_k8:.4f}\\%}}$ & $\\mathbf{{50.05\\%}}$ \\\\")
     tex_content.append("\\bottomrule")
     tex_content.append("\\end{tabular}")
     tex_content.append("\\end{table}\n")
@@ -279,9 +193,9 @@ def generate_report():
         bold_prefix = "\\textbf{" if "Rubik-4D" in b['algo'] else ""
         bold_suffix = "}" if "Rubik-4D" in b['algo'] else ""
         
-        ent_str = f"{b['ent']:.4f}" if isinstance(b['ent'], float) else b['ent']
+        ent_str = f"{float(b['ent']):.4f}" if b['ent'] != "---" else "---"
         ok_str = b['ok'].replace("%", "\\%")
-        tex_content.append(f" & {bold_prefix}{b['algo']}{bold_suffix} & {bold_prefix}{b['time']:.2f}{bold_suffix} & {bold_prefix}{b['tp']:.2f}{bold_suffix} & {bold_prefix}{b['cpb']:.2f}{bold_suffix} & {ent_str} & {ok_str} \\\\")
+        tex_content.append(f" & {bold_prefix}{b['algo']}{bold_suffix} & {bold_prefix}{float(b['time']):.2f}{bold_suffix} & {bold_prefix}{float(b['tp']):.2f}{bold_suffix} & {bold_prefix}{float(b['cpb']):.2f}{bold_suffix} & {ent_str} & {ok_str} \\\\")
 
     tex_content.append("\\bottomrule")
     tex_content.append("\\end{tabular}")
@@ -316,7 +230,7 @@ def generate_report():
     md_content.append("| :--- | :--- | :--- | :--- | :--- | :--- |")
     for r in key_sac_data:
         md_content.append(f"| **{r['rk']}** | {r['bits']:.3f} / 128 | {r['pct']:.4f}% | {r['std']:.4f}% | {r['min']} / {r['max']} | {r['lut']} |")
-    md_content.append(f"| **Trung bình ($K_1 \\dots K_8$)** | **4.007 / 128** | **3.1301%** | **1.0901%** | **1 / 8** | **50.05%** |")
+    md_content.append(f"| **Trung bình ($K_1 \\dots K_8$)** | **{avg_bits_k1_k8:.3f} / 128** | **{avg_pct_k1_k8:.4f}%** | **{avg_std_k1_k8:.4f}%** | **1 / 8** | **50.05%** |")
     md_content.append("\n> **Nhận xét chuyên sâu:**")
     md_content.append("> - Thuật sinh khóa Rubik-4D cập nhật theo công thức: $K_r[i] = \\text{AES\\_SBOX}[K_{r-1}[(i+3) \\pmod{16}]] \\oplus (r \\times \\text{0x1B})$. Khi 1 bit lật ở 1 byte của Master Key, tại mỗi vòng kế tiếp, đúng byte tương ứng bị biến đổi qua AES S-box. Trong phạm vi byte bị ảnh hưởng, số bit lật đạt trung bình $4.019 / 8 = 50.24\\%$, thoả mãn hoàn hảo tiêu chí SAC cấp độ byte (byte-level SAC).")
     md_content.append("> - Đặc biệt, giá trị $k\\_fold = \\bigoplus_{i=0}^{15} master[i]$ bị đảo bit với xác suất 100%, dẫn tới chỉ số bảng hoán vị $\\text{tbl\\_idx} = ((r + (k\\_fold \\ \\& \\ 7)) \\pmod 6) \\times 2 + ((k\\_fold \\gg 3) \\ \\& \\ 1)$ bị thay đổi với tỷ lệ đúng **50.05%** (tiệm cận tuyệt đối 50%), đảm bảo cấu trúc hoán vị của cipher phân kỳ mạnh ngay từ vòng 1.")
@@ -348,7 +262,7 @@ def generate_report():
     md_content.append("| :--- | :--- | :--- | :--- | :--- | :--- |")
     for k in key_sensitivity_data:
         md_content.append(f"| **{k['round']}** | {k['bits']:.3f} / 128 | **{k['pct']:.4f}%** | {k['std']:.4f}% | {k['min']} / {k['max']} | {k['status']} |")
-    md_content.append("\n> **Kết quả:** Bản mã cuối cùng (Ciphertext sau Round 8) đạt độ nhạy khóa trung bình **50.0565% $\\pm$ 4.4150%** (Min: 44, Max: 87 bits), hoàn toàn ngăn chặn các cuộc tấn công vi sai liên quan khóa (Related-Key Differential Attacks).")
+    md_content.append(f"\n> **Kết quả:** Bản mã cuối cùng (Ciphertext sau Round 8) đạt độ nhạy khóa trung bình **{key_sensitivity_data[8]['pct']:.4f}% $\\pm$ {key_sensitivity_data[8]['std']:.4f}%** (Min: {key_sensitivity_data[8]['min']}, Max: {key_sensitivity_data[8]['max']} bits), hoàn toàn ngăn chặn các cuộc tấn công vi sai liên quan khóa (Related-Key Differential Attacks).")
     md_content.append("\n---\n")
 
     # Section 3
@@ -366,8 +280,8 @@ def generate_report():
     md_content.append(f"| **NPCR (Đổi 1 bit khóa - 100 lần thử)** | --- | **{img_data['Lena']['npcr_key_mean']:.4f}%** | --- | **{img_data['Baboon']['npcr_key_mean']:.4f}%** | $\\ge 99.6094\\%$ |")
     md_content.append(f"| **UACI (Đổi 1 bit khóa - 100 lần thử)** | --- | **{img_data['Lena']['uaci_key_mean']:.4f}%** | --- | **{img_data['Baboon']['uaci_key_mean']:.4f}%** | $\\approx 33.4635\\%$ |")
     md_content.append("\n> **Biểu đồ thị giác:** Các biểu đồ so sánh ảnh gốc, ảnh mã hóa và lược đồ phân bố xám Histogram đã được tạo và lưu trực tiếp tại:")
-    md_content.append("> - `tests/Lena_cryptanalysis_eval.png`")
-    md_content.append("> - `tests/Baboon_cryptanalysis_eval.png`")
+    md_content.append("> - `reports/Lena_cryptanalysis_eval.png`")
+    md_content.append("> - `reports/Baboon_cryptanalysis_eval.png`")
     md_content.append("\n---\n")
 
     # Section 4
@@ -377,13 +291,13 @@ def generate_report():
     md_content.append("\n| Payload Size | Algorithm | Execution Time (ms) | Throughput (MB/s) | Cycles/Byte (cpb) | Entropy | Integrity |")
     md_content.append("| :--- | :--- | :--- | :--- | :--- | :--- | :--- |")
     for b in benchmark_data:
-        ent_str = f"{b['ent']:.4f}" if isinstance(b['ent'], float) else b['ent']
+        ent_str = f"{float(b['ent']):.4f}" if b['ent'] != "---" else "---"
         bold = "**" if "Rubik-4D" in b['algo'] else ""
-        md_content.append(f"| {b['size']} | {bold}{b['algo']}{bold} | {bold}{b['time']:.2f}{bold} | {bold}{b['tp']:.2f}{bold} | {bold}{b['cpb']:.2f}{bold} | {ent_str} | {b['ok']} |")
+        md_content.append(f"| {b['size']} | {bold}{b['algo']}{bold} | {bold}{float(b['time']):.2f}{bold} | {bold}{float(b['tp']):.2f}{bold} | {bold}{float(b['cpb']):.2f}{bold} | {ent_str} | {b['ok']} |")
     
     md_content.append("\n### 5.2. Đo độ trễ mã hóa khối lõi (Core Block Latency - 1.000.000 khối 16-byte)")
-    md_content.append("- **Rubik-4D Single Block Encrypt:** **499.61 cycles/block** (**31.23 cycles/byte**)")
-    md_content.append("- **Rubik-4D Single Block Decrypt:** **605.27 cycles/block** (**37.83 cycles/byte**)")
+    md_content.append(f"- **Rubik-4D Single Block Encrypt:** **{single_block_data['enc_cycles_block']:.2f} cycles/block** (**{single_block_data['enc_cpb']:.2f} cycles/byte**)")
+    md_content.append(f"- **Rubik-4D Single Block Decrypt:** **{single_block_data['dec_cycles_block']:.2f} cycles/block** (**{single_block_data['dec_cpb']:.2f} cycles/byte**)")
     md_content.append("\n> **Đánh giá hiệu năng:**")
     md_content.append("> - Rubik-4D vượt trội hơn đáng kể so với phần mềm chuẩn **AES-128 (FIPS-197)** trên mọi kích thước tải (đạt **143.02 MB/s** ở 2 MB so với **97.05 MB/s** của AES-128, tương đương mức tăng tốc **+47.4%**).")
     md_content.append("> - Số chu kỳ xung nhịp trên mỗi byte của Rubik-4D đạt từ **20.06 cpb đến 28.66 cpb**, thấp hơn rõ rệt so với AES-128 (đạt tới 33.58 - 52.89 cpb).")
@@ -395,22 +309,13 @@ def generate_report():
     md_content.append("- `tests/test_sensitivity.c`: Mã nguồn C đo độ nhạy bản rõ/khóa round-by-round.")
     md_content.append("- `tests/test_image_analysis.py`: Script Python kiểm định mật mã ảnh trên Lena và Baboon.")
     md_content.append("- `tests/test_benchmark.c`: Mã nguồn C đo Throughput, cpb và single block latency.")
-    md_content.append("- `tests/Rubik4D_Tables.tex`: File chứa toàn bộ 6 bảng biểu chuẩn LaTeX sẵn sàng nhúng vào bài báo.")
-    md_content.append("- `tests/Lena_cryptanalysis_eval.png`: Đồ họa trực quan phân tích ảnh Lena.")
-    md_content.append("- `tests/Baboon_cryptanalysis_eval.png`: Đồ họa trực quan phân tích ảnh Baboon.")
+    md_content.append("- `reports/Rubik4D_Tables.tex`: File chứa toàn bộ 6 bảng biểu chuẩn LaTeX sẵn sàng nhúng vào bài báo.")
+    md_content.append("- `reports/Lena_cryptanalysis_eval.png`: Đồ họa trực quan phân tích ảnh Lena.")
+    md_content.append("- `reports/Baboon_cryptanalysis_eval.png`: Đồ họa trực quan phân tích ảnh Baboon.")
 
     with open(md_file, "w", encoding="utf-8") as f:
         f.write("\n".join(md_content))
     print(f"[+] Exported Markdown report to {md_file}")
-
-    # Copy image figures to reports/
-    import shutil
-    for img_file in ["Lena_cryptanalysis_eval.png", "Baboon_cryptanalysis_eval.png"]:
-        src_img = os.path.join(base_dir, img_file)
-        dst_img = os.path.join(reports_dir, img_file)
-        if os.path.exists(src_img):
-            shutil.copy(src_img, dst_img)
-            print(f"[+] Copied {img_file} to {reports_dir}")
 
 if __name__ == "__main__":
     generate_report()

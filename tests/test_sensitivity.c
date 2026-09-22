@@ -275,8 +275,97 @@ void run_key_sensitivity_test(void) {
     printf("[+] Ideal Expectation: 50.0000%%\n\n");
 }
 
+static void export_json_results(void) {
+    xoroshiro_ctx rng_pt = { .s = { 0xA5A5A5A512345678ULL, 0x5A5A5A5A87654321ULL } };
+    xoroshiro_ctx rng_key = { .s = { 0xF0E1D2C3B4A59687ULL, 0x1A2B3C4D5E6F7081ULL } };
+    rubik4d_init_tables();
+
+    double pt_sum[9] = {0.0}, pt_sum_sq[9] = {0.0};
+    int pt_min[9], pt_max[9];
+    for (int r = 0; r <= 8; r++) { pt_min[r] = 128; pt_max[r] = 0; }
+
+    for (int sample = 0; sample < NUM_SAMPLES; sample++) {
+        uint8_t key[16], p1[16], p2[16];
+        fill_random(&rng_pt, key, 16);
+        fill_random(&rng_pt, p1, 16);
+        memcpy(p2, p1, 16);
+        int bit_idx = (int)(xoroshiro_next(&rng_pt) % 128);
+        p2[bit_idx / 8] ^= (1 << (bit_idx % 8));
+
+        rubik4d_ctx ctx;
+        rubik4d_key_setup(&ctx, key, 16);
+        uint8_t states1[9][16], states2[9][16];
+        rubik4d_trace_rounds(&ctx, p1, states1);
+        rubik4d_trace_rounds(&ctx, p2, states2);
+
+        for (int r = 0; r <= 8; r++) {
+            int d = count_bit_diff(states1[r], states2[r], 16);
+            pt_sum[r] += d;
+            pt_sum_sq[r] += (double)d * d;
+            if (d < pt_min[r]) pt_min[r] = d;
+            if (d > pt_max[r]) pt_max[r] = d;
+        }
+    }
+
+    double key_sum[9] = {0.0}, key_sum_sq[9] = {0.0};
+    int key_min[9], key_max[9];
+    for (int r = 0; r <= 8; r++) { key_min[r] = 128; key_max[r] = 0; }
+
+    for (int sample = 0; sample < NUM_SAMPLES; sample++) {
+        uint8_t pt[16], k1[16], k2[16];
+        fill_random(&rng_key, pt, 16);
+        fill_random(&rng_key, k1, 16);
+        memcpy(k2, k1, 16);
+        int bit_idx = (int)(xoroshiro_next(&rng_key) % 128);
+        k2[bit_idx / 8] ^= (1 << (bit_idx % 8));
+
+        rubik4d_ctx ctx1, ctx2;
+        rubik4d_key_setup(&ctx1, k1, 16);
+        rubik4d_key_setup(&ctx2, k2, 16);
+        uint8_t states1[9][16], states2[9][16];
+        rubik4d_trace_rounds(&ctx1, pt, states1);
+        rubik4d_trace_rounds(&ctx2, pt, states2);
+
+        for (int r = 0; r <= 8; r++) {
+            int d = count_bit_diff(states1[r], states2[r], 16);
+            key_sum[r] += d;
+            key_sum_sq[r] += (double)d * d;
+            if (d < key_min[r]) key_min[r] = d;
+            if (d > key_max[r]) key_max[r] = d;
+        }
+    }
+
+    FILE *f = fopen("reports/sensitivity.json", "w");
+    if (!f) f = fopen("sensitivity.json", "w");
+    if (!f) return;
+
+    fprintf(f, "{\n  \"pt_avalanche\": [\n");
+    for (int r = 0; r <= 8; r++) {
+        double m_bits = pt_sum[r] / NUM_SAMPLES;
+        double m_pct = (m_bits / 128.0) * 100.0;
+        double var = (pt_sum_sq[r] / NUM_SAMPLES) - (m_bits * m_bits);
+        double s_pct = (sqrt(var > 0 ? var : 0) / 128.0) * 100.0;
+        const char *st = (r == 0) ? "Whitening (1 bit)" : (m_pct >= 48.0 ? "Full Avalanche" : "Diffusing");
+        fprintf(f, "    {\"round\": \"Round %d\", \"bits\": %.3f, \"pct\": %.4f, \"std\": %.4f, \"min\": %d, \"max\": %d, \"status\": \"%s\"}%s\n",
+                r, m_bits, m_pct, s_pct, pt_min[r], pt_max[r], st, (r == 8) ? "" : ",");
+    }
+    fprintf(f, "  ],\n  \"key_sensitivity\": [\n");
+    for (int r = 0; r <= 8; r++) {
+        double m_bits = key_sum[r] / NUM_SAMPLES;
+        double m_pct = (m_bits / 128.0) * 100.0;
+        double var = (key_sum_sq[r] / NUM_SAMPLES) - (m_bits * m_bits);
+        double s_pct = (sqrt(var > 0 ? var : 0) / 128.0) * 100.0;
+        const char *st = (r == 0) ? "Whitening (1 bit)" : (m_pct >= 48.0 ? "Full Avalanche" : "Diffusing");
+        fprintf(f, "    {\"round\": \"Round %d\", \"bits\": %.3f, \"pct\": %.4f, \"std\": %.4f, \"min\": %d, \"max\": %d, \"status\": \"%s\"}%s\n",
+                r, m_bits, m_pct, s_pct, key_min[r], key_max[r], st, (r == 8) ? "" : ",");
+    }
+    fprintf(f, "  ]\n}\n");
+    fclose(f);
+}
+
 int main(void) {
     run_plaintext_avalanche_test();
     run_key_sensitivity_test();
+    export_json_results();
     return 0;
 }

@@ -25,8 +25,9 @@ def main():
     os.makedirs(bin_dir, exist_ok=True)
     os.makedirs(reports_dir, exist_ok=True)
 
+    sys.stdout.reconfigure(encoding='utf-8')
     print("====================================================================")
-    print(" 🧊 RUBIK-4D CRYPTANALYSIS SUITE - AUTOMATED BUILD & TEST RUNNER")
+    print(" [*] RUBIK-4D CRYPTANALYSIS SUITE - AUTOMATED BUILD & TEST RUNNER")
     print("====================================================================")
 
     # 1. Compile binaries into tests/bin/
@@ -47,11 +48,16 @@ def main():
     run_cmd(f'"{os.path.join(bin_dir, "test_sensitivity.exe")}" > "{raw_sens}"', cwd=root_dir)
 
     # 4. Run Test 3: Image Cryptanalysis
-    print("\n--- [Step 4/4] Running Image Cryptanalysis on Lena & Baboon ---")
+    print("\n--- [Step 4/5] Running Image Cryptanalysis on Lena & Baboon ---")
     raw_img = os.path.join(reports_dir, "raw_image_cryptanalysis.txt")
     run_cmd(f'python tests/test_image_analysis.py > "{raw_img}"', cwd=root_dir)
 
-    # 5. Generate LaTeX Tables and Markdown Report
+    # 5. Run Test 4: Software Performance Benchmark
+    print("\n--- [Step 5/5] Running Software Performance & Hardware Cycles Benchmark ---")
+    raw_bench = os.path.join(reports_dir, "raw_software_benchmark.txt")
+    run_cmd(f'"{os.path.join(bin_dir, "test_benchmark.exe")}" > "{raw_bench}"', cwd=root_dir)
+
+    # 6. Generate LaTeX Tables and Markdown Report
     print("\n--- Generating Consolidated Reports & LaTeX Tables into reports/ ---")
     run_cmd(f"python tests/generate_report.py", cwd=root_dir)
 

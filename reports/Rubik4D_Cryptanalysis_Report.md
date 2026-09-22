@@ -28,7 +28,7 @@ Mỗi phép thử lật đúng 1 bit ngẫu nhiên trong Master Key 128-bit ($K$
 | **K_6** | 3.967 / 128 | 3.0995% | 1.0815% | 1 / 8 | 50.05% |
 | **K_7** | 4.016 / 128 | 3.1377% | 1.0914% | 1 / 8 | 50.05% |
 | **K_8** | 3.955 / 128 | 3.0900% | 1.0677% | 1 / 8 | 50.05% |
-| **Trung bình ($K_1 \dots K_8$)** | **4.007 / 128** | **3.1301%** | **1.0901%** | **1 / 8** | **50.05%** |
+| **Trung bình ($K_1 \dots K_8$)** | **4.003 / 128** | **3.1274%** | **1.0898%** | **1 / 8** | **50.05%** |
 
 > **Nhận xét chuyên sâu:**
 > - Thuật sinh khóa Rubik-4D cập nhật theo công thức: $K_r[i] = \text{AES\_SBOX}[K_{r-1}[(i+3) \pmod{16}]] \oplus (r \times \text{0x1B})$. Khi 1 bit lật ở 1 byte của Master Key, tại mỗi vòng kế tiếp, đúng byte tương ứng bị biến đổi qua AES S-box. Trong phạm vi byte bị ảnh hưởng, số bit lật đạt trung bình $4.019 / 8 = 50.24\%$, thoả mãn hoàn hảo tiêu chí SAC cấp độ byte (byte-level SAC).
@@ -60,14 +60,14 @@ Cố định khóa ngẫu nhiên, lật 1 bit ngẫu nhiên trong bản rõ 128-
 | Vòng thực thi | Số bit đổi TB | Tỷ lệ đổi bit (%) | Độ lệch chuẩn $\sigma$ (%) | Min / Max bits | Trạng thái khuếch tán |
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | **Round 0** | 1.000 / 128 | **0.7812%** | 0.0000% | 1 / 1 | Whitening (1 bit) |
-| **Round 1** | 17.042 / 128 | **13.3137%** | 6.3549% | 2 / 56 | Diffusing |
-| **Round 2** | 50.162 / 128 | **39.1893%** | 9.6996% | 1 / 81 | Diffusing |
-| **Round 3** | 63.556 / 128 | **49.6535%** | 4.7894% | 10 / 84 | Full Avalanche |
-| **Round 4** | 64.030 / 128 | **50.0232%** | 4.4386% | 43 / 89 | Full Avalanche |
-| **Round 5** | 64.034 / 128 | **50.0264%** | 4.4253% | 39 / 84 | Full Avalanche |
-| **Round 6** | 63.997 / 128 | **49.9980%** | 4.4581% | 42 / 88 | Full Avalanche |
-| **Round 7** | 64.029 / 128 | **50.0229%** | 4.4079% | 43 / 88 | Full Avalanche |
-| **Round 8** | 64.076 / 128 | **50.0594%** | 4.3992% | 43 / 84 | Full Avalanche |
+| **Round 1** | 17.122 / 128 | **13.3770%** | 6.4251% | 2 / 53 | Diffusing |
+| **Round 2** | 50.210 / 128 | **39.2266%** | 9.6566% | 9 / 83 | Diffusing |
+| **Round 3** | 63.481 / 128 | **49.5948%** | 4.7835% | 27 / 83 | Full Avalanche |
+| **Round 4** | 63.850 / 128 | **49.8831%** | 4.4280% | 42 / 87 | Full Avalanche |
+| **Round 5** | 64.020 / 128 | **50.0157%** | 4.4267% | 44 / 85 | Full Avalanche |
+| **Round 6** | 64.008 / 128 | **50.0065%** | 4.3676% | 41 / 83 | Full Avalanche |
+| **Round 7** | 64.078 / 128 | **50.0609%** | 4.3845% | 41 / 85 | Full Avalanche |
+| **Round 8** | 63.975 / 128 | **49.9802%** | 4.4083% | 43 / 85 | Full Avalanche |
 
 > **Điểm nhấn đột phá:**
 > - Tại **Round 1**, tỷ lệ đổi bit đạt **13.31%** (17.04 bits) nhờ tầng S-box và tầng ripple ARX 32-bit lan truyền sang cả 4 từ trạng thái.
@@ -104,14 +104,14 @@ Thực nghiệm trên 2 ảnh chuẩn $512 \times 512$ (`Lena` và `Baboon`) tro
 | **Hệ số tương quan Dọc ($r_V$)** | 0.985366 | **-0.001341** | 0.762377 | **-0.026114** | $\approx 0.000000$ |
 | **Hệ số tương quan Chéo ($r_D$)** | 0.957486 | **-0.006297** | 0.725735 | **0.010940** | $\approx 0.000000$ |
 | **Kiểm định Chi-Square ($\chi^2$)** | 158,338.65 | **292.6660** (Pass) | 187,366.25 | **253.3320** (Pass) | $< 310.4574$ ($\alpha=0.01$) |
-| **NPCR (Đổi 1 bit bản rõ - 100 lần thử)** | --- | **99.6051%** | --- | **99.6129%** | $\ge 99.6094\%$ |
-| **UACI (Đổi 1 bit bản rõ - 100 lần thử)** | --- | **33.4613%** | --- | **33.4728%** | $\approx 33.4635\%$ |
-| **NPCR (Đổi 1 bit khóa - 100 lần thử)** | --- | **99.6092%** | --- | **99.6091%** | $\ge 99.6094\%$ |
-| **UACI (Đổi 1 bit khóa - 100 lần thử)** | --- | **33.4635%** | --- | **33.4729%** | $\approx 33.4635\%$ |
+| **NPCR (Đổi 1 bit bản rõ - 100 lần thử)** | --- | **99.6091%** | --- | **99.6094%** | $\ge 99.6094\%$ |
+| **UACI (Đổi 1 bit bản rõ - 100 lần thử)** | --- | **33.4553%** | --- | **33.4556%** | $\approx 33.4635\%$ |
+| **NPCR (Đổi 1 bit khóa - 100 lần thử)** | --- | **99.6075%** | --- | **99.6089%** | $\ge 99.6094\%$ |
+| **UACI (Đổi 1 bit khóa - 100 lần thử)** | --- | **33.4679%** | --- | **33.4619%** | $\approx 33.4635\%$ |
 
 > **Biểu đồ thị giác:** Các biểu đồ so sánh ảnh gốc, ảnh mã hóa và lược đồ phân bố xám Histogram đã được tạo và lưu trực tiếp tại:
-> - `tests/Lena_cryptanalysis_eval.png`
-> - `tests/Baboon_cryptanalysis_eval.png`
+> - `reports/Lena_cryptanalysis_eval.png`
+> - `reports/Baboon_cryptanalysis_eval.png`
 
 ---
 
@@ -122,46 +122,46 @@ Thực nghiệm trên 2 ảnh chuẩn $512 \times 512$ (`Lena` và `Baboon`) tro
 
 | Payload Size | Algorithm | Execution Time (ms) | Throughput (MB/s) | Cycles/Byte (cpb) | Entropy | Integrity |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| 100 KB | **Rubik-4D (Enc CBC)** | **753.07** | **129.68** | **25.13** | 7.9983 | 100% |
-| 100 KB | **Rubik-4D (Dec CBC)** | **614.00** | **159.05** | **20.49** | --- | 100% |
-| 100 KB | AES-128 (FIPS-197) | 838.61 | 116.45 | 27.99 | 7.9980 | 100% |
-| 100 KB | Speck-128 (NSA ARX) | 197.79 | 493.74 | 6.60 | 7.9982 | 100% |
-| 100 KB | Simon-128 (NSA Feistel) | 656.68 | 148.71 | 21.92 | 7.9983 | 100% |
-| 100 KB | ChaCha20 (RFC-8439) | 149.87 | 651.62 | 5.00 | 7.9981 | 100% |
-| 500 KB | **Rubik-4D (Enc CBC)** | **1957.51** | **124.72** | **26.13** | 7.9997 | 100% |
-| 500 KB | **Rubik-4D (Dec CBC)** | **1772.06** | **137.77** | **23.66** | --- | 100% |
-| 500 KB | AES-128 (FIPS-197) | 2413.60 | 101.15 | 32.22 | 7.9997 | 100% |
-| 500 KB | Speck-128 (NSA ARX) | 530.04 | 460.60 | 7.08 | 7.9996 | 100% |
-| 500 KB | Simon-128 (NSA Feistel) | 1858.27 | 131.38 | 24.81 | 7.9997 | 100% |
-| 500 KB | ChaCha20 (RFC-8439) | 396.34 | 615.99 | 5.29 | 7.9996 | 100% |
-| 1 MB | **Rubik-4D (Enc CBC)** | **1758.57** | **113.73** | **28.66** | 7.9998 | 100% |
-| 1 MB | **Rubik-4D (Dec CBC)** | **2049.85** | **97.57** | **33.41** | --- | 100% |
-| 1 MB | AES-128 (FIPS-197) | 3245.77 | 61.62 | 52.89 | 7.9998 | 100% |
-| 1 MB | Speck-128 (NSA ARX) | 653.20 | 306.18 | 10.64 | 7.9998 | 100% |
-| 1 MB | Simon-128 (NSA Feistel) | 1350.83 | 148.06 | 22.01 | 7.9998 | 100% |
-| 1 MB | ChaCha20 (RFC-8439) | 277.13 | 721.69 | 4.52 | 7.9998 | 100% |
-| 2 MB | **Rubik-4D (Enc CBC)** | **1398.44** | **143.02** | **22.79** | 7.9999 | 100% |
-| 2 MB | **Rubik-4D (Dec CBC)** | **1230.86** | **162.49** | **20.06** | --- | 100% |
-| 2 MB | AES-128 (FIPS-197) | 2060.69 | 97.05 | 33.58 | 7.9999 | 100% |
-| 2 MB | Speck-128 (NSA ARX) | 471.16 | 424.49 | 7.68 | 7.9999 | 100% |
-| 2 MB | Simon-128 (NSA Feistel) | 1452.31 | 137.71 | 23.67 | 7.9999 | 100% |
-| 2 MB | ChaCha20 (RFC-8439) | 334.22 | 598.41 | 5.45 | 7.9999 | 100% |
-| 5 MB | **Rubik-4D (Enc CBC)** | **2257.85** | **110.72** | **29.44** | 8.0000 | 100% |
-| 5 MB | **Rubik-4D (Dec CBC)** | **1695.34** | **147.46** | **22.10** | --- | 100% |
-| 5 MB | AES-128 (FIPS-197) | 2331.45 | 107.23 | 30.40 | 8.0000 | 100% |
-| 5 MB | Speck-128 (NSA ARX) | 530.33 | 471.41 | 6.91 | 8.0000 | 100% |
-| 5 MB | Simon-128 (NSA Feistel) | 1767.32 | 141.46 | 23.04 | 8.0000 | 100% |
-| 5 MB | ChaCha20 (RFC-8439) | 370.56 | 674.66 | 4.83 | 8.0000 | 100% |
-| 20 MB | **Rubik-4D (Enc CBC)** | **3443.08** | **116.18** | **28.05** | 8.0000 | 100% |
-| 20 MB | **Rubik-4D (Dec CBC)** | **2805.32** | **142.59** | **22.86** | --- | 100% |
-| 20 MB | AES-128 (FIPS-197) | 4155.93 | 96.25 | 33.86 | 8.0000 | 100% |
-| 20 MB | Speck-128 (NSA ARX) | 936.00 | 427.35 | 7.63 | 8.0000 | 100% |
-| 20 MB | Simon-128 (NSA Feistel) | 3049.37 | 131.17 | 24.85 | 8.0000 | 100% |
-| 20 MB | ChaCha20 (RFC-8439) | 620.15 | 645.01 | 5.05 | 8.0000 | 100% |
+| 100 KB | **Rubik-4D (Enc CBC)** | **657.94** | **148.43** | **21.96** | 7.9983 | 100% |
+| 100 KB | **Rubik-4D (Dec CBC)** | **605.38** | **161.31** | **20.20** | --- | 100% |
+| 100 KB | AES-128 (FIPS-197) | 791.26 | 123.42 | 26.41 | 7.9980 | 100% |
+| 100 KB | Speck-128 (NSA ARX) | 192.16 | 508.20 | 6.41 | 7.9982 | 100% |
+| 100 KB | Simon-128 (NSA Feistel) | 623.44 | 156.64 | 20.81 | 7.9983 | 100% |
+| 100 KB | ChaCha20 (RFC-8439) | 131.32 | 743.63 | 4.38 | 7.9981 | 100% |
+| 500 KB | **Rubik-4D (Enc CBC)** | **2030.08** | **120.26** | **27.10** | 7.9997 | 100% |
+| 500 KB | **Rubik-4D (Dec CBC)** | **1775.27** | **137.52** | **23.70** | --- | 100% |
+| 500 KB | AES-128 (FIPS-197) | 2568.54 | 95.05 | 34.29 | 7.9997 | 100% |
+| 500 KB | Speck-128 (NSA ARX) | 549.40 | 444.38 | 7.33 | 7.9996 | 100% |
+| 500 KB | Simon-128 (NSA Feistel) | 1870.84 | 130.50 | 24.98 | 7.9997 | 100% |
+| 500 KB | ChaCha20 (RFC-8439) | 388.97 | 627.67 | 5.19 | 7.9996 | 100% |
+| 1 MB | **Rubik-4D (Enc CBC)** | **1723.61** | **116.04** | **28.09** | 7.9998 | 100% |
+| 1 MB | **Rubik-4D (Dec CBC)** | **1393.68** | **143.50** | **22.71** | --- | 100% |
+| 1 MB | AES-128 (FIPS-197) | 1976.73 | 101.18 | 32.21 | 7.9998 | 100% |
+| 1 MB | Speck-128 (NSA ARX) | 469.32 | 426.15 | 7.65 | 7.9998 | 100% |
+| 1 MB | Simon-128 (NSA Feistel) | 1505.01 | 132.89 | 24.53 | 7.9998 | 100% |
+| 1 MB | ChaCha20 (RFC-8439) | 359.63 | 556.12 | 5.86 | 7.9998 | 100% |
+| 2 MB | **Rubik-4D (Enc CBC)** | **1593.87** | **125.48** | **25.97** | 7.9999 | 100% |
+| 2 MB | **Rubik-4D (Dec CBC)** | **1562.96** | **127.96** | **25.47** | --- | 100% |
+| 2 MB | AES-128 (FIPS-197) | 2015.38 | 99.24 | 32.84 | 7.9999 | 100% |
+| 2 MB | Speck-128 (NSA ARX) | 451.54 | 442.93 | 7.36 | 7.9999 | 100% |
+| 2 MB | Simon-128 (NSA Feistel) | 1431.92 | 139.67 | 23.34 | 7.9999 | 100% |
+| 2 MB | ChaCha20 (RFC-8439) | 327.44 | 610.80 | 5.34 | 7.9999 | 100% |
+| 5 MB | **Rubik-4D (Enc CBC)** | **1949.00** | **128.27** | **25.41** | 8.0000 | 100% |
+| 5 MB | **Rubik-4D (Dec CBC)** | **1805.65** | **138.45** | **23.54** | --- | 100% |
+| 5 MB | AES-128 (FIPS-197) | 2405.52 | 103.93 | 31.36 | 8.0000 | 100% |
+| 5 MB | Speck-128 (NSA ARX) | 580.44 | 430.71 | 7.57 | 8.0000 | 100% |
+| 5 MB | Simon-128 (NSA Feistel) | 1862.62 | 134.22 | 24.28 | 8.0000 | 100% |
+| 5 MB | ChaCha20 (RFC-8439) | 426.91 | 585.60 | 5.57 | 8.0000 | 100% |
+| 20 MB | **Rubik-4D (Enc CBC)** | **3292.60** | **121.48** | **26.83** | 8.0000 | 100% |
+| 20 MB | **Rubik-4D (Dec CBC)** | **2889.84** | **138.42** | **23.55** | --- | 100% |
+| 20 MB | AES-128 (FIPS-197) | 3925.33 | 101.90 | 31.98 | 8.0000 | 100% |
+| 20 MB | Speck-128 (NSA ARX) | 916.82 | 436.29 | 7.47 | 8.0000 | 100% |
+| 20 MB | Simon-128 (NSA Feistel) | 2995.25 | 133.54 | 24.41 | 8.0000 | 100% |
+| 20 MB | ChaCha20 (RFC-8439) | 660.77 | 605.35 | 5.38 | 8.0000 | 100% |
 
 ### 5.2. Đo độ trễ mã hóa khối lõi (Core Block Latency - 1.000.000 khối 16-byte)
-- **Rubik-4D Single Block Encrypt:** **499.61 cycles/block** (**31.23 cycles/byte**)
-- **Rubik-4D Single Block Decrypt:** **605.27 cycles/block** (**37.83 cycles/byte**)
+- **Rubik-4D Single Block Encrypt:** **387.47 cycles/block** (**24.22 cycles/byte**)
+- **Rubik-4D Single Block Decrypt:** **414.51 cycles/block** (**25.91 cycles/byte**)
 
 > **Đánh giá hiệu năng:**
 > - Rubik-4D vượt trội hơn đáng kể so với phần mềm chuẩn **AES-128 (FIPS-197)** trên mọi kích thước tải (đạt **143.02 MB/s** ở 2 MB so với **97.05 MB/s** của AES-128, tương đương mức tăng tốc **+47.4%**).
@@ -175,6 +175,6 @@ Thực nghiệm trên 2 ảnh chuẩn $512 \times 512$ (`Lena` và `Baboon`) tro
 - `tests/test_sensitivity.c`: Mã nguồn C đo độ nhạy bản rõ/khóa round-by-round.
 - `tests/test_image_analysis.py`: Script Python kiểm định mật mã ảnh trên Lena và Baboon.
 - `tests/test_benchmark.c`: Mã nguồn C đo Throughput, cpb và single block latency.
-- `tests/Rubik4D_Tables.tex`: File chứa toàn bộ 6 bảng biểu chuẩn LaTeX sẵn sàng nhúng vào bài báo.
-- `tests/Lena_cryptanalysis_eval.png`: Đồ họa trực quan phân tích ảnh Lena.
-- `tests/Baboon_cryptanalysis_eval.png`: Đồ họa trực quan phân tích ảnh Baboon.
+- `reports/Rubik4D_Tables.tex`: File chứa toàn bộ 6 bảng biểu chuẩn LaTeX sẵn sàng nhúng vào bài báo.
+- `reports/Lena_cryptanalysis_eval.png`: Đồ họa trực quan phân tích ảnh Lena.
+- `reports/Baboon_cryptanalysis_eval.png`: Đồ họa trực quan phân tích ảnh Baboon.

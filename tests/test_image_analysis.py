@@ -1,5 +1,6 @@
 import os
 import sys
+import json
 import ctypes
 import numpy as np
 import matplotlib.pyplot as plt
@@ -178,9 +179,10 @@ def analyze_image(img_path, img_name):
     print(f"[*] Running {num_trials} trials of Plaintext 1-bit Difference (NPCR & UACI)...")
     for trial in range(num_trials):
         mod_arr = plain_arr.copy()
-        # Flip 1 bit in the very first byte (coordinate (0, 0)) with varying bit positions
-        bit_pos = trial % 8
-        mod_arr[0, 0] ^= (1 << bit_pos)
+        # Flip 1 bit randomly within the first 16-byte block
+        px_x = int(rng.integers(0, 16))
+        bit_pos = int(rng.integers(0, 8))
+        mod_arr[0, px_x] ^= (1 << bit_pos)
 
         mod_bytes = mod_arr.tobytes()
         cipher2_bytes = encrypt_rubik4d_cbc(mod_bytes, master_key, iv)
@@ -274,6 +276,14 @@ def main():
     print(f"{'NPCR Key 1-bit':<36} | {res_lena['npcr_key_mean']:<19.4f}% | {res_baboon['npcr_key_mean']:<19.4f}% | >= 99.6094%")
     print(f"{'UACI Key 1-bit':<36} | {res_lena['uaci_key_mean']:<19.4f}% | {res_baboon['uaci_key_mean']:<19.4f}% | ~ 33.4635%")
     print("=" * 88 + "\n")
+
+    # Export to reports/image_analysis.json
+    reports_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "reports")
+    os.makedirs(reports_dir, exist_ok=True)
+    json_path = os.path.join(reports_dir, "image_analysis.json")
+    with open(json_path, "w", encoding="utf-8") as f:
+        json.dump({"Lena": res_lena, "Baboon": res_baboon}, f, indent=2)
+    print(f"[+] Saved image cryptanalysis JSON to {json_path}")
 
 if __name__ == "__main__":
     main()

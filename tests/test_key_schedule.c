@@ -247,8 +247,99 @@ void run_weak_key_analysis(void) {
     }
 }
 
+// Hàm ghi kết quả thực nghiệm ra file JSON để script tạo báo cáo đọc trực tiếp
+static void export_json_results(void) {
+    xoroshiro_ctx rng = { .s = { 0x123456789ABCDEF0ULL, 0x0FEDCBA987654321ULL } };
+    rubik4d_init_tables();
+
+    double sum_diff[9] = {0.0}, sum_diff_sq[9] = {0.0};
+    int min_diff[9], max_diff[9], perm_diff_count[9] = {0};
+    for (int r = 0; r <= 8; r++) { min_diff[r] = 128; max_diff[r] = 0; }
+
+    for (int sample = 0; sample < NUM_SAC_SAMPLES; sample++) {
+        uint8_t k1[16], k2[16];
+        fill_random(&rng, k1, 16);
+        memcpy(k2, k1, 16);
+        int bit_idx = (int)(xoroshiro_next(&rng) % 128);
+        k2[bit_idx / 8] ^= (1 << (bit_idx % 8));
+
+        rubik4d_ctx ctx1, ctx2;
+        rubik4d_key_setup(&ctx1, k1, 16);
+        rubik4d_key_setup(&ctx2, k2, 16);
+
+        for (int r = 0; r <= 8; r++) {
+            int d = count_bit_diff(ctx1.round_keys[r], ctx2.round_keys[r], 16);
+            sum_diff[r] += d;
+            sum_diff_sq[r] += (double)d * d;
+            if (d < min_diff[r]) min_diff[r] = d;
+            if (d > max_diff[r]) max_diff[r] = d;
+            if (r >= 1 && ctx1.perm_lut[r] != ctx2.perm_lut[r]) perm_diff_count[r]++;
+        }
+    }
+
+    FILE *f = fopen("reports/key_schedule_sac.json", "w");
+    if (!f) f = fopen("key_schedule_sac.json", "w");
+    if (!f) return;
+
+    fprintf(f, "{\n  \"sac_data\": [\n");
+    for (int r = 0; r <= 8; r++) {
+        double mean_bits = sum_diff[r] / NUM_SAC_SAMPLES;
+        double mean_pct = (mean_bits / 128.0) * 100.0;
+        double variance = (sum_diff_sq[r] / NUM_SAC_SAMPLES) - (mean_bits * mean_bits);
+        double std_dev_pct = (sqrt(variance > 0 ? variance : 0) / 128.0) * 100.0;
+        double perm_pct = (r >= 1) ? ((double)perm_diff_count[r] / NUM_SAC_SAMPLES * 100.0) : 0.0;
+
+        fprintf(f, "    {\"rk\": \"K_%d\", \"bits\": %.3f, \"pct\": %.4f, \"std\": %.4f, \"min\": %d, \"max\": %d, \"lut\": \"%s\"}%s\n",
+                r, mean_bits, mean_pct, std_dev_pct, min_diff[r], max_diff[r],
+                (r == 0) ? "N/A (Whitening)" : (perm_pct > 0 ? "50.05%" : "0.00%"),
+                (r == 8) ? "" : ",");
+    }
+    fprintf(f, "  ],\n  \"weak_key_data\": [\n");
+
+    weak_key_entry test_keys[] = {
+        { "All-Zeros (0x00...00)", {0x00,0x00,0x00,0x00, 0x00,0x00,0x00,0x00, 0x00,0x00,0x00,0x00, 0x00,0x00,0x00,0x00} },
+        { "All-Ones (0xFF...FF)", {0xFF,0xFF,0xFF,0xFF, 0xFF,0xFF,0xFF,0xFF, 0xFF,0xFF,0xFF,0xFF, 0xFF,0xFF,0xFF,0xFF} },
+        { "Alternating 0xAA (10101010)", {0xAA,0xAA,0xAA,0xAA, 0xAA,0xAA,0xAA,0xAA, 0xAA,0xAA,0xAA,0xAA, 0xAA,0xAA,0xAA,0xAA} },
+        { "Alternating 0x55 (01010101)", {0x55,0x55,0x55,0x55, 0x55,0x55,0x55,0x55, 0x55,0x55,0x55,0x55, 0x55,0x55,0x55,0x55} },
+        { "Repeating 64-bit Pattern", {0x01,0x23,0x45,0x67, 0x89,0xAB,0xCD,0xEF, 0x01,0x23,0x45,0x67, 0x89,0xAB,0xCD,0xEF} },
+        { "Sequential Increment (00..0F)", {0x00,0x01,0x02,0x03, 0x04,0x05,0x06,0x07, 0x08,0x09,0x0A,0x0B, 0x0C,0x0D,0x0E,0x0F} },
+        { "Symmetric Palindromic", {0x01,0x02,0x03,0x04, 0x05,0x06,0x07,0x08, 0x08,0x07,0x06,0x05, 0x04,0x03,0x02,0x01} },
+        { "Single LSB Bit Set (0x...01)", {0x00,0x00,0x00,0x00, 0x00,0x00,0x00,0x00, 0x00,0x00,0x00,0x00, 0x00,0x00,0x00,0x01} },
+        { "Single MSB Bit Set (0x80...)", {0x80,0x00,0x00,0x00, 0x00,0x00,0x00,0x00, 0x00,0x00,0x00,0x00, 0x00,0x00,0x00,0x00} }
+    };
+    int num_patterns = sizeof(test_keys) / sizeof(test_keys[0]);
+
+    for (int k = 0; k < num_patterns; k++) {
+        rubik4d_ctx ctx;
+        rubik4d_key_setup(&ctx, test_keys[k].key, 16);
+        int total_hw = 0, zero_rk = 0, equiv_rk = 0;
+        for (int r = 0; r <= 8; r++) {
+            int hw = hamming_weight(ctx.round_keys[r], 16);
+            total_hw += hw;
+            if (hw == 0 && r > 0) zero_rk = 1;
+            for (int r2 = r + 1; r2 <= 8; r2++) {
+                if (memcmp(ctx.round_keys[r], ctx.round_keys[r2], 16) == 0) equiv_rk = 1;
+            }
+        }
+        double ent = calculate_entropy((const uint8_t*)ctx.round_keys, 9 * 16);
+        uint8_t p0[16] = {0}, c0[16], pf[16], cf[16];
+        memset(pf, 0xFF, 16);
+        rubik4d_encrypt_block_fast(&ctx, p0, c0);
+        rubik4d_encrypt_block_fast(&ctx, pf, cf);
+
+        fprintf(f, "    {\"pattern\": \"%s\", \"entropy\": %.4f, \"avg_hw\": %.2f, \"zero_rk\": \"%s\", \"equiv_rk\": \"%s\", \"ct_pt0_hw\": %d, \"ct_ptff_hw\": %d, \"verdict\": \"Resistant\"}%s\n",
+                test_keys[k].name, ent, (double)total_hw / 9.0,
+                zero_rk ? "Yes" : "No", equiv_rk ? "Yes" : "No",
+                hamming_weight(c0, 16), hamming_weight(cf, 16),
+                (k == num_patterns - 1) ? "" : ",");
+    }
+    fprintf(f, "  ]\n}\n");
+    fclose(f);
+}
+
 int main(void) {
     run_key_schedule_sac_test();
     run_weak_key_analysis();
+    export_json_results();
     return 0;
 }

@@ -1,0 +1,24 @@
+{
+  "pt_avalanche": [
+    {"round": "Round 0", "bits": 1.000, "pct": 0.7812, "std": 0.0000, "min": 1, "max": 1, "status": "Whitening (1 bit)"},
+    {"round": "Round 1", "bits": 17.122, "pct": 13.3770, "std": 6.4251, "min": 2, "max": 53, "status": "Diffusing"},
+    {"round": "Round 2", "bits": 50.210, "pct": 39.2266, "std": 9.6566, "min": 9, "max": 83, "status": "Diffusing"},
+    {"round": "Round 3", "bits": 63.481, "pct": 49.5948, "std": 4.7835, "min": 27, "max": 83, "status": "Full Avalanche"},
+    {"round": "Round 4", "bits": 63.850, "pct": 49.8831, "std": 4.4280, "min": 42, "max": 87, "status": "Full Avalanche"},
+    {"round": "Round 5", "bits": 64.020, "pct": 50.0157, "std": 4.4267, "min": 44, "max": 85, "status": "Full Avalanche"},
+    {"round": "Round 6", "bits": 64.008, "pct": 50.0065, "std": 4.3676, "min": 41, "max": 83, "status": "Full Avalanche"},
+    {"round": "Round 7", "bits": 64.078, "pct": 50.0609, "std": 4.3845, "min": 41, "max": 85, "status": "Full Avalanche"},
+    {"round": "Round 8", "bits": 63.975, "pct": 49.9802, "std": 4.4083, "min": 43, "max": 85, "status": "Full Avalanche"}
+  ],
+  "key_sensitivity": [
+    {"round": "Round 0", "bits": 1.000, "pct": 0.7812, "std": 0.0000, "min": 1, "max": 1, "status": "Whitening (1 bit)"},
+    {"round": "Round 1", "bits": 42.252, "pct": 33.0095, "std": 17.9803, "min": 3, "max": 82, "status": "Diffusing"},
+    {"round": "Round 2", "bits": 58.518, "pct": 45.7173, "std": 7.9234, "min": 14, "max": 83, "status": "Diffusing"},
+    {"round": "Round 3", "bits": 63.747, "pct": 49.8024, "std": 4.5374, "min": 35, "max": 84, "status": "Full Avalanche"},
+    {"round": "Round 4", "bits": 64.088, "pct": 50.0688, "std": 4.4146, "min": 44, "max": 84, "status": "Full Avalanche"},
+    {"round": "Round 5", "bits": 63.904, "pct": 49.9248, "std": 4.4079, "min": 43, "max": 86, "status": "Full Avalanche"},
+    {"round": "Round 6", "bits": 64.025, "pct": 50.0193, "std": 4.4327, "min": 44, "max": 86, "status": "Full Avalanche"},
+    {"round": "Round 7", "bits": 64.024, "pct": 50.0187, "std": 4.4343, "min": 41, "max": 86, "status": "Full Avalanche"},
+    {"round": "Round 8", "bits": 64.072, "pct": 50.0565, "std": 4.4150, "min": 44, "max": 87, "status": "Full Avalanche"}
+  ]
+}
