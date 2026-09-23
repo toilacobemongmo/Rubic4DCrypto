@@ -1,12 +1,16 @@
 \relax 
 \citation{beaulieu2015simon}
-\citation{diaconu2008}
-\citation{lin2010rubik,huang2019rubik}
 \@writefile{toc}{\contentsline {section}{\numberline {1}Introduction}{1}{}\protected@file@percent }
 \newlabel{sec:intro}{{1}{1}{Introduction}{section.1}{}}
+\citation{diaconu2008}
+\citation{lin2010rubik}
+\citation{loukhafallah2011image}
+\citation{khalid2014rubik}
+\citation{huang2019rubik}
 \citation{ghosal2021berc}
 \citation{aldmour2022cierpf}
 \citation{li2022quantum}
+\citation{wang2023spatiotemporal}
 \citation{nair2024rubik}
 \citation{dunkelman2020alzette}
 \citation{hadipour2023milp}
@@ -17,25 +21,24 @@
 \citation{kim2004dft}
 \@writefile{toc}{\contentsline {section}{\numberline {2}Related Work and Novelty Comparison}{2}{}\protected@file@percent }
 \newlabel{sec:related_work}{{2}{2}{Related Work and Novelty Comparison}{section.2}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {3}The Proposed Rubik-4D Cipher Scheme}{2}{}\protected@file@percent }
-\newlabel{sec:cipher}{{3}{2}{The Proposed Rubik-4D Cipher Scheme}{section.3}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.1}State Representation and 4D Tesseract Geometry}{2}{}\protected@file@percent }
 \@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Qualitative and Structural Comparison Between Conventional Rubik-Inspired Ciphers and Rubik-4D}}{3}{}\protected@file@percent }
 \providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
 \newlabel{tab:rubik_comparison}{{1}{3}{Related Work and Novelty Comparison}{table.1}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Operational pipeline of Rubik-4D: (a) Encryption transformation consisting of SubBytes, $SO(4)$ hypercube spatial permutation, 32-bit ARX ripple diffusion, and AddRoundKey; (b) Bijective inverse decryption transformation.}}{3}{}\protected@file@percent }
-\newlabel{fig:rubik4d_architecture}{{1}{3}{State Representation and 4D Tesseract Geometry}{figure.1}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {3}The Proposed Rubik-4D Cipher Scheme}{3}{}\protected@file@percent }
+\newlabel{sec:cipher}{{3}{3}{The Proposed Rubik-4D Cipher Scheme}{section.3}{}}
 \@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Notational conventions.}}{3}{}\protected@file@percent }
 \newlabel{tab:notations}{{2}{3}{The Proposed Rubik-4D Cipher Scheme}{table.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1}State Representation and 4D Tesseract Geometry}{3}{}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.2}Round Function Execution Pipeline}{3}{}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {3.2.1}Non-linear Substitution (SubBytes)}{3}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.2.2}$SO(4)$ Tesseract Permutation}{3}{}\protected@file@percent }
-\@writefile{loa}{\contentsline {algorithm}{\numberline {1}{\ignorespaces Rubik-4D Encryption Pipeline.}}{4}{}\protected@file@percent }
-\newlabel{alg:rubik4d_enc}{{1}{4}{Round Function Execution Pipeline}{algorithm.1}{}}
+\@writefile{loa}{\contentsline {algorithm}{\numberline {1}{\ignorespaces Rubik-4D Encryption Pipeline.}}{3}{}\protected@file@percent }
+\newlabel{alg:rubik4d_enc}{{1}{3}{Round Function Execution Pipeline}{algorithm.1}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Architectural comparison diagram: (a) Traditional 3D Rubik scrambling model (pixel coordinate permutation coupled with floating-point chaos, slow and lacking mathematical security proofs); (b) Proposed Rubik-4D block cipher architecture highlighting core structural breakthroughs (non-linear AES S-box, $O(1)$ precomputed $SO(4)$ 4D hypercube rotations, integer-only 32-bit ARX carry ripple, and automated MILP provable security).}}{4}{}\protected@file@percent }
+\newlabel{fig:rubik4d_architecture}{{1}{4}{State Representation and 4D Tesseract Geometry}{figure.1}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.2.2}$SO(4)$ Tesseract Permutation}{4}{}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {3.2.3}32-bit ARX Ripple-Carry Diffusion}{4}{}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {3.2.4}Subkey Addition (AddRoundKey)}{4}{}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.3}Decryption Process}{4}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.4}Key Schedule and Parameter Derivation}{4}{}\protected@file@percent }
 \citation{mouha2011differential}
 \citation{mouha2011differential,fu2016milp}
 \citation{daemen2002design}
@@ -45,28 +48,29 @@
 \citation{matsui1993linear}
 \@writefile{loa}{\contentsline {algorithm}{\numberline {2}{\ignorespaces Rubik-4D Decryption Pipeline.}}{5}{}\protected@file@percent }
 \newlabel{alg:rubik4d_dec}{{2}{5}{Decryption Process}{algorithm.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.4}Key Schedule and Parameter Derivation}{5}{}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.5}Mathematical Security Proofs}{5}{}\protected@file@percent }
 \newlabel{subsec:proofs}{{3.5}{5}{Mathematical Security Proofs}{subsection.3.5}{}}
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {3.5.1}Differential Cryptanalysis via MILP}{5}{}\protected@file@percent }
 \@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces Active S-Box Lower Bound Scan (Differential Cryptanalysis)}}{5}{}\protected@file@percent }
 \newlabel{tab:diff_results}{{3}{5}{Differential Cryptanalysis via MILP}{table.3}{}}
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {3.5.2}Linear Cryptanalysis Evaluation}{5}{}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {4}{\ignorespaces Active S-Box Lower Bound Scan (Linear Cryptanalysis)}}{5}{}\protected@file@percent }
-\newlabel{tab:linear_results}{{4}{5}{Linear Cryptanalysis Evaluation}{table.4}{}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.5.3}Integral Cryptanalysis Resistance}{5}{}\protected@file@percent }
 \citation{biryukov1999slide,biryukov2000slide}
 \citation{rukhin2010nist}
 \citation{gmt0005}
 \citation{kim2004dft}
 \citation{kim2004dft}
+\@writefile{lot}{\contentsline {table}{\numberline {4}{\ignorespaces Active S-Box Lower Bound Scan (Linear Cryptanalysis)}}{6}{}\protected@file@percent }
+\newlabel{tab:linear_results}{{4}{6}{Linear Cryptanalysis Evaluation}{table.4}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.5.3}Integral Cryptanalysis Resistance}{6}{}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {3.5.4}Algebraic Degree Bounds and SAT Immunity}{6}{}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {3.5.5}Resistance Against Slide Attacks}{6}{}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {3.5.6}Empirical Statistical Randomness Validations}{6}{}\protected@file@percent }
 \@writefile{lot}{\contentsline {table}{\numberline {5}{\ignorespaces NIST SP 800-22 randomness test results of the Rubik-4D keystream (1,000 sets).}}{6}{}\protected@file@percent }
 \newlabel{tab:nist_results}{{5}{6}{Empirical Statistical Randomness Validations}{table.5}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {6}{\ignorespaces GM/T 0005-2021 randomness test results of the Rubik-4D ciphertext (10,000 samples, 20~MB).}}{6}{}\protected@file@percent }
-\newlabel{tab:gmt_results}{{6}{6}{Empirical Statistical Randomness Validations}{table.6}{}}
 \citation{webster1985sac}
+\@writefile{lot}{\contentsline {table}{\numberline {6}{\ignorespaces GM/T 0005-2021 randomness test results of the Rubik-4D ciphertext (10,000 samples, 20~MB).}}{7}{}\protected@file@percent }
+\newlabel{tab:gmt_results}{{6}{7}{Empirical Statistical Randomness Validations}{table.6}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {4}Experimental Evaluation and Performance Benchmarking}{7}{}\protected@file@percent }
 \newlabel{sec:experiments}{{4}{7}{Experimental Evaluation and Performance Benchmarking}{section.4}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Key Schedule Security and Strict Avalanche Criterion}{7}{}\protected@file@percent }
@@ -78,30 +82,30 @@
 \@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Plaintext Avalanche Effect and Key Sensitivity}{7}{}\protected@file@percent }
 \newlabel{subsec:avalanche_sensitivity}{{4.2}{7}{Plaintext Avalanche Effect and Key Sensitivity}{subsection.4.2}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {4.3}Software Performance and Hardware Cycles Benchmarking}{7}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.4}Image Cryptanalysis and Statistical Validation}{7}{}\protected@file@percent }
-\newlabel{subsec:image_crypt}{{4.4}{7}{Image Cryptanalysis and Statistical Validation}{subsection.4.4}{}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.4.1}Visual Inspection and Histogram Uniformity}{7}{}\protected@file@percent }
+\newlabel{subsec:perf_benchmarks}{{4.3}{7}{Software Performance and Hardware Cycles Benchmarking}{subsection.4.3}{}}
 \@writefile{lot}{\contentsline {table}{\numberline {9}{\ignorespaces Software Performance Benchmarks Across Primitives (13th Gen Intel Core i3-13100F @ 3.40GHz)}}{8}{}\protected@file@percent }
 \newlabel{tab:benchmarks_all}{{9}{8}{Key Schedule Security and Strict Avalanche Criterion}{table.9}{}}
 \@writefile{lot}{\contentsline {table}{\numberline {10}{\ignorespaces Plaintext Avalanche Effect and Key Sensitivity Propagation Across Rounds 1 to 8 (10,000 Executions)}}{8}{}\protected@file@percent }
 \newlabel{tab:avalanche_combined}{{10}{8}{Plaintext Avalanche Effect and Key Sensitivity}{table.10}{}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.4.2}Adjacent Pixel Correlation Analysis}{8}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.4}Image Cryptanalysis and Statistical Validation}{8}{}\protected@file@percent }
+\newlabel{subsec:image_crypt}{{4.4}{8}{Image Cryptanalysis and Statistical Validation}{subsection.4.4}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.4.1}Visual Inspection and Histogram Uniformity}{8}{}\protected@file@percent }
 \citation{diaconu2008}
 \citation{huang2019rubik}
 \citation{ghosal2021berc}
 \citation{aldmour2022cierpf}
 \citation{li2022quantum}
 \citation{nair2024rubik}
-\citation{nair2024rubik}
-\citation{li2022quantum}
-\newlabel{fig:lena_analysis}{{2a}{9}{Key Schedule Security and Strict Avalanche Criterion}{subfigure.2.1}{}}
-\newlabel{sub@fig:lena_analysis}{{a}{9}{Key Schedule Security and Strict Avalanche Criterion}{subfigure.2.1}{}}
-\newlabel{fig:baboon_analysis}{{2b}{9}{Key Schedule Security and Strict Avalanche Criterion}{subfigure.2.2}{}}
-\newlabel{sub@fig:baboon_analysis}{{b}{9}{Key Schedule Security and Strict Avalanche Criterion}{subfigure.2.2}{}}
+\citation{li2022quantum,nair2024rubik}
+\newlabel{fig:lena_analysis}{{2a}{9}{Image Cryptanalysis and Statistical Validation}{subfigure.2.1}{}}
+\newlabel{sub@fig:lena_analysis}{{a}{9}{Image Cryptanalysis and Statistical Validation}{subfigure.2.1}{}}
+\newlabel{fig:baboon_analysis}{{2b}{9}{Image Cryptanalysis and Statistical Validation}{subfigure.2.2}{}}
+\newlabel{sub@fig:baboon_analysis}{{b}{9}{Image Cryptanalysis and Statistical Validation}{subfigure.2.2}{}}
 \@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Visual inspection and histogram uniformity analysis of standard $512 \times 512$ benchmarks encrypted via Rubik-4D.}}{9}{}\protected@file@percent }
-\newlabel{fig:image_analysis}{{2}{9}{Key Schedule Security and Strict Avalanche Criterion}{figure.2}{}}
+\newlabel{fig:image_analysis}{{2}{9}{Image Cryptanalysis and Statistical Validation}{figure.2}{}}
 \@writefile{lot}{\contentsline {table}{\numberline {11}{\ignorespaces Quantitative Image Cryptanalysis Evaluation on $512 \times 512$ Benchmarks}}{9}{}\protected@file@percent }
 \newlabel{tab:image_security}{{11}{9}{Visual Inspection and Histogram Uniformity}{table.11}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.4.2}Adjacent Pixel Correlation Analysis}{9}{}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {4.4.3}Differential Resistance Metrics (NPCR and UACI)}{9}{}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {4.4.4}Comprehensive Comparison with State-of-the-Art Schemes}{9}{}\protected@file@percent }
 \bibcite{diaconu2008}{1}
@@ -111,21 +115,24 @@
 \bibcite{aldmour2022cierpf}{5}
 \bibcite{li2022quantum}{6}
 \bibcite{nair2024rubik}{7}
-\bibcite{dunkelman2020alzette}{8}
-\bibcite{hadipour2023milp}{9}
-\bibcite{zhang2023division}{10}
-\bibcite{daemen2002design}{11}
-\bibcite{webster1985sac}{12}
-\bibcite{beaulieu2015simon}{13}
-\bibcite{mouha2011differential}{14}
-\bibcite{fu2016milp}{15}
-\bibcite{lai1991markov}{16}
-\bibcite{matsui1993linear}{17}
-\bibcite{biryukov1999slide}{18}
-\bibcite{biryukov2000slide}{19}
-\bibcite{rukhin2010nist}{20}
-\bibcite{gmt0005}{21}
-\bibcite{kim2004dft}{22}
+\bibcite{loukhafallah2011image}{8}
+\bibcite{khalid2014rubik}{9}
+\bibcite{wang2023spatiotemporal}{10}
+\bibcite{dunkelman2020alzette}{11}
+\bibcite{hadipour2023milp}{12}
+\bibcite{zhang2023division}{13}
+\bibcite{daemen2002design}{14}
+\bibcite{webster1985sac}{15}
+\bibcite{beaulieu2015simon}{16}
+\bibcite{mouha2011differential}{17}
+\bibcite{fu2016milp}{18}
+\bibcite{lai1991markov}{19}
+\bibcite{matsui1993linear}{20}
+\bibcite{biryukov1999slide}{21}
+\bibcite{biryukov2000slide}{22}
+\bibcite{rukhin2010nist}{23}
+\bibcite{gmt0005}{24}
+\bibcite{kim2004dft}{25}
 \@writefile{lot}{\contentsline {table}{\numberline {12}{\ignorespaces Empirical Performance and Security Comparison with State-of-the-Art Rubik and Chaos Image Encryption Schemes ($512 \times 512$ Grayscale)}}{10}{}\protected@file@percent }
 \newlabel{tab:sota_image_comparison}{{12}{10}{Comprehensive Comparison with State-of-the-Art Schemes}{table.12}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {5}Conclusion}{10}{}\protected@file@percent }

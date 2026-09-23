@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.9.20)  23 SEP 2026 13:34
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.9.20)  23 SEP 2026 19:46
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1163,83 +1163,80 @@ AppData/Local/Programs/MiKTeX/fonts/enc/dvips/base/8r.enc}
 
 
 ]
-Underfull \hbox (badness 1442) in paragraph at lines 100--101
-[]\T5/ptm/b/n/10 Cªn An To n Tü ^^^ëng MILP v  Chu©n Hâa
- []
-
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <8> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 125.
-
-Underfull \hbox (badness 1648) in paragraph at lines 179--181
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 130.
+ [2]
+Underfull \hbox (badness 1648) in paragraph at lines 184--186
 []\T5/ptm/b/n/10 ^^^¦u v o: \T5/ptm/m/n/10 Khèi b£n rã $\OML/ztmcm/m/it/10 P$ \
 T5/ptm/m/n/10 (128-bit), sè váng $\OML/ztmcm/m/it/10 R \OT1/ztmcm/m/n/10 = 8$\T
 5/ptm/m/n/10 ,
  []
 
 
-Underfull \hbox (badness 1571) in paragraph at lines 179--181
+Underfull \hbox (badness 1571) in paragraph at lines 184--186
 \T5/ptm/m/n/10 khâa ch½nh $\OML/ztmcm/m/it/10 K[]$\T5/ptm/m/n/10 , tªp khâa ván
 g $\OMS/ztmcm/m/n/10 f\OML/ztmcm/m/it/10 K[]; [] ; K[]\OMS/ztmcm/m/n/10 g$\T5/p
 tm/m/n/10 , h¬ng sè
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 179--181
+Underfull \hbox (badness 10000) in paragraph at lines 184--186
 \T5/ptm/b/n/10 ^^^¦u ra: \T5/ptm/m/n/10 Khèi b£n m¢ $\OML/ztmcm/m/it/10 C[]$ \T
 5/ptm/m/n/10 (128-
  []
 
-[2] [3]
-Underfull \hbox (badness 4608) in paragraph at lines 390--392
+
+Overfull \hbox (9.49657pt too wide) in paragraph at lines 314--315
+ [][] 
+ []
+
+[3]
+Underfull \hbox (badness 4608) in paragraph at lines 412--414
 \T5/ptm/m/n/10 L÷ñc ^^_ç khâa mð rëng khâa ch½nh 128-bit $\OML/ztmcm/m/it/10 K[
 ] \OT1/ztmcm/m/n/10 =
  []
 
 [4] [5] [6]
-Underfull \hbox (badness 1466) in paragraph at lines 754--755
+Underfull \hbox (badness 1466) in paragraph at lines 776--777
 []\T5/ptm/m/n/10 Rubik-4D M¢ hâa ^^_ìn khèi: $\OT1/ztmcm/m/n/10 323\OML/ztmcm/m
 /it/10 :\OT1/ztmcm/m/n/10 20$ \T5/ptm/m/n/10 chu ký/khèi
  []
 
 
-Underfull \hbox (badness 1199) in paragraph at lines 755--756
+Underfull \hbox (badness 1199) in paragraph at lines 777--778
 []\T5/ptm/m/n/10 Rubik-4D Gi£i m¢ ^^_ìn khèi: $\OT1/ztmcm/m/n/10 339\OML/ztmcm/
 m/it/10 :\OT1/ztmcm/m/n/10 51$ \T5/ptm/m/n/10 chu ký/khèi
  []
 
 
-Underfull \hbox (badness 2626) in paragraph at lines 761--762
+Underfull \hbox (badness 2626) in paragraph at lines 783--784
 \T5/ptm/m/n/10 ^^_èi vîi m¢ hâa v  $\OT1/ztmcm/m/n/10 157\OML/ztmcm/m/it/10 :\O
 T1/ztmcm/m/n/10 40 \OMS/ztmcm/m/n/10 ^^@ \OT1/ztmcm/m/n/10 167\OML/ztmcm/m/it/1
 0 :\OT1/ztmcm/m/n/10 17$ \T5/ptm/m/n/10 MB/s ($\OT1/ztmcm/m/n/10 19\OML/ztmcm/m
 /it/10 :\OT1/ztmcm/m/n/10 50 \OMS/ztmcm/m/n/10 ^^@
  []
 
-<Lena_cryptanalysis_result.png, id=37, 794.97pt x 650.43pt>
+[7]
+<Lena_cryptanalysis_result.png, id=41, 794.97pt x 650.43pt>
 File: Lena_cryptanalysis_result.png Graphic file (type png)
 <use Lena_cryptanalysis_result.png>
-Package pdftex.def Info: Lena_cryptanalysis_result.png  used on input line 771.
+Package pdftex.def Info: Lena_cryptanalysis_result.png  used on input line 793.
 
 (pdftex.def)             Requested size: 237.63522pt x 194.42584pt.
-<Baboon_cryptanalysis_result.png, id=39, 794.97pt x 650.43pt>
+<Baboon_cryptanalysis_result.png, id=43, 794.97pt x 650.43pt>
 File: Baboon_cryptanalysis_result.png Graphic file (type png)
 <use Baboon_cryptanalysis_result.png>
-Package pdftex.def Info: Baboon_cryptanalysis_result.png  used on input line 77
-7.
+Package pdftex.def Info: Baboon_cryptanalysis_result.png  used on input line 79
+9.
 (pdftex.def)             Requested size: 237.63522pt x 194.42584pt.
-[7] [8]
-Underfull \hbox (badness 2393) in paragraph at lines 840--842
+ [8]
+Underfull \hbox (badness 2393) in paragraph at lines 862--864
 \T5/ptm/m/n/10 Ký vång lþ thuy¸t ^^_èi vîi d¢y ng¨u nhi¶n 8-bit l 
  []
 
 [9 <./Lena_cryptanalysis_result.png> <./Baboon_cryptanalysis_result.png>]
-Underfull \hbox (badness 3460) in paragraph at lines 920--921
-[]\T5/ptm/m/n/9 R. Beaulieu, D. Shors, J. Smith, S. Treatman-Clark,
- []
-
-
-Underfull \hbox (badness 1024) in paragraph at lines 944--945
-[]\T5/ptm/m/n/9 State Cryp-tog-ra-phy Ad-min-is-tra-tion of China, ``Ran-dom-
+Underfull \hbox (badness 1092) in paragraph at lines 977--978
+[]\T5/ptm/m/n/8 S.-J. Kim, K. Umeno, and A. Hasegawa, ``Cor-rec-tions of the
  []
 
 [10] (haogianguyen_vi.aux)
@@ -1249,13 +1246,13 @@ L3 programming layer <2025-12-24>
  ***********
  ) 
 Here is how much of TeX's memory you used:
- 19388 strings out of 467871
- 381463 string characters out of 5418376
- 825421 words of memory out of 5000000
- 47877 multiletter control sequences out of 15000+600000
- 712007 words of font info for 161 fonts, out of 8000000 for 9000
+ 19422 strings out of 467871
+ 382154 string characters out of 5418376
+ 825326 words of memory out of 5000000
+ 47905 multiletter control sequences out of 15000+600000
+ 719085 words of font info for 169 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 102i,16n,107p,2521b,938s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 102i,15n,107p,2521b,1007s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <C:/Users/ghaob/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/
 cmex10.pfb><C:/Users/ghaob/AppData/Local/Programs/MiKTeX/fonts/type1/public/ams
 fonts/cm/cmmi10.pfb><C:/Users/ghaob/AppData/Local/Programs/MiKTeX/fonts/type1/p
@@ -1271,7 +1268,7 @@ cal/Programs/MiKTeX/fonts/type1/urw/times/utmri8a.pfb><C:/Users/ghaob/AppData/L
 ocal/Programs/MiKTeX/fonts/type1/vntex/urwvn/utmri8v.pfb><C:/Users/ghaob/AppDat
 a/Local/Programs/MiKTeX/fonts/type1/vntex/vnr/vntt10.pfb><C:/Users/ghaob/AppDat
 a/Local/Programs/MiKTeX/fonts/type1/vntex/vnr/vntt9.pfb>
-Output written on haogianguyen_vi.pdf (10 pages, 7439467 bytes).
+Output written on haogianguyen_vi.pdf (10 pages, 7436338 bytes).
 PDF statistics:
  115 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
