@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.9.20)  23 SEP 2026 13:08
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.9.20)  23 SEP 2026 13:34
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1227,23 +1227,22 @@ File: Baboon_cryptanalysis_result.png Graphic file (type png)
 Package pdftex.def Info: Baboon_cryptanalysis_result.png  used on input line 77
 7.
 (pdftex.def)             Requested size: 237.63522pt x 194.42584pt.
-[7] [8 <./Lena_cryptanalysis_result.png> <./Baboon_cryptanalysis_result.png>]
+[7] [8]
 Underfull \hbox (badness 2393) in paragraph at lines 840--842
 \T5/ptm/m/n/10 Ký vång lþ thuy¸t ^^_èi vîi d¢y ng¨u nhi¶n 8-bit l 
  []
 
-
-Underfull \hbox (badness 3557) in paragraph at lines 880--881
-[]\T5/ptm/m/n/10 A. V. Di-a-conu and K. Loukhafal-lah, ``Circular-
+[9 <./Lena_cryptanalysis_result.png> <./Baboon_cryptanalysis_result.png>]
+Underfull \hbox (badness 3460) in paragraph at lines 920--921
+[]\T5/ptm/m/n/9 R. Beaulieu, D. Shors, J. Smith, S. Treatman-Clark,
  []
 
-[9] [10]
-Underfull \hbox (badness 1960) in paragraph at lines 940--941
-\T5/ptm/m/n/10 al-go-rithms,'' \T5/ptm/m/it/10 GM/T 0005-2021\T5/ptm/m/n/10 , S
-tan-dard Press of
+
+Underfull \hbox (badness 1024) in paragraph at lines 944--945
+[]\T5/ptm/m/n/9 State Cryp-tog-ra-phy Ad-min-is-tra-tion of China, ``Ran-dom-
  []
 
-[11] (haogianguyen_vi.aux)
+[10] (haogianguyen_vi.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2025-12-24>
@@ -1252,7 +1251,7 @@ L3 programming layer <2025-12-24>
 Here is how much of TeX's memory you used:
  19388 strings out of 467871
  381463 string characters out of 5418376
- 829422 words of memory out of 5000000
+ 825421 words of memory out of 5000000
  47877 multiletter control sequences out of 15000+600000
  712007 words of font info for 161 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -1272,9 +1271,9 @@ cal/Programs/MiKTeX/fonts/type1/urw/times/utmri8a.pfb><C:/Users/ghaob/AppData/L
 ocal/Programs/MiKTeX/fonts/type1/vntex/urwvn/utmri8v.pfb><C:/Users/ghaob/AppDat
 a/Local/Programs/MiKTeX/fonts/type1/vntex/vnr/vntt10.pfb><C:/Users/ghaob/AppDat
 a/Local/Programs/MiKTeX/fonts/type1/vntex/vnr/vntt9.pfb>
-Output written on haogianguyen_vi.pdf (11 pages, 7440399 bytes).
+Output written on haogianguyen_vi.pdf (10 pages, 7439467 bytes).
 PDF statistics:
- 118 PDF objects out of 1000 (max. 8388607)
+ 115 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  23 words of extra memory for PDF output out of 10000 (max. 10000000)
 

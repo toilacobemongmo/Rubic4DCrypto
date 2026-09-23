@@ -615,15 +615,15 @@ TB ($K_1 \dots K_8$) & $4.003 / 128$ & $3.1274\%$ & $1.0898\%$ & 50.05\% \\ \bot
 
 Bảng~\ref{tab:key_schedule_sac_vi} chứng minh rằng trong byte bị ảnh hưởng bởi phép dịch vòng, tỷ lệ đổi bit đạt trung bình $\mu = 4.003 / 8 = 50.24\%$, thỏa mãn hoàn hảo tiêu chuẩn SAC cấp byte. Đồng thời, việc lật 1 bit khóa làm đảo giá trị $k\_fold$ với xác suất 1.0, kéo theo sự thay đổi chỉ số bảng quay $\text{tbl}_{\text{idx}}$ với xác suất thực nghiệm là $50.05\%$. Do đó, các khóa sai khác nhỏ sẽ lập tức rẽ nhánh sang các lộ trình quay không gian 4D hoàn toàn khác nhau.
 
-\begin{table*}[htbp]
+\begin{table}[htbp]
 \caption{Phân Tích Lớp Khóa Yếu Dưới Các Mẫu Khóa Cực Trị}
 \label{tab:weak_key_analysis_vi}
 \centering
 \small
-\resizebox{\textwidth}{!}{%
+\resizebox{\columnwidth}{!}{%
 \begin{tabular}{@{}lcccccc@{}}
 \toprule
-\textbf{Mẫu khóa chính kiểm tra} & \textbf{Entropy khóa con ($H$)} & \textbf{Trọng số HW TB} & \textbf{Khóa con zero?} & \textbf{Khóa tương đương?} & \textbf{HW bản mã ($P=0$)} & \textbf{Kết luận} \\ \midrule
+\textbf{Mẫu khóa chính kiểm tra} & \textbf{Entropy ($H$)} & \textbf{Trọng số HW} & \textbf{Zero?} & \textbf{Tương đương?} & \textbf{HW ($P=0$)} & \textbf{Kết luận} \\ \midrule
 Toàn bit 0 (\texttt{0x00...00}) & 3.1699 & 55.11/128 & Không & Không & 67/128 & Miễn nhiễm \\
 Toàn bit 1 (\texttt{0xFF...FF}) & 3.1699 & 72.89/128 & Không & Không & 70/128 & Miễn nhiễm \\
 Xen kẽ \texttt{0xAA} ($10101010_2$) & 3.1699 & 64.00/128 & Không & Không & 75/128 & Miễn nhiễm \\
@@ -635,7 +635,7 @@ Chỉ 1 bit LSB (\texttt{0x...01}) & 3.5072 & 55.22/128 & Không & Không & 61/1
 Chỉ 1 bit MSB (\texttt{0x80...}) & 3.5072 & 55.00/128 & Không & Không & 56/128 & Miễn nhiễm \\ \bottomrule
 \end{tabular}%
 }
-\end{table*}
+\end{table}
 
 Để kiểm chứng tính miễn nhiễm trước các lớp khóa yếu, Rubik-4D được thử nghiệm trên 9 mẫu khóa cực trị (Bảng~\ref{tab:weak_key_analysis_vi}). Sự hiện diện của hằng số vòng bất đối xứng $(r \times \text{0x1B})$ triệt tiêu hoàn toàn khả năng sinh khóa con bằng 0 hoặc các khóa con tương đương. Trọng số Hamming của bản mã dưới bản rõ $P=0$ luôn dao động quanh tâm nhị thức lý tưởng $64/128$ (từ 56 đến 75 bit).
 
@@ -870,11 +870,15 @@ Kết quả định lượng làm nổi bật ba ưu thế kiến trúc vượt 
     \item Triệt tiêu trôi dạt độ chính xác và tính bất biến trên mọi phần cứng: Khác với các hệ mã dựa trên hỗn loạn vốn chịu sự suy biến động lực học và sai lệch dấu phẩy động giữa các kiến trúc vi xử lý khác nhau (như x86, ARM hay DSP), Rubik-4D hoàn toàn tất định trên số nguyên, với bộ nhớ bảng tra cứu cố định chỉ 192 byte trong bộ nhớ đệm cache.
 \end{enumerate}
 
+\newpage
 \section{Kết Luận}
 \label{sec:conclusion}
 Bài báo đã trình bày đặc tả kiến trúc, các chứng minh an toàn toán học hình thức và đánh giá thực nghiệm toàn diện của hệ mã khối đối xứng 128-bit Rubik-4D. Thông qua việc kết hợp S-box AES với phép quay trực giao $SO(4)$ chi phí $O(1)$ và tầng khuếch tán lan truyền số nhớ ARX 32-bit, thuật toán đạt độ khuếch tán liên byte hoàn chỉnh chỉ trong 8 vòng lặp. Mô hình tự động MILP xác nhận cận dưới 22 S-box kích hoạt đối với thám mã vi sai ($P_{\text{diff}} \le 2^{-132}$) và 108 S-box kích hoạt đối với thám mã tuyến tính ($N_D \approx 2^{434}$), đồng thời kháng tấn công tích phân và vượt qua các bộ kiểm định ngẫu nhiên NIST SP 800-22 và GM/T 0005-2021. Đánh giá mật mã ảnh khẳng định sự triệt tiêu tương quan điểm ảnh ($|r| \le 0.026$), entropy xấp xỉ tuyệt đối (vượt $7.999$) và chỉ số vi sai tối ưu ($\text{NPCR} \approx 99.61\%$ với cận dưới $\ge 99.605\%$, $\text{UACI} \approx 33.46\%$). Các phép đo thực tế trên tệp dữ liệu lên đến $20$~MB xác nhận thông lượng trung bình đạt $151.65$~MB/s (lên tới $167.17$~MB/s khi giải mã), vượt trội hơn $20\% - 35\%$ so với AES-128 triển khai thuần phần mềm. Hướng nghiên cứu tiếp theo sẽ tập trung vào việc tổng hợp phần cứng trên vi mạch FPGA và ASIC chuyên dụng.
 
 \begin{thebibliography}{00}
+\small
+\setlength{\itemsep}{0pt}
+\setlength{\parskip}{0pt}
 
 \bibitem{diaconu2008}
 A. V. Diaconu and K. Loukhafallah, ``Circular-permutation based image encryption using the Rubik's cube principle,'' \textit{Proc. IEEE CS}, pp. 120--125, 2008.
