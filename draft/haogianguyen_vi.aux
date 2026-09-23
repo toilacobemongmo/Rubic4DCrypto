@@ -8,18 +8,23 @@
 \newlabel{sec:intro}{{1}{1}{Giới Thiệu}{section.1}{}}
 \citation{diaconu2008}
 \citation{lin2010rubik,huang2019rubik}
+\citation{ghosal2021berc}
+\citation{aldmour2022cierpf}
+\citation{li2022quantum}
+\citation{nair2024rubik}
+\citation{dunkelman2020alzette}
+\citation{hadipour2023milp}
+\citation{zhang2023division}
 \citation{diaconu2008}
-\citation{lin2010rubik}
 \citation{huang2019rubik}
+\citation{nair2024rubik}
+\citation{kim2004dft}
 \@writefile{toc}{\contentsline {section}{\numberline {2}Công Trình Liên Quan và So Sánh Tính Mới}{2}{}\protected@file@percent }
 \newlabel{sec:related_work}{{2}{2}{Công Trình Liên Quan và So Sánh Tính Mới}{section.2}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {3}Thiết Kế Chi Tiết Hệ Mã Rubik-4D}{2}{}\protected@file@percent }
 \newlabel{sec:cipher}{{3}{2}{Thiết Kế Chi Tiết Hệ Mã Rubik-4D}{section.3}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.1}Biểu Diễn Trạng Thái và Hình Học Tesseract 4D}{2}{}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.2}Quy Trình Thực Thi Hàm Vòng}{2}{}\protected@file@percent }
-\@writefile{loa}{\contentsline {algorithm}{\numberline {1}{\ignorespaces Quy trình mã hóa Rubik-4D.}}{2}{}\protected@file@percent }
-\newlabel{alg:rubik4d_enc_vi}{{1}{2}{Quy Trình Thực Thi Hàm Vòng}{algorithm.1}{}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.2.1}Hộp Thay Thế Phi Tuyến SubBytes}{2}{}\protected@file@percent }
 \@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces So Sánh Định Tính và Cấu Trúc Giữa Các Thuật Toán Dựa Trên Rubik và Rubik-4D}}{3}{}\protected@file@percent }
 \providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
 \newlabel{tab:rubik_comparison_vi}{{1}{3}{Công Trình Liên Quan và So Sánh Tính Mới}{table.1}{}}
@@ -27,88 +32,109 @@
 \newlabel{fig:rubik4d_architecture_vi}{{1}{3}{Quy Trình Thực Thi Hàm Vòng}{figure.1}{}}
 \@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Quy ước ký hiệu toán học.}}{3}{}\protected@file@percent }
 \newlabel{tab:notations_vi}{{2}{3}{Thiết Kế Chi Tiết Hệ Mã Rubik-4D}{table.2}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.2.1}Hộp Thay Thế Phi Tuyến SubBytes}{3}{}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {3.2.2}Hoán Vị Siêu Lập Phương $SO(4)$}{3}{}\protected@file@percent }
+\@writefile{loa}{\contentsline {algorithm}{\numberline {1}{\ignorespaces Quy trình mã hóa Rubik-4D.}}{4}{}\protected@file@percent }
+\newlabel{alg:rubik4d_enc_vi}{{1}{4}{Quy Trình Thực Thi Hàm Vòng}{algorithm.1}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.2.3}Khuếch Tán Lan Truyền Số Nhớ ARX 32-bit}{4}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.2.4}Cộng Khóa Vòng (AddRoundKey)}{4}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3}Quy Trình Giải Mã}{4}{}\protected@file@percent }
+\@writefile{loa}{\contentsline {algorithm}{\numberline {2}{\ignorespaces Quy trình giải mã Rubik-4D.}}{4}{}\protected@file@percent }
+\newlabel{alg:rubik4d_dec_vi}{{2}{4}{Quy Trình Giải Mã}{algorithm.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.4}Lược Đồ Sinh Khóa Vòng (Key Schedule)}{4}{}\protected@file@percent }
 \citation{mouha2011differential}
 \citation{mouha2011differential,fu2016milp}
 \citation{daemen2002design}
 \citation{lai1991markov}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.2.3}Khuếch Tán Lan Truyền Số Nhớ ARX 32-bit}{4}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.2.4}Cộng Khóa Vòng (AddRoundKey)}{4}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.3}Quy Trình Giải Mã}{4}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.4}Lược Đồ Sinh Khóa Vòng (Key Schedule)}{4}{}\protected@file@percent }
-\@writefile{loa}{\contentsline {algorithm}{\numberline {2}{\ignorespaces Quy trình giải mã Rubik-4D.}}{4}{}\protected@file@percent }
-\newlabel{alg:rubik4d_dec_vi}{{2}{4}{Quy Trình Giải Mã}{algorithm.2}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.5}Chứng Minh An Toàn Toán Học}{4}{}\protected@file@percent }
-\newlabel{subsec:proofs}{{3.5}{4}{Chứng Minh An Toàn Toán Học}{subsection.3.5}{}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.5.1}Thám Mã Vi Sai Qua Quy Hoạch Nguyên (MILP)}{4}{}\protected@file@percent }
 \citation{daemen2002design}
 \citation{matsui1993linear}
 \citation{matsui1993linear}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.5}Chứng Minh An Toàn Toán Học}{5}{}\protected@file@percent }
+\newlabel{subsec:proofs}{{3.5}{5}{Chứng Minh An Toàn Toán Học}{subsection.3.5}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.5.1}Thám Mã Vi Sai Qua Quy Hoạch Nguyên (MILP)}{5}{}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces Quét cận dưới S-box kích hoạt (Thám mã vi sai).}}{5}{}\protected@file@percent }
+\newlabel{tab:diff_results_vi}{{3}{5}{Thám Mã Vi Sai Qua Quy Hoạch Nguyên (MILP)}{table.3}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.5.2}Thám Mã Tuyến Tính Bằng MILP}{5}{}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {4}{\ignorespaces Quét cận dưới S-box kích hoạt (Thám mã tuyến tính).}}{5}{}\protected@file@percent }
+\newlabel{tab:linear_results_vi}{{4}{5}{Thám Mã Tuyến Tính Bằng MILP}{table.4}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.5.3}Kháng Thám Mã Tích Phân (Integral Cryptanalysis)}{5}{}\protected@file@percent }
 \citation{biryukov1999slide,biryukov2000slide}
 \citation{rukhin2010nist}
 \citation{gmt0005}
 \citation{kim2004dft}
 \citation{kim2004dft}
 \citation{webster1985sac}
-\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces Quét cận dưới S-box kích hoạt (Thám mã vi sai).}}{5}{}\protected@file@percent }
-\newlabel{tab:diff_results_vi}{{3}{5}{Thám Mã Vi Sai Qua Quy Hoạch Nguyên (MILP)}{table.3}{}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.5.2}Thám Mã Tuyến Tính Bằng MILP}{5}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.5.3}Kháng Thám Mã Tích Phân (Integral Cryptanalysis)}{5}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.5.4}Giới Hạn Bậc Đại Số và Kháng Bộ Giải SAT}{5}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.5.5}Kháng Tấn Công Trượt (Slide Attacks)}{5}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.6}Kiểm Định Ngẫu Nhiên Thống Kê}{5}{}\protected@file@percent }
-\newlabel{subsec:randomness}{{3.6}{5}{Kiểm Định Ngẫu Nhiên Thống Kê}{subsection.3.6}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {4}Đánh Giá Thực Nghiệm và Đo Lường Hiệu Năng}{5}{}\protected@file@percent }
-\newlabel{sec:experiments}{{4}{5}{Đánh Giá Thực Nghiệm và Đo Lường Hiệu Năng}{section.4}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {4}{\ignorespaces Quét cận dưới S-box kích hoạt (Thám mã tuyến tính).}}{6}{}\protected@file@percent }
-\newlabel{tab:linear_results_vi}{{4}{6}{Thám Mã Tuyến Tính Bằng MILP}{table.4}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.5.4}Giới Hạn Bậc Đại Số và Kháng Bộ Giải SAT}{6}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.5.5}Kháng Tấn Công Trượt (Slide Attacks)}{6}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.6}Kiểm Định Ngẫu Nhiên Thống Kê}{6}{}\protected@file@percent }
+\newlabel{subsec:randomness}{{3.6}{6}{Kiểm Định Ngẫu Nhiên Thống Kê}{subsection.3.6}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {4}Đánh Giá Thực Nghiệm và Đo Lường Hiệu Năng}{6}{}\protected@file@percent }
+\newlabel{sec:experiments}{{4}{6}{Đánh Giá Thực Nghiệm và Đo Lường Hiệu Năng}{section.4}{}}
 \@writefile{lot}{\contentsline {table}{\numberline {5}{\ignorespaces Kết quả kiểm định tính ngẫu nhiên NIST SP 800-22 (1.000 tập mẫu).}}{6}{}\protected@file@percent }
 \newlabel{tab:nist_results_vi}{{5}{6}{Kiểm Định Ngẫu Nhiên Thống Kê}{table.5}{}}
 \@writefile{lot}{\contentsline {table}{\numberline {6}{\ignorespaces Kết quả kiểm định ngẫu nhiên GM/T 0005-2021 (10.000 mẫu, 20~MB).}}{6}{}\protected@file@percent }
 \newlabel{tab:gmt_results_vi}{{6}{6}{Kiểm Định Ngẫu Nhiên Thống Kê}{table.6}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Độ An Toàn Lược Đồ Khóa và Tiêu Chuẩn Thác Lũ Nghiêm Ngặt (SAC)}{6}{}\protected@file@percent }
-\newlabel{subsec:key_schedule_sac_vi}{{4.1}{6}{Độ An Toàn Lược Đồ Khóa và Tiêu Chuẩn Thác Lũ Nghiêm Ngặt (SAC)}{subsection.4.1}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {7}{\ignorespaces Tiêu chuẩn SAC của lược đồ khóa Rubik-4D (10.000 cặp khóa).}}{6}{}\protected@file@percent }
-\newlabel{tab:key_schedule_sac_vi}{{7}{6}{Độ An Toàn Lược Đồ Khóa và Tiêu Chuẩn Thác Lũ Nghiêm Ngặt (SAC)}{table.7}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Hiệu Ứng Thác Lũ Bản Rõ và Độ Nhạy Khóa}{6}{}\protected@file@percent }
-\newlabel{subsec:avalanche_sensitivity_vi}{{4.2}{6}{Hiệu Ứng Thác Lũ Bản Rõ và Độ Nhạy Khóa}{subsection.4.2}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {8}{\ignorespaces Phân Tích Lớp Khóa Yếu Dưới Các Mẫu Khóa Cực Trị}}{7}{}\protected@file@percent }
-\newlabel{tab:weak_key_analysis_vi}{{8}{7}{Độ An Toàn Lược Đồ Khóa và Tiêu Chuẩn Thác Lũ Nghiêm Ngặt (SAC)}{table.8}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {9}{\ignorespaces Sự lan truyền hiệu ứng thác lũ bản rõ qua 8 vòng (10.000 lần thử).}}{7}{}\protected@file@percent }
-\newlabel{tab:plaintext_avalanche_vi}{{9}{7}{Hiệu Ứng Thác Lũ Bản Rõ và Độ Nhạy Khóa}{table.9}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {10}{\ignorespaces Độ nhạy khóa bí mật trên bản mã (10.000 lần thử).}}{7}{}\protected@file@percent }
-\newlabel{tab:key_sensitivity_vi}{{10}{7}{Hiệu Ứng Thác Lũ Bản Rõ và Độ Nhạy Khóa}{table.10}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Độ An Toàn Lược Đồ Khóa và Tiêu Chuẩn Thác Lũ Nghiêm Ngặt (SAC)}{7}{}\protected@file@percent }
+\newlabel{subsec:key_schedule_sac_vi}{{4.1}{7}{Độ An Toàn Lược Đồ Khóa và Tiêu Chuẩn Thác Lũ Nghiêm Ngặt (SAC)}{subsection.4.1}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {7}{\ignorespaces Tiêu chuẩn SAC của lược đồ khóa Rubik-4D (10.000 cặp khóa).}}{7}{}\protected@file@percent }
+\newlabel{tab:key_schedule_sac_vi}{{7}{7}{Độ An Toàn Lược Đồ Khóa và Tiêu Chuẩn Thác Lũ Nghiêm Ngặt (SAC)}{table.7}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Hiệu Ứng Thác Lũ Bản Rõ và Độ Nhạy Khóa}{7}{}\protected@file@percent }
+\newlabel{subsec:avalanche_sensitivity_vi}{{4.2}{7}{Hiệu Ứng Thác Lũ Bản Rõ và Độ Nhạy Khóa}{subsection.4.2}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {4.3}Hiệu Năng Phần Mềm và Chu Kỳ Xung Nhịp Phần Cứng}{7}{}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {4.4}Phân Tích Mật Mã Ảnh (Image Cryptanalysis)}{7}{}\protected@file@percent }
 \newlabel{subsec:image_crypt_vi}{{4.4}{7}{Phân Tích Mật Mã Ảnh (Image Cryptanalysis)}{subsection.4.4}{}}
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {4.4.1}Kiểm Tra Thị Giác và Tính Đồng Đều Histogram}{7}{}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {4.4.2}Phân Tích Tương Quan Pixel Lân Cận}{7}{}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {11}{\ignorespaces Đo Lường Hiệu Năng Phần Mềm Giữa Các Hệ Mã (Intel Core i3-13100F @ 3.40GHz)}}{8}{}\protected@file@percent }
-\newlabel{tab:benchmarks_all_vi}{{11}{8}{Hiệu Năng Phần Mềm và Chu Kỳ Xung Nhịp Phần Cứng}{table.11}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {12}{\ignorespaces Đánh giá mật mã lượng hóa trên ảnh chuẩn $512 \times 512$.}}{8}{}\protected@file@percent }
-\newlabel{tab:image_security_vi}{{12}{8}{Kiểm Tra Thị Giác và Tính Đồng Đều Histogram}{table.12}{}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.4.3}Chỉ Số Kháng Tấn Công Vi Sai (NPCR và UACI)}{8}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {5}Kết Luận}{8}{}\protected@file@percent }
-\newlabel{sec:conclusion}{{5}{8}{Kết Luận}{section.5}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {8}{\ignorespaces Phân Tích Lớp Khóa Yếu Dưới Các Mẫu Khóa Cực Trị}}{8}{}\protected@file@percent }
+\newlabel{tab:weak_key_analysis_vi}{{8}{8}{Độ An Toàn Lược Đồ Khóa và Tiêu Chuẩn Thác Lũ Nghiêm Ngặt (SAC)}{table.8}{}}
+\newlabel{fig:lena_analysis_vi}{{2a}{8}{Phân Tích Mật Mã Ảnh (Image Cryptanalysis)}{subfigure.2.1}{}}
+\newlabel{sub@fig:lena_analysis_vi}{{a}{8}{Phân Tích Mật Mã Ảnh (Image Cryptanalysis)}{subfigure.2.1}{}}
+\newlabel{fig:baboon_analysis_vi}{{2b}{8}{Phân Tích Mật Mã Ảnh (Image Cryptanalysis)}{subfigure.2.2}{}}
+\newlabel{sub@fig:baboon_analysis_vi}{{b}{8}{Phân Tích Mật Mã Ảnh (Image Cryptanalysis)}{subfigure.2.2}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Kiểm tra thị giác và tính đồng đều Histogram của các ảnh chuẩn $512 \times 512$ mã hóa bằng Rubik-4D.}}{8}{}\protected@file@percent }
+\newlabel{fig:image_analysis_vi}{{2}{8}{Phân Tích Mật Mã Ảnh (Image Cryptanalysis)}{figure.2}{}}
+\citation{diaconu2008}
+\citation{huang2019rubik}
+\citation{ghosal2021berc}
+\citation{aldmour2022cierpf}
+\citation{li2022quantum}
+\citation{nair2024rubik}
+\citation{nair2024rubik}
+\citation{li2022quantum}
 \bibcite{diaconu2008}{1}
 \bibcite{lin2010rubik}{2}
 \bibcite{huang2019rubik}{3}
-\bibcite{daemen2002design}{4}
-\bibcite{webster1985sac}{5}
-\bibcite{beaulieu2015simon}{6}
-\bibcite{mouha2011differential}{7}
-\bibcite{fu2016milp}{8}
-\bibcite{lai1991markov}{9}
-\bibcite{matsui1993linear}{10}
-\bibcite{biryukov1999slide}{11}
-\bibcite{biryukov2000slide}{12}
-\bibcite{rukhin2010nist}{13}
-\bibcite{gmt0005}{14}
-\newlabel{fig:lena_analysis_vi}{{2a}{9}{Phân Tích Mật Mã Ảnh (Image Cryptanalysis)}{subfigure.2.1}{}}
-\newlabel{sub@fig:lena_analysis_vi}{{a}{9}{Phân Tích Mật Mã Ảnh (Image Cryptanalysis)}{subfigure.2.1}{}}
-\newlabel{fig:baboon_analysis_vi}{{2b}{9}{Phân Tích Mật Mã Ảnh (Image Cryptanalysis)}{subfigure.2.2}{}}
-\newlabel{sub@fig:baboon_analysis_vi}{{b}{9}{Phân Tích Mật Mã Ảnh (Image Cryptanalysis)}{subfigure.2.2}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Kiểm tra thị giác và tính đồng đều Histogram của các ảnh chuẩn $512 \times 512$ mã hóa bằng Rubik-4D.}}{9}{}\protected@file@percent }
-\newlabel{fig:image_analysis_vi}{{2}{9}{Phân Tích Mật Mã Ảnh (Image Cryptanalysis)}{figure.2}{}}
-\bibcite{kim2004dft}{15}
-\gdef \@abspage@last{10}
+\bibcite{ghosal2021berc}{4}
+\@writefile{lot}{\contentsline {table}{\numberline {9}{\ignorespaces Sự lan truyền hiệu ứng thác lũ bản rõ qua 8 vòng (10.000 lần thử).}}{9}{}\protected@file@percent }
+\newlabel{tab:plaintext_avalanche_vi}{{9}{9}{Hiệu Ứng Thác Lũ Bản Rõ và Độ Nhạy Khóa}{table.9}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {10}{\ignorespaces Độ nhạy khóa bí mật trên bản mã (10.000 lần thử).}}{9}{}\protected@file@percent }
+\newlabel{tab:key_sensitivity_vi}{{10}{9}{Hiệu Ứng Thác Lũ Bản Rõ và Độ Nhạy Khóa}{table.10}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.4.3}Chỉ Số Kháng Tấn Công Vi Sai (NPCR và UACI)}{9}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.4.4}So Sánh Thực Nghiệm Toàn Diện Với Các Công Trình Tiên Tiến}{9}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {5}Kết Luận}{9}{}\protected@file@percent }
+\newlabel{sec:conclusion}{{5}{9}{Kết Luận}{section.5}{}}
+\bibcite{aldmour2022cierpf}{5}
+\bibcite{li2022quantum}{6}
+\bibcite{nair2024rubik}{7}
+\bibcite{dunkelman2020alzette}{8}
+\bibcite{hadipour2023milp}{9}
+\@writefile{lot}{\contentsline {table}{\numberline {11}{\ignorespaces Đo Lường Hiệu Năng Phần Mềm Giữa Các Hệ Mã (Intel Core i3-13100F @ 3.40GHz)}}{10}{}\protected@file@percent }
+\newlabel{tab:benchmarks_all_vi}{{11}{10}{Hiệu Năng Phần Mềm và Chu Kỳ Xung Nhịp Phần Cứng}{table.11}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {12}{\ignorespaces Đánh giá mật mã lượng hóa trên ảnh chuẩn $512 \times 512$.}}{10}{}\protected@file@percent }
+\newlabel{tab:image_security_vi}{{12}{10}{Kiểm Tra Thị Giác và Tính Đồng Đều Histogram}{table.12}{}}
+\bibcite{zhang2023division}{10}
+\bibcite{daemen2002design}{11}
+\bibcite{webster1985sac}{12}
+\bibcite{beaulieu2015simon}{13}
+\bibcite{mouha2011differential}{14}
+\bibcite{fu2016milp}{15}
+\bibcite{lai1991markov}{16}
+\bibcite{matsui1993linear}{17}
+\bibcite{biryukov1999slide}{18}
+\bibcite{biryukov2000slide}{19}
+\bibcite{rukhin2010nist}{20}
+\bibcite{gmt0005}{21}
+\bibcite{kim2004dft}{22}
+\@writefile{lot}{\contentsline {table}{\numberline {13}{\ignorespaces So Sánh Thực Nghiệm Hiệu Năng và Độ An Toàn Với Các Hệ Mã Ảnh Rubik và Hỗn Loạn Tiên Tiến ($512 \times 512$ Mức Xám)}}{11}{}\protected@file@percent }
+\newlabel{tab:sota_image_comparison_vi}{{13}{11}{So Sánh Thực Nghiệm Toàn Diện Với Các Công Trình Tiên Tiến}{table.13}{}}
+\gdef \@abspage@last{11}
