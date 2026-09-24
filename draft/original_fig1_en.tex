@@ -1,0 +1,87 @@
+\begin{figure*}[htbp]
+\centering
+\begin{tikzpicture}[
+    >=Stealth,
+    node distance=1.1cm and 0.8cm,
+    block/.style={rectangle, draw=black, thick, fill=blue!8, text centered, minimum width=2.5cm, minimum height=0.7cm, font=\small},
+    permblock/.style={rectangle, draw=black, thick, fill=orange!15, text centered, minimum width=2.5cm, minimum height=0.7cm, font=\small},
+    diffblock/.style={rectangle, draw=black, thick, fill=teal!15, text centered, minimum width=2.5cm, minimum height=0.7cm, font=\small},
+    op/.style={circle, draw=black, thick, fill=white, inner sep=0pt, minimum size=6mm, font=\normalsize},
+    state/.style={rectangle, draw=black!70, dashed, fill=gray!5, minimum width=2.8cm, minimum height=0.6cm, font=\small\ttfamily},
+    arrow/.style={->, thick, draw=black!85}
+]
+
+% ENCRYPTION PIPELINE (LEFT)
+\node[state] (p_in) at (0, 0) {Plaintext State $S^{(r-1)}$};
+\node[block, below=0.6cm of p_in] (subbytes) {
+    \begin{tabular}{c}
+        \textbf{SubBytes} \\
+        AES S-Box over $\text{GF}(2^8)$
+    \end{tabular}
+};
+\node[permblock, below=0.6cm of subbytes] (so4) {
+    \begin{tabular}{c}
+        \textbf{4D Rubik Permutation} \\
+        $SO(4)$ Rotation Table $\pi_{\text{tbl}_{\text{idx}}}$
+    \end{tabular}
+};
+\node[diffblock, below=0.6cm of so4] (arx) {
+    \begin{tabular}{c}
+        \textbf{32-bit ARX Diffusion} \\
+        $\boxplus C \;\to\; \lll n \;\to\; \oplus$
+    \end{tabular}
+};
+\node[op, below=0.6cm of arx] (xor1) {$\oplus$};
+\node[left=0.8cm of xor1, font=\small] (k_in) {$K_r$ (Round Key)};
+\node[state, below=0.6cm of xor1] (c_out) {Round Output $S^{(r)}$};
+
+\draw[arrow] (p_in) -- (subbytes);
+\draw[arrow] (subbytes) -- (so4);
+\draw[arrow] (so4) -- (arx);
+\draw[arrow] (arx) -- (xor1);
+\draw[arrow] (k_in) -- (xor1);
+\draw[arrow] (xor1) -- (c_out);
+
+\draw[draw=blue!60, thick, rounded corners] ($(p_in.north west)+(-1.8,0.3)$) rectangle ($(c_out.south east)+(1.8,-0.3)$);
+\node[font=\bfseries\color{blue!80!black}] at ($(p_in.north)+(0, 0.6)$) {(a) Rubik-4D Encryption Round $r$};
+
+% DECRYPTION PIPELINE (RIGHT)
+\begin{scope}[xshift=8.5cm]
+\node[state] (c_in) at (0, 0) {Round Cipher State $S^{(r)}$};
+\node[op, below=0.6cm of c_in] (xor2) {$\oplus$};
+\node[right=0.8cm of xor2, font=\small] (k_inv) {$K_r$ (Round Key)};
+\node[diffblock, below=0.6cm of xor2] (inv_arx) {
+    \begin{tabular}{c}
+        \textbf{Inverse ARX Diffusion} \\
+        Reverse Word Sequence
+    \end{tabular}
+};
+\node[permblock, below=0.6cm of inv_arx] (inv_so4) {
+    \begin{tabular}{c}
+        \textbf{Inverse 4D Permutation} \\
+        $\pi_{\text{tbl}_{\text{idx}}}^{-1}$ Mapping Layer
+    \end{tabular}
+};
+\node[block, below=0.6cm of inv_so4] (inv_subbytes) {
+    \begin{tabular}{c}
+        \textbf{InvSubBytes} \\
+        AES $\text{S-Box}^{-1}$
+    \end{tabular}
+};
+\node[state, below=0.6cm of inv_subbytes] (p_out) {Restored State $S^{(r-1)}$};
+
+\draw[arrow] (c_in) -- (xor2);
+\draw[arrow] (k_inv) -- (xor2);
+\draw[arrow] (xor2) -- (inv_arx);
+\draw[arrow] (inv_arx) -- (inv_so4);
+\draw[arrow] (inv_so4) -- (inv_subbytes);
+\draw[arrow] (inv_subbytes) -- (p_out);
+
+\draw[draw=teal!70!black, thick, rounded corners] ($(c_in.north west)+(-1.8,0.3)$) rectangle ($(p_out.south east)+(1.8,-0.3)$);
+\node[font=\bfseries\color{teal!70!black}] at ($(c_in.north)+(0, 0.6)$) {(b) Rubik-4D Decryption Round $r$};
+\end{scope}
+
+\end{tikzpicture}
+\caption{Operational pipeline of Rubik-4D: (a) Encryption transformation consisting of SubBytes, $SO(4)$ hypercube spatial permutation, 32-bit ARX ripple diffusion, and AddRoundKey; (b) Bijective inverse decryption transformation.}
+\label{fig:rubik4d_architecture}
+\end{figure*}

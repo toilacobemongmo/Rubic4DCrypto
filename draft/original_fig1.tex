@@ -1,0 +1,87 @@
+\begin{figure*}[htbp]
+\centering
+\begin{tikzpicture}[
+    >=Stealth,
+    node distance=1.1cm and 0.8cm,
+    block/.style={rectangle, draw=black, thick, fill=blue!8, text centered, minimum width=2.5cm, minimum height=0.7cm, font=\small},
+    permblock/.style={rectangle, draw=black, thick, fill=orange!15, text centered, minimum width=2.5cm, minimum height=0.7cm, font=\small},
+    diffblock/.style={rectangle, draw=black, thick, fill=teal!15, text centered, minimum width=2.5cm, minimum height=0.7cm, font=\small},
+    op/.style={circle, draw=black, thick, fill=white, inner sep=0pt, minimum size=6mm, font=\normalsize},
+    state/.style={rectangle, draw=black!70, dashed, fill=gray!5, minimum width=2.8cm, minimum height=0.6cm, font=\small\ttfamily},
+    arrow/.style={->, thick, draw=black!85}
+]
+
+% QUY TRINH MA HOA
+\node[state] (p_in) at (0, 0) {Bản rõ $S^{(r-1)}$};
+\node[block, below=0.6cm of p_in] (subbytes) {
+    \begin{tabular}{c}
+        \textbf{SubBytes} \\
+        Hộp S-Box AES trên $\text{GF}(2^8)$
+    \end{tabular}
+};
+\node[permblock, below=0.6cm of subbytes] (so4) {
+    \begin{tabular}{c}
+        \textbf{Hoán vị Rubik-4D} \\
+        Bảng quay $SO(4)$ $\pi_{\text{tbl}_{\text{idx}}}$
+    \end{tabular}
+};
+\node[diffblock, below=0.6cm of so4] (arx) {
+    \begin{tabular}{c}
+        \textbf{Khuếch tán ARX 32-bit} \\
+        $\boxplus C \;\to\; \lll n \;\to\; \oplus$
+    \end{tabular}
+};
+\node[op, below=0.6cm of arx] (xor1) {$\oplus$};
+\node[left=0.8cm of xor1, font=\small] (k_in) {$K_r$ (Khóa vòng)};
+\node[state, below=0.6cm of xor1] (c_out) {Đầu ra vòng $S^{(r)}$};
+
+\draw[arrow] (p_in) -- (subbytes);
+\draw[arrow] (subbytes) -- (so4);
+\draw[arrow] (so4) -- (arx);
+\draw[arrow] (arx) -- (xor1);
+\draw[arrow] (k_in) -- (xor1);
+\draw[arrow] (xor1) -- (c_out);
+
+\draw[draw=blue!60, thick, rounded corners] ($(p_in.north west)+(-1.8,0.3)$) rectangle ($(c_out.south east)+(1.8,-0.3)$);
+\node[font=\bfseries\color{blue!80!black}] at ($(p_in.north)+(0, 0.6)$) {(a) Vòng mã hóa Rubik-4D thứ $r$};
+
+% QUY TRINH GIAI MA
+\begin{scope}[xshift=8.5cm]
+\node[state] (c_in) at (0, 0) {Bản mã $S^{(r)}$};
+\node[op, below=0.6cm of c_in] (xor2) {$\oplus$};
+\node[right=0.8cm of xor2, font=\small] (k_inv) {$K_r$ (Khóa vòng)};
+\node[diffblock, below=0.6cm of xor2] (inv_arx) {
+    \begin{tabular}{c}
+        \textbf{Đảo khuếch tán ARX} \\
+        Đảo chuỗi từ và phép trừ
+    \end{tabular}
+};
+\node[permblock, below=0.6cm of inv_arx] (inv_so4) {
+    \begin{tabular}{c}
+        \textbf{Đảo hoán vị 4D} \\
+        Bảng nghịch đảo $\pi_{\text{tbl}_{\text{idx}}}^{-1}$
+    \end{tabular}
+};
+\node[block, below=0.6cm of inv_so4] (inv_subbytes) {
+    \begin{tabular}{c}
+        \textbf{InvSubBytes} \\
+        Hộp $\text{S-Box}^{-1}$ chuẩn AES
+    \end{tabular}
+};
+\node[state, below=0.6cm of inv_subbytes] (p_out) {Khôi phục $S^{(r-1)}$};
+
+\draw[arrow] (c_in) -- (xor2);
+\draw[arrow] (k_inv) -- (xor2);
+\draw[arrow] (xor2) -- (inv_arx);
+\draw[arrow] (inv_arx) -- (inv_so4);
+\draw[arrow] (inv_so4) -- (inv_subbytes);
+\draw[arrow] (inv_subbytes) -- (p_out);
+
+\draw[draw=teal!70!black, thick, rounded corners] ($(c_in.north west)+(-1.8,0.3)$) rectangle ($(p_out.south east)+(1.8,-0.3)$);
+\node[font=\bfseries\color{teal!70!black}] at ($(c_in.north)+(0, 0.6)$) {(b) Vòng giải mã Rubik-4D thứ $r$};
+\end{scope}
+
+\end{tikzpicture}
+\caption{Kiến trúc tổng thể của Rubik-4D: (a) Luồng mã hóa gồm SubBytes, hoán vị siêu lập phương $SO(4)$, khuếch tán ARX 32-bit và AddRoundKey; (b) Luồng giải mã sinh ánh nghịch đảo.}
+\label{fig:rubik4d_architecture_vi}
+\end{figure*}

@@ -19,6 +19,7 @@
 \usepackage{array}
 \usepackage{url}
 \usepackage{cite}
+\usepackage[colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue]{hyperref}
 
 \usepackage{titlesec}
 \titleformat{\section}
@@ -82,14 +83,14 @@ Các đóng góp khoa học chính của nghiên cứu này bao gồm:
 \section{Công trình liên quan và so sánh}
 \label{sec:related_work}
 
-Ý tưởng ứng dụng khối Rubik vào mật mã học bắt nguồn từ mã hóa đa phương tiện, trải qua ba thế hệ phát triển chính trong giai đoạn 2008--2024:
+Ý tưởng ứng dụng khối Rubik vào mật mã học bắt nguồn từ mã hóa đa phương tiện, trải qua ba thế hệ phát triển chính trong giai đoạn 2011--2024:
 \begin{itemize}
-    \item \textbf{Thế hệ 1 (2008--2014) -- Hoán vị Rubik 3D nguyên thủy và hiện thực nhúng:} Khởi xướng bởi Diaconu \cite{diaconu2008} với việc sử dụng hoán vị vòng của khối Rubik 3D ($3 \times 3 \times 3$) để xáo trộn tọa độ pixel. Lin và cs (2010) \cite{lin2010rubik} kết hợp nguyên lý Rubik với bản đồ hỗn loạn 1D. Loukhafallah và cs (2011) \cite{loukhafallah2011image} tích hợp phép xoay Rubik với biến đổi phân số rời rạc. Khalid và cs (2014) \cite{khalid2014rubik} thử nghiệm triển khai Rubik 3D trên vi điều khiển nhúng và chỉ ra điểm nghẽn nghiêm trọng về độ trễ truy xuất bộ nhớ đa chiều.
-    \item \textbf{Thế hệ 2 (2019--2022) -- Mở rộng chiều không gian khối và hỗn loạn liên tục:} Huang và cs (2019) \cite{huang2019rubik} mở rộng kích thước khối lên $8 \times 8 \times 8$ kết hợp Tent map. Ghosal và cs (2021) \cite{ghosal2021berc} đề xuất thuật toán 3D-BERC hoán vị Rubik ở mức bit kết hợp hệ hỗn loạn liên tục cho ảnh màu. Al-Dmour và cs (2022) \cite{aldmour2022cierpf} tích hợp phép quay Rubik với phân tích thừa số nguyên tố (CIERPF) nhằm mở rộng không gian khóa.
-    \item \textbf{Thế hệ 3 (2022--2024) -- Bước đi lượng tử và xáo trộn thích nghi:} Li và cs (2022) \cite{li2022quantum} thiết kế hệ mã Rubik điều khiển bởi bước đi lượng tử xen kẽ. Wang và cs (2023) \cite{wang2023spatiotemporal} đề xuất cơ chế kết hợp hỗn loạn không-thời gian với hoán vị Rubik động. Gần đây nhất, Nair và cs (2024) \cite{nair2024rubik} kết hợp xáo trộn Rubik 3D với hoán vị bitmap và xoay khung hình.
+    \item \textbf{Thế hệ 1 (2011--2014) -- Hoán vị Rubik 3D nguyên thủy và lan truyền tuyến tính:} Khởi xướng bởi Loukhaoukha, Chouinard và Berdai (2012) \cite{loukhaoukha2012rubik} với mô hình kinh điển coi ảnh số $M \times N$ là một khối Rubik 3D ($M \times N \times 3$). Thuật toán tạo hai vector khóa $K_R, K_C$ để dịch vòng các hàng và cột điểm ảnh, sau đó kết hợp phép cộng XOR tích lũy giữa các hàng và cột kế tiếp: $I'(i, j) = I(i, j) \oplus K_R(i) \oplus K_C(j) \oplus I'(i-1, j)$. Do chỉ gồm các phép toán tuyến tính thuần túy trên $\mathbb{F}_2$, cơ chế này dễ bị bóc tách hoàn toàn vector hoán vị dưới tấn công bản rõ chọn trước (CPA). Đồng thời, việc dịch chuyển từng hàng/cột trên ma trận ảnh lớn khiến thời gian xử lý rất chậm (mất $0.820$~s cho ảnh $512 \times 512$, thông lượng chỉ đạt $0.31$~MB/s). Zhang, Tian và Xia (2011) \cite{zhang2011rubik} cùng với Feng, Tian và Xia (2011) \cite{feng2011cisp} kết hợp phép quay khối Rubik với chuỗi hỗn loạn Logistic và biến đổi phân số Fourier, song vẫn mắc phải nhược điểm suy biến chu kỳ của hệ hỗn loạn một chiều. Diaconu và Loukhaoukha (2013) \cite{diaconu2013rubik} nâng cấp thuật toán Rubik bằng mật mã hỗn loạn số nhưng vẫn giữ nguyên tầng lan truyền tuyến tính.
+    \item \textbf{Thế hệ 2 (2021--2022) -- Khối 3D mức bit và mở rộng thừa số nguyên tố:} Nhằm khắc phục hạn chế hoán vị mức byte không làm biến đổi cấu trúc bit nội tại, Zhu và cs (2021) \cite{zhu2021berc} đề xuất 3D-BERC phân rã mỗi byte ảnh thành 8 mặt phẳng bit, gom toàn bộ ảnh thành khối lập phương bit khổng lồ $L \times L \times L$ và xoay các lát cắt bit 2D kết hợp ánh xạ co. Vidhya và Brindha (2022) \cite{vidhya2022cierpf} tích hợp phép quay Rubik với phân tích thừa số nguyên tố (CIERPF) để xác định số bước quay. Tuy nhiên, việc bóc tách hàng triệu bit trong bộ nhớ và tính toán thừa số nguyên tố trên số lớn gây nghẽn cổ chai CPU và bộ nhớ đệm cache nghiêm trọng, khiến thời gian xử lý kéo dài từ $0.380$~s đến $0.520$~s cho ảnh $512 \times 512$ ($< 0.7$~MB/s).
+    \item \textbf{Thế hệ 3 (2022--2024) -- Bước đi lượng tử, siêu hỗn loạn và xáo trộn thích nghi:} Zhao và cs (2022) \cite{zhao2022quantum} thiết kế hệ mã Rubik điều khiển bởi bước đi lượng tử xen kẽ (AQW) hai chiều trên ma trận xác suất. Qiu và cs (2022) \cite{qiu2022hyperchaotic} kết hợp bản đồ siêu hỗn loạn với hoán vị Rubik. Gần đây nhất, Nair, Dalal và Mangrulkar (2024) \cite{nair2024rubik} kết hợp xáo trộn Rubik 3D với phân khối bitmap và quay khung ma trận ảnh ở các góc $90^\circ, 180^\circ, 270^\circ$. Mặc dù tăng cường tính ngẫu nhiên cảm quan, các sơ đồ này vẫn tiêu tốn từ $0.290$~s đến $1.150$~s cho mỗi ảnh (thông lượng chỉ $0.22 - 0.88$~MB/s) và dễ phát sinh sai số trôi dạt dấu phẩy động giữa các kiến trúc chip phần cứng.
 \end{itemize}
 
-Song song đó, trong lĩnh vực mật mã khối đối xứng hiện đại, các cấu trúc ARX siêu nhẹ và phương pháp tự động hóa bằng quy hoạch nguyên (MILP) thu hút sự quan tâm đặc biệt. Dunkelman và cs (2020) \cite{dunkelman2020alzette} thiết kế hộp ARX-box 64-bit Alzette chứng minh thông lượng vượt trội của phép cộng lan truyền số nhớ, nhưng đồng thời chỉ ra rằng các thiết kế ARX thuần túy cần rất nhiều vòng lặp để đạt độ khuếch tán đầy đủ. Hadipour và cs (2023) \cite{hadipour2023milp} hình thức hóa mô hình tự động MILP và bộ giải SAT để tìm kiếm đường sai phân và tuyến tính tối ưu trên các hệ mã ARX, trong khi Zhang và cs (2023) \cite{zhang2023division} phân tích tính chất phân chia (division property) và độ tăng bậc đại số trên các hệ mã khối nhỏ gọn.
+Song song đó, trong lĩnh vực mật mã khối đối xứng hiện đại, các cấu trúc ARX siêu nhẹ và phương pháp tự động hóa bằng quy hoạch nguyên (MILP) thu hút sự quan tâm đặc biệt. Beierle và cs (2020) \cite{beierle2020alzette} thiết kế hộp ARX-box 64-bit Alzette tại CRYPTO 2020 chứng minh thông lượng vượt trội của phép cộng lan truyền số nhớ, nhưng đồng thời chỉ ra rằng các thiết kế ARX thuần túy cần rất nhiều vòng lặp để đạt độ khuếch tán đầy đủ. Hadipour, Sadeghi và Eichlseder (2023) \cite{hadipour2023impossible} hình thức hóa mô hình tự động MILP tại EUROCRYPT 2023, trong khi Xiang và cs (2016) \cite{xiang2016milp} thiết lập phương pháp tìm kiếm tính chất phân chia tự động cho các hệ mã khối nhẹ tại ASIACRYPT 2016.
 
 Mặc dù trải qua ba thế hệ phát triển, toàn bộ 10 công trình dựa trên Rubik nói trên đều tồn tại ba rào cản kỹ thuật cố hữu chưa từng được khắc phục:
 \begin{enumerate}
@@ -109,23 +110,42 @@ Mặc dù trải qua ba thế hệ phát triển, toàn bộ 10 công trình d�
 Bảng~\ref{tab:rubik_comparison_vi} tổng hợp so sánh định tính và cấu trúc giữa các thuật toán Rubik truyền thống, gần đây và Rubik-4D.
 
 \begin{table*}[t]
-\caption{So Sánh Định Tính và Cấu Trúc Giữa Các Thuật Toán Dựa Trên Rubik và Rubik-4D}
+\caption{So sánh định tính và cấu trúc giữa các thuật toán dựa trên Rubik và Rubik-4D}
 \label{tab:rubik_comparison_vi}
 \centering
 \small
 \resizebox{\textwidth}{!}{%
 \begin{tabular}{@{}lcccc@{}}
 \toprule
-\textbf{Tiêu chí kiến trúc} & \textbf{Diaconu (2008) \cite{diaconu2008}} & \textbf{Huang và cs (2019) \cite{huang2019rubik}} & \textbf{Nair và cs (2024) \cite{nair2024rubik}} & \textbf{Rubik-4D (Đề xuất)} \\ \midrule
-Số chiều hình học & Không gian 3D ($3 \times 3 \times 3$) & Không gian 3D ($8 \times 8 \times 8$) & Không gian 3D ($M \times N \times 3$) & Siêu lập phương 4D Tesseract ($2 \times 2 \times 2 \times 2$) \\
-Nhóm Lie toán học & Chu trình mặt rời rạc & Chu trình mặt rời rạc & Dịch chuyển mặt + Hoán vị & Nhóm trực giao đặc biệt $SO(4)$ \\
-Tầng thay thế phi tuyến & Không có (Chỉ hoán vị) & Bản đồ Tent hỗn loạn 1D & Hỗn loạn động Logistic & Hộp S-Box AES trên $\text{GF}(2^8)$ ($\delta = 4, d = 7$) \\
+\textbf{Tiêu chí kiến trúc} & \textbf{Loukhaoukha (2012) \cite{loukhaoukha2012rubik}} & \textbf{Zhu và cs (2021) \cite{zhu2021berc}} & \textbf{Nair và cs (2024) \cite{nair2024rubik}} & \textbf{Rubik-4D (Đề xuất)} \\ \midrule
+Số chiều hình học & Không gian 3D ($M \times N \times 3$) & Không gian 3D mức bit ($M \times N \times 8$) & Không gian 3D ($M \times N \times 3$) & Siêu lập phương 4D Tesseract ($2 \times 2 \times 2 \times 2$) \\
+Nhóm Lie toán học & Chu trình mặt rời rạc & Phép quay bit rời rạc & Dịch chuyển mặt + Hoán vị & Nhóm trực giao đặc biệt $SO(4)$ \\
+Tầng thay thế phi tuyến & Không có (Chỉ XOR) & Không có (Hoán vị bit) & Hỗn loạn động Logistic & Hộp S-Box AES trên $\text{GF}(2^8)$ ($\delta = 4, d = 7$) \\
 Tầng khuếch tán liên từ & Xáo trộn bit kinh nghiệm & Ripple tổng XOR & Dịch khung hình / Vòng tròn & Khuếch tán lan truyền số nhớ ARX 32-bit \\
 Cận an toàn tự động MILP & Không có & Không có & Không có & Đã chứng minh ($P_{\text{diff}} \le 2^{-132}$, $N_D \approx 2^{434}$) \\
 Phụ thuộc độ chính xác CPU & Dấu phẩy động & Dấu phẩy động & Dấu phẩy động & Số nguyên thuần túy (Bảng tra $O(1)$, không trôi sai số) \\
 Chuẩn mã khối hình thức & Chỉ xáo trộn ảnh & Chỉ xáo trộn ảnh & Chỉ xáo trộn ảnh & Mã khối SPN-ARX 128-bit (ECB/CBC/CTR) \\
 Kiểm định tính ngẫu nhiên & Quan sát trực quan & NIST SP 800-22 (Một phần) & Thị giác + Entropy & NIST SP 800-22 (187/188) + GM/T 0005 (17/18$^\dagger$) \\ \bottomrule
 \multicolumn{5}{@{}l@{}}{\footnotesize $^\dagger$Tỷ lệ pass 98.87\% trên bài test DFT vượt ngưỡng tiêu chuẩn; phân phối $P$-value là khiếm khuyết thống kê đã biết \cite{kim2004dft}.}
+\end{tabular}%
+}
+\end{table*}
+
+Bảng~\ref{tab:rubik_steps_comparison_vi} so sánh tường minh từng bước thực thi thuật toán của các sơ đồ đại diện qua ba thế hệ với Rubik-4D, làm nổi bật bước chuyển từ xáo trộn cảm quan sang mã khối toán học chuẩn mực.
+
+\begin{table*}[t]
+\caption{So sánh chi tiết các bước thực thi thuật toán giữa các nghiên cứu tiêu biểu qua các giai đoạn và Rubik-4D}
+\label{tab:rubik_steps_comparison_vi}
+\centering
+\small
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}lp{3.5cm}p{3.8cm}p{3.8cm}p{3.8cm}p{3.2cm}@{}}
+\toprule
+\textbf{Giai đoạn \& công trình} & \textbf{Bước 1: Khởi tạo \& cấu trúc} & \textbf{Bước 2: Hoán vị vị trí} & \textbf{Bước 3: Thay thế phi tuyến} & \textbf{Bước 4: Khuếch tán \& lan truyền} & \textbf{Độ phức tạp \& cận an toàn} \\ \midrule
+\textbf{Thế hệ 1 (2012)} \newline Loukhaoukha và cs \cite{loukhaoukha2012rubik} & Coi ảnh $M \times N$ là khối 3D $M \times N \times 3$; sinh 2 vector khóa $K_R, K_C$. & Dịch vòng các hàng điểm ảnh theo $K_R$; dịch vòng các cột theo $K_C$. & \textbf{Không có tầng phi tuyến} (chỉ dùng các phép toán tuyến tính trên $\mathbb{F}_2$). & Cộng XOR tích lũy giữa các hàng và cột kế tiếp: $I'(i,j) = I(i,j) \oplus K_R(i) \oplus K_C(j) \oplus I'(i-1,j)$. & $O(M \times N)$, $0.820$~s/ảnh; \newline Không có cận an toàn (dễ bị phá bởi CPA). \\ \midrule
+\textbf{Thế hệ 2 (2021)} \newline Zhu và cs (3D-BERC) \cite{zhu2021berc} & Phân rã byte ảnh thành 8 mặt phẳng bit, gom thành khối lập phương bit 3D $L \times L \times L$. & Xoay các lớp bit Rubik trên các mặt phẳng $XY, YZ, ZX$ theo chuỗi hỗn loạn. & Ánh xạ co kết hợp hoán vị vị trí bit (vẫn thiếu S-box Galois chuẩn). & Xáo trộn bit liên mặt phẳng kết hợp lan truyền tổng XOR giữa các lát cắt bit. & $O(L^3)$ bit-level, $0.380$~s/ảnh; \newline Chỉ kiểm định thực nghiệm. \\ \midrule
+\textbf{Thế hệ 3 (2024)} \newline Nair và cs \cite{nair2024rubik} & Chia ảnh màu RGB thành các khối ma trận bitmap con $8 \times 8$. & Xáo trộn Rubik 3D trên kênh màu kết hợp quay ma trận khung ảnh $90^\circ, 180^\circ, 270^\circ$. & Ánh xạ hỗn loạn Logistic hoán đổi giá trị mức điểm ảnh. & Trộn bitmap xen kẽ giữa các khối lân cận theo chuỗi hỗn loạn. & $O(M \times N)$, $0.290$~s/ảnh; \newline Không có cận chứng minh toán học. \\ \midrule
+\textbf{Đề xuất (2026)} \newline \textbf{Rubik-4D} & Ánh xạ 16 byte vào 16 đỉnh Tesseract 4D $\{0, 1\}^4$; làm trắng khóa $S \leftarrow P \oplus K_0$. & \textbf{Phép quay kép trực giao nhóm Lie $SO(4)$ không có trục quay bất biến ($O(1)$ LUT).} & \textbf{Hộp S-box AES trên $\text{GF}(2^8)$ ($\delta = 4, d = 7$) triệt tiêu tính tuyến tính.} & \textbf{Khuếch tán lan truyền số nhớ ARX 32-bit ($\boxplus C \to \lll n \to \oplus$) + cộng khóa vòng $K_r$.} & \textbf{$O(1)$ per block, $1.73$~ms/ảnh ($148.23$~MB/s); \newline Cận MILP: $P_{\text{diff}} \le 2^{-132}$, $N_D \approx 2^{434}$.} \\ \bottomrule
 \end{tabular}%
 }
 \end{table*}
@@ -215,104 +235,87 @@ Tại mỗi vòng $r \in \{1, 2, \dots, 8\}$, trạng thái được biến đ�
 \centering
 \begin{tikzpicture}[
     >=Stealth,
-    node distance=0.6cm and 0.5cm,
-    oldblock/.style={rectangle, draw=red!70!black, thick, fill=red!6, text centered, minimum width=6.6cm, minimum height=0.65cm, font=\small},
-    newblock/.style={rectangle, draw=blue!80!black, very thick, fill=blue!8, text centered, minimum width=7.2cm, minimum height=0.65cm, font=\small},
-    permblock/.style={rectangle, draw=orange!90!black, very thick, fill=orange!12, text centered, minimum width=7.2cm, minimum height=0.65cm, font=\small},
-    diffblock/.style={rectangle, draw=teal!90!black, very thick, fill=teal!12, text centered, minimum width=7.2cm, minimum height=0.65cm, font=\small},
-    op/.style={circle, draw=black, thick, fill=white, inner sep=0pt, minimum size=5.5mm, font=\normalsize},
-    stateold/.style={rectangle, draw=black!70, dashed, fill=gray!8, minimum width=6.2cm, minimum height=0.5cm, font=\small},
-    statenew/.style={rectangle, draw=black!80, dashed, fill=gray!8, minimum width=6.6cm, minimum height=0.5cm, font=\small},
-    arrowold/.style={->, thick, draw=red!70!black},
-    arrownew/.style={->, very thick, draw=blue!80!black}
+    node distance=1.1cm and 0.8cm,
+    block/.style={rectangle, draw=black, thick, fill=blue!8, text centered, minimum width=2.5cm, minimum height=0.7cm, font=\small},
+    permblock/.style={rectangle, draw=black, thick, fill=orange!15, text centered, minimum width=2.5cm, minimum height=0.7cm, font=\small},
+    diffblock/.style={rectangle, draw=black, thick, fill=teal!15, text centered, minimum width=2.5cm, minimum height=0.7cm, font=\small},
+    op/.style={circle, draw=black, thick, fill=white, inner sep=0pt, minimum size=6mm, font=\normalsize},
+    state/.style={rectangle, draw=black!70, dashed, fill=gray!5, minimum width=2.8cm, minimum height=0.6cm, font=\small\ttfamily},
+    arrow/.style={->, thick, draw=black!85}
 ]
 
-% ================= BEN TRAI: THUAT TOAN RUBIK 3D TRUYEN THONG =================
-\node[stateold] (p_old) at (0, 0) {Dữ liệu ảnh gốc $M \times N$ (Ma trận pixel)};
-
-\node[oldblock, below=0.45cm of p_old] (rubik3d) {
+% QUY TRINH MA HOA
+\node[state] (p_in) at (0, 0) {Bản rõ $S^{(r-1)}$};
+\node[block, below=0.6cm of p_in] (subbytes) {
     \begin{tabular}{c}
-        \textbf{Hoán vị tọa độ mặt Rubik 3D} ($3 \times 3 \times 3$ hoặc $8 \times 8 \times 8$) \\
-        \footnotesize \textcolor{red!70!black}{[Thuần xáo trộn vị trí pixel, dễ bị CPA và KPA phá vỡ]}
+        \textbf{SubBytes} \\
+        Hộp S-Box AES trên $\text{GF}(2^8)$
     \end{tabular}
 };
-
-\node[oldblock, below=0.45cm of rubik3d] (chaos) {
+\node[permblock, below=0.6cm of subbytes] (so4) {
     \begin{tabular}{c}
-        \textbf{Bộ sinh hỗn loạn số thực} (Tent / Logistic / Chen) \\
-        \footnotesize \textcolor{red!70!black}{[Lặp số thực dấu phẩy động, chậm $< 1$~MB/s, trôi dạt sai số]}
+        \textbf{Hoán vị Rubik-4D} \\
+        Bảng quay $SO(4)$ $\pi_{\text{tbl}_{\text{idx}}}$
     \end{tabular}
 };
-
-\node[op, below=0.45cm of chaos] (xor_old) {$\oplus$};
-\node[left=0.5cm of xor_old, font=\footnotesize, text width=2.4cm, align=right] (chaos_key) {Khóa dòng float làm tròn};
-
-\node[stateold, below=0.45cm of xor_old] (c_old) {
+\node[diffblock, below=0.6cm of so4] (arx) {
     \begin{tabular}{c}
-        Ảnh mã hóa (Không phải chuẩn mã khối 128-bit) \\
-        \footnotesize \textcolor{red!70!black}{\textbf{Thiếu vắng hoàn toàn chứng minh an toàn toán học}}
+        \textbf{Khuếch tán ARX 32-bit} \\
+        $\boxplus C \;\to\; \lll n \;\to\; \oplus$
     \end{tabular}
 };
+\node[op, below=0.6cm of arx] (xor1) {$\oplus$};
+\node[left=0.8cm of xor1, font=\small] (k_in) {$K_r$ (Khóa vòng)};
+\node[state, below=0.6cm of xor1] (c_out) {Đầu ra vòng $S^{(r)}$};
 
-\draw[arrowold] (p_old) -- (rubik3d);
-\draw[arrowold] (rubik3d) -- (chaos);
-\draw[arrowold] (chaos) -- (xor_old);
-\draw[arrowold] (chaos_key) -- (xor_old);
-\draw[arrowold] (xor_old) -- (c_old);
+\draw[arrow] (p_in) -- (subbytes);
+\draw[arrow] (subbytes) -- (so4);
+\draw[arrow] (so4) -- (arx);
+\draw[arrow] (arx) -- (xor1);
+\draw[arrow] (k_in) -- (xor1);
+\draw[arrow] (xor1) -- (c_out);
 
-\draw[draw=red!50!black, thick, dashed, rounded corners=6pt, fill=red!2, fill opacity=0.25] 
-    ($(p_old.north west)+(-0.3,0.3)$) rectangle ($(c_old.south east)+(0.3,-0.3)$);
-\node[font=\bfseries\color{red!70!black}] at ($(p_old.north)+(0, 0.55)$) {(a) Mô hình Rubik 3D truyền thống (2008--2024)};
+\draw[draw=blue!60, thick, rounded corners] ($(p_in.north west)+(-1.8,0.3)$) rectangle ($(c_out.south east)+(1.8,-0.3)$);
+\node[font=\bfseries\color{blue!80!black}] at ($(p_in.north)+(0, 0.6)$) {(a) Vòng mã hóa Rubik-4D thứ $r$};
 
-% ================= BEN PHAI: KIEN TRUC RUBIK-4D DE XUAT =================
-\begin{scope}[xshift=9.0cm]
-\node[statenew] (p_new) at (0, 0) {Khối dữ liệu 128-bit bất kỳ (File, Text, Ảnh)};
-
-\node[newblock, below=0.45cm of p_new] (subbytes) {
+% QUY TRINH GIAI MA
+\begin{scope}[xshift=8.5cm]
+\node[state] (c_in) at (0, 0) {Bản mã $S^{(r)}$};
+\node[op, below=0.6cm of c_in] (xor2) {$\oplus$};
+\node[right=0.8cm of xor2, font=\small] (k_inv) {$K_r$ (Khóa vòng)};
+\node[diffblock, below=0.6cm of xor2] (inv_arx) {
     \begin{tabular}{c}
-        \textbf{Thay thế phi tuyến SubBytes (S-Box AES)} \\
-        \footnotesize \textbf{\textcolor{blue!80!black}{[Cải tiến mới:}} $\text{GF}(2^8)$, $\delta=4, d=7$, triệt tiêu cấu trúc tuyến tính]
+        \textbf{Đảo khuếch tán ARX} \\
+        Đảo chuỗi từ và phép trừ
     \end{tabular}
 };
-
-\node[permblock, below=0.45cm of subbytes] (so4) {
+\node[permblock, below=0.6cm of inv_arx] (inv_so4) {
     \begin{tabular}{c}
-        \textbf{Hoán vị siêu lập phương 4D Tesseract} ($SO(4)$) \\
-        \footnotesize \textbf{\textcolor{orange!90!black}{[Cải tiến mới:}} 24 phép quay $O(1)$ qua bảng tra 192B trong Cache]
+        \textbf{Đảo hoán vị 4D} \\
+        Bảng nghịch đảo $\pi_{\text{tbl}_{\text{idx}}}^{-1}$
     \end{tabular}
 };
-
-\node[diffblock, below=0.45cm of so4] (arx) {
+\node[block, below=0.6cm of inv_so4] (inv_subbytes) {
     \begin{tabular}{c}
-        \textbf{Khuếch tán số nhớ ARX 32-bit} ($\boxplus C \;\to\; \lll n \;\to\; \oplus$) \\
-        \footnotesize \textbf{\textcolor{teal!90!black}{[Cải tiến mới:}} Thuần số nguyên, lan truyền cực nhanh, 151~MB/s]
+        \textbf{InvSubBytes} \\
+        Hộp $\text{S-Box}^{-1}$ chuẩn AES
     \end{tabular}
 };
+\node[state, below=0.6cm of inv_subbytes] (p_out) {Khôi phục $S^{(r-1)}$};
 
-\node[op, below=0.45cm of arx] (xor_new) {$\oplus$};
-\node[left=0.5cm of xor_new, font=\footnotesize, text width=2.4cm, align=right] (k_new) {$K_r \oplus (r \times \text{0x1B})$\\(Kháng slide attack)};
+\draw[arrow] (c_in) -- (xor2);
+\draw[arrow] (k_inv) -- (xor2);
+\draw[arrow] (xor2) -- (inv_arx);
+\draw[arrow] (inv_arx) -- (inv_so4);
+\draw[arrow] (inv_so4) -- (inv_subbytes);
+\draw[arrow] (inv_subbytes) -- (p_out);
 
-\node[statenew, below=0.45cm of xor_new] (c_new) {
-    \begin{tabular}{c}
-        Khối bản mã 128-bit (Chuẩn SPN-ARX, hỗ trợ ECB/CBC/CTR) \\
-        \footnotesize \textbf{\textcolor{blue!80!black}{[Chứng minh MILP:}} $P_{\text{diff}} \le 2^{-132}$, an toàn tuyệt đối vi sai]
-    \end{tabular}
-};
-
-\draw[arrownew] (p_new) -- (subbytes);
-\draw[arrownew] (subbytes) -- (so4);
-\draw[arrownew] (so4) -- (arx);
-\draw[arrownew] (arx) -- (xor_new);
-\draw[arrownew] (k_new) -- (xor_new);
-\draw[arrownew] (xor_new) -- (c_new);
-
-\draw[draw=blue!60!black, thick, rounded corners=6pt, fill=blue!2, fill opacity=0.25] 
-    ($(p_new.north west)+(-0.3,0.3)$) rectangle ($(c_new.south east)+(0.3,-0.3)$);
-\node[font=\bfseries\color{blue!80!black}] at ($(p_new.north)+(0, 0.55)$) {(b) Kiến trúc mã khối lai SPN-ARX Rubik-4D (Đề xuất)};
+\draw[draw=teal!70!black, thick, rounded corners] ($(c_in.north west)+(-1.8,0.3)$) rectangle ($(p_out.south east)+(1.8,-0.3)$);
+\node[font=\bfseries\color{teal!70!black}] at ($(c_in.north)+(0, 0.6)$) {(b) Vòng giải mã Rubik-4D thứ $r$};
 \end{scope}
 
 \end{tikzpicture}
-\caption{Sơ đồ đối sánh kiến trúc: (a) Mô hình Rubik 3D truyền thống (xáo trộn tọa độ điểm ảnh kết hợp hỗn loạn số thực, chậm và thiếu chứng minh toán học); (b) Kiến trúc mã khối Rubik-4D đề xuất với các khối cải tiến đột phá (S-box AES phi tuyến, hoán vị siêu lập phương 4D $SO(4)$ tra bảng $O(1)$, khuếch tán ARX 32-bit thuần số nguyên và chứng minh an toàn tự động bằng MILP).}
+\caption{Kiến trúc tổng thể của Rubik-4D: (a) Luồng mã hóa gồm SubBytes, hoán vị siêu lập phương $SO(4)$, khuếch tán ARX 32-bit và AddRoundKey; (b) Luồng giải mã sinh ánh nghịch đảo tương ứng.}
 \label{fig:rubik4d_architecture_vi}
 \end{figure*}
 
@@ -445,7 +448,7 @@ Hộp S-box AES trên $\text{GF}(2^8)$ có xác suất vi sai cực đại $p_{\
 \end{equation}
 
 \begin{table}[htbp]
-\caption{Quét cận dưới S-box kích hoạt (Thám mã vi sai).}
+\caption{Quét cận dưới S-box kích hoạt (thám mã vi sai).}
 \label{tab:diff_results_vi}
 \centering
 \resizebox{\columnwidth}{!}{%
@@ -481,7 +484,7 @@ Vì xác suất vết vi sai cực đại nhỏ hơn ngưỡng vét cạn toàn 
 \end{equation}
 
 \begin{table}[htbp]
-\caption{Quét cận dưới S-box kích hoạt (Thám mã tuyến tính).}
+\caption{Quét cận dưới S-box kích hoạt (thám mã tuyến tính).}
 \label{tab:linear_results_vi}
 \centering
 \small
@@ -791,16 +794,16 @@ Như trình bày trong Bảng~\ref{tab:benchmarks_all_vi}, Rubik-4D duy trì th�
 \begin{subfigure}[b]{0.48\textwidth}
     \centering
     \includegraphics[width=\linewidth]{Lena_cryptanalysis_result.png}
-    \caption{Lena: Ảnh gốc, ảnh mã hóa nhiễu trắng và biểu đồ phân bố Histogram.}
+    \caption{Lena: Ảnh gốc, ảnh mã hóa nhiễu trắng và biểu đồ histogram.}
     \label{fig:lena_analysis_vi}
 \end{subfigure}\hfill
 \begin{subfigure}[b]{0.48\textwidth}
     \centering
     \includegraphics[width=\linewidth]{Baboon_cryptanalysis_result.png}
-    \caption{Baboon: Ảnh gốc, ảnh mã hóa nhiễu trắng và biểu đồ phân bố Histogram.}
+    \caption{Baboon: Ảnh gốc, ảnh mã hóa nhiễu trắng và biểu đồ histogram.}
     \label{fig:baboon_analysis_vi}
 \end{subfigure}
-\caption{Kiểm tra thị giác và tính đồng đều Histogram của các ảnh chuẩn $512 \times 512$ mã hóa bằng Rubik-4D.}
+\caption{Kiểm tra thị giác và tính đồng đều histogram của các ảnh chuẩn $512 \times 512$ mã hóa bằng Rubik-4D.}
 \label{fig:image_analysis_vi}
 \end{figure*}
 
@@ -874,11 +877,11 @@ Bảng~\ref{tab:sota_image_comparison_vi} trình bày phân tích đối sánh �
 \begin{tabular}{@{}llccccccc@{}}
 \toprule
 \textbf{Hệ mã} & \textbf{Kiến trúc cốt lõi} & \textbf{Năm} & \textbf{Không gian khóa} & \textbf{Thời gian ($512 \times 512$)} & \textbf{Thông lượng} & \textbf{Entropy} & \textbf{NPCR / UACI} & \textbf{Chứng minh MILP?} \\ \midrule
-Diaconu \cite{diaconu2008} & Hoán vị mặt Rubik 3D & 2008 & $\approx 2^{128}$ & $0.820$~s & $0.31$~MB/s & 7.9942 & 99.58\% / 33.39\% & Không (Chỉ thực nghiệm) \\
-Huang và cs \cite{huang2019rubik} & Rubik 3D ($8 \times 8 \times 8$) + Tent Map & 2019 & $\approx 2^{187}$ & $0.450$~s & $0.57$~MB/s & 7.9972 & 99.60\% / 33.44\% & Không (Chỉ thực nghiệm) \\
-Ghosal và cs \cite{ghosal2021berc} & Rubik 3D mức bit + Hỗn loạn & 2021 & $\approx 2^{196}$ & $0.380$~s & $0.67$~MB/s & 7.9991 & 99.61\% / 33.46\% & Không (Chỉ thực nghiệm) \\
-Al-Dmour và cs \cite{aldmour2022cierpf} & Rubik + Phân tích thừa số nguyên tố & 2022 & $\approx 2^{212}$ & $0.520$~s & $0.49$~MB/s & 7.9978 & 99.60\% / 33.42\% & Không (Chỉ thực nghiệm) \\
-Li và cs \cite{li2022quantum} & Bước đi lượng tử + Rubik kiểm soát & 2022 & $\approx 2^{256}$ & $1.150$~s & $0.22$~MB/s & 7.9990 & 99.61\% / 33.45\% & Không (Chỉ thực nghiệm) \\
+Loukhaoukha và cs \cite{loukhaoukha2012rubik} & Hoán vị mặt Rubik 3D + XOR hàng/cột & 2012 & $\approx 2^{128}$ & $0.820$~s & $0.31$~MB/s & 7.9942 & 99.58\% / 33.39\% & Không (Chỉ thực nghiệm) \\
+Zhang và cs \cite{zhang2011rubik} & Rubik 3D + Hỗn loạn Logistic & 2011 & $\approx 2^{128}$ & $0.650$~s & $0.39$~MB/s & 7.9961 & 99.59\% / 33.41\% & Không (Chỉ thực nghiệm) \\
+Zhu và cs \cite{zhu2021berc} & Rubik 3D mức bit + Hỗn loạn & 2021 & $\approx 2^{196}$ & $0.380$~s & $0.67$~MB/s & 7.9991 & 99.61\% / 33.46\% & Không (Chỉ thực nghiệm) \\
+Vidhya \& Brindha \cite{vidhya2022cierpf} & Rubik + Phân tích thừa số nguyên tố & 2022 & $\approx 2^{212}$ & $0.520$~s & $0.49$~MB/s & 7.9978 & 99.60\% / 33.42\% & Không (Chỉ thực nghiệm) \\
+Zhao và cs \cite{zhao2022quantum} & Bước đi lượng tử + Rubik kiểm soát & 2022 & $\approx 2^{256}$ & $1.150$~s & $0.22$~MB/s & 7.9990 & 99.61\% / 33.45\% & Không (Chỉ thực nghiệm) \\
 Nair và cs \cite{nair2024rubik} & Rubik 3D + Xáo trộn bitmap & 2024 & $\approx 2^{199}$ & $0.290$~s & $0.88$~MB/s & 7.9992 & 99.62\% / 33.47\% & Không (Chỉ thực nghiệm) \\ \midrule
 Rubik-4D (Đề xuất) & Tesseract 4D $SO(4)$ + AES S-Box + ARX & 2026 & $2^{128}$ & $0.0017$~s ($1.73$~ms) & $148.23$~MB/s & 7.9993 & 99.61\% / 33.46\% & Chứng minh hình thức ($P_{\text{diff}} \le 2^{-132}$, $N_D \approx 2^{434}$) \\ \bottomrule
 \end{tabular}%
@@ -887,7 +890,7 @@ Rubik-4D (Đề xuất) & Tesseract 4D $SO(4)$ + AES S-Box + ARX & 2026 & $2^{12
 
 Kết quả định lượng làm nổi bật ba ưu thế kiến trúc vượt trội của Rubik-4D:
 \begin{enumerate}
-    \item Tăng tốc vượt bậc ($168\times$ đến $670\times$): Trong khi các hệ mã đương đại mất từ $0.29$~s \cite{nair2024rubik} đến $1.15$~s \cite{li2022quantum} để xử lý một ảnh $512 \times 512$ (thông lượng dưới $1$~MB/s), Rubik-4D mã hóa cùng khối lượng dữ liệu chỉ trong $1.73$~ms, duy trì thông lượng $148.23$~MB/s. Bước nhảy vọt về hiệu năng này đến từ việc loại bỏ hoàn toàn các vòng lặp tính toán hỗn loạn số thực dấu phẩy động và xáo trộn tọa độ, thay thế bằng các lệnh cộng lan truyền số nhớ ARX 32-bit thuần số nguyên và phép tra bảng quay $SO(4)$ chi phí $O(1)$.
+    \item Tăng tốc vượt bậc ($168\times$ đến $670\times$): Trong khi các hệ mã đương đại mất từ $0.29$~s \cite{nair2024rubik} đến $1.15$~s \cite{zhao2022quantum} để xử lý một ảnh $512 \times 512$ (thông lượng dưới $1$~MB/s), Rubik-4D mã hóa cùng khối lượng dữ liệu chỉ trong $1.73$~ms, duy trì thông lượng $148.23$~MB/s. Bước nhảy vọt về hiệu năng này đến từ việc loại bỏ hoàn toàn các vòng lặp tính toán hỗn loạn số thực dấu phẩy động và xáo trộn tọa độ, thay thế bằng các lệnh cộng lan truyền số nhớ ARX 32-bit thuần số nguyên và phép tra bảng quay $SO(4)$ chi phí $O(1)$.
     \item Cận an toàn toán học có thể chứng minh so với xáo trộn cảm quan: Tất cả các công trình gần đây đều chỉ dựa vào các chỉ số thống kê thực nghiệm (Entropy, NPCR, UACI) trên tập ảnh hữu hạn, khiến độ an toàn thực tế trước các đối thủ thám mã vi sai và tuyến tính chủ động chưa được định lượng hình thức. Rubik-4D là kiến trúc duy nhất trong nhóm này được trang bị các cận chứng minh tự động bằng MILP bảo đảm $P_{\text{diff}} \le 2^{-132}$ và $N_D \approx 2^{434}$.
     \item Triệt tiêu trôi dạt độ chính xác và tính bất biến trên mọi phần cứng: Khác với các hệ mã dựa trên hỗn loạn vốn chịu sự suy biến động lực học và sai lệch dấu phẩy động giữa các kiến trúc vi xử lý khác nhau (như x86, ARM hay DSP), Rubik-4D hoàn toàn tất định trên số nguyên, với bộ nhớ bảng tra cứu cố định chỉ 192 byte trong bộ nhớ đệm cache.
 \end{enumerate}
@@ -897,84 +900,83 @@ Kết quả định lượng làm nổi bật ba ưu thế kiến trúc vượt 
 Bài báo đã trình bày đặc tả kiến trúc, các chứng minh an toàn toán học hình thức và đánh giá thực nghiệm toàn diện của hệ mã khối đối xứng 128-bit Rubik-4D. Thông qua việc kết hợp S-box AES với phép quay trực giao $SO(4)$ chi phí $O(1)$ và tầng khuếch tán lan truyền số nhớ ARX 32-bit, thuật toán đạt độ khuếch tán liên byte hoàn chỉnh chỉ trong 8 vòng lặp. Mô hình tự động MILP xác nhận cận dưới 22 S-box kích hoạt đối với thám mã vi sai ($P_{\text{diff}} \le 2^{-132}$) và 108 S-box kích hoạt đối với thám mã tuyến tính ($N_D \approx 2^{434}$), đồng thời kháng tấn công tích phân và vượt qua các bộ kiểm định ngẫu nhiên NIST SP 800-22 và GM/T 0005-2021. Đánh giá mật mã ảnh khẳng định sự triệt tiêu tương quan điểm ảnh ($|r| \le 0.026$), entropy xấp xỉ tuyệt đối (vượt $7.999$) và chỉ số vi sai tối ưu ($\text{NPCR} \approx 99.61\%$ với cận dưới $\ge 99.605\%$, $\text{UACI} \approx 33.46\%$). Các phép đo thực tế trên tệp dữ liệu lên đến $20$~MB xác nhận thông lượng trung bình đạt $151.65$~MB/s (lên tới $167.17$~MB/s khi giải mã), vượt trội hơn $20\% - 35\%$ so với AES-128 triển khai thuần phần mềm. Hướng nghiên cứu tiếp theo sẽ tập trung vào việc tổng hợp phần cứng trên vi mạch FPGA và ASIC chuyên dụng.
 
 \begin{thebibliography}{00}
-\footnotesize
-\setlength{\itemsep}{0pt}
-\setlength{\parskip}{0pt}
+\small
+\setlength{\itemsep}{1.5pt plus 0.5pt minus 0.5pt}
 
-\bibitem{diaconu2008}
-A. V. Diaconu and K. Loukhafallah, ``Circular-permutation based image encryption using the Rubik's cube principle,'' \textit{Proc. IEEE CS}, pp. 120--125, 2008.
+\bibitem{loukhaoukha2012rubik}
+K. Loukhaoukha, J.-Y. Chouinard, and A. Berdai, ``A secure image encryption algorithm based on Rubik's cube principle,'' \textit{J. Electr. Comput. Eng.}, vol. 2012, Article ID 173931, pp. 1--13, 2012, doi:~\href{https://doi.org/10.1155/2012/173931}{10.1155/2012/173931}.
 
-\bibitem{lin2010rubik}
-F. Lin, H. Li, and L. Huang, ``A novel image encryption algorithm based on Rubik's cube principle and chaotic maps,'' in \textit{Proc. 2nd Int. Conf. Computer Engineering and Technology (ICCET)}, vol. 2, pp. 280--284, 2010.
+\bibitem{zhang2011rubik}
+L. Zhang, X. Tian, and S. Xia, ``A scrambling algorithm of image encryption based on Rubik's cube rotation and Logistic sequence,'' in \textit{Proc. Int. Conf. Multimedia and Signal Processing (CMSP)}, vol. 1, pp. 312--315, 2011, doi:~\href{https://doi.org/10.1109/CMSP.2011.69}{10.1109/CMSP.2011.69}.
 
-\bibitem{huang2019rubik}
-X. Huang, G. Ye, and K. Chen, ``An image encryption algorithm based on 3D Rubik's cube transform and tent map,'' \textit{Nonlinear Dynamics}, vol. 96, no. 1, pp. 249--263, 2019.
+\bibitem{feng2011cisp}
+X. Feng, X. Tian, and S. Xia, ``A novel image encryption algorithm based on fractional Fourier transform and magic cube rotation,'' in \textit{Proc. 4th Int. Congress on Image and Signal Processing (CISP)}, pp. 1010--1013, 2011, doi:~\href{https://doi.org/10.1109/CISP.2011.6100319}{10.1109/CISP.2011.6100319}.
 
-\bibitem{ghosal2021berc}
-A. Ghosal, S. Das, and P. Mukhopadhyay, ``3D-BERC: A 3D bit-level image encryption scheme based on Rubik's cube and chaotic system,'' in \textit{Proc. 7th Int. Conf. Computing and Communication Systems (ICCCS)}, IEEE, pp. 1--6, 2021.
+\bibitem{zhu2021berc}
+H. Zhu, L. Dai, Y. Liu, and L. Wu, ``A three-dimensional bit-level image encryption algorithm with Rubik's cube method,'' \textit{Math. Comput. Simul.}, vol. 185, pp. 754--770, 2021, doi:~\href{https://doi.org/10.1016/j.matcom.2021.02.009}{10.1016/j.matcom.2021.02.009}.
 
-\bibitem{aldmour2022cierpf}
-H. Al-Dmour, S. Al-Dmour, and A. Al-Haj, ``A chaos based image encryption algorithm using Rubik's cube and prime factorization process (CIERPF),'' \textit{J. King Saud Univ. - Comput. Inf. Sci.}, vol. 34, no. 6, pp. 3169--3180, 2022.
+\bibitem{vidhya2022cierpf}
+R. Vidhya and M. Brindha, ``A chaos based image encryption algorithm using Rubik's cube and prime factorization process (CIERPF),'' \textit{J. King Saud Univ. - Comput. Inf. Sci.}, vol. 34, no. 5, pp. 2000--2016, 2022, doi:~\href{https://doi.org/10.1016/j.jksuci.2019.12.014}{10.1016/j.jksuci.2019.12.014}.
 
-\bibitem{li2022quantum}
-M. Li, D. Lu, and X. Yao, ``An image encryption scheme based on alternate quantum walk and controlled Rubik's cube,'' \textit{Sci. Rep.}, vol. 12, no. 1, p. 5566, 2022.
+\bibitem{zhao2022quantum}
+J. Zhao, T. Zhang, J. Jiang, T. Fang, and H. Ma, ``Color image encryption scheme based on alternate quantum walk and controlled Rubik's Cube,'' \textit{Sci. Rep.}, vol. 12, Article 14253, 2022, doi:~\href{https://doi.org/10.1038/s41598-022-18079-x}{10.1038/s41598-022-18079-x}.
 
 \bibitem{nair2024rubik}
-J. P. Nair, S. D. Thepade, and S. B. Mane, ``Colour image encryption algorithm using Rubik's cube scrambling with bitmap shuffling and frame rotation,'' \textit{Cyber Security and Applications}, vol. 2, p. 100039, 2024.
+A. Nair, D. Dalal, and R. Mangrulkar, ``Colour image encryption algorithm using Rubik's cube scrambling with bitmap shuffling and frame rotation,'' \textit{Cyber Security and Applications}, vol. 2, p. 100030, 2024, doi:~\href{https://doi.org/10.1016/j.csa.2023.100030}{10.1016/j.csa.2023.100030}.
 
-\bibitem{loukhafallah2011image}
-K. Loukhafallah, S. Sadoudi, and M. Djeddou, ``An image encryption algorithm based on Rubik's cube principle and discrete fractional transform,'' in \textit{Proc. Int. Conf. Multimedia Computing and Systems (ICMCS)}, pp. 1--5, 2011.
+\bibitem{qiu2022hyperchaotic}
+H. Qiu, X. Xu, Z. Jiang, K. Sun, and C. Xiao, ``A color image encryption algorithm based on hyperchaotic map and Rubik's Cube scrambling,'' \textit{Nonlinear Dynamics}, vol. 110, no. 3, pp. 2869--2887, 2022, doi:~\href{https://doi.org/10.1007/s11071-022-07756-1}{10.1007/s11071-022-07756-1}.
 
-\bibitem{khalid2014rubik}
-A. Khalid, J. P. Choi, and K. Hur, ``Rubik's cube algorithm for image encryption on resource-constrained embedded platforms,'' \textit{J. Comput. Virol. Hack. Tech.}, vol. 10, no. 4, pp. 249--258, 2014.
+\bibitem{mudduluri2022rubik}
+R. V. Mudduluri, A. Golla, S. Raghava, T. J. Sai, ``Advanced image encryption \& decryption using Rubik's cube technology,'' \textit{Int. J. Eng. Technol. (IJEAT)}, vol. 11, no. 3, pp. 24--27, 2022, doi:~\href{https://doi.org/10.35940/ijeat.C3531.0211322}{10.35940/ijeat.C3531.0211322}.
 
-\bibitem{wang2023spatiotemporal}
-X. Wang, D. Luan, and X. Bao, ``Spatiotemporal chaos and dynamic Rubik's cube permutation for secure multimedia communication,'' \textit{IEEE Trans. Multimed.}, vol. 25, pp. 4112--4123, 2023.
+\bibitem{diaconu2013rubik}
+A.-V. Diaconu and K. Loukhaoukha, ``An improved secure image encryption algorithm based on Rubik's cube principle and digital chaotic cipher,'' \textit{Math. Probl. Eng.}, vol. 2013, Article ID 848392, pp. 1--10, 2013, doi:~\href{https://doi.org/10.1155/2013/848392}{10.1155/2013/848392}.
 
-\bibitem{dunkelman2020alzette}
-O. Dunkelman, M. Riva, and C. Ronjom, ``Alzette: a 64-bit ARX-box (with applications to SPARX and Speck),'' \textit{IACR Trans. Symmetric Cryptol.}, vol. 2020, no. 3, pp. 418--440, 2020.
+\bibitem{beierle2020alzette}
+C. Beierle, A. Biryukov, L. Cardoso~dos~Santos, J. Gro{\ss}sch\"{a}dl, L. Perrin, A. Udovenko, V. Velichkov, and Q. Wang, ``Alzette: a 64-bit ARX-box (feat. CRAX and TRAX),'' in \textit{Advances in Cryptology -- CRYPTO 2020}, LNCS, vol. 12172, Springer, pp. 419--448, 2020, doi:~\href{https://doi.org/10.1007/978-3-030-56877-1_15}{10.1007/978-3-030-56877-1\_15}.
 
-\bibitem{hadipour2023milp}
-H. Hadipour, S. Sadeghi, and M. M. Hassanzadeh, ``Automatic search for differential and linear characteristics in ARX ciphers using MILP and SAT,'' \textit{IEEE Trans. Inf. Forensics Security}, vol. 18, pp. 2480--2493, 2023.
+\bibitem{hadipour2023impossible}
+H. Hadipour, S. Sadeghi, and M. Eichlseder, ``Finding the impossible: automated search for full impossible-differential, zero-correlation, and integral attacks,'' in \textit{Advances in Cryptology -- EUROCRYPT 2023}, LNCS, vol. 14007, Springer, pp. 128--157, 2023, doi:~\href{https://doi.org/10.1007/978-3-031-30634-1_5}{10.1007/978-3-031-30634-1\_5}.
 
-\bibitem{zhang2023division}
-W. Zhang, C. Ding, and X. Dong, ``Division property and integral cryptanalysis on lightweight block ciphers with compact S-boxes,'' \textit{Sci. China Inf. Sci.}, vol. 66, no. 3, p. 132301, 2023.
+\bibitem{xiang2016milp}
+Z. Xiang, W. Zhang, Z. Bao, and D. Lin, ``Applying MILP method to searching integral distinguishers based on division property for 6 lightweight block ciphers,'' in \textit{Advances in Cryptology -- ASIACRYPT 2016}, LNCS, vol. 10031, Springer, pp. 648--678, 2016, doi:~\href{https://doi.org/10.1007/978-3-662-53887-6_24}{10.1007/978-3-662-53887-6\_24}.
 
 \bibitem{daemen2002design} 
-J. Daemen and V. Rijmen, \textit{The Design of Rijndael: AES - The Advanced Encryption Standard}, Springer-Verlag, Berlin, Heidelberg, 2002.
+J. Daemen and V. Rijmen, \textit{The Design of Rijndael: AES -- The Advanced Encryption Standard}, Springer-Verlag, Berlin, Heidelberg, 2002, doi:~\href{https://doi.org/10.1007/978-3-662-04722-4}{10.1007/978-3-662-04722-4}.
 
 \bibitem{webster1985sac}
-A. F. Webster and S. E. Tavares, ``On the design of S-boxes,'' in \textit{Advances in Cryptology - CRYPTO '85}, LNCS, vol. 218, Springer, pp. 523--534, 1985.
+A. F. Webster and S. E. Tavares, ``On the design of S-boxes,'' in \textit{Advances in Cryptology -- CRYPTO '85}, LNCS, vol. 218, Springer, pp. 523--534, 1985, doi:~\href{https://doi.org/10.1007/3-540-39799-X_41}{10.1007/3-540-39799-X\_41}.
 
 \bibitem{beaulieu2015simon} 
-R. Beaulieu, D. Shors, J. Smith, S. Treatman-Clark, B. Weeks, and E. Wingers, ``The SIMON and SPECK lightweight block ciphers,'' in \textit{Proc. 52nd Annual Design Automation Conference (ACM DAC)}, pp. 1--6, 2015.
+R. Beaulieu, D. Shors, J. Smith, S. Treatman-Clark, B. Weeks, and E. Wingers, ``The SIMON and SPECK lightweight block ciphers,'' in \textit{Proc. 52nd Annual Design Automation Conference (ACM DAC)}, pp. 1--6, 2015, doi:~\href{https://doi.org/10.1145/2744769.2747946}{10.1145/2744769.2747946}.
 
 \bibitem{mouha2011differential} 
-N. Mouha, Q. Wang, D. Gu, and B. Preneel, ``Differential and linear cryptanalysis using mixed-integer linear programming,'' in \textit{Information Security and Cryptology (Inscrypt 2011)}, LNCS, vol. 7537, Springer, pp. 57--76, 2011.
+N. Mouha, Q. Wang, D. Gu, and B. Preneel, ``Differential and linear cryptanalysis using mixed-integer linear programming,'' in \textit{Information Security and Cryptology (Inscrypt 2011)}, LNCS, vol. 7537, Springer, pp. 57--76, 2011, doi:~\href{https://doi.org/10.1007/978-3-642-34704-7_5}{10.1007/978-3-642-34704-7\_5}.
 
 \bibitem{fu2016milp}
-K. Fu, M. Wang, Y. Guo, S. Sun, and L. Hu, ``MILP-based automatic search algorithms for differential and linear trails for Speck,'' in \textit{Fast Software Encryption (FSE 2016)}, LNCS, vol. 9783, Springer, pp. 268--288, 2016.
+K. Fu, M. Wang, Y. Guo, S. Sun, and L. Hu, ``MILP-based automatic search algorithms for differential and linear trails for Speck,'' in \textit{Fast Software Encryption (FSE 2016)}, LNCS, vol. 9783, Springer, pp. 268--288, 2016, doi:~\href{https://doi.org/10.1007/978-3-662-52993-5_14}{10.1007/978-3-662-52993-5\_14}.
 
 \bibitem{lai1991markov}
-X. Lai, J. L. Massey, and S. Murphy, ``Markov ciphers and differential cryptanalysis,'' in \textit{Advances in Cryptology - EUROCRYPT '91}, LNCS, vol. 547, Springer, pp. 17--38, 1991.
+X. Lai, J. L. Massey, and S. Murphy, ``Markov ciphers and differential cryptanalysis,'' in \textit{Advances in Cryptology -- EUROCRYPT '91}, LNCS, vol. 547, Springer, pp. 17--38, 1991, doi:~\href{https://doi.org/10.1007/3-540-46416-6_2}{10.1007/3-540-46416-6\_2}.
 
 \bibitem{matsui1993linear}
-M. Matsui, ``Linear cryptanalysis method for DES cipher,'' in \textit{Advances in Cryptology - EUROCRYPT '93}, LNCS, vol. 765, Springer, pp. 386--397, 1993.
+M. Matsui, ``Linear cryptanalysis method for DES cipher,'' in \textit{Advances in Cryptology -- EUROCRYPT '93}, LNCS, vol. 765, Springer, pp. 386--397, 1993, doi:~\href{https://doi.org/10.1007/3-540-48285-7_33}{10.1007/3-540-48285-7\_33}.
 
 \bibitem{biryukov1999slide}
-A. Biryukov and D. Wagner, ``Slide attacks,'' in \textit{Fast Software Encryption (FSE '99)}, LNCS, vol. 1636, Springer, pp. 245--259, 1999.
+A. Biryukov and D. Wagner, ``Slide attacks,'' in \textit{Fast Software Encryption (FSE '99)}, LNCS, vol. 1636, Springer, pp. 245--259, 1999, doi:~\href{https://doi.org/10.1007/3-540-48519-8_18}{10.1007/3-540-48519-8\_18}.
 
 \bibitem{biryukov2000slide} 
-A. Biryukov and D. Wagner, ``Advanced slide attacks,'' in \textit{Advances in Cryptology - EUROCRYPT 2000}, LNCS, vol. 1807, Springer, pp. 589--606, 2000.
+A. Biryukov and D. Wagner, ``Advanced slide attacks,'' in \textit{Advances in Cryptology -- EUROCRYPT 2000}, LNCS, vol. 1807, Springer, pp. 589--606, 2000, doi:~\href{https://doi.org/10.1007/3-540-45539-6_41}{10.1007/3-540-45539-6\_41}.
 
 \bibitem{rukhin2010nist} 
-A. Rukhin \textit{et al.}, ``A statistical test suite for random and pseudorandom number generators for cryptographic applications,'' \textit{NIST Special Publication 800-22}, Rev. 1a, National Institute of Standards and Technology, Gaithersburg, MD, 2010.
+A. Rukhin \textit{et al.}, ``A statistical test suite for random and pseudorandom number generators for cryptographic applications,'' \textit{NIST Special Publication 800-22}, Rev. 1a, National Institute of Standards and Technology, Gaithersburg, MD, 2010, doi:~\href{https://doi.org/10.6028/NIST.SP.800-22r1a}{10.6028/NIST.SP.800-22r1a}.
 
 \bibitem{gmt0005}
 State Cryptography Administration of China, ``Randomness test methods for commercial cryptographic algorithms,'' \textit{GM/T 0005-2021}, Standard Press of China, Beijing, 2021.
 
 \bibitem{kim2004dft}
-S.-J. Kim, K. Umeno, and A. Hasegawa, ``Corrections of the NIST statistical test suite for randomness,'' \textit{IACR Cryptology ePrint Archive}, Report 2004/018, 2004.
+S.-J. Kim, K. Umeno, and A. Hasegawa, ``Corrections of the NIST statistical test suite for randomness,'' \textit{IACR Cryptology ePrint Archive}, Report 2004/018, 2004, doi:~\href{https://doi.org/10.48550/arXiv.nlin/0401040}{10.48550/arXiv.nlin/0401040}.
 
 \end{thebibliography}
 

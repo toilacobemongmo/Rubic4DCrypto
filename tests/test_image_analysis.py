@@ -91,39 +91,45 @@ def compute_npcr_uaci(c1_arr, c2_arr):
     return npcr, uaci
 
 def plot_and_save_figure(plain_arr, cipher_arr, img_name, output_path):
-    """Renders side-by-side comparison images and grayscale histograms."""
-    fig, axes = plt.subplots(2, 2, figsize=(11, 9))
+    """Renders side-by-side comparison images and grayscale histograms (true square 1:1 aspect ratio)."""
+    fig, axes = plt.subplots(2, 2, figsize=(8, 8), dpi=300)
 
     # Plain Image
-    axes[0, 0].imshow(plain_arr, cmap="gray", vmin=0, vmax=255)
-    axes[0, 0].set_title(f"Plaintext Image: {img_name}", fontsize=12, fontweight="bold")
+    axes[0, 0].imshow(plain_arr, cmap="gray", vmin=0, vmax=255, aspect="equal")
+    axes[0, 0].set_title(f"Plaintext Image: {img_name}", fontsize=11, fontweight="bold", pad=8)
     axes[0, 0].axis("off")
+    axes[0, 0].set_box_aspect(1)
 
     # Plain Histogram
     axes[0, 1].hist(plain_arr.flatten(), bins=256, range=(0, 256), color="#1f4e79", alpha=0.85)
-    axes[0, 1].set_title(f"Histogram: {img_name} (Original)", fontsize=12, fontweight="bold")
-    axes[0, 1].set_xlabel("Grayscale Intensity Level (0 - 255)")
-    axes[0, 1].set_ylabel("Pixel Frequency")
+    axes[0, 1].set_title(f"Histogram: {img_name} (Plain)", fontsize=11, fontweight="bold", pad=8)
+    axes[0, 1].set_xlabel("Grayscale Intensity (0–255)", fontsize=9)
+    axes[0, 1].set_ylabel("Pixel Frequency", fontsize=9)
+    axes[0, 1].tick_params(labelsize=8)
     axes[0, 1].grid(True, linestyle=":", alpha=0.6)
+    axes[0, 1].set_box_aspect(1)
 
     # Cipher Image
-    axes[1, 0].imshow(cipher_arr, cmap="gray", vmin=0, vmax=255)
-    axes[1, 0].set_title(f"Ciphertext Image: {img_name} (Rubik-4D CBC)", fontsize=12, fontweight="bold")
+    axes[1, 0].imshow(cipher_arr, cmap="gray", vmin=0, vmax=255, aspect="equal")
+    axes[1, 0].set_title(f"Ciphertext Image: {img_name}", fontsize=11, fontweight="bold", pad=8)
     axes[1, 0].axis("off")
+    axes[1, 0].set_box_aspect(1)
 
     # Cipher Histogram
     axes[1, 1].hist(cipher_arr.flatten(), bins=256, range=(0, 256), color="#c00000", alpha=0.85)
-    axes[1, 1].axhline(y=1024, color="black", linestyle="--", linewidth=1.2, label="Ideal Uniform ($e=1024$)")
-    axes[1, 1].set_title(f"Histogram: {img_name} (Encrypted - Uniform)", fontsize=12, fontweight="bold")
-    axes[1, 1].set_xlabel("Grayscale Intensity Level (0 - 255)")
-    axes[1, 1].set_ylabel("Pixel Frequency")
+    axes[1, 1].axhline(y=1024, color="black", linestyle="--", linewidth=1.2, label="Ideal ($e=1024$)")
+    axes[1, 1].set_title(f"Histogram: {img_name} (Cipher)", fontsize=11, fontweight="bold", pad=8)
+    axes[1, 1].set_xlabel("Grayscale Intensity (0–255)", fontsize=9)
+    axes[1, 1].set_ylabel("Pixel Frequency", fontsize=9)
+    axes[1, 1].tick_params(labelsize=8)
     axes[1, 1].grid(True, linestyle=":", alpha=0.6)
-    axes[1, 1].legend()
+    axes[1, 1].legend(fontsize=8, loc="upper right")
+    axes[1, 1].set_box_aspect(1)
 
-    plt.tight_layout()
-    plt.savefig(output_path, dpi=300)
+    plt.tight_layout(pad=1.5)
+    plt.savefig(output_path, dpi=300, bbox_inches="tight")
     plt.close()
-    print(f"[+] Saved high-resolution plot to {output_path}")
+    print(f"[+] Saved high-resolution true-square plot to {output_path}")
 
 def analyze_image(img_path, img_name):
     print("=" * 80)
@@ -227,11 +233,14 @@ def analyze_image(img_path, img_name):
     print(f"    -> Key NPCR (Mean +/- Std)      : {mean_npcr_key:.4f}% +/- {std_npcr_key:.4f}% (Ideal >= 99.6094%)")
     print(f"    -> Key UACI (Mean +/- Std)      : {mean_uaci_key:.4f}% +/- {std_uaci_key:.4f}% (Ideal ~ 33.4635%)")
 
-    # Save visualization figure directly to reports/
+    # Save visualization figure directly to reports/ and draft/
     reports_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), "reports")
+    draft_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), "draft")
     os.makedirs(reports_dir, exist_ok=True)
     out_fig = os.path.join(reports_dir, f"{img_name}_cryptanalysis_eval.png")
+    draft_fig = os.path.join(draft_dir, f"{img_name}_cryptanalysis_result.png")
     plot_and_save_figure(plain_arr, cipher_arr, img_name, out_fig)
+    plot_and_save_figure(plain_arr, cipher_arr, img_name, draft_fig)
 
     results = {
         "img_name": img_name,

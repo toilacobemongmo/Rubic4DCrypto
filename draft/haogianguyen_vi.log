@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.9.20)  23 SEP 2026 19:46
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.9.20)  23 SEP 2026 23:34
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -993,19 +993,146 @@ LaTeX Info: Redefining \cite on input line 302.
 LaTeX Info: Redefining \nocite on input line 332.
 Package: cite 2015/02/27  v 5.5
 )
+(C:\Users\ghaob\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\hyperref.sty
+Package: hyperref 2025-07-12 v7.01o Hypertext links for LaTeX
+
+(C:\Users\ghaob\AppData\Local\Programs\MiKTeX\tex/latex/kvsetkeys\kvsetkeys.sty
+Package: kvsetkeys 2022-10-05 v1.19 Key value parser (HO)
+)
+(C:\Users\ghaob\AppData\Local\Programs\MiKTeX\tex/generic/kvdefinekeys\kvdefine
+keys.sty
+Package: kvdefinekeys 2019-12-19 v1.6 Define keys (HO)
+)
+(C:\Users\ghaob\AppData\Local\Programs\MiKTeX\tex/generic/pdfescape\pdfescape.s
+ty
+Package: pdfescape 2019/12/09 v1.15 Implements pdfTeX's escape features (HO)
+
+(C:\Users\ghaob\AppData\Local\Programs\MiKTeX\tex/generic/ltxcmds\ltxcmds.sty
+Package: ltxcmds 2023-12-04 v1.26 LaTeX kernel commands for general use (HO)
+)
+(C:\Users\ghaob\AppData\Local\Programs\MiKTeX\tex/generic/pdftexcmds\pdftexcmds
+.sty
+Package: pdftexcmds 2020-06-27 v0.33 Utility functions of pdfTeX for LuaTeX (HO
+)
+
+(C:\Users\ghaob\AppData\Local\Programs\MiKTeX\tex/generic/infwarerr\infwarerr.s
+ty
+Package: infwarerr 2019/12/03 v1.5 Providing info/warning/error messages (HO)
+)
+Package pdftexcmds Info: \pdf@primitive is available.
+Package pdftexcmds Info: \pdf@ifprimitive is available.
+Package pdftexcmds Info: \pdfdraftmode found.
+))
+(C:\Users\ghaob\AppData\Local\Programs\MiKTeX\tex/latex/hycolor\hycolor.sty
+Package: hycolor 2020-01-27 v1.10 Color options for hyperref/bookmark (HO)
+)
+(C:\Users\ghaob\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\nameref.sty
+Package: nameref 2025-06-21 v2.57 Cross-referencing by name of section
+
+(C:\Users\ghaob\AppData\Local\Programs\MiKTeX\tex/latex/refcount\refcount.sty
+Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
+)
+(C:\Users\ghaob\AppData\Local\Programs\MiKTeX\tex/generic/gettitlestring\gettit
+lestring.sty
+Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
+
+(C:\Users\ghaob\AppData\Local\Programs\MiKTeX\tex/latex/kvoptions\kvoptions.sty
+Package: kvoptions 2022-06-15 v3.15 Key value format for package options (HO)
+))
+\c@section@level=\count336
+)
+(C:\Users\ghaob\AppData\Local\Programs\MiKTeX\tex/latex/etoolbox\etoolbox.sty
+Package: etoolbox 2025/10/02 v2.5m e-TeX tools for LaTeX (JAW)
+\etb@tempcnta=\count337
+)
+(C:\Users\ghaob\AppData\Local\Programs\MiKTeX\tex/generic/stringenc\stringenc.s
+ty
+Package: stringenc 2019/11/29 v1.12 Convert strings between diff. encodings (HO
+)
+)
+\@linkdim=\dimen303
+\Hy@linkcounter=\count338
+\Hy@pagecounter=\count339
+ (C:\Users\ghaob\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\pd1enc.def
+File: pd1enc.def 2025-07-12 v7.01o Hyperref: PDFDocEncoding definition (HO)
+Now handling font encoding PD1 ...
+... no UTF-8 mapping file for font encoding PD1
+) (C:\Users\ghaob\AppData\Local\Programs\MiKTeX\tex/generic/intcalc\intcalc.sty
+Package: intcalc 2019/12/15 v1.3 Expandable calculations with integers (HO)
+)
+\Hy@SavedSpaceFactor=\count340
+ (C:\Users\ghaob\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\puenc.def
+File: puenc.def 2025-07-12 v7.01o Hyperref: PDF Unicode definition (HO)
+Now handling font encoding PU ...
+... no UTF-8 mapping file for font encoding PU
+)
+Package hyperref Info: Option `colorlinks' set `true' on input line 4066.
+Package hyperref Info: Hyper figures OFF on input line 4195.
+Package hyperref Info: Link nesting OFF on input line 4200.
+Package hyperref Info: Hyper index ON on input line 4203.
+Package hyperref Info: Plain pages OFF on input line 4210.
+Package hyperref Info: Backreferencing OFF on input line 4215.
+Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
+Package hyperref Info: Bookmarks ON on input line 4462.
+\c@Hy@tempcnt=\count341
+LaTeX Info: Redefining \url on input line 4801.
+\XeTeXLinkMargin=\dimen304
+
+(C:\Users\ghaob\AppData\Local\Programs\MiKTeX\tex/generic/bitset\bitset.sty
+Package: bitset 2019/12/09 v1.3 Handle bit-vector datatype (HO)
+
+(C:\Users\ghaob\AppData\Local\Programs\MiKTeX\tex/generic/bigintcalc\bigintcalc
+.sty
+Package: bigintcalc 2019/12/15 v1.5 Expandable calculations on big integers (HO
+)
+))
+\Fld@menulength=\count342
+\Field@Width=\dimen305
+\Fld@charsize=\dimen306
+Package hyperref Info: Hyper figures OFF on input line 6078.
+Package hyperref Info: Link nesting OFF on input line 6083.
+Package hyperref Info: Hyper index ON on input line 6086.
+Package hyperref Info: backreferencing OFF on input line 6093.
+Package hyperref Info: Link coloring ON on input line 6096.
+Package hyperref Info: Link coloring with OCG OFF on input line 6103.
+Package hyperref Info: PDF/A mode OFF on input line 6108.
+\Hy@abspage=\count343
+\c@Item=\count344
+\c@Hfootnote=\count345
+)
+Package hyperref Info: Driver (autodetected): hpdftex.
+
+(C:\Users\ghaob\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\hpdftex.def
+File: hpdftex.def 2025-07-12 v7.01o Hyperref driver for pdfTeX
+\Fld@listcount=\count346
+\c@bookmark@seq@number=\count347
+
+(C:\Users\ghaob\AppData\Local\Programs\MiKTeX\tex/latex/rerunfilecheck\rerunfil
+echeck.sty
+Package: rerunfilecheck 2025-06-21 v1.11 Rerun checks for auxiliary files (HO)
+
+(C:\Users\ghaob\AppData\Local\Programs\MiKTeX\tex/generic/uniquecounter\uniquec
+ounter.sty
+Package: uniquecounter 2019/12/15 v1.4 Provide unlimited unique counter (HO)
+)
+Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
+84.
+)
+\Hy@SectionHShift=\skip60
+)
 (C:\Users\ghaob\AppData\Local\Programs\MiKTeX\tex/latex/titlesec\titlesec.sty
 Package: titlesec 2025/01/04 v2.17 Sectioning titles
 \ttl@box=\box70
-\beforetitleunit=\skip60
-\aftertitleunit=\skip61
-\ttl@plus=\dimen303
-\ttl@minus=\dimen304
+\beforetitleunit=\skip61
+\aftertitleunit=\skip62
+\ttl@plus=\dimen307
+\ttl@minus=\dimen308
 \ttl@toksa=\toks42
-\titlewidth=\dimen305
-\titlewidthlast=\dimen306
-\titlewidthfirst=\dimen307
+\titlewidth=\dimen309
+\titlewidthlast=\dimen310
+\titlewidthfirst=\dimen311
 )
-LaTeX Font Info:    Trying to load font information for T5+ptm on input line 33
+LaTeX Font Info:    Trying to load font information for T5+ptm on input line 34
 .
 
 (C:\Users\ghaob\AppData\Local\Programs\MiKTeX\tex/latex/vntex\t5ptm.fd
@@ -1014,29 +1141,33 @@ File: t5utm.fd 2005/08/24 Fontinst v1.929 font definitions for T5/ptm.
 (C:\Users\ghaob\AppData\Local\Programs\MiKTeX\tex/latex/l3backend\l3backend-pdf
 tex.def
 File: l3backend-pdftex.def 2025-10-09 L3 backend support: PDF output (pdfTeX)
-\l__color_backend_stack_int=\count336
+\l__color_backend_stack_int=\count348
 ) (haogianguyen_vi.aux
 Package babel Info: 'vietnamese' activates 'vietnamese' shorthands.
-(babel)             Reported on input line 6.
+(babel)             Reported on input line 9.
 )
 \openout1 = `haogianguyen_vi.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 33.
-LaTeX Font Info:    ... okay on input line 33.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 33.
-LaTeX Font Info:    ... okay on input line 33.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 33.
-LaTeX Font Info:    ... okay on input line 33.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 33.
-LaTeX Font Info:    ... okay on input line 33.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 33.
-LaTeX Font Info:    ... okay on input line 33.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 33.
-LaTeX Font Info:    ... okay on input line 33.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 33.
-LaTeX Font Info:    ... okay on input line 33.
-LaTeX Font Info:    Checking defaults for T5/cmr/m/n on input line 33.
-LaTeX Font Info:    ... okay on input line 33.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 34.
+LaTeX Font Info:    ... okay on input line 34.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 34.
+LaTeX Font Info:    ... okay on input line 34.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 34.
+LaTeX Font Info:    ... okay on input line 34.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 34.
+LaTeX Font Info:    ... okay on input line 34.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 34.
+LaTeX Font Info:    ... okay on input line 34.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 34.
+LaTeX Font Info:    ... okay on input line 34.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 34.
+LaTeX Font Info:    ... okay on input line 34.
+LaTeX Font Info:    Checking defaults for T5/cmr/m/n on input line 34.
+LaTeX Font Info:    ... okay on input line 34.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 34.
+LaTeX Font Info:    ... okay on input line 34.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 34.
+LaTeX Font Info:    ... okay on input line 34.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -1074,21 +1205,22 @@ LaTeX Font Info:    ... okay on input line 33.
 
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: float package is loaded.
+Package caption Info: hyperref package is loaded.
 Package caption Info: End \AtBeginDocument code.
 
 (C:\Users\ghaob\AppData\Local\Programs\MiKTeX\tex/context/base/mkii\supp-pdf.mk
 ii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count337
-\scratchdimen=\dimen308
+\scratchcounter=\count349
+\scratchdimen=\dimen312
 \scratchbox=\box71
-\nofMPsegments=\count338
-\nofMParguments=\count339
+\nofMPsegments=\count350
+\nofMParguments=\count351
 \everyMPshowfont=\toks43
-\MPscratchCnt=\count340
-\MPscratchDim=\dimen309
-\MPnumerator=\count341
-\makeMPintoPDFobject=\count342
+\MPscratchCnt=\count352
+\MPscratchDim=\dimen313
+\MPnumerator=\count353
+\makeMPintoPDFobject=\count354
 \everyMPtoPDFconversion=\toks44
 )
 (C:\Users\ghaob\AppData\Local\Programs\MiKTeX\tex/latex/epstopdf-pkg\epstopdf-b
@@ -1101,59 +1233,66 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
 fg
 File: epstopdf-sys.cfg 2021/03/18 v2.0 Configuration of epstopdf for MiKTeX
 ))
+Package hyperref Info: Link coloring ON on input line 34.
+ (haogianguyen_vi.out) (haogianguyen_vi.out)
+\@outlinefile=\write4
+\openout4 = `haogianguyen_vi.out'.
+
 LaTeX Font Info:    Trying to load font information for OT1+ztmcm on input line
- 60.
- (C:\Users\ghaob\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\ot1ztmcm.fd
+ 61.
+
+(C:\Users\ghaob\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\ot1ztmcm.fd
 File: ot1ztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OT1/ztmcm.
 )
 LaTeX Font Info:    Trying to load font information for OML+ztmcm on input line
- 60.
- (C:\Users\ghaob\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\omlztmcm.fd
+ 61.
+
+(C:\Users\ghaob\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\omlztmcm.fd
 File: omlztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OML/ztmcm.
 )
 LaTeX Font Info:    Trying to load font information for OMS+ztmcm on input line
- 60.
+ 61.
 
 (C:\Users\ghaob\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\omsztmcm.fd
 File: omsztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OMS/ztmcm.
 )
 LaTeX Font Info:    Trying to load font information for OMX+ztmcm on input line
- 60.
+ 61.
 
 (C:\Users\ghaob\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\omxztmcm.fd
 File: omxztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OMX/ztmcm.
 )
 LaTeX Font Info:    Trying to load font information for OT1+ptm on input line 6
-0.
+1.
 
 (C:\Users\ghaob\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\ot1ptm.fd
 File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
 )
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 60.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 61.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <7.4> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 60.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 61.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <6> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 60.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 61.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <9> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 60.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 61.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <7> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 60.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 61.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <5> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 60.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 61.
 LaTeX Font Info:    Trying to load font information for T5+cmtt on input line 6
-0.
+1.
 
 (C:\Users\ghaob\AppData\Local\Programs\MiKTeX\tex/latex/vntex\t5cmtt.fd
 File: t5cmtt.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Trying to load font information for TS1+ptm on input line 7
-4.
+5.
 
 (C:\Users\ghaob\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\ts1ptm.fd
 File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
 )
-Underfull \hbox (badness 1127) in paragraph at lines 76--77
+Underfull \hbox (badness 1127) in paragraph at lines 77--78
 []\T5/ptm/m/n/10 Thi∏t l™p mÊ hºnh Quy ho§ch nguy∂n tuy∏n tΩnh
  []
 
@@ -1162,115 +1301,254 @@ aob/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/vntex/t5.enc}{C:/Users/ghaob/
 AppData/Local/Programs/MiKTeX/fonts/enc/dvips/base/8r.enc}
 
 
-]
+] [2]
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <8> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 130.
- [2]
-Underfull \hbox (badness 1648) in paragraph at lines 184--186
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 131.
+
+Underfull \hbox (badness 3108) in paragraph at lines 150--150
+\T5/ptm/m/n/9 c°c m∞t phØng $\OML/ztmcm/m/it/9 XY; YZ; ZX$
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 150--150
+[]|$\OML/ztmcm/m/it/9 O\OT1/ztmcm/m/n/9 (\OML/ztmcm/m/it/9 L[]\OT1/ztmcm/m/n/9 
+)$ \T5/ptm/m/n/9 bit-level,
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 150--150
+\T5/ptm/m/n/9 Chø ki∫m ^^_‡nh th¸c
+ []
+
+
+Underfull \hbox (badness 1082) in paragraph at lines 150--150
+\T5/ptm/m/n/9 m†u k∏t hÒp quay ma tr™n
+ []
+
+
+Underfull \hbox (badness 3039) in paragraph at lines 150--150
+[]|\T5/ptm/m/n/9 Ånh x§ hÈn lo§n Lo-gis-tic
+ []
+
+
+Underfull \hbox (badness 7168) in paragraph at lines 150--150
+\T5/ptm/m/n/9 KhÊng c‚ c™n ch˘ng
+ []
+
+
+Underfull \hbox (badness 2142) in paragraph at lines 150--150
+[]|\T5/ptm/b/n/9 Ph≤p quay k≤p tr¸c giao
+ []
+
+
+Underfull \hbox (badness 1997) in paragraph at lines 150--150
+\T5/ptm/b/n/9 trˆc quay bßt bi∏n ($\OML/ztmcm/m/it/9 O\OT1/ztmcm/m/n/9 (1)$
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 150--150
+[]|$\OML/ztmcm/m/it/9 O\OT1/ztmcm/m/n/9 (1)$ \T5/ptm/b/n/9 per block,
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 150--150
+\OT1/ztmcm/m/n/9 1\OML/ztmcm/m/it/9 :\OT1/ztmcm/m/n/9 73$ \T5/ptm/b/n/9 ms/£nh
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 150--150
+\T5/ptm/b/n/9 C™n MILP:
+ []
+
+Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
+put line 202.
+
+Underfull \hbox (badness 1648) in paragraph at lines 204--206
 []\T5/ptm/b/n/10 ^^^¶u v†o: \T5/ptm/m/n/10 KhËi b£n r„ $\OML/ztmcm/m/it/10 P$ \
 T5/ptm/m/n/10 (128-bit), sË v·ng $\OML/ztmcm/m/it/10 R \OT1/ztmcm/m/n/10 = 8$\T
 5/ptm/m/n/10 ,
  []
 
 
-Underfull \hbox (badness 1571) in paragraph at lines 184--186
+Underfull \hbox (badness 1571) in paragraph at lines 204--206
 \T5/ptm/m/n/10 kh‚a chΩnh $\OML/ztmcm/m/it/10 K[]$\T5/ptm/m/n/10 , t™p kh‚a v·n
 g $\OMS/ztmcm/m/n/10 f\OML/ztmcm/m/it/10 K[]; [] ; K[]\OMS/ztmcm/m/n/10 g$\T5/p
 tm/m/n/10 , h¨ng sË
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 184--186
+Underfull \hbox (badness 10000) in paragraph at lines 204--206
 \T5/ptm/b/n/10 ^^^¶u ra: \T5/ptm/m/n/10 KhËi b£n m¢ $\OML/ztmcm/m/it/10 C[]$ \T
 5/ptm/m/n/10 (128-
  []
 
 
-Overfull \hbox (9.49657pt too wide) in paragraph at lines 314--315
- [][] 
- []
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 328.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 328.
 
 [3]
-Underfull \hbox (badness 4608) in paragraph at lines 412--414
+Underfull \hbox (badness 4608) in paragraph at lines 415--417
 \T5/ptm/m/n/10 L˜Òc ^^_Á kh‚a m rÎng kh‚a chΩnh 128-bit $\OML/ztmcm/m/it/10 K[
 ] \OT1/ztmcm/m/n/10 =
  []
 
-[4] [5] [6]
-Underfull \hbox (badness 1466) in paragraph at lines 776--777
+[4] [5] [6] [7]
+Underfull \hbox (badness 1466) in paragraph at lines 779--780
 []\T5/ptm/m/n/10 Rubik-4D M¢ h‚a ^^_Ïn khËi: $\OT1/ztmcm/m/n/10 323\OML/ztmcm/m
 /it/10 :\OT1/ztmcm/m/n/10 20$ \T5/ptm/m/n/10 chu k˝/khËi
  []
 
 
-Underfull \hbox (badness 1199) in paragraph at lines 777--778
+Underfull \hbox (badness 1199) in paragraph at lines 780--781
 []\T5/ptm/m/n/10 Rubik-4D Gi£i m¢ ^^_Ïn khËi: $\OT1/ztmcm/m/n/10 339\OML/ztmcm/
 m/it/10 :\OT1/ztmcm/m/n/10 51$ \T5/ptm/m/n/10 chu k˝/khËi
  []
 
 
-Underfull \hbox (badness 2626) in paragraph at lines 783--784
+Underfull \hbox (badness 2626) in paragraph at lines 786--787
 \T5/ptm/m/n/10 ^^_Ëi vÓi m¢ h‚a v† $\OT1/ztmcm/m/n/10 157\OML/ztmcm/m/it/10 :\O
 T1/ztmcm/m/n/10 40 \OMS/ztmcm/m/n/10 ^^@ \OT1/ztmcm/m/n/10 167\OML/ztmcm/m/it/1
 0 :\OT1/ztmcm/m/n/10 17$ \T5/ptm/m/n/10 MB/s ($\OT1/ztmcm/m/n/10 19\OML/ztmcm/m
 /it/10 :\OT1/ztmcm/m/n/10 50 \OMS/ztmcm/m/n/10 ^^@
  []
 
-[7]
-<Lena_cryptanalysis_result.png, id=41, 794.97pt x 650.43pt>
+<Lena_cryptanalysis_result.png, id=321, 537.207pt x 562.5015pt>
 File: Lena_cryptanalysis_result.png Graphic file (type png)
 <use Lena_cryptanalysis_result.png>
-Package pdftex.def Info: Lena_cryptanalysis_result.png  used on input line 793.
+Package pdftex.def Info: Lena_cryptanalysis_result.png  used on input line 796.
 
-(pdftex.def)             Requested size: 237.63522pt x 194.42584pt.
-<Baboon_cryptanalysis_result.png, id=43, 794.97pt x 650.43pt>
+(pdftex.def)             Requested size: 237.63522pt x 248.82321pt.
+<Baboon_cryptanalysis_result.png, id=323, 537.207pt x 562.5015pt>
 File: Baboon_cryptanalysis_result.png Graphic file (type png)
 <use Baboon_cryptanalysis_result.png>
-Package pdftex.def Info: Baboon_cryptanalysis_result.png  used on input line 79
-9.
-(pdftex.def)             Requested size: 237.63522pt x 194.42584pt.
- [8]
-Underfull \hbox (badness 2393) in paragraph at lines 862--864
+Package pdftex.def Info: Baboon_cryptanalysis_result.png  used on input line 80
+2.
+(pdftex.def)             Requested size: 237.63522pt x 248.82321pt.
+
+Underfull \hbox (badness 2393) in paragraph at lines 865--867
 \T5/ptm/m/n/10 K˝ vÂng l˛ thuy∏t ^^_Ëi vÓi d¢y ng®u nhi∂n 8-bit l†
  []
 
-[9 <./Lena_cryptanalysis_result.png> <./Baboon_cryptanalysis_result.png>]
-Underfull \hbox (badness 1092) in paragraph at lines 977--978
-[]\T5/ptm/m/n/8 S.-J. Kim, K. Umeno, and A. Hasegawa, ``Cor-rec-tions of the
+[8] [9]
+Underfull \hbox (badness 1092) in paragraph at lines 910--911
+\T5/ptm/m/it/9 Sig-nal Pro-cess-ing (CMSP)\T5/ptm/m/n/9 , vol. 1, pp. 312--315,
+ 2011,
  []
 
-[10] (haogianguyen_vi.aux)
+
+Underfull \hbox (badness 3039) in paragraph at lines 919--920
+\T5/ptm/m/it/9 put. Inf. Sci.\T5/ptm/m/n/9 , vol. 34, no. 5, pp. 2000--2016, 20
+22,
+ []
+
+[10 <./Lena_cryptanalysis_result.png> <./Baboon_cryptanalysis_result.png>]
+Underfull \hbox (badness 3209) in paragraph at lines 925--926
+[]\T5/ptm/m/n/9 A. Nair, D. Dalal, and R. Man-grulkar, ``Colour im-
+ []
+
+
+Underfull \hbox (badness 4181) in paragraph at lines 925--926
+\T5/ptm/m/n/9 age en-cryp-tion al-go-rithm us-ing Ru-bik's cube scram-
+ []
+
+
+Underfull \hbox (badness 2521) in paragraph at lines 925--926
+\T5/ptm/m/n/9 bling with bitmap shuf-fling and frame ro-ta-tion,'' \T5/ptm/m/it
+/9 Cy-
+ []
+
+
+Underfull \hbox (badness 3713) in paragraph at lines 937--938
+[]\T5/ptm/m/n/9 C. Beierle, A. Biryukov, L. Car-doso dos San-tos, J.
+ []
+
+
+Underfull \hbox (badness 4556) in paragraph at lines 937--938
+\T5/ptm/m/n/9 Q. Wang, ``Alzette: a 64-bit ARX-box (feat. CRAX
+ []
+
+
+Underfull \hbox (badness 2626) in paragraph at lines 937--938
+\T5/ptm/m/n/9 and TRAX),'' in \T5/ptm/m/it/9 Ad-vances in Cryp-tol-ogy -- CRYPT
+O
+ []
+
+
+Underfull \hbox (badness 1418) in paragraph at lines 940--941
+[]\T5/ptm/m/n/9 H. Hadipour, S. Sadeghi, and M. Eichlseder, ``Find-ing
+ []
+
+
+Underfull \hbox (badness 3158) in paragraph at lines 940--941
+\T5/ptm/m/n/9 the im-pos-si-ble: au-to-mated search for full impossible-
+ []
+
+
+Underfull \hbox (badness 1077) in paragraph at lines 943--944
+\T5/ptm/m/it/9 vances in Cryp-tol-ogy -- ASI-ACRYPT 2016\T5/ptm/m/n/9 , LNCS, v
+ol.
+ []
+
+
+Underfull \hbox (badness 3460) in paragraph at lines 952--953
+[]\T5/ptm/m/n/9 R. Beaulieu, D. Shors, J. Smith, S. Treatman-Clark,
+ []
+
+
+Underfull \hbox (badness 1755) in paragraph at lines 952--953
+\T5/ptm/m/n/9 lightweight block ci-phers,'' in \T5/ptm/m/it/9 Proc. 52nd An-nua
+l De-
+ []
+
+
+Underfull \hbox (badness 1024) in paragraph at lines 976--977
+[]\T5/ptm/m/n/9 State Cryp-tog-ra-phy Ad-min-is-tra-tion of China, ``Ran-dom-
+ []
+
+
+Underfull \hbox (badness 6188) in paragraph at lines 979--980
+[]\T5/ptm/m/n/9 S.-J. Kim, K. Umeno, and A. Hasegawa, ``Cor-rec-
+ []
+
+[11] (haogianguyen_vi.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2025-12-24>
  ***********
+Package rerunfilecheck Info: File `haogianguyen_vi.out' has not changed.
+(rerunfilecheck)             Checksum: 665C2D26643BAC87E6D6E3ACA109B2B6;7773.
  ) 
 Here is how much of TeX's memory you used:
- 19422 strings out of 467871
- 382154 string characters out of 5418376
- 825326 words of memory out of 5000000
- 47905 multiletter control sequences out of 15000+600000
- 719085 words of font info for 169 fonts, out of 8000000 for 9000
+ 26378 strings out of 467871
+ 490171 string characters out of 5418376
+ 956384 words of memory out of 5000000
+ 54619 multiletter control sequences out of 15000+600000
+ 712514 words of font info for 162 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 102i,15n,107p,2521b,1007s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 102i,16n,107p,2521b,943s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <C:/Users/ghaob/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/
 cmex10.pfb><C:/Users/ghaob/AppData/Local/Programs/MiKTeX/fonts/type1/public/ams
 fonts/cm/cmmi10.pfb><C:/Users/ghaob/AppData/Local/Programs/MiKTeX/fonts/type1/p
 ublic/amsfonts/cm/cmr10.pfb><C:/Users/ghaob/AppData/Local/Programs/MiKTeX/fonts
 /type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/ghaob/AppData/Local/Programs/MiK
 TeX/fonts/type1/public/amsfonts/symbols/msam10.pfb><C:/Users/ghaob/AppData/Loca
-l/Programs/MiKTeX/fonts/type1/urw/symbol/usyr.pfb><C:/Users/ghaob/AppData/Local
-/Programs/MiKTeX/fonts/type1/urw/symbol/usyr.pfb><C:/Users/ghaob/AppData/Local/
-Programs/MiKTeX/fonts/type1/vntex/urwvn/utmb8v.pfb><C:/Users/ghaob/AppData/Loca
-l/Programs/MiKTeX/fonts/type1/urw/times/utmr8a.pfb><C:/Users/ghaob/AppData/Loca
-l/Programs/MiKTeX/fonts/type1/vntex/urwvn/utmr8v.pfb><C:/Users/ghaob/AppData/Lo
-cal/Programs/MiKTeX/fonts/type1/urw/times/utmri8a.pfb><C:/Users/ghaob/AppData/L
-ocal/Programs/MiKTeX/fonts/type1/vntex/urwvn/utmri8v.pfb><C:/Users/ghaob/AppDat
-a/Local/Programs/MiKTeX/fonts/type1/vntex/vnr/vntt10.pfb><C:/Users/ghaob/AppDat
-a/Local/Programs/MiKTeX/fonts/type1/vntex/vnr/vntt9.pfb>
-Output written on haogianguyen_vi.pdf (10 pages, 7436338 bytes).
+l/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm10.pfb><C:/Users/ghao
+b/AppData/Local/Programs/MiKTeX/fonts/type1/urw/symbol/usyr.pfb><C:/Users/ghaob
+/AppData/Local/Programs/MiKTeX/fonts/type1/urw/symbol/usyr.pfb><C:/Users/ghaob/
+AppData/Local/Programs/MiKTeX/fonts/type1/vntex/urwvn/utmb8v.pfb><C:/Users/ghao
+b/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmr8a.pfb><C:/Users/ghao
+b/AppData/Local/Programs/MiKTeX/fonts/type1/vntex/urwvn/utmr8v.pfb><C:/Users/gh
+aob/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmri8a.pfb><C:/Users/g
+haob/AppData/Local/Programs/MiKTeX/fonts/type1/vntex/urwvn/utmri8v.pfb><C:/User
+s/ghaob/AppData/Local/Programs/MiKTeX/fonts/type1/vntex/vnr/vntt10.pfb><C:/User
+s/ghaob/AppData/Local/Programs/MiKTeX/fonts/type1/vntex/vnr/vntt9.pfb>
+Output written on haogianguyen_vi.pdf (11 pages, 5615377 bytes).
 PDF statistics:
- 115 PDF objects out of 1000 (max. 8388607)
- 0 named destinations out of 1000 (max. 500000)
- 23 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 495 PDF objects out of 1000 (max. 8388607)
+ 159 named destinations out of 1000 (max. 500000)
+ 247 words of extra memory for PDF output out of 10000 (max. 10000000)
 

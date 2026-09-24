@@ -1,0 +1,3076 @@
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.9.20)  23 SEP 2026 22:17
+entering extended mode
+ restricted \write18 enabled.
+ %&-line parsing enabled.
+**./original_fig1.tex
+(original_fig1.tex
+LaTeX2e <2025-11-01>
+L3 programming layer <2025-12-24>
+
+! LaTeX Error: Environment figure* undefined.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1 \begin{figure*}
+                   [htbp]
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1 \begin{figure*}[
+                    htbp]
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+Missing character: There is no [ in font nullfont!
+Missing character: There is no h in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no b in font nullfont!
+Missing character: There is no p in font nullfont!
+Missing character: There is no ] in font nullfont!
+
+! LaTeX Error: Environment tikzpicture undefined.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.3 \begin{tikzpicture}
+                       [
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+Missing character: There is no [ in font nullfont!
+Missing character: There is no > in font nullfont!
+Missing character: There is no = in font nullfont!
+Missing character: There is no S in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no h in font nullfont!
+Missing character: There is no , in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no d in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no d in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no s in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no = in font nullfont!
+Missing character: There is no 1 in font nullfont!
+Missing character: There is no . in font nullfont!
+Missing character: There is no 1 in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no m in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no d in font nullfont!
+Missing character: There is no 0 in font nullfont!
+Missing character: There is no . in font nullfont!
+Missing character: There is no 8 in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no m in font nullfont!
+Missing character: There is no , in font nullfont!
+Missing character: There is no b in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no k in font nullfont!
+Missing character: There is no / in font nullfont!
+Missing character: There is no . in font nullfont!
+Missing character: There is no s in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no y in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no = in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no g in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no , in font nullfont!
+Missing character: There is no d in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no w in font nullfont!
+Missing character: There is no = in font nullfont!
+Missing character: There is no b in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no k in font nullfont!
+Missing character: There is no , in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no h in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no k in font nullfont!
+Missing character: There is no , in font nullfont!
+Missing character: There is no f in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no = in font nullfont!
+Missing character: There is no b in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no u in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no ! in font nullfont!
+Missing character: There is no 8 in font nullfont!
+Missing character: There is no , in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no x in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no d in font nullfont!
+Missing character: There is no , in font nullfont!
+Missing character: There is no m in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no m in font nullfont!
+Missing character: There is no u in font nullfont!
+Missing character: There is no m in font nullfont!
+Missing character: There is no w in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no d in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no h in font nullfont!
+Missing character: There is no = in font nullfont!
+Missing character: There is no 2 in font nullfont!
+Missing character: There is no . in font nullfont!
+Missing character: There is no 5 in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no m in font nullfont!
+Missing character: There is no , in font nullfont!
+Missing character: There is no m in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no m in font nullfont!
+Missing character: There is no u in font nullfont!
+Missing character: There is no m in font nullfont!
+Missing character: There is no h in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no g in font nullfont!
+Missing character: There is no h in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no = in font nullfont!
+Missing character: There is no 0 in font nullfont!
+Missing character: There is no . in font nullfont!
+Missing character: There is no 7 in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no m in font nullfont!
+Missing character: There is no , in font nullfont!
+Missing character: There is no f in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no = in font nullfont!
+! Undefined control sequence.
+l.6 ...th=2.5cm, minimum height=0.7cm, font=\small
+                                                  },
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+Missing character: There is no , in font nullfont!
+Missing character: There is no p in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no m in font nullfont!
+Missing character: There is no b in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no k in font nullfont!
+Missing character: There is no / in font nullfont!
+Missing character: There is no . in font nullfont!
+Missing character: There is no s in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no y in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no = in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no g in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no , in font nullfont!
+Missing character: There is no d in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no w in font nullfont!
+Missing character: There is no = in font nullfont!
+Missing character: There is no b in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no k in font nullfont!
+Missing character: There is no , in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no h in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no k in font nullfont!
+Missing character: There is no , in font nullfont!
+Missing character: There is no f in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no = in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no g in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no ! in font nullfont!
+Missing character: There is no 1 in font nullfont!
+Missing character: There is no 5 in font nullfont!
+Missing character: There is no , in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no x in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no d in font nullfont!
+Missing character: There is no , in font nullfont!
+Missing character: There is no m in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no m in font nullfont!
+Missing character: There is no u in font nullfont!
+Missing character: There is no m in font nullfont!
+Missing character: There is no w in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no d in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no h in font nullfont!
+Missing character: There is no = in font nullfont!
+Missing character: There is no 2 in font nullfont!
+Missing character: There is no . in font nullfont!
+Missing character: There is no 5 in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no m in font nullfont!
+Missing character: There is no , in font nullfont!
+Missing character: There is no m in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no m in font nullfont!
+Missing character: There is no u in font nullfont!
+Missing character: There is no m in font nullfont!
+Missing character: There is no h in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no g in font nullfont!
+Missing character: There is no h in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no = in font nullfont!
+Missing character: There is no 0 in font nullfont!
+Missing character: There is no . in font nullfont!
+Missing character: There is no 7 in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no m in font nullfont!
+Missing character: There is no , in font nullfont!
+Missing character: There is no f in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no = in font nullfont!
+! Undefined control sequence.
+l.7 ...th=2.5cm, minimum height=0.7cm, font=\small
+                                                  },
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+Missing character: There is no , in font nullfont!
+Missing character: There is no d in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no f in font nullfont!
+Missing character: There is no f in font nullfont!
+Missing character: There is no b in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no k in font nullfont!
+Missing character: There is no / in font nullfont!
+Missing character: There is no . in font nullfont!
+Missing character: There is no s in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no y in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no = in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no g in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no , in font nullfont!
+Missing character: There is no d in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no w in font nullfont!
+Missing character: There is no = in font nullfont!
+Missing character: There is no b in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no k in font nullfont!
+Missing character: There is no , in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no h in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no k in font nullfont!
+Missing character: There is no , in font nullfont!
+Missing character: There is no f in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no = in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no ! in font nullfont!
+Missing character: There is no 1 in font nullfont!
+Missing character: There is no 5 in font nullfont!
+Missing character: There is no , in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no x in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no d in font nullfont!
+Missing character: There is no , in font nullfont!
+Missing character: There is no m in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no m in font nullfont!
+Missing character: There is no u in font nullfont!
+Missing character: There is no m in font nullfont!
+Missing character: There is no w in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no d in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no h in font nullfont!
+Missing character: There is no = in font nullfont!
+Missing character: There is no 2 in font nullfont!
+Missing character: There is no . in font nullfont!
+Missing character: There is no 5 in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no m in font nullfont!
+Missing character: There is no , in font nullfont!
+Missing character: There is no m in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no m in font nullfont!
+Missing character: There is no u in font nullfont!
+Missing character: There is no m in font nullfont!
+Missing character: There is no h in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no g in font nullfont!
+Missing character: There is no h in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no = in font nullfont!
+Missing character: There is no 0 in font nullfont!
+Missing character: There is no . in font nullfont!
+Missing character: There is no 7 in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no m in font nullfont!
+Missing character: There is no , in font nullfont!
+Missing character: There is no f in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no = in font nullfont!
+! Undefined control sequence.
+l.8 ...th=2.5cm, minimum height=0.7cm, font=\small
+                                                  },
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+Missing character: There is no , in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no p in font nullfont!
+Missing character: There is no / in font nullfont!
+Missing character: There is no . in font nullfont!
+Missing character: There is no s in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no y in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no = in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no , in font nullfont!
+Missing character: There is no d in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no w in font nullfont!
+Missing character: There is no = in font nullfont!
+Missing character: There is no b in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no k in font nullfont!
+Missing character: There is no , in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no h in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no k in font nullfont!
+Missing character: There is no , in font nullfont!
+Missing character: There is no f in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no = in font nullfont!
+Missing character: There is no w in font nullfont!
+Missing character: There is no h in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no , in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no s in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no p in font nullfont!
+Missing character: There is no = in font nullfont!
+Missing character: There is no 0 in font nullfont!
+Missing character: There is no p in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no , in font nullfont!
+Missing character: There is no m in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no m in font nullfont!
+Missing character: There is no u in font nullfont!
+Missing character: There is no m in font nullfont!
+Missing character: There is no s in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no z in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no = in font nullfont!
+Missing character: There is no 6 in font nullfont!
+Missing character: There is no m in font nullfont!
+Missing character: There is no m in font nullfont!
+Missing character: There is no , in font nullfont!
+Missing character: There is no f in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no = in font nullfont!
+
+! LaTeX Error: The font size command \normalsize is not defined:
+               there is probably something wrong with the class file.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.9 ...sep=0pt, minimum size=6mm, font=\normalsize
+                                                  },
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+Missing character: There is no , in font nullfont!
+Missing character: There is no s in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no / in font nullfont!
+Missing character: There is no . in font nullfont!
+Missing character: There is no s in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no y in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no = in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no g in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no , in font nullfont!
+Missing character: There is no d in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no w in font nullfont!
+Missing character: There is no = in font nullfont!
+Missing character: There is no b in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no k in font nullfont!
+Missing character: There is no ! in font nullfont!
+Missing character: There is no 7 in font nullfont!
+Missing character: There is no 0 in font nullfont!
+Missing character: There is no , in font nullfont!
+Missing character: There is no d in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no s in font nullfont!
+Missing character: There is no h in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no d in font nullfont!
+Missing character: There is no , in font nullfont!
+Missing character: There is no f in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no = in font nullfont!
+Missing character: There is no g in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no y in font nullfont!
+Missing character: There is no ! in font nullfont!
+Missing character: There is no 5 in font nullfont!
+Missing character: There is no , in font nullfont!
+Missing character: There is no m in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no m in font nullfont!
+Missing character: There is no u in font nullfont!
+Missing character: There is no m in font nullfont!
+Missing character: There is no w in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no d in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no h in font nullfont!
+Missing character: There is no = in font nullfont!
+Missing character: There is no 2 in font nullfont!
+Missing character: There is no . in font nullfont!
+Missing character: There is no 8 in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no m in font nullfont!
+Missing character: There is no , in font nullfont!
+Missing character: There is no m in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no m in font nullfont!
+Missing character: There is no u in font nullfont!
+Missing character: There is no m in font nullfont!
+Missing character: There is no h in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no g in font nullfont!
+Missing character: There is no h in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no = in font nullfont!
+Missing character: There is no 0 in font nullfont!
+Missing character: There is no . in font nullfont!
+Missing character: There is no 6 in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no m in font nullfont!
+Missing character: There is no , in font nullfont!
+Missing character: There is no f in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no = in font nullfont!
+! Undefined control sequence.
+l.10 ...h=2.8cm, minimum height=0.6cm, font=\small
+                                                  \ttfamily},
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+Missing character: There is no , in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no w in font nullfont!
+Missing character: There is no / in font nullfont!
+Missing character: There is no . in font nullfont!
+Missing character: There is no s in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no y in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no = in font nullfont!
+Missing character: There is no - in font nullfont!
+Missing character: There is no > in font nullfont!
+Missing character: There is no , in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no h in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no k in font nullfont!
+Missing character: There is no , in font nullfont!
+Missing character: There is no d in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no w in font nullfont!
+Missing character: There is no = in font nullfont!
+Missing character: There is no b in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no k in font nullfont!
+Missing character: There is no ! in font nullfont!
+Missing character: There is no 8 in font nullfont!
+Missing character: There is no 5 in font nullfont!
+Missing character: There is no ] in font nullfont!
+
+Overfull \hbox (20.0pt too wide) in paragraph at lines 1--13
+ [] 
+ []
+
+! Undefined control sequence.
+l.15 \node
+          [state] (p_in) at (0, 0) {Bản rõ $S^{(r-1)}$};
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.15 \node[
+           state] (p_in) at (0, 0) {Bản rõ $S^{(r-1)}$};
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+Missing character: There is no [ in font nullfont!
+Missing character: There is no s in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no ] in font nullfont!
+Missing character: There is no ( in font nullfont!
+Missing character: There is no p in font nullfont!
+! Missing $ inserted.
+<inserted text> 
+                $
+l.15 \node[state] (p_
+                     in) at (0, 0) {Bản rõ $S^{(r-1)}$};
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line 15.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line 15.
+
+! LaTeX Error: Unicode character ả (U+1EA3)
+               not set up for use with LaTeX.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.15 \node[state] (p_in) at (0, 0) {Bả
+                                        n rõ $S^{(r-1)}$};
+You may provide a definition with
+\DeclareUnicodeCharacter 
+
+
+LaTeX Warning: Command \~ invalid in math mode on input line 15.
+
+
+LaTeX Warning: Command \~ invalid in math mode on input line 15.
+
+LaTeX Font Info:    Trying to load font information for +cmr on input line 15.
+LaTeX Font Info:    No file cmr.fd. on input line 15.
+
+LaTeX Font Warning: Font shape `/cmr/m/n' undefined
+(Font)              using `/cmr/m/n' instead on input line 15.
+
+! Corrupted NFSS tables.
+wrong@fontshape ...message {Corrupted NFSS tables}
+                                                  error@fontshape else let f...
+l.15 \node[state] (p_in) at (0, 0) {Bản rõ
+                                              $S^{(r-1)}$};
+This error message was generated by an \errmessage
+command, so I can't give any explicit help.
+Pretend that you're Hercule Poirot: Examine all clues,
+and deduce the truth by order and method.
+
+
+LaTeX Font Warning: Font shape `/cmr/m/n' undefined
+(Font)              using `OT1/cmr/m/n' instead on input line 15.
+
+! Please use \mathaccent for accents in math mode.
+\add@accent ... \let \ignorespaces \relax \accent 
+                                                  #1 #2\egroup \ifmmode \els...
+l.15 \node[state] (p_in) at (0, 0) {Bản rõ
+                                              $S^{(r-1)}$};
+I'm changing \accent to \mathaccent here; wish me luck.
+(Accents are not the same in formulas as they are in text.)
+
+! Missing { inserted.
+<to be read again> 
+                   \edef 
+l.15 \node[state] (p_in) at (0, 0) {Bản rõ
+                                              $S^{(r-1)}$};
+A left brace was mandatory here, so I've put one in.
+You might want to delete and/or insert some corrections
+so that I will find a matching right brace soon.
+(If you're confused by all this, try typing `I}' now.)
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.15 \node[state] (p_in) at (0, 0) {Bản rõ $
+                                               S^{(r-1)}$};
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.15 \node[state] (p_in) at (0, 0) {Bản rõ $
+                                               S^{(r-1)}$};
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+Missing character: There is no S in font nullfont!
+! Missing $ inserted.
+<inserted text> 
+                $
+l.15 \node[state] (p_in) at (0, 0) {Bản rõ $S^
+                                                 {(r-1)}$};
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Extra }, or forgotten \endgroup.
+l.15 ...] (p_in) at (0, 0) {Bản rõ $S^{(r-1)}$}
+                                                  ;
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+Missing character: There is no ; in font nullfont!
+! Undefined control sequence.
+l.16 \node
+          [block, below=0.6cm of p_in] (subbytes) {
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+Missing character: There is no [ in font nullfont!
+Missing character: There is no b in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no k in font nullfont!
+Missing character: There is no , in font nullfont!
+Missing character: There is no b in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no w in font nullfont!
+Missing character: There is no = in font nullfont!
+Missing character: There is no 0 in font nullfont!
+Missing character: There is no . in font nullfont!
+Missing character: There is no 6 in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no m in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no f in font nullfont!
+Missing character: There is no p in font nullfont!
+! Missing $ inserted.
+<inserted text> 
+                $
+l.16 \node[block, below=0.6cm of p_
+                                   in] (subbytes) {
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+Missing character: There is no H in font nullfont!
+
+! LaTeX Error: Unicode character ộ (U+1ED9)
+               not set up for use with LaTeX.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.19         Hộ
+                 p S-Box AES trên $\text{GF}(2^8)$
+You may provide a definition with
+\DeclareUnicodeCharacter 
+
+Missing character: There is no p in font nullfont!
+Missing character: There is no S in font nullfont!
+Missing character: There is no - in font nullfont!
+Missing character: There is no B in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no x in font nullfont!
+Missing character: There is no A in font nullfont!
+Missing character: There is no E in font nullfont!
+Missing character: There is no S in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no n in font nullfont!
+! Undefined control sequence.
+<recently read> \text 
+                      
+l.19         Hộp S-Box AES trên $\text
+                                         {GF}(2^8)$
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.22 \node
+          [permblock, below=0.6cm of subbytes] (so4) {
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+! LaTeX Error: Unicode character ị (U+1ECB)
+               not set up for use with LaTeX.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.24         \textbf{Hoán vị Rubik-4D}
+                                          \\
+You may provide a definition with
+\DeclareUnicodeCharacter 
+
+Missing character: There is no B in font nullfont!
+
+! LaTeX Error: Unicode character ả (U+1EA3)
+               not set up for use with LaTeX.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.25         Bả
+                 ng quay $SO(4)$ $\pi_{\text{tbl}_{\text{idx}}}$
+You may provide a definition with
+\DeclareUnicodeCharacter 
+
+Missing character: There is no n in font nullfont!
+Missing character: There is no g in font nullfont!
+Missing character: There is no q in font nullfont!
+Missing character: There is no u in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no y in font nullfont!
+! Undefined control sequence.
+l.25         Bảng quay $SO(4)$ $\pi_{\text
+                                            {tbl}_{\text{idx}}}$
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.25 ...ảng quay $SO(4)$ $\pi_{\text{tbl}_{\text
+                                                  {idx}}}$
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.28 \node
+          [diffblock, below=0.6cm of so4] (arx) {
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+! LaTeX Error: Unicode character ế (U+1EBF)
+               not set up for use with LaTeX.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.30         \textbf{Khuếch tán ARX 32-bit}
+                                               \\
+You may provide a definition with
+\DeclareUnicodeCharacter 
+
+! Undefined control sequence.
+<recently read> \boxplus 
+                         
+l.31         $\boxplus
+                       C \;\to\; \lll n \;\to\; \oplus$
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.31         $\boxplus C \;\to\; \lll
+                                      n \;\to\; \oplus$
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.34 \node
+          [op, below=0.6cm of arx] (xor1) {$\oplus$};
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.34 \node[op, below=0.6cm of arx] (xor1) {$
+                                            \oplus$};
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.34 \node[op, below=0.6cm of arx] (xor1) {$\oplus
+                                                  $};
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Extra }, or forgotten \endgroup.
+l.34 ...[op, below=0.6cm of arx] (xor1) {$\oplus$}
+                                                  ;
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+Missing character: There is no ; in font nullfont!
+! Undefined control sequence.
+l.35 \node
+          [left=0.8cm of xor1, font=\small] (k_in) {$K_r$ (Khóa vòng)};
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+Missing character: There is no [ in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no f in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no = in font nullfont!
+Missing character: There is no 0 in font nullfont!
+Missing character: There is no . in font nullfont!
+Missing character: There is no 8 in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no m in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no f in font nullfont!
+Missing character: There is no x in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no 1 in font nullfont!
+Missing character: There is no , in font nullfont!
+Missing character: There is no f in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no = in font nullfont!
+! Undefined control sequence.
+l.35 \node[left=0.8cm of xor1, font=\small
+                                          ] (k_in) {$K_r$ (Khóa vòng)};
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+Missing character: There is no ] in font nullfont!
+Missing character: There is no ( in font nullfont!
+Missing character: There is no k in font nullfont!
+! Missing $ inserted.
+<inserted text> 
+                $
+l.35 \node[left=0.8cm of xor1, font=\small] (k_
+                                               in) {$K_r$ (Khóa vòng)};
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.35 ...left=0.8cm of xor1, font=\small] (k_in) {$
+                                                  K_r$ (Khóa vòng)};
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+Missing character: There is no K in font nullfont!
+! Missing $ inserted.
+<inserted text> 
+                $
+l.35 ...ft=0.8cm of xor1, font=\small] (k_in) {$K_
+                                                  r$ (Khóa vòng)};
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+Missing character: There is no ( in font nullfont!
+Missing character: There is no K in font nullfont!
+Missing character: There is no h in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no v in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no g in font nullfont!
+Missing character: There is no ) in font nullfont!
+! Extra }, or forgotten \endgroup.
+l.35 ... font=\small] (k_in) {$K_r$ (Khóa vòng)}
+                                                  ;
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+Missing character: There is no ; in font nullfont!
+! Undefined control sequence.
+l.36 \node
+          [state, below=0.6cm of xor1] (c_out) {Đầu ra vòng $S^{(r)}$};
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+Missing character: There is no [ in font nullfont!
+Missing character: There is no s in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no , in font nullfont!
+Missing character: There is no b in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no w in font nullfont!
+Missing character: There is no = in font nullfont!
+Missing character: There is no 0 in font nullfont!
+Missing character: There is no . in font nullfont!
+Missing character: There is no 6 in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no m in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no f in font nullfont!
+Missing character: There is no x in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no 1 in font nullfont!
+Missing character: There is no ] in font nullfont!
+Missing character: There is no ( in font nullfont!
+Missing character: There is no c in font nullfont!
+! Missing $ inserted.
+<inserted text> 
+                $
+l.36 \node[state, below=0.6cm of xor1] (c_
+                                          out) {Đầu ra vòng $S^{(r)}$};
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+
+LaTeX Warning: Command \DJ invalid in math mode on input line 36.
+
+
+! LaTeX Error: Command \DJ unavailable in encoding .
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.36 \node[state, below=0.6cm of xor1] (c_out) {Đ
+                                                  ầu ra vòng $S^{(r)}$};
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+! LaTeX Error: Unicode character ầ (U+1EA7)
+               not set up for use with LaTeX.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.36 ...state, below=0.6cm of xor1] (c_out) {Đầ
+                                                  u ra vòng $S^{(r)}$};
+You may provide a definition with
+\DeclareUnicodeCharacter 
+
+
+LaTeX Warning: Command \` invalid in math mode on input line 36.
+
+
+LaTeX Warning: Command \` invalid in math mode on input line 36.
+
+! Please use \mathaccent for accents in math mode.
+\add@accent ... \let \ignorespaces \relax \accent 
+                                                  #1 #2\egroup \ifmmode \els...
+l.36 ...elow=0.6cm of xor1] (c_out) {Đầu ra vò
+                                                  ng $S^{(r)}$};
+I'm changing \accent to \mathaccent here; wish me luck.
+(Accents are not the same in formulas as they are in text.)
+
+! Missing { inserted.
+<to be read again> 
+                   \edef 
+l.36 ...elow=0.6cm of xor1] (c_out) {Đầu ra vò
+                                                  ng $S^{(r)}$};
+A left brace was mandatory here, so I've put one in.
+You might want to delete and/or insert some corrections
+so that I will find a matching right brace soon.
+(If you're confused by all this, try typing `I}' now.)
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.36 ...=0.6cm of xor1] (c_out) {Đầu ra vòng $
+                                                  S^{(r)}$};
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.36 ...=0.6cm of xor1] (c_out) {Đầu ra vòng $
+                                                  S^{(r)}$};
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+Missing character: There is no S in font nullfont!
+! Missing $ inserted.
+<inserted text> 
+                $
+l.36 ....6cm of xor1] (c_out) {Đầu ra vòng $S^
+                                                  {(r)}$};
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Extra }, or forgotten \endgroup.
+l.36 ... xor1] (c_out) {Đầu ra vòng $S^{(r)}$}
+                                                  ;
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+Missing character: There is no ; in font nullfont!
+
+Overfull \hbox (88.97997pt too wide) in paragraph at lines 15--37
+ []\OML/cmm/m/it/10 n\/cmr/m/n/10 )\OML/cmm/m/it/10 at\/cmr/m/n/10 (0\OML/cmm/m
+/it/10 ; \/cmr/m/n/10 0)[]$$[]$ 
+ []
+
+
+Overfull \hbox (196.84566pt too wide) in paragraph at lines 15--37
+ []\OML/cmm/m/it/10 n\/cmr/m/n/10 ](\OML/cmm/m/it/10 subbytes\/cmr/m/n/10 )[]; 
+[\OML/cmm/m/it/10 permblock; below \/cmr/m/n/10 = 
+ []
+
+
+Overfull \hbox (277.92992pt too wide) in paragraph at lines 15--37
+ \/cmr/m/n/10 0\OML/cmm/m/it/10 :\/cmr/m/n/10 6\OML/cmm/m/it/10 cmofsubbytes\/c
+mr/m/n/10 ](\OML/cmm/m/it/10 so\/cmr/m/n/10 4)[]; [\OML/cmm/m/it/10 diffblock; 
+below \/cmr/m/n/10 = 
+ []
+
+
+Overfull \hbox (250.09676pt too wide) in paragraph at lines 15--37
+ \/cmr/m/n/10 0\OML/cmm/m/it/10 :\/cmr/m/n/10 6\OML/cmm/m/it/10 cmofso\/cmr/m/n
+/10 4](\OML/cmm/m/it/10 arx\/cmr/m/n/10 )[]; [\OML/cmm/m/it/10 op; below \/cmr/
+m/n/10 = 
+ []
+
+
+Overfull \hbox (91.1808pt too wide) in paragraph at lines 15--37
+ \/cmr/m/n/10 0\OML/cmm/m/it/10 :\/cmr/m/n/10 6\OML/cmm/m/it/10 cmofarx\/cmr/m/
+n/10 ](\OML/cmm/m/it/10 xor\/cmr/m/n/10 1)[]$$\OMS/cmsy/m/n/10 ^^H$ 
+ []
+
+
+Overfull \hbox (17.64879pt too wide) in paragraph at lines 15--37
+ []\OML/cmm/m/it/10 n\/cmr/m/n/10 )[]$$[]$ 
+ []
+
+
+Overfull \hbox (5.00002pt too wide) in paragraph at lines 15--37
+ \/cmr/m/n/10 ^^So 
+ []
+
+
+Overfull \hbox (5.00002pt too wide) in paragraph at lines 15--37
+ \/cmr/m/n/10 ^^Ro 
+ []
+
+
+Overfull \hbox (65.33398pt too wide) in paragraph at lines 15--37
+ []\OML/cmm/m/it/10 ut\/cmr/m/n/10 )[]$$[]$ 
+ []
+
+! Undefined control sequence.
+l.38 \draw
+          [arrow] (p_in) -- (subbytes);
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.38 \draw[
+           arrow] (p_in) -- (subbytes);
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+Missing character: There is no [ in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no w in font nullfont!
+Missing character: There is no ] in font nullfont!
+Missing character: There is no ( in font nullfont!
+Missing character: There is no p in font nullfont!
+! Missing $ inserted.
+<inserted text> 
+                $
+l.38 \draw[arrow] (p_
+                     in) -- (subbytes);
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Undefined control sequence.
+l.39 \draw
+          [arrow] (subbytes) -- (so4);
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.40 \draw
+          [arrow] (so4) -- (arx);
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.41 \draw
+          [arrow] (arx) -- (xor1);
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.42 \draw
+          [arrow] (k_in) -- (xor1);
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.43 \draw
+          [arrow] (xor1) -- (c_out);
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.44 
+     
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+
+Overfull \hbox (20.99834pt too wide) in paragraph at lines 38--44
+ []\OML/cmm/m/it/10 n\/cmr/m/n/10 ) \OMS/cmsy/m/n/10 ^^@ 
+ []
+
+
+Overfull \hbox (142.67503pt too wide) in paragraph at lines 38--44
+ \OMS/cmsy/m/n/10 ^^@\/cmr/m/n/10 (\OML/cmm/m/it/10 subbytes\/cmr/m/n/10 ); [\O
+ML/cmm/m/it/10 arrow\/cmr/m/n/10 ](\OML/cmm/m/it/10 subbytes\/cmr/m/n/10 ) \OMS
+/cmsy/m/n/10 ^^@ 
+ []
+
+
+Overfull \hbox (97.32079pt too wide) in paragraph at lines 38--44
+ \OMS/cmsy/m/n/10 ^^@\/cmr/m/n/10 (\OML/cmm/m/it/10 so\/cmr/m/n/10 4); [\OML/cm
+m/m/it/10 arrow\/cmr/m/n/10 ](\OML/cmm/m/it/10 so\/cmr/m/n/10 4) \OMS/cmsy/m/n/
+10 ^^@ 
+ []
+
+
+Overfull \hbox (99.83235pt too wide) in paragraph at lines 38--44
+ \OMS/cmsy/m/n/10 ^^@\/cmr/m/n/10 (\OML/cmm/m/it/10 arx\/cmr/m/n/10 ); [\OML/cm
+m/m/it/10 arrow\/cmr/m/n/10 ](\OML/cmm/m/it/10 arx\/cmr/m/n/10 ) \OMS/cmsy/m/n/
+10 ^^@ 
+ []
+
+
+Overfull \hbox (103.14085pt too wide) in paragraph at lines 38--44
+ \OMS/cmsy/m/n/10 ^^@\/cmr/m/n/10 (\OML/cmm/m/it/10 xor\/cmr/m/n/10 1); [\OML/c
+mm/m/it/10 arrow\/cmr/m/n/10 ](\OML/cmm/m/it/10 k[]n\/cmr/m/n/10 ) \OMS/cmsy/m/
+n/10 ^^@ 
+ []
+
+
+Overfull \hbox (108.95506pt too wide) in paragraph at lines 38--44
+ \OMS/cmsy/m/n/10 ^^@\/cmr/m/n/10 (\OML/cmm/m/it/10 xor\/cmr/m/n/10 1); [\OML/c
+mm/m/it/10 arrow\/cmr/m/n/10 ](\OML/cmm/m/it/10 xor\/cmr/m/n/10 1) \OMS/cmsy/m/
+n/10 ^^@ 
+ []
+
+
+Overfull \hbox (36.44386pt too wide) in paragraph at lines 38--44
+ \OMS/cmsy/m/n/10 ^^@\/cmr/m/n/10 (\OML/cmm/m/it/10 c[]ut\/cmr/m/n/10 );$ 
+ []
+
+! Undefined control sequence.
+l.45 \draw
+          [draw=blue!60, thick, rounded corners] ($(p_in.north west)+(-1.8,0...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.45 \draw[
+           draw=blue!60, thick, rounded corners] ($(p_in.north west)+(-1.8,0...
+
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+Missing character: There is no [ in font nullfont!
+Missing character: There is no d in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no w in font nullfont!
+Missing character: There is no = in font nullfont!
+Missing character: There is no b in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no u in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no ! in font nullfont!
+Missing character: There is no 6 in font nullfont!
+Missing character: There is no 0 in font nullfont!
+Missing character: There is no , in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no h in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no k in font nullfont!
+Missing character: There is no , in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no u in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no d in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no d in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no s in font nullfont!
+Missing character: There is no ] in font nullfont!
+Missing character: There is no ( in font nullfont!
+Missing character: There is no ) in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no g in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no ( in font nullfont!
+Missing character: There is no ) in font nullfont!
+Missing character: There is no ; in font nullfont!
+! Undefined control sequence.
+l.46 \node
+          [font=\bfseries\color{blue!80!black}] at ($(p_in.north)+(0, 0.6)$)...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+Missing character: There is no [ in font nullfont!
+Missing character: There is no f in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no = in font nullfont!
+! Undefined control sequence.
+l.46 \node[font=\bfseries\color
+                               {blue!80!black}] at ($(p_in.north)+(0, 0.6)$)...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+! LaTeX Error: Unicode character ứ (U+1EE9)
+               not set up for use with LaTeX.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.46 ... 0.6)$) {(a) Vòng mã hóa Rubik-4D thứ
+                                                   $r$};
+You may provide a definition with
+\DeclareUnicodeCharacter 
+
+
+Overfull \hbox (78.09105pt too wide) in paragraph at lines 45--47
+ \/cmr/m/n/10 (\OML/cmm/m/it/10 p[]n:northwest\/cmr/m/n/10 ) + 
+ []
+
+
+Overfull \hbox (45.55565pt too wide) in paragraph at lines 45--47
+ \/cmr/m/n/10 (\OMS/cmsy/m/n/10 ^^@\/cmr/m/n/10 1\OML/cmm/m/it/10 :\/cmr/m/n/10
+ 8\OML/cmm/m/it/10 ; \/cmr/m/n/10 0\OML/cmm/m/it/10 :\/cmr/m/n/10 3)$ 
+ []
+
+
+Overfull \hbox (79.31664pt too wide) in paragraph at lines 45--47
+ \/cmr/m/n/10 (\OML/cmm/m/it/10 c[]ut:southeast\/cmr/m/n/10 ) + 
+ []
+
+
+Overfull \hbox (45.55565pt too wide) in paragraph at lines 45--47
+ \/cmr/m/n/10 (1\OML/cmm/m/it/10 :\/cmr/m/n/10 8\OML/cmm/m/it/10 ; \OMS/cmsy/m/
+n/10 ^^@\/cmr/m/n/10 0\OML/cmm/m/it/10 :\/cmr/m/n/10 3)$ 
+ []
+
+
+Overfull \hbox (68.97185pt too wide) in paragraph at lines 45--47
+ \OT1/cmr/bx/n/10 blue!80!black] 
+ []
+
+
+Overfull \hbox (10.06242pt too wide) in paragraph at lines 45--47
+ \OT1/cmr/bx/n/10 at 
+ []
+
+
+Overfull \hbox (62.18011pt too wide) in paragraph at lines 45--47
+ \OT1/cmr/bx/n/10 ($\/cmr/m/n/10 (\OML/cmm/m/it/10 p[]n:north\/cmr/m/n/10 ) + 
+ []
+
+
+Overfull \hbox (34.47224pt too wide) in paragraph at lines 45--47
+ \/cmr/m/n/10 (0\OML/cmm/m/it/10 ; \/cmr/m/n/10 0\OML/cmm/m/it/10 :\/cmr/m/n/10
+ 6)$\OT1/cmr/bx/n/10 ) 
+ []
+
+
+Overfull \hbox (14.53462pt too wide) in paragraph at lines 45--47
+ \OT1/cmr/bx/n/10 (a) 
+ []
+
+
+Overfull \hbox (26.58319pt too wide) in paragraph at lines 45--47
+ \OT1/cmr/bx/n/10 V^^Rong 
+ []
+
+
+Overfull \hbox (15.17351pt too wide) in paragraph at lines 45--47
+ \OT1/cmr/bx/n/10 m~a 
+ []
+
+
+Overfull \hbox (17.72905pt too wide) in paragraph at lines 45--47
+ \OT1/cmr/bx/n/10 h^^Soa 
+ []
+
+
+Overfull \hbox (34.49982pt too wide) in paragraph at lines 45--47
+ \OT1/cmr/bx/n/10 Rubik- 
+ []
+
+
+Overfull \hbox (14.56937pt too wide) in paragraph at lines 45--47
+ \OT1/cmr/bx/n/10 4D 
+ []
+
+
+Overfull \hbox (10.86105pt too wide) in paragraph at lines 45--47
+ \OT1/cmr/bx/n/10 th 
+ []
+
+
+Overfull \hbox (7.9838pt too wide) in paragraph at lines 45--47
+ \OML/cmm/m/it/10 r$\OT1/cmr/bx/n/10 ; 
+ []
+
+
+! LaTeX Error: Environment scope undefined.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.49 \begin{scope}
+                  [xshift=8.5cm]
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.49 \begin{scope}[
+                   xshift=8.5cm]
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+! Undefined control sequence.
+l.50 \node
+          [state] (c_in) at (0, 0) {Bản mã $S^{(r)}$};
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.50 \node[state] (c_
+                     in) at (0, 0) {Bản mã $S^{(r)}$};
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+
+! LaTeX Error: Unicode character ả (U+1EA3)
+               not set up for use with LaTeX.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.50 \node[state] (c_in) at (0, 0) {Bả
+                                        n mã $S^{(r)}$};
+You may provide a definition with
+\DeclareUnicodeCharacter 
+
+
+LaTeX Warning: Command \~ invalid in math mode on input line 50.
+
+! Please use \mathaccent for accents in math mode.
+\add@accent ... \let \ignorespaces \relax \accent 
+                                                  #1 #2\egroup \ifmmode \els...
+l.50 \node[state] (c_in) at (0, 0) {Bản mã
+                                              $S^{(r)}$};
+I'm changing \accent to \mathaccent here; wish me luck.
+(Accents are not the same in formulas as they are in text.)
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.50 \node[state] (c_in) at (0, 0) {Bản mã $
+                                               S^{(r)}$};
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.50 \node[state] (c_in) at (0, 0) {Bản mã $S^
+                                                 {(r)}$};
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Extra }, or forgotten \endgroup.
+l.50 ...te] (c_in) at (0, 0) {Bản mã $S^{(r)}$}
+                                                  ;
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Undefined control sequence.
+l.51 \node
+          [op, below=0.6cm of c_in] (xor2) {$\oplus$};
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.51 \node[op, below=0.6cm of c_
+                                in] (xor2) {$\oplus$};
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.51 \node[op, below=0.6cm of c_in] (xor2) {$
+                                             \oplus$};
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.51 ...e[op, below=0.6cm of c_in] (xor2) {$\oplus
+                                                  $};
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Extra }, or forgotten \endgroup.
+l.51 ...op, below=0.6cm of c_in] (xor2) {$\oplus$}
+                                                  ;
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Undefined control sequence.
+l.52 \node
+          [right=0.8cm of xor2, font=\small] (k_inv) {$K_r$ (Khóa vòng)};
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.52 \node[right=0.8cm of xor2, font=\small
+                                           ] (k_inv) {$K_r$ (Khóa vòng)};
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.52 \node[right=0.8cm of xor2, font=\small] (k_
+                                                inv) {$K_r$ (Khóa vòng)};
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.52 ...ght=0.8cm of xor2, font=\small] (k_inv) {$
+                                                  K_r$ (Khóa vòng)};
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.52 ...t=0.8cm of xor2, font=\small] (k_inv) {$K_
+                                                  r$ (Khóa vòng)};
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Extra }, or forgotten \endgroup.
+l.52 ...font=\small] (k_inv) {$K_r$ (Khóa vòng)}
+                                                  ;
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Undefined control sequence.
+l.53 \node
+          [diffblock, below=0.6cm of xor2] (inv_arx) {
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.53 \node[diffblock, below=0.6cm of xor2] (inv_
+                                                arx) {
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+
+! LaTeX Error: Command \DJ unavailable in encoding OT1.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.55         \textbf{Đảo khuếch tán ARX}
+                                               \\
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+! LaTeX Error: Unicode character ả (U+1EA3)
+               not set up for use with LaTeX.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.55         \textbf{Đảo khuếch tán ARX}
+                                               \\
+You may provide a definition with
+\DeclareUnicodeCharacter 
+
+
+! LaTeX Error: Unicode character ế (U+1EBF)
+               not set up for use with LaTeX.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.55         \textbf{Đảo khuếch tán ARX}
+                                               \\
+You may provide a definition with
+\DeclareUnicodeCharacter 
+
+
+! LaTeX Error: Command \DJ unavailable in encoding OT1.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.56         Đ
+               ảo chuỗi từ và phép trừ
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+! LaTeX Error: Unicode character ả (U+1EA3)
+               not set up for use with LaTeX.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.56         Đả
+                  o chuỗi từ và phép trừ
+You may provide a definition with
+\DeclareUnicodeCharacter 
+
+
+! LaTeX Error: Unicode character ỗ (U+1ED7)
+               not set up for use with LaTeX.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.56         Đảo chuỗ
+                          i từ và phép trừ
+You may provide a definition with
+\DeclareUnicodeCharacter 
+
+
+! LaTeX Error: Unicode character ừ (U+1EEB)
+               not set up for use with LaTeX.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.56         Đảo chuỗi từ
+                                 và phép trừ
+You may provide a definition with
+\DeclareUnicodeCharacter 
+
+
+! LaTeX Error: Unicode character ừ (U+1EEB)
+               not set up for use with LaTeX.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.56         Đảo chuỗi từ và phép trừ
+                                                
+You may provide a definition with
+\DeclareUnicodeCharacter 
+
+! Undefined control sequence.
+l.59 \node
+          [permblock, below=0.6cm of inv_arx] (inv_so4) {
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+! LaTeX Error: Command \DJ unavailable in encoding OT1.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.61         \textbf{Đảo hoán vị 4D}
+                                           \\
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+! LaTeX Error: Unicode character ả (U+1EA3)
+               not set up for use with LaTeX.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.61         \textbf{Đảo hoán vị 4D}
+                                           \\
+You may provide a definition with
+\DeclareUnicodeCharacter 
+
+
+! LaTeX Error: Unicode character ị (U+1ECB)
+               not set up for use with LaTeX.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.61         \textbf{Đảo hoán vị 4D}
+                                           \\
+You may provide a definition with
+\DeclareUnicodeCharacter 
+
+
+! LaTeX Error: Unicode character ả (U+1EA3)
+               not set up for use with LaTeX.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.62         Bả
+                 ng nghịch đảo $\pi_{\text{tbl}_{\text{idx}}}^{-1}$
+You may provide a definition with
+\DeclareUnicodeCharacter 
+
+
+! LaTeX Error: Unicode character ị (U+1ECB)
+               not set up for use with LaTeX.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.62         Bảng nghị
+                          ch đảo $\pi_{\text{tbl}_{\text{idx}}}^{-1}$
+You may provide a definition with
+\DeclareUnicodeCharacter 
+
+
+! LaTeX Error: Command \dj unavailable in encoding OT1.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.62         Bảng nghịch đ
+                               ảo $\pi_{\text{tbl}_{\text{idx}}}^{-1}$
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+! LaTeX Error: Unicode character ả (U+1EA3)
+               not set up for use with LaTeX.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.62         Bảng nghịch đả
+                                  o $\pi_{\text{tbl}_{\text{idx}}}^{-1}$
+You may provide a definition with
+\DeclareUnicodeCharacter 
+
+! Undefined control sequence.
+l.62         Bảng nghịch đảo $\pi_{\text
+                                               {tbl}_{\text{idx}}}^{-1}$
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.62 ...ng nghịch đảo $\pi_{\text{tbl}_{\text
+                                                  {idx}}}^{-1}$
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.65 \node
+          [block, below=0.6cm of inv_so4] (inv_subbytes) {
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+! LaTeX Error: Unicode character ộ (U+1ED9)
+               not set up for use with LaTeX.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.68         Hộ
+                 p $\text{S-Box}^{-1}$ chuẩn AES
+You may provide a definition with
+\DeclareUnicodeCharacter 
+
+! Undefined control sequence.
+<recently read> \text 
+                      
+l.68         Hộp $\text
+                         {S-Box}^{-1}$ chuẩn AES
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+! LaTeX Error: Unicode character ẩ (U+1EA9)
+               not set up for use with LaTeX.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.68         Hộp $\text{S-Box}^{-1}$ chuẩ
+                                             n AES
+You may provide a definition with
+\DeclareUnicodeCharacter 
+
+! Undefined control sequence.
+l.71 \node
+          [state, below=0.6cm of inv_subbytes] (p_out) {Khôi phục $S^{(r-...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+LaTeX Warning: Command \^ invalid in math mode on input line 71.
+
+! Please use \mathaccent for accents in math mode.
+\add@accent ... \let \ignorespaces \relax \accent 
+                                                  #1 #2\egroup \ifmmode \els...
+l.71 ...below=0.6cm of inv_subbytes] (p_out) {Khô
+                                                  i phục $S^{(r-1)}$};
+I'm changing \accent to \mathaccent here; wish me luck.
+(Accents are not the same in formulas as they are in text.)
+
+
+! LaTeX Error: Unicode character ụ (U+1EE5)
+               not set up for use with LaTeX.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.71 ....6cm of inv_subbytes] (p_out) {Khôi phụ
+                                                  c $S^{(r-1)}$};
+You may provide a definition with
+\DeclareUnicodeCharacter 
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.71 ...m of inv_subbytes] (p_out) {Khôi phục $
+                                                  S^{(r-1)}$};
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.71 ...of inv_subbytes] (p_out) {Khôi phục $S^
+                                                  {(r-1)}$};
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Extra }, or forgotten \endgroup.
+l.71 ...bbytes] (p_out) {Khôi phục $S^{(r-1)}$}
+                                                  ;
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+
+Overfull \hbox (72.89682pt too wide) in paragraph at lines 49--72
+ []\OT1/cmr/bx/n/10 [xshift=8.5cm] 
+ []
+
+
+Overfull \hbox (30.73036pt too wide) in paragraph at lines 49--72
+ \OT1/cmr/bx/n/10 [state] 
+ []
+
+
+Overfull \hbox (102.33981pt too wide) in paragraph at lines 49--72
+ \OT1/cmr/bx/n/10 (c$[]\OML/cmm/m/it/10 n\/cmr/m/n/10 )\OML/cmm/m/it/10 at\/cmr
+/m/n/10 (0\OML/cmm/m/it/10 ; \/cmr/m/n/10 0)[]$\OT1/cmr/bx/n/10 S$[]$; 
+ []
+
+
+Overfull \hbox (18.52768pt too wide) in paragraph at lines 49--72
+ \OT1/cmr/bx/n/10 [op, 
+ []
+
+
+Overfull \hbox (15.81242pt too wide) in paragraph at lines 49--72
+ \OT1/cmr/bx/n/10 be- 
+ []
+
+
+Overfull \hbox (55.2636pt too wide) in paragraph at lines 49--72
+ \OT1/cmr/bx/n/10 low=0.6cm 
+ []
+
+
+Overfull \hbox (9.26384pt too wide) in paragraph at lines 49--72
+ \OT1/cmr/bx/n/10 of 
+ []
+
+
+Overfull \hbox (56.32242pt too wide) in paragraph at lines 49--72
+ \OT1/cmr/bx/n/10 c$[]\OML/cmm/m/it/10 n\/cmr/m/n/10 ](\OML/cmm/m/it/10 xor\/cm
+r/m/n/10 2)[]$$\OMS/cmsy/m/n/10 ^^H$\OT1/cmr/bx/n/10 ; 
+ []
+
+
+Overfull \hbox (65.74966pt too wide) in paragraph at lines 49--72
+ \OT1/cmr/bx/n/10 [right=0.8cm 
+ []
+
+
+Overfull \hbox (9.26384pt too wide) in paragraph at lines 49--72
+ \OT1/cmr/bx/n/10 of 
+ []
+
+
+Overfull \hbox (25.49988pt too wide) in paragraph at lines 49--72
+ \OT1/cmr/bx/n/10 xor2, 
+ []
+
+
+Overfull \hbox (31.94427pt too wide) in paragraph at lines 49--72
+ \OT1/cmr/bx/n/10 font=] 
+ []
+
+
+Overfull \hbox (42.41025pt too wide) in paragraph at lines 49--72
+ \OT1/cmr/bx/n/10 (k$[]\OML/cmm/m/it/10 nv\/cmr/m/n/10 )[]$\OT1/cmr/bx/n/10 K$[
+]$ 
+ []
+
+
+Overfull \hbox (31.21509pt too wide) in paragraph at lines 49--72
+ \OT1/cmr/bx/n/10 (Kh^^Soa 
+ []
+
+
+Overfull \hbox (31.62483pt too wide) in paragraph at lines 49--72
+ \OT1/cmr/bx/n/10 v^^Rong); 
+ []
+
+
+Overfull \hbox (23.31932pt too wide) in paragraph at lines 49--72
+ \OT1/cmr/bx/n/10 [diff- 
+ []
+
+
+Overfull \hbox (29.70818pt too wide) in paragraph at lines 49--72
+ \OT1/cmr/bx/n/10 block, 
+ []
+
+
+Overfull \hbox (15.81242pt too wide) in paragraph at lines 49--72
+ \OT1/cmr/bx/n/10 be- 
+ []
+
+
+Overfull \hbox (55.2636pt too wide) in paragraph at lines 49--72
+ \OT1/cmr/bx/n/10 low=0.6cm 
+ []
+
+
+Overfull \hbox (9.26384pt too wide) in paragraph at lines 49--72
+ \OT1/cmr/bx/n/10 of 
+ []
+
+
+Overfull \hbox (25.49988pt too wide) in paragraph at lines 49--72
+ \OT1/cmr/bx/n/10 xor2] 
+ []
+
+
+Overfull \hbox (226.22601pt too wide) in paragraph at lines 49--72
+ \OT1/cmr/bx/n/10 (inv$[]\OML/cmm/m/it/10 rx\/cmr/m/n/10 )[]; [\OML/cmm/m/it/10
+ permblock; below \/cmr/m/n/10 = 
+ []
+
+
+Overfull \hbox (267.51721pt too wide) in paragraph at lines 49--72
+ \/cmr/m/n/10 0\OML/cmm/m/it/10 :\/cmr/m/n/10 6\OML/cmm/m/it/10 cmofinv[]rx\/cm
+r/m/n/10 ](\OML/cmm/m/it/10 inv[]o\/cmr/m/n/10 4)[]; [\OML/cmm/m/it/10 block; b
+elow \/cmr/m/n/10 = 
+ []
+
+
+Overfull \hbox (316.73044pt too wide) in paragraph at lines 49--72
+ \/cmr/m/n/10 0\OML/cmm/m/it/10 :\/cmr/m/n/10 6\OML/cmm/m/it/10 cmofinv[]o\/cmr
+/m/n/10 4](\OML/cmm/m/it/10 inv[]ubbytes\/cmr/m/n/10 )[]; [\OML/cmm/m/it/10 sta
+te; below \/cmr/m/n/10 = 
+ []
+
+
+Overfull \hbox (186.04852pt too wide) in paragraph at lines 49--72
+ \/cmr/m/n/10 0\OML/cmm/m/it/10 :\/cmr/m/n/10 6\OML/cmm/m/it/10 cmofinv[]ubbyte
+s\/cmr/m/n/10 ](\OML/cmm/m/it/10 p[]ut\/cmr/m/n/10 )[]$\OT1/cmr/bx/n/10 S$[]$; 
+
+ []
+
+! Undefined control sequence.
+l.73 \draw
+          [arrow] (c_in) -- (xor2);
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.73 \draw[
+           arrow] (c_in) -- (xor2);
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.73 \draw[arrow] (c_
+                     in) -- (xor2);
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Undefined control sequence.
+l.74 \draw
+          [arrow] (k_inv) -- (xor2);
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.75 \draw
+          [arrow] (xor2) -- (inv_arx);
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.76 \draw
+          [arrow] (inv_arx) -- (inv_so4);
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.77 \draw
+          [arrow] (inv_so4) -- (inv_subbytes);
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.78 \draw
+          [arrow] (inv_subbytes) -- (p_out);
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.79 
+     
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+
+Overfull \hbox (35.18732pt too wide) in paragraph at lines 73--79
+ []\OT1/cmr/bx/n/10 [arrow] 
+ []
+
+
+Overfull \hbox (30.58162pt too wide) in paragraph at lines 73--79
+ \OT1/cmr/bx/n/10 (c$[]\OML/cmm/m/it/10 n\/cmr/m/n/10 ) \OMS/cmsy/m/n/10 ^^@ 
+ []
+
+
+Overfull \hbox (108.34686pt too wide) in paragraph at lines 73--79
+ \OMS/cmsy/m/n/10 ^^@\/cmr/m/n/10 (\OML/cmm/m/it/10 xor\/cmr/m/n/10 2); [\OML/c
+mm/m/it/10 arrow\/cmr/m/n/10 ](\OML/cmm/m/it/10 k[]nv\/cmr/m/n/10 ) \OMS/cmsy/m
+/n/10 ^^@ 
+ []
+
+
+Overfull \hbox (108.95506pt too wide) in paragraph at lines 73--79
+ \OMS/cmsy/m/n/10 ^^@\/cmr/m/n/10 (\OML/cmm/m/it/10 xor\/cmr/m/n/10 2); [\OML/c
+mm/m/it/10 arrow\/cmr/m/n/10 ](\OML/cmm/m/it/10 xor\/cmr/m/n/10 2) \OMS/cmsy/m/
+n/10 ^^@ 
+ []
+
+
+Overfull \hbox (127.52528pt too wide) in paragraph at lines 73--79
+ \OMS/cmsy/m/n/10 ^^@\/cmr/m/n/10 (\OML/cmm/m/it/10 inv[]rx\/cmr/m/n/10 ); [\OM
+L/cmm/m/it/10 arrow\/cmr/m/n/10 ](\OML/cmm/m/it/10 inv[]rx\/cmr/m/n/10 ) \OMS/c
+msy/m/n/10 ^^@ 
+ []
+
+
+Overfull \hbox (125.08385pt too wide) in paragraph at lines 73--79
+ \OMS/cmsy/m/n/10 ^^@\/cmr/m/n/10 (\OML/cmm/m/it/10 inv[]o\/cmr/m/n/10 4); [\OM
+L/cmm/m/it/10 arrow\/cmr/m/n/10 ](\OML/cmm/m/it/10 inv[]o\/cmr/m/n/10 4) \OMS/c
+msy/m/n/10 ^^@ 
+ []
+
+
+Overfull \hbox (170.4381pt too wide) in paragraph at lines 73--79
+ \OMS/cmsy/m/n/10 ^^@\/cmr/m/n/10 (\OML/cmm/m/it/10 inv[]ubbytes\/cmr/m/n/10 );
+ [\OML/cmm/m/it/10 arrow\/cmr/m/n/10 ](\OML/cmm/m/it/10 inv[]ubbytes\/cmr/m/n/1
+0 ) \OMS/cmsy/m/n/10 ^^@ 
+ []
+
+
+Overfull \hbox (37.14755pt too wide) in paragraph at lines 73--79
+ \OMS/cmsy/m/n/10 ^^@\/cmr/m/n/10 (\OML/cmm/m/it/10 p[]ut\/cmr/m/n/10 );$ 
+ []
+
+! Undefined control sequence.
+l.80 \draw
+          [draw=teal!70!black, thick, rounded corners] ($(c_in.north west)+(...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.80 \draw[
+           draw=teal!70!black, thick, rounded corners] ($(c_in.north west)+(...
+
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+! Undefined control sequence.
+l.81 \node
+          [font=\bfseries\color{teal!70!black}] at ($(c_in.north)+(0, 0.6)$)...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.81 \node[font=\bfseries\color
+                               {teal!70!black}] at ($(c_in.north)+(0, 0.6)$)...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+! LaTeX Error: Unicode character ả (U+1EA3)
+               not set up for use with LaTeX.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.81 ...($(c_in.north)+(0, 0.6)$) {(b) Vòng giả
+                                                  i mã Rubik-4D thứ $r$};
+You may provide a definition with
+\DeclareUnicodeCharacter 
+
+
+! LaTeX Error: Unicode character ứ (U+1EE9)
+               not set up for use with LaTeX.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.81 ....6)$) {(b) Vòng giải mã Rubik-4D thứ
+                                                   $r$};
+You may provide a definition with
+\DeclareUnicodeCharacter 
+
+
+! LaTeX Error: \begin{document} ended by \end{scope}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.82 \end{scope}
+                
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+Overfull \hbox (103.09663pt too wide) in paragraph at lines 80--83
+ []\OT1/cmr/bx/n/10 [draw=teal!70!black, 
+ []
+
+
+Overfull \hbox (28.11096pt too wide) in paragraph at lines 80--83
+ \OT1/cmr/bx/n/10 thick, 
+ []
+
+
+Overfull \hbox (41.3123pt too wide) in paragraph at lines 80--83
+ \OT1/cmr/bx/n/10 rounded 
+ []
+
+
+Overfull \hbox (19.43047pt too wide) in paragraph at lines 80--83
+ \OT1/cmr/bx/n/10 cor- 
+ []
+
+
+Overfull \hbox (24.12627pt too wide) in paragraph at lines 80--83
+ \OT1/cmr/bx/n/10 ners] 
+ []
+
+
+Overfull \hbox (81.85956pt too wide) in paragraph at lines 80--83
+ \OT1/cmr/bx/n/10 ($\/cmr/m/n/10 (\OML/cmm/m/it/10 c[]n:northwest\/cmr/m/n/10 )
+ + 
+ []
+
+
+Overfull \hbox (50.02785pt too wide) in paragraph at lines 80--83
+ \/cmr/m/n/10 (\OMS/cmsy/m/n/10 ^^@\/cmr/m/n/10 1\OML/cmm/m/it/10 :\/cmr/m/n/10
+ 8\OML/cmm/m/it/10 ; \/cmr/m/n/10 0\OML/cmm/m/it/10 :\/cmr/m/n/10 3)$\OT1/cmr/b
+x/n/10 ) 
+ []
+
+
+Overfull \hbox (23.42351pt too wide) in paragraph at lines 80--83
+ \OT1/cmr/bx/n/10 rect- 
+ []
+
+
+Overfull \hbox (15.8124pt too wide) in paragraph at lines 80--83
+ \OT1/cmr/bx/n/10 an- 
+ []
+
+
+Overfull \hbox (14.21521pt too wide) in paragraph at lines 80--83
+ \OT1/cmr/bx/n/10 gle 
+ []
+
+
+Overfull \hbox (84.49252pt too wide) in paragraph at lines 80--83
+ \OT1/cmr/bx/n/10 ($\/cmr/m/n/10 (\OML/cmm/m/it/10 p[]ut:southeast\/cmr/m/n/10 
+) + 
+ []
+
+
+Overfull \hbox (53.22227pt too wide) in paragraph at lines 80--83
+ \/cmr/m/n/10 (1\OML/cmm/m/it/10 :\/cmr/m/n/10 8\OML/cmm/m/it/10 ; \OMS/cmsy/m/
+n/10 ^^@\/cmr/m/n/10 0\OML/cmm/m/it/10 :\/cmr/m/n/10 3)$\OT1/cmr/bx/n/10 ); 
+ []
+
+
+Overfull \hbox (98.20084pt too wide) in paragraph at lines 80--83
+ \OT1/cmr/bx/n/10 [font=teal!70!black] 
+ []
+
+
+Overfull \hbox (10.06242pt too wide) in paragraph at lines 80--83
+ \OT1/cmr/bx/n/10 at 
+ []
+
+
+Overfull \hbox (61.47643pt too wide) in paragraph at lines 80--83
+ \OT1/cmr/bx/n/10 ($\/cmr/m/n/10 (\OML/cmm/m/it/10 c[]n:north\/cmr/m/n/10 ) + 
+ []
+
+
+Overfull \hbox (34.47224pt too wide) in paragraph at lines 80--83
+ \/cmr/m/n/10 (0\OML/cmm/m/it/10 ; \/cmr/m/n/10 0\OML/cmm/m/it/10 :\/cmr/m/n/10
+ 6)$\OT1/cmr/bx/n/10 ) 
+ []
+
+
+Overfull \hbox (15.33325pt too wide) in paragraph at lines 80--83
+ \OT1/cmr/bx/n/10 (b) 
+ []
+
+
+Overfull \hbox (26.58319pt too wide) in paragraph at lines 80--83
+ \OT1/cmr/bx/n/10 V^^Rong 
+ []
+
+
+Overfull \hbox (12.13882pt too wide) in paragraph at lines 80--83
+ \OT1/cmr/bx/n/10 gii 
+ []
+
+
+Overfull \hbox (15.17351pt too wide) in paragraph at lines 80--83
+ \OT1/cmr/bx/n/10 m~a 
+ []
+
+
+Overfull \hbox (34.49982pt too wide) in paragraph at lines 80--83
+ \OT1/cmr/bx/n/10 Rubik- 
+ []
+
+
+Overfull \hbox (14.56937pt too wide) in paragraph at lines 80--83
+ \OT1/cmr/bx/n/10 4D 
+ []
+
+
+Overfull \hbox (10.86105pt too wide) in paragraph at lines 80--83
+ \OT1/cmr/bx/n/10 th 
+ []
+
+
+Overfull \hbox (7.9838pt too wide) in paragraph at lines 80--83
+ \OML/cmm/m/it/10 r$\OT1/cmr/bx/n/10 ; 
+ []
+
+
+! LaTeX Error: \begin{document} ended by \end{tikzpicture}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.84 \end{tikzpicture}
+                      
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+! LaTeX Error: \caption outside float.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.85 \caption
+             {Kiến trúc tổng thể của Rubik-4D: (a) Luồng mã hóa...
+
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.85 \caption{K
+               iến trúc tổng thể của Rubik-4D: (a) Luồng mã hóa...
+
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+Missing character: There is no K in font nullfont!
+Missing character: There is no i in font nullfont!
+
+! LaTeX Error: Unicode character ế (U+1EBF)
+               not set up for use with LaTeX.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.85 \caption{Kiế
+                   n trúc tổng thể của Rubik-4D: (a) Luồng mã hóa...
+
+You may provide a definition with
+\DeclareUnicodeCharacter 
+
+Missing character: There is no n in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no t in font nullfont!
+
+! LaTeX Error: Unicode character ổ (U+1ED5)
+               not set up for use with LaTeX.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.85 \caption{Kiến trúc tổ
+                               ng thể của Rubik-4D: (a) Luồng mã hóa...
+
+You may provide a definition with
+\DeclareUnicodeCharacter 
+
+Missing character: There is no n in font nullfont!
+Missing character: There is no g in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no h in font nullfont!
+
+! LaTeX Error: Unicode character ể (U+1EC3)
+               not set up for use with LaTeX.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.85 \caption{Kiến trúc tổng thể
+                                        của Rubik-4D: (a) Luồng mã hóa...
+
+You may provide a definition with
+\DeclareUnicodeCharacter 
+
+Missing character: There is no c in font nullfont!
+
+! LaTeX Error: Unicode character ủ (U+1EE7)
+               not set up for use with LaTeX.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.85 \caption{Kiến trúc tổng thể củ
+                                            a Rubik-4D: (a) Luồng mã hóa...
+
+You may provide a definition with
+\DeclareUnicodeCharacter 
+
+Missing character: There is no a in font nullfont!
+Missing character: There is no R in font nullfont!
+Missing character: There is no u in font nullfont!
+Missing character: There is no b in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no k in font nullfont!
+Missing character: There is no - in font nullfont!
+Missing character: There is no 4 in font nullfont!
+Missing character: There is no D in font nullfont!
+Missing character: There is no : in font nullfont!
+Missing character: There is no ( in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no ) in font nullfont!
+Missing character: There is no L in font nullfont!
+Missing character: There is no u in font nullfont!
+
+! LaTeX Error: Unicode character ồ (U+1ED3)
+               not set up for use with LaTeX.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.85 ...úc tổng thể của Rubik-4D: (a) Luồ
+                                                  ng mã hóa gồm SubBytes...
+
+You may provide a definition with
+\DeclareUnicodeCharacter 
+
+Missing character: There is no n in font nullfont!
+Missing character: There is no g in font nullfont!
+Missing character: There is no m in font nullfont!
+Missing character: There is no h in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no g in font nullfont!
+
+! LaTeX Error: Unicode character ồ (U+1ED3)
+               not set up for use with LaTeX.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.85 ... của Rubik-4D: (a) Luồng mã hóa gồ
+                                                  m SubBytes, hoán vị si�...
+
+You may provide a definition with
+\DeclareUnicodeCharacter 
+
+Missing character: There is no m in font nullfont!
+Missing character: There is no S in font nullfont!
+Missing character: There is no u in font nullfont!
+Missing character: There is no b in font nullfont!
+Missing character: There is no B in font nullfont!
+Missing character: There is no y in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no s in font nullfont!
+Missing character: There is no , in font nullfont!
+Missing character: There is no h in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no v in font nullfont!
+
+! LaTeX Error: Unicode character ị (U+1ECB)
+               not set up for use with LaTeX.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.85 ...uồng mã hóa gồm SubBytes, hoán vị
+                                                   siêu lập phương $SO(...
+
+You may provide a definition with
+\DeclareUnicodeCharacter 
+
+Missing character: There is no s in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no u in font nullfont!
+Missing character: There is no l in font nullfont!
+
+! LaTeX Error: Unicode character ậ (U+1EAD)
+               not set up for use with LaTeX.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.85 ...hóa gồm SubBytes, hoán vị siêu lậ
+                                                  p phương $SO(4)$, khuế...
+
+You may provide a definition with
+\DeclareUnicodeCharacter 
+
+Missing character: There is no p in font nullfont!
+Missing character: There is no p in font nullfont!
+Missing character: There is no h in font nullfont!
+
+! LaTeX Error: Unicode character ư (U+01B0)
+               not set up for use with LaTeX.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.85 ...ồm SubBytes, hoán vị siêu lập phư
+                                                  ơng $SO(4)$, khuếch tá...
+
+You may provide a definition with
+\DeclareUnicodeCharacter 
+
+
+! LaTeX Error: Unicode character ơ (U+01A1)
+               not set up for use with LaTeX.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.85 ...�m SubBytes, hoán vị siêu lập phươ
+                                                  ng $SO(4)$, khuếch tán ...
+
+You may provide a definition with
+\DeclareUnicodeCharacter 
+
+Missing character: There is no n in font nullfont!
+Missing character: There is no g in font nullfont!
+Missing character: There is no , in font nullfont!
+Missing character: There is no k in font nullfont!
+Missing character: There is no h in font nullfont!
+Missing character: There is no u in font nullfont!
+
+! LaTeX Error: Unicode character ế (U+1EBF)
+               not set up for use with LaTeX.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.85 ... vị siêu lập phương $SO(4)$, khuế
+                                                  ch tán ARX 32-bit và Add...
+
+You may provide a definition with
+\DeclareUnicodeCharacter 
+
+Missing character: There is no c in font nullfont!
+Missing character: There is no h in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no A in font nullfont!
+Missing character: There is no R in font nullfont!
+Missing character: There is no X in font nullfont!
+Missing character: There is no 3 in font nullfont!
+Missing character: There is no 2 in font nullfont!
+Missing character: There is no - in font nullfont!
+Missing character: There is no b in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no v in font nullfont!
+Missing character: There is no A in font nullfont!
+Missing character: There is no d in font nullfont!
+Missing character: There is no d in font nullfont!
+Missing character: There is no R in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no u in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no d in font nullfont!
+Missing character: There is no K in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no y in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ( in font nullfont!
+Missing character: There is no b in font nullfont!
+Missing character: There is no ) in font nullfont!
+Missing character: There is no L in font nullfont!
+Missing character: There is no u in font nullfont!
+
+! LaTeX Error: Unicode character ồ (U+1ED3)
+               not set up for use with LaTeX.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.85 ...tán ARX 32-bit và AddRoundKey; (b) Luồ
+                                                  ng giải mã sinh ánh ng...
+
+You may provide a definition with
+\DeclareUnicodeCharacter 
+
+Missing character: There is no n in font nullfont!
+Missing character: There is no g in font nullfont!
+Missing character: There is no g in font nullfont!
+Missing character: There is no i in font nullfont!
+
+! LaTeX Error: Unicode character ả (U+1EA3)
+               not set up for use with LaTeX.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.85 ... 32-bit và AddRoundKey; (b) Luồng giả
+                                                  i mã sinh ánh nghịch �...
+
+You may provide a definition with
+\DeclareUnicodeCharacter 
+
+Missing character: There is no i in font nullfont!
+Missing character: There is no m in font nullfont!
+Missing character: There is no s in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no h in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no h in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no g in font nullfont!
+Missing character: There is no h in font nullfont!
+
+! LaTeX Error: Unicode character ị (U+1ECB)
+               not set up for use with LaTeX.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.85 ...y; (b) Luồng giải mã sinh ánh nghị
+                                                  ch đảo.}
+You may provide a definition with
+\DeclareUnicodeCharacter 
+
+Missing character: There is no c in font nullfont!
+Missing character: There is no h in font nullfont!
+
+! LaTeX Error: Command \dj unavailable in encoding .
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.85 ...) Luồng giải mã sinh ánh nghịch đ
+                                                  ảo.}
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+! LaTeX Error: Unicode character ả (U+1EA3)
+               not set up for use with LaTeX.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.85 ...uồng giải mã sinh ánh nghịch đả
+                                                  o.}
+You may provide a definition with
+\DeclareUnicodeCharacter 
+
+Missing character: There is no o in font nullfont!
+Missing character: There is no . in font nullfont!
+
+! LaTeX Error: \begin{document} ended by \end{figure*}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.87 \end{figure*}
+                  
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+)
+! Emergency stop.
+<*> ./original_fig1.tex
+                       
+*** (job aborted, no legal \end found)
+
+ 
+Here is how much of TeX's memory you used:
+ 80 strings out of 467871
+ 1074 string characters out of 5418376
+ 439733 words of memory out of 5000000
+ 29057 multiletter control sequences out of 15000+600000
+ 628197 words of font info for 42 fonts, out of 8000000 for 9000
+ 1141 hyphenation exceptions out of 8191
+ 23i,12n,32p,276b,217s stack positions out of 10000i,1000n,20000p,200000b,200000s
+!  ==> Fatal error occurred, no output PDF file produced!
