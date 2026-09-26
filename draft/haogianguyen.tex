@@ -179,98 +179,34 @@ Each byte index $i \in \{0, \dots, 15\}$ is mapped to a unique vertex coordinate
 % ================= FIGURE 2: ARCHITECTURE COMPARISON DIAGRAM =================
 \begin{figure*}[htbp]
 \centering
-\begin{tikzpicture}[
-    >=Stealth,
-    node distance=1.1cm and 0.8cm,
-    block/.style={rectangle, draw=black, thick, fill=blue!8, text centered, minimum width=2.5cm, minimum height=0.7cm, font=\small},
-    permblock/.style={rectangle, draw=black, thick, fill=orange!15, text centered, minimum width=2.5cm, minimum height=0.7cm, font=\small},
-    diffblock/.style={rectangle, draw=black, thick, fill=teal!15, text centered, minimum width=2.5cm, minimum height=0.7cm, font=\small},
-    op/.style={circle, draw=black, thick, fill=white, inner sep=0pt, minimum size=6mm, font=\normalsize},
-    state/.style={rectangle, draw=black!70, dashed, fill=gray!5, minimum width=2.8cm, minimum height=0.6cm, font=\small\ttfamily},
-    arrow/.style={->, thick, draw=black!85}
-]
-
-% ENCRYPTION PIPELINE (LEFT)
-\node[state] (p_in) at (0, 0) {Plaintext State $S^{(r-1)}$};
-\node[block, below=0.6cm of p_in] (subbytes) {
-    \begin{tabular}{c}
-        \textbf{SubBytes} \\
-        AES S-Box over $\text{GF}(2^8)$
-    \end{tabular}
-};
-\node[permblock, below=0.6cm of subbytes] (so4) {
-    \begin{tabular}{c}
-        \textbf{4D Rubik Permutation} \\
-        $SO(4)$ Rotation Table $\pi_{\text{tbl}_{\text{idx}}}$
-    \end{tabular}
-};
-\node[diffblock, below=0.6cm of so4] (arx) {
-    \begin{tabular}{c}
-        \textbf{32-bit ARX Diffusion} \\
-        $\boxplus C \;\to\; \lll n \;\to\; \oplus$
-    \end{tabular}
-};
-\node[op, below=0.6cm of arx] (xor1) {$\oplus$};
-\node[left=0.8cm of xor1, font=\small] (k_in) {$K_r$ (Round Key)};
-\node[state, below=0.6cm of xor1] (c_out) {Round Output $S^{(r)}$};
-
-\draw[arrow] (p_in) -- (subbytes);
-\draw[arrow] (subbytes) -- (so4);
-\draw[arrow] (so4) -- (arx);
-\draw[arrow] (arx) -- (xor1);
-\draw[arrow] (k_in) -- (xor1);
-\draw[arrow] (xor1) -- (c_out);
-
-\draw[draw=blue!60, thick, rounded corners] ($(p_in.north west)+(-1.8,0.3)$) rectangle ($(c_out.south east)+(1.8,-0.3)$);
-\node[font=\bfseries\color{blue!80!black}] at ($(p_in.north)+(0, 0.6)$) {(a) Rubik-4D Encryption Round $r$};
-
-% DECRYPTION PIPELINE (RIGHT)
-\begin{scope}[xshift=8.5cm]
-\node[state] (c_in) at (0, 0) {Round Cipher State $S^{(r)}$};
-\node[op, below=0.6cm of c_in] (xor2) {$\oplus$};
-\node[right=0.8cm of xor2, font=\small] (k_inv) {$K_r$ (Round Key)};
-\node[diffblock, below=0.6cm of xor2] (inv_arx) {
-    \begin{tabular}{c}
-        \textbf{Inverse ARX Diffusion} \\
-        Reverse Word Sequence
-    \end{tabular}
-};
-\node[permblock, below=0.6cm of inv_arx] (inv_so4) {
-    \begin{tabular}{c}
-        \textbf{Inverse 4D Permutation} \\
-        $\pi_{\text{tbl}_{\text{idx}}}^{-1}$ Mapping Layer
-    \end{tabular}
-};
-\node[block, below=0.6cm of inv_so4] (inv_subbytes) {
-    \begin{tabular}{c}
-        \textbf{InvSubBytes} \\
-        AES $\text{S-Box}^{-1}$
-    \end{tabular}
-};
-\node[state, below=0.6cm of inv_subbytes] (p_out) {Restored State $S^{(r-1)}$};
-
-\draw[arrow] (c_in) -- (xor2);
-\draw[arrow] (k_inv) -- (xor2);
-\draw[arrow] (xor2) -- (inv_arx);
-\draw[arrow] (inv_arx) -- (inv_so4);
-\draw[arrow] (inv_so4) -- (inv_subbytes);
-\draw[arrow] (inv_subbytes) -- (p_out);
-
-\draw[draw=teal!70!black, thick, rounded corners] ($(c_in.north west)+(-1.8,0.3)$) rectangle ($(p_out.south east)+(1.8,-0.3)$);
-\node[font=\bfseries\color{teal!70!black}] at ($(c_in.north)+(0, 0.6)$) {(b) Rubik-4D Decryption Round $r$};
-\end{scope}
-
-\end{tikzpicture}
-\caption{Operational pipeline of Rubik-4D: (a) Encryption transformation consisting of SubBytes, $SO(4)$ hypercube spatial permutation, 32-bit ARX ripple diffusion, and AddRoundKey; (b) Bijective inverse decryption transformation.}
+\includegraphics[width=\textwidth]{fig_rubik4d_architecture.png}
+\caption{Architectural overview of Rubik-4D block cipher adhering to the AES multi-stage structural paradigm: (a) Encryption pipeline comprising \textcircled{1} Initial Round / Key Whitening ($P \oplus K_0$), \textcircled{2} Iterative round function across 8 rounds (SubBytes, $SO(4)$ hypercube permutation, 32-bit ARX ripple diffusion, AddRoundKey), and \textcircled{3} Ciphertext output generation; Key expansion engine integrating RFC 5869 HKDF-SHA256 for variable-length passphrase entropy extraction into NIST 128-bit master key $K_0$ and round key generation; (b) Symmetric dual decryption pipeline comprising \textcircled{1} 8-round inverse transformation and \textcircled{2} Final plaintext recovery.}
 \label{fig:rubik4d_architecture}
 \end{figure*}
 
-\subsection{Round function execution pipeline}
-Before round iterations, the state undergoes initial key whitening:
-\begin{equation}
-    S^{(0)} \leftarrow \text{Plaintext} \oplus K_0
-\end{equation}
-For rounds $r = 1, 2, \dots, 8$, the intermediate state is updated through four deterministic stages, as formalized in Algorithm~\ref{alg:rubik4d_enc} and illustrated in Fig.~\ref{fig:rubik4d_architecture}(a):
+\subsection{Layered architecture and execution pipeline}
+Adhering to contemporary block cipher design standards and mirroring the three-stage structural paradigm of the Advanced Encryption Standard (AES) \cite{nist2001fips, daemen2002design}, the Rubik-4D encryption pipeline is organized into three distinct operational stages (Fig.~\ref{fig:rubik4d_architecture}(a) and Algorithm~\ref{alg:rubik4d_enc}):
+
+\begin{enumerate}
+    \item \textbf{Stage 1 -- Initial Round (Key Whitening):} The 128-bit plaintext block $P = \text{plain\_text}[127:0]$ undergoes pre-round key whitening via bitwise modulo-2 addition with master key $K_0$:
+    \begin{equation}
+        S^{(0)} \leftarrow P \oplus K_0
+    \end{equation}
+    This initial transformation shields the first non-linear substitution layer from direct observation, rendering trivial chosen-plaintext differential attacks ineffective.
+    
+    \item \textbf{Stage 2 -- Iterative Round Function (8 Rounds $r = 1 \dots 8$):} State $S$ iteratively traverses four cascaded transformations per round:
+    \begin{itemize}
+        \item \emph{SubBytes}: Parallel non-linear substitution of 16 bytes via standard AES $\text{GF}(2^8)$ S-boxes.
+        \item \emph{4D Rubik Permutation}: Spatial coordinate permutation in $SO(4)$ Lie group according to key-selected rotation table $\pi_{\text{tbl}_{\text{idx}}}$.
+        \item \emph{32-bit ARX Diffusion}: Inter-word carry propagation across an Addition-Rotation-XOR network ($\boxplus C$, $\lll$, $\oplus$).
+        \item \emph{AddRoundKey}: Modulo-2 addition with round subkey $S^{(r)} \leftarrow S \oplus K_r$.
+    \end{itemize}
+    
+    \item \textbf{Stage 3 -- Output Generation:} Upon concluding all 8 rounds, the internal state directly forms the 128-bit ciphertext block:
+    \begin{equation}
+        C_{\text{out}} = \text{cipher\_text}[127:0] \leftarrow S^{(8)}
+    \end{equation}
+\end{enumerate}
 
 \begin{algorithm}[htbp]
 \caption{Rubik-4D encryption pipeline.}
@@ -278,29 +214,32 @@ For rounds $r = 1, 2, \dots, 8$, the intermediate state is updated through four 
 \textbf{Input:} Plaintext block $P$ (128-bit), Round count $R=8$, Master key $K_0$, Subkeys $\{K_1, \dots, K_R\}$, Constant $C = \text{\texttt{0x5A5A5A5A}}$ \\
 \textbf{Output:} Ciphertext block $C_{\text{out}}$ (128-bit)
 \begin{algorithmic}[1]
-\STATE $S \leftarrow P \oplus K_0$ \COMMENT{Initial key whitening}
+\STATE \COMMENT{Stage 1: Initial key whitening}
+\STATE $S \leftarrow P \oplus K_0$
+\STATE \COMMENT{Stage 2: Iterative round function (8 rounds $r = 1 \dots 8$)}
 \FOR{$r = 1$ \TO $R$}
-    \STATE \COMMENT{Step 1: Non-linear substitution (SubBytes)}
+    \STATE \COMMENT{1. Non-linear substitution (SubBytes)}
     \FOR{$i = 0$ \TO $15$}
         \STATE $S[i] \leftarrow \text{S-Box}[S[i]]$
     \ENDFOR
     
-    \STATE \COMMENT{Step 2: $SO(4)$ hypercube spatial permutation}
+    \STATE \COMMENT{2. $SO(4)$ hypercube spatial permutation}
     \STATE $\text{tbl}_{\text{idx}} \leftarrow \left( (r + (\mathit{k\_fold} \mathbin{\&} 7)) \bmod 6 \right) \times 2 + ((\mathit{k\_fold} \gg 3) \mathbin{\&} 1)$
     \FOR{$i = 0$ \TO $15$}
         \STATE $S_{\text{rot}}[i] \leftarrow S[\pi_{\text{tbl}_{\text{idx}}}[i]]$
     \ENDFOR
     
-    \STATE \COMMENT{Step 3: 32-bit ARX ripple-carry diffusion}
+    \STATE \COMMENT{3. 32-bit ARX ripple-carry diffusion}
     \STATE Pack $S_{\text{rot}}$ into 4 words: $[W_0, W_1, W_2, W_3]^\top$
     \STATE $W_1 \leftarrow W_1 \oplus \text{ROTL}_{32}(W_0 \boxplus C, 7)$
     \STATE $W_2 \leftarrow W_2 \oplus \text{ROTL}_{32}(W_1 \boxplus C, 11)$
     \STATE $W_3 \leftarrow W_3 \oplus \text{ROTL}_{32}(W_2 \boxplus C, 13)$
     \STATE $W_0 \leftarrow W_0 \oplus \text{ROTL}_{32}(W_3 \boxplus C, 17)$
     
-    \STATE \COMMENT{Step 4: Subkey addition}
+    \STATE \COMMENT{4. Subkey addition (AddRoundKey)}
     \STATE $S \leftarrow [W_0, W_1, W_2, W_3]^\top \oplus K_r$
 \ENDFOR
+\STATE \COMMENT{Stage 3: Output generation}
 \STATE \textbf{return} $C_{\text{out}} = S$
 \end{algorithmic}
 \end{algorithm}
@@ -355,20 +294,30 @@ The state resulting from the ARX layer is XORed with the derived round subkey $K
 The final ciphertext block corresponds to $C = S^{(8)}$.
 
 \subsection{Decryption process}
-Decryption evaluates the inverse transformations from round $r = 8$ down to $r = 1$, as formalized in Algorithm~\ref{alg:rubik4d_dec} and shown in Fig.~\ref{fig:rubik4d_architecture}(b):
-\begin{equation}
-    S \leftarrow S \oplus K_r
-\end{equation}
-The ARX operations are inverted by reversing the word order:
-\begin{equation}
-\begin{cases}
-    W_0 \leftarrow W_0 \oplus \text{ROTL}_{32}(W_3 \boxplus C, 17) \\
-    W_3 \leftarrow W_3 \oplus \text{ROTL}_{32}(W_2 \boxplus C, 13) \\
-    W_2 \leftarrow W_2 \oplus \text{ROTL}_{32}(W_1 \boxplus C, 11) \\
-    W_1 \leftarrow W_1 \oplus \text{ROTL}_{32}(W_0 \boxplus C, 7)
-\end{cases}
-\end{equation}
-Following ARX inversion, the inverse permutation $\pi_{\text{tbl}_{\text{idx}}}^{-1}$ and $\text{InvS-Box}$ transformations are applied. Finally, key addition $S \leftarrow S \oplus K_0$ recovers the original plaintext.
+Decryption executes the dual inverse transformations, operating in two sequential stages (Fig.~\ref{fig:rubik4d_architecture}(c) and Algorithm~\ref{alg:rubik4d_dec}):
+
+\begin{enumerate}
+    \item \textbf{Stage 1 -- Inverse Round Iterations (8 Rounds $r = 8 \dots 1$):} Ciphertext block $C_{\text{out}}$ traverses 8 inverse rounds in reverse sequence. Each round applies inverse operations in exact reverse order:
+    \begin{itemize}
+        \item \emph{Inverse AddRoundKey}: $S \leftarrow S \oplus K_r$.
+        \item \emph{Inverse ARX Diffusion}: Evaluated by reversing the 32-bit word processing chain:
+        \begin{equation}
+        \begin{cases}
+            W_0 \leftarrow W_0 \oplus \text{ROTL}_{32}(W_3 \boxplus C, 17) \\
+            W_3 \leftarrow W_3 \oplus \text{ROTL}_{32}(W_2 \boxplus C, 13) \\
+            W_2 \leftarrow W_2 \oplus \text{ROTL}_{32}(W_1 \boxplus C, 11) \\
+            W_1 \leftarrow W_1 \oplus \text{ROTL}_{32}(W_0 \boxplus C, 7)
+        \end{cases}
+        \end{equation}
+        \item \emph{Inverse 4D Permutation}: Applied using precomputed inverse permutation tables $S_{\text{inv}}[i] \leftarrow S[\pi_{\text{tbl}_{\text{idx}}}^{-1}[i]]$.
+        \item \emph{Inverse SubBytes}: Byte substitution via standard AES $\text{InvS-Box}$ over $\text{GF}(2^8)$.
+    \end{itemize}
+    
+    \item \textbf{Stage 2 -- Plaintext Recovery (Final Inverse Whitening):} The intermediate state following round 1 is XORed directly with master key $K_0$ to recover the original plaintext:
+    \begin{equation}
+        P = \text{plain\_text}[127:0] \leftarrow S \oplus K_0
+    \end{equation}
+\end{enumerate}
 
 \begin{algorithm}[htbp]
 \caption{Rubik-4D decryption pipeline.}
@@ -376,37 +325,47 @@ Following ARX inversion, the inverse permutation $\pi_{\text{tbl}_{\text{idx}}}^
 \textbf{Input:} Ciphertext block $C_{\text{out}}$ (128-bit), Round count $R=8$, Master key $K_0$, Subkeys $\{K_1, \dots, K_R\}$, Constant $C = \text{\texttt{0x5A5A5A5A}}$ \\
 \textbf{Output:} Restored Plaintext block $P$ (128-bit)
 \begin{algorithmic}[1]
+\STATE \COMMENT{Stage 1: Inverse iterative decryption (8 rounds $r = R \dots 1$)}
 \STATE $S \leftarrow C_{\text{out}}$
 \FOR{$r = R, \dots, 1$}
-    \STATE \COMMENT{Step 1: Inverse subkey addition}
+    \STATE \COMMENT{1. Inverse subkey addition}
     \STATE $[W_0, W_1, W_2, W_3]^\top \leftarrow S \oplus K_r$
     
-    \STATE \COMMENT{Step 2: Inverse ARX ripple-carry diffusion}
+    \STATE \COMMENT{2. Inverse ARX ripple-carry diffusion}
     \STATE $W_0 \leftarrow W_0 \oplus \text{ROTL}_{32}(W_3 \boxplus C, 17)$
     \STATE $W_3 \leftarrow W_3 \oplus \text{ROTL}_{32}(W_2 \boxplus C, 13)$
     \STATE $W_2 \leftarrow W_2 \oplus \text{ROTL}_{32}(W_1 \boxplus C, 11)$
     \STATE $W_1 \leftarrow W_1 \oplus \text{ROTL}_{32}(W_0 \boxplus C, 7)$
     \STATE Unpack $[W_0, W_1, W_2, W_3]^\top$ into byte array $S$
     
-    \STATE \COMMENT{Step 3: Inverse $SO(4)$ permutation}
+    \STATE \COMMENT{3. Inverse $SO(4)$ permutation}
     \STATE $\text{tbl}_{\text{idx}} \leftarrow \left( (r + (\mathit{k\_fold} \mathbin{\&} 7)) \bmod 6 \right) \times 2 + ((\mathit{k\_fold} \gg 3) \mathbin{\&} 1)$
     \FOR{$i = 0$ \TO $15$}
         \STATE $S_{\text{inv}}[i] \leftarrow S[\pi_{\text{tbl}_{\text{idx}}}^{-1}[i]]$
     \ENDFOR
     
-    \STATE \COMMENT{Step 4: Inverse non-linear substitution}
+    \STATE \COMMENT{4. Inverse non-linear substitution (InvSubBytes)}
     \FOR{$i = 0$ \TO $15$}
         \STATE $S[i] \leftarrow \text{InvS-Box}[S_{\text{inv}}[i]]$
     \ENDFOR
 \ENDFOR
-\STATE $P \leftarrow S \oplus K_0$ \COMMENT{Inverse initial whitening}
+\STATE \COMMENT{Stage 2: Plaintext recovery}
+\STATE $P \leftarrow S \oplus K_0$
 \STATE \textbf{return} $P$
 \end{algorithmic}
 \end{algorithm}
 
 \subsection{Key schedule and parameter derivation}
-The key schedule expands the 128-bit master key $K_0 = [k_0, k_1, \dots, k_{15}]^\top \in \mathbb{F}_2^{128}$ into 8 round subkeys $K_1, \dots, K_8$ and derives an 8-bit spatial folding parameter $\mathit{k\_fold}$. Conforming to standard block cipher design paradigms (such as NIST FIPS 197 \cite{nist2001fips}), the 128-bit key is ingested directly in $O(1)$ constant time without iterative reduction overhead. Variable-length user credentials or application-level passphrases are decoupled to standard Key Derivation Functions (such as HKDF \cite{nir2018chacha20} or PBKDF2) prior to cipher initialization, guaranteeing full 128-bit cryptographic entropy.
+The key schedule expands the 128-bit master key $K_0 = [k_0, k_1, \dots, k_{15}]^\top \in \mathbb{F}_2^{128}$ into 8 round subkeys $K_1, \dots, K_8$ and derives an 8-bit spatial folding parameter $\mathit{k\_fold}$ (Fig.~\ref{fig:key_schedule}).
 
+\subsubsection{Master key derivation via cryptographic hashing and HKDF}
+For real-world cryptosystem implementations accepting user-supplied variable-length credentials (passphrases), Rubik-4D integrates a cryptographic entropy extraction pre-processing stage using RFC 5869 Key Derivation Function (HKDF-SHA256) or secure SHA-256 hash algorithms:
+\begin{equation}
+    K_0 = \text{HKDF-Extract-and-Expand}(\text{Passphrase}, \text{Salt}, \text{info}, L=16)
+\end{equation}
+The cryptographic hash serves as an entropy extractor and compressor, transforming non-uniform passphrase strings into a cryptographically uniform 16-byte (128-bit) master key array prior to cipher ingestion. Under standard NIST FIPS 197 \cite{nist2001fips} operational models where a 128-bit pseudorandom master key is directly supplied, the cipher ingests $K_0$ in $O(1)$ constant time without computational overhead.
+
+\subsubsection{Key folding accumulation and permutation table selection}
 The parameter $\mathit{k\_fold}$ is computed by cumulative XOR reduction across the master key bytes:
 \begin{equation}
     \mathit{k\_fold} = \bigoplus_{i=0}^{15} K_0[i]
@@ -419,6 +378,7 @@ At round $r \in \{1, \dots, 8\}$, the rotation table index $\text{tbl}_{\text{id
 \end{aligned}
 \end{equation}
 
+\subsubsection{Recursive round subkey derivation}
 Subkeys $K_r$ ($r \in \{1, \dots, 8\}$) are derived sequentially via circular shifts, AES S-box substitutions, and round-constant additions:
 \begin{equation}
 \begin{aligned}
@@ -431,7 +391,7 @@ for all $i \in \{0, \dots, 15\}$.
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=\columnwidth]{fig_key_schedule.png}
-\caption{Rubik-4D key schedule execution pipeline: (1) Direct 128-bit master key ingestion under NIST FIPS 197; (2) Master key folding $\mathit{k\_fold}$ mapping to the active $SO(4)$ permutation table $\pi_{\text{tbl}_{\text{idx}}}$; (3) Recursive subkey derivation across rounds $r = 1 \dots 8$ via 3-byte circular rotation, 16 parallel AES S-boxes, and round-dependent constant injection.}
+\caption{Rubik-4D key schedule execution pipeline: (1) Variable-length credential ingestion via RFC 5869 HKDF-SHA256 entropy extraction to derive 128-bit master key $K_0$; (2) Master key folding $\mathit{k\_fold}$ mapping to the active $SO(4)$ permutation table $\pi_{\text{tbl}_{\text{idx}}}$; (3) Recursive subkey derivation across rounds $r = 1 \dots 8$ via 3-byte circular rotation, 16 parallel AES S-boxes, and round-dependent constant injection.}
 \label{fig:key_schedule}
 \end{figure}
 

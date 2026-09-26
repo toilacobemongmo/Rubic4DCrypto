@@ -172,12 +172,29 @@ Mỗi chỉ số byte $i \in \{0, \dots, 15\}$ được ánh xạ đơn ánh lê
 \label{fig:tesseract_4d_vi}
 \end{figure}
 
-\subsection{Quy trình thực thi hàm vòng}
-Trước khi bước vào các vòng lặp, trạng thái trải qua bước làm trắng khóa ban đầu:
-\begin{equation}
-    S^{(0)} \leftarrow \text{Bản rõ} \oplus K_0
-\end{equation}
-Tại mỗi vòng $r \in \{1, 2, \dots, 8\}$, trạng thái được biến đổi qua 4 giai đoạn nối tiếp nhau (Thuật toán~\ref{alg:rubik4d_enc_vi} và Hình~\ref{fig:rubik4d_architecture_vi}):
+\subsection{Kiến trúc phân tầng và quy trình thực thi}
+Theo chuẩn thiết kế của các hệ mã khối hiện đại (tương đồng với cấu trúc phân tầng 3 giai đoạn của AES \cite{nist2001fips, daemen2002design}), toàn bộ quy trình mã hóa Rubik-4D được phân chia tường minh thành 3 giai đoạn xử lý nối tiếp nhau (Hình~\ref{fig:rubik4d_architecture_vi}(a) và Thuật toán~\ref{alg:rubik4d_enc_vi}):
+
+\begin{enumerate}
+    \item \textbf{Giai đoạn 1 -- Bước khởi tạo (Key Whitening):} Khối bản rõ $P = \text{plain\_text}[127:0]$ được làm trắng ban đầu bằng phép cộng modulo-2 trực tiếp với khóa chính $K_0$:
+    \begin{equation}
+        S^{(0)} \leftarrow P \oplus K_0
+    \end{equation}
+    Phép làm trắng này triệt tiêu hoàn toàn khả năng quan sát trực tiếp các giá trị đưa vào tầng phi tuyến đầu tiên, vô hiệu hóa các đòn thám mã chọn bản rõ đơn giản.
+    
+    \item \textbf{Giai đoạn 2 -- Bước lặp mã hóa (8 vòng lặp $r = 1 \dots 8$):} Trạng thái $S$ lần lượt đi qua 4 phép biến đổi cấu thành một vòng SPN-ARX hoàn chỉnh:
+    \begin{itemize}
+        \item \emph{SubBytes}: Thay thế 16 byte phi tuyến độc lập qua hộp S-Box $\text{GF}(2^8)$ của AES.
+        \item \emph{4D Rubik Permutation}: Hoán vị tọa độ siêu lập phương $SO(4)$ theo bảng tra $\pi_{\text{tbl}_{\text{idx}}}$.
+        \item \emph{32-bit ARX Diffusion}: Khuếch tán lan truyền số nhớ liên từ qua mạng cộng xoay XOR ($\boxplus C$, $\lll$, $\oplus$).
+        \item \emph{AddRoundKey}: Cộng khóa con vòng $S^{(r)} \leftarrow S \oplus K_r$.
+    \end{itemize}
+    
+    \item \textbf{Giai đoạn 3 -- Bước tạo ngõ ra (Output Generation):} Trạng thái sau khi hoàn thành toàn bộ 8 vòng lặp được trích xuất trực tiếp thành khối bản mã hoàn chỉnh:
+    \begin{equation}
+        C_{\text{out}} = \text{cipher\_text}[127:0] \leftarrow S^{(8)}
+    \end{equation}
+\end{enumerate}
 
 \begin{algorithm}[htbp]
 \caption{Quy trình mã hóa Rubik-4D.}
@@ -185,118 +202,40 @@ Tại mỗi vòng $r \in \{1, 2, \dots, 8\}$, trạng thái được biến đ�
 \textbf{Đầu vào:} Khối bản rõ $P$ (128-bit), số vòng $R=8$, khóa chính $K_0$, tập khóa vòng $\{K_1, \dots, K_R\}$, hằng số $C = \text{\texttt{0x5A5A5A5A}}$ \\
 \textbf{Đầu ra:} Khối bản mã $C_{\text{out}}$ (128-bit)
 \begin{algorithmic}[1]
-\STATE $S \leftarrow P \oplus K_0$ \COMMENT{Làm trắng khóa ban đầu}
+\STATE \COMMENT{Giai đoạn 1: Bước khởi tạo làm trắng khóa}
+\STATE $S \leftarrow P \oplus K_0$
+\STATE \COMMENT{Giai đoạn 2: Bước lặp mã hóa (8 vòng $r = 1 \dots 8$)}
 \FOR{$r = 1$ \TO $R$}
-    \STATE \COMMENT{Bước 1: Thay thế phi tuyến SubBytes}
+    \STATE \COMMENT{1. Thay thế phi tuyến SubBytes}
     \FOR{$i = 0$ \TO $15$}
         \STATE $S[i] \leftarrow \text{S-Box}[S[i]]$
     \ENDFOR
     
-    \STATE \COMMENT{Bước 2: Hoán vị không gian siêu lập phương $SO(4)$}
+    \STATE \COMMENT{2. Hoán vị không gian siêu lập phương $SO(4)$}
     \STATE $\text{tbl}_{\text{idx}} \leftarrow \left( (r + (\mathit{k\_fold} \mathbin{\&} 7)) \bmod 6 \right) \times 2 + ((\mathit{k\_fold} \gg 3) \mathbin{\&} 1)$
     \FOR{$i = 0$ \TO $15$}
         \STATE $S_{\text{rot}}[i] \leftarrow S[\pi_{\text{tbl}_{\text{idx}}}[i]]$
     \ENDFOR
     
-    \STATE \COMMENT{Bước 3: Khuếch tán lan truyền số nhớ ARX 32-bit}
+    \STATE \COMMENT{3. Khuếch tán lan truyền số nhớ ARX 32-bit}
     \STATE Đóng gói $S_{\text{rot}}$ thành 4 từ 32-bit: $[W_0, W_1, W_2, W_3]^\top$
     \STATE $W_1 \leftarrow W_1 \oplus \text{ROTL}_{32}(W_0 \boxplus C, 7)$
     \STATE $W_2 \leftarrow W_2 \oplus \text{ROTL}_{32}(W_1 \boxplus C, 11)$
     \STATE $W_3 \leftarrow W_3 \oplus \text{ROTL}_{32}(W_2 \boxplus C, 13)$
     \STATE $W_0 \leftarrow W_0 \oplus \text{ROTL}_{32}(W_3 \boxplus C, 17)$
     
-    \STATE \COMMENT{Bước 4: Cộng khóa vòng (AddRoundKey)}
+    \STATE \COMMENT{4. Cộng khóa con vòng (AddRoundKey)}
     \STATE $S \leftarrow [W_0, W_1, W_2, W_3]^\top \oplus K_r$
 \ENDFOR
+\STATE \COMMENT{Giai đoạn 3: Bước tạo ngõ ra}
 \STATE \textbf{return} $C_{\text{out}} = S$
 \end{algorithmic}
 \end{algorithm}
 
 \begin{figure*}[htbp]
 \centering
-\begin{tikzpicture}[
-    >=Stealth,
-    node distance=1.1cm and 0.8cm,
-    block/.style={rectangle, draw=black, thick, fill=blue!8, text centered, minimum width=2.5cm, minimum height=0.7cm, font=\small},
-    permblock/.style={rectangle, draw=black, thick, fill=orange!15, text centered, minimum width=2.5cm, minimum height=0.7cm, font=\small},
-    diffblock/.style={rectangle, draw=black, thick, fill=teal!15, text centered, minimum width=2.5cm, minimum height=0.7cm, font=\small},
-    op/.style={circle, draw=black, thick, fill=white, inner sep=0pt, minimum size=6mm, font=\normalsize},
-    state/.style={rectangle, draw=black!70, dashed, fill=gray!5, minimum width=2.8cm, minimum height=0.6cm, font=\small\ttfamily},
-    arrow/.style={->, thick, draw=black!85}
-]
-
-% QUY TRINH MA HOA
-\node[state] (p_in) at (0, 0) {Bản rõ $S^{(r-1)}$};
-\node[block, below=0.6cm of p_in] (subbytes) {
-    \begin{tabular}{c}
-        \textbf{SubBytes} \\
-        Hộp S-Box AES trên $\text{GF}(2^8)$
-    \end{tabular}
-};
-\node[permblock, below=0.6cm of subbytes] (so4) {
-    \begin{tabular}{c}
-        \textbf{Hoán vị Rubik-4D} \\
-        Bảng quay $SO(4)$ $\pi_{\text{tbl}_{\text{idx}}}$
-    \end{tabular}
-};
-\node[diffblock, below=0.6cm of so4] (arx) {
-    \begin{tabular}{c}
-        \textbf{Khuếch tán ARX 32-bit} \\
-        $\boxplus C \;\to\; \lll n \;\to\; \oplus$
-    \end{tabular}
-};
-\node[op, below=0.6cm of arx] (xor1) {$\oplus$};
-\node[left=0.8cm of xor1, font=\small] (k_in) {$K_r$ (Khóa vòng)};
-\node[state, below=0.6cm of xor1] (c_out) {Đầu ra vòng $S^{(r)}$};
-
-\draw[arrow] (p_in) -- (subbytes);
-\draw[arrow] (subbytes) -- (so4);
-\draw[arrow] (so4) -- (arx);
-\draw[arrow] (arx) -- (xor1);
-\draw[arrow] (k_in) -- (xor1);
-\draw[arrow] (xor1) -- (c_out);
-
-\draw[draw=blue!60, thick, rounded corners] ($(p_in.north west)+(-1.8,0.3)$) rectangle ($(c_out.south east)+(1.8,-0.3)$);
-\node[font=\bfseries\color{blue!80!black}] at ($(p_in.north)+(0, 0.6)$) {(a) Vòng mã hóa Rubik-4D thứ $r$};
-
-% QUY TRINH GIAI MA
-\begin{scope}[xshift=8.5cm]
-\node[state] (c_in) at (0, 0) {Bản mã $S^{(r)}$};
-\node[op, below=0.6cm of c_in] (xor2) {$\oplus$};
-\node[right=0.8cm of xor2, font=\small] (k_inv) {$K_r$ (Khóa vòng)};
-\node[diffblock, below=0.6cm of xor2] (inv_arx) {
-    \begin{tabular}{c}
-        \textbf{Đảo khuếch tán ARX} \\
-        Đảo chuỗi từ và phép trừ
-    \end{tabular}
-};
-\node[permblock, below=0.6cm of inv_arx] (inv_so4) {
-    \begin{tabular}{c}
-        \textbf{Đảo hoán vị 4D} \\
-        Bảng nghịch đảo $\pi_{\text{tbl}_{\text{idx}}}^{-1}$
-    \end{tabular}
-};
-\node[block, below=0.6cm of inv_so4] (inv_subbytes) {
-    \begin{tabular}{c}
-        \textbf{InvSubBytes} \\
-        Hộp $\text{S-Box}^{-1}$ chuẩn AES
-    \end{tabular}
-};
-\node[state, below=0.6cm of inv_subbytes] (p_out) {Khôi phục $S^{(r-1)}$};
-
-\draw[arrow] (c_in) -- (xor2);
-\draw[arrow] (k_inv) -- (xor2);
-\draw[arrow] (xor2) -- (inv_arx);
-\draw[arrow] (inv_arx) -- (inv_so4);
-\draw[arrow] (inv_so4) -- (inv_subbytes);
-\draw[arrow] (inv_subbytes) -- (p_out);
-
-\draw[draw=teal!70!black, thick, rounded corners] ($(c_in.north west)+(-1.8,0.3)$) rectangle ($(p_out.south east)+(1.8,-0.3)$);
-\node[font=\bfseries\color{teal!70!black}] at ($(c_in.north)+(0, 0.6)$) {(b) Vòng giải mã Rubik-4D thứ $r$};
-\end{scope}
-
-\end{tikzpicture}
-\caption{Kiến trúc tổng thể của Rubik-4D: (a) Luồng mã hóa gồm SubBytes, hoán vị siêu lập phương $SO(4)$, khuếch tán ARX 32-bit và AddRoundKey; (b) Luồng giải mã sinh ánh nghịch đảo tương ứng.}
+\includegraphics[width=\textwidth]{fig_rubik4d_architecture.png}
+\caption{Kiến trúc tổng thể của thuật toán Rubik-4D được thiết kế theo cấu trúc phân tầng tương đồng chuẩn mực AES: (a) Quy trình mã hóa (Encryption Pipeline) với 3 giai đoạn rõ rệt: \textcircled{1} Bước khởi tạo (AddRoundKey với khóa chính $K_0$), \textcircled{2} Bước lặp mã hóa lặp lại 8 lần (chuỗi SubBytes, hoán vị Rubik-4D siêu lập phương $SO(4)$, khuếch tán ARX 32-bit và AddRoundKey với $K_r$), và \textcircled{3} Bước tạo ngõ ra bản mã; (b) Khối quản lý và mở rộng khóa tích hợp hàm băm mật mã/KDF (HKDF-SHA256 theo RFC 5869) nén mật khẩu tùy ý thành khóa chuẩn $K_0$ và cấp phát $K_r, \pi_{\text{tbl}_{\text{idx}}}$; (c) Quy trình giải mã (Decryption Pipeline) đối ngẫu gồm \textcircled{1} Bước lặp giải mã 8 vòng và \textcircled{2} Bước khôi phục bản rõ.}
 \label{fig:rubik4d_architecture_vi}
 \end{figure*}
 
@@ -346,17 +285,30 @@ Trạng thái sau tầng ARX được XOR trực tiếp với khóa vòng tươn
 Bản mã cuối cùng thu được sau vòng thứ 8 là $C_{\text{out}} = S^{(8)}$.
 
 \subsection{Quy trình giải mã}
-Giải mã là quá trình thực hiện ngược lại hoàn toàn các phép toán từ vòng $r = 8$ về vòng $r = 1$ (Thuật toán~\ref{alg:rubik4d_dec_vi} và Hình~\ref{fig:rubik4d_architecture_vi}(b)):
-Đầu tiên, trạng thái được tách khóa $S \leftarrow S \oplus K_r$. Tầng ARX được đảo ngược bằng cách giải tuần tự các từ theo thứ tự đảo:
-\begin{equation}
-\begin{cases}
-    W_0 \leftarrow W_0 \oplus \text{ROTL}_{32}(W_3 \boxplus C, 17) \\
-    W_3 \leftarrow W_3 \oplus \text{ROTL}_{32}(W_2 \boxplus C, 13) \\
-    W_2 \leftarrow W_2 \oplus \text{ROTL}_{32}(W_1 \boxplus C, 11) \\
-    W_1 \leftarrow W_1 \oplus \text{ROTL}_{32}(W_0 \boxplus C, 7)
-\end{cases}
-\end{equation}
-Tiếp theo, bảng hoán vị nghịch đảo $\pi_{\text{tbl}_{\text{idx}}}^{-1}$ và hộp thay thế nghịch đảo $\text{InvS-Box}$ được áp dụng. Cuối cùng, phép tách khóa khởi tạo $S \leftarrow S \oplus K_0$ khôi phục hoàn toàn bản rõ gốc.
+Quy trình giải mã Rubik-4D là ánh xạ song ánh đối ngẫu đảo ngược hoàn toàn quy trình mã hóa, cũng được phân tách thành 2 giai đoạn rõ rệt (Hình~\ref{fig:rubik4d_architecture_vi}(c) và Thuật toán~\ref{alg:rubik4d_dec_vi}):
+
+\begin{enumerate}
+    \item \textbf{Giai đoạn 1 -- Bước lặp giải mã (8 vòng lặp đảo ngược $r = 8 \dots 1$):} Với mỗi vòng từ 8 về 1, khối trạng thái lần lượt trải qua 4 thao tác đảo ngược theo thứ tự nghiêm ngặt:
+    \begin{itemize}
+        \item \emph{Tách khóa con vòng}: $S \leftarrow S \oplus K_r$.
+        \item \emph{Đảo khuếch tán ARX 32-bit}: Giải tuần tự các từ theo thứ tự đảo ngược và trừ hằng số modulo $\boxminus C$ với $C = \text{0x5A5A5A5A}$:
+        \begin{equation}
+        \begin{cases}
+            W_0 \leftarrow W_0 \oplus \text{ROTL}_{32}(W_3 \boxplus C, 17) \\
+            W_3 \leftarrow W_3 \oplus \text{ROTL}_{32}(W_2 \boxplus C, 13) \\
+            W_2 \leftarrow W_2 \oplus \text{ROTL}_{32}(W_1 \boxplus C, 11) \\
+            W_1 \leftarrow W_1 \oplus \text{ROTL}_{32}(W_0 \boxplus C, 7)
+        \end{cases}
+        \end{equation}
+        \item \emph{Đảo hoán vị $SO(4)$}: Áp dụng bảng hoán vị nghịch đảo $\pi_{\text{tbl}_{\text{idx}}}^{-1}$.
+        \item \emph{Đảo thay thế phi tuyến}: Thay thế qua hộp $\text{InvS-Box}$ chuẩn AES trên $\text{GF}(2^8)$.
+    \end{itemize}
+    
+    \item \textbf{Giai đoạn 2 -- Bước khôi phục ngõ ra (Final Inverse Whitening):} Trạng thái sau vòng 1 được XOR trực tiếp với khóa chính $K_0$ để khôi phục chính xác khối bản rõ ban đầu:
+    \begin{equation}
+        P = \text{plain\_text}[127:0] \leftarrow S \oplus K_0
+    \end{equation}
+\end{enumerate}
 
 \begin{algorithm}[htbp]
 \caption{Quy trình giải mã Rubik-4D.}
@@ -364,37 +316,47 @@ Tiếp theo, bảng hoán vị nghịch đảo $\pi_{\text{tbl}_{\text{idx}}}^{-
 \textbf{Đầu vào:} Khối bản mã $C_{\text{out}}$ (128-bit), số vòng $R=8$, khóa chính $K_0$, tập khóa vòng $\{K_1, \dots, K_R\}$, hằng số $C = \text{\texttt{0x5A5A5A5A}}$ \\
 \textbf{Đầu ra:} Khối bản rõ $P$ (128-bit)
 \begin{algorithmic}[1]
+\STATE \COMMENT{Giai đoạn 1: Bước lặp giải mã (8 vòng đảo ngược $r = R \dots 1$)}
 \STATE $S \leftarrow C_{\text{out}}$
 \FOR{$r = R, \dots, 1$}
-    \STATE \COMMENT{Bước 1: Tách khóa vòng}
+    \STATE \COMMENT{1. Tách khóa con vòng}
     \STATE $[W_0, W_1, W_2, W_3]^\top \leftarrow S \oplus K_r$
     
-    \STATE \COMMENT{Bước 2: Nghịch đảo khuếch tán ARX}
+    \STATE \COMMENT{2. Nghịch đảo khuếch tán ARX 32-bit}
     \STATE $W_0 \leftarrow W_0 \oplus \text{ROTL}_{32}(W_3 \boxplus C, 17)$
     \STATE $W_3 \leftarrow W_3 \oplus \text{ROTL}_{32}(W_2 \boxplus C, 13)$
     \STATE $W_2 \leftarrow W_2 \oplus \text{ROTL}_{32}(W_1 \boxplus C, 11)$
     \STATE $W_1 \leftarrow W_1 \oplus \text{ROTL}_{32}(W_0 \boxplus C, 7)$
     \STATE Mở gói $[W_0, W_1, W_2, W_3]^\top$ thành mảng byte $S$
     
-    \STATE \COMMENT{Bước 3: Nghịch đảo hoán vị $SO(4)$}
+    \STATE \COMMENT{3. Nghịch đảo hoán vị không gian $SO(4)$}
     \STATE $\text{tbl}_{\text{idx}} \leftarrow \left( (r + (\mathit{k\_fold} \mathbin{\&} 7)) \bmod 6 \right) \times 2 + ((\mathit{k\_fold} \gg 3) \mathbin{\&} 1)$
     \FOR{$i = 0$ \TO $15$}
         \STATE $S_{\text{inv}}[i] \leftarrow S[\pi_{\text{tbl}_{\text{idx}}}^{-1}[i]]$
     \ENDFOR
     
-    \STATE \COMMENT{Bước 4: Nghịch đảo thay thế phi tuyến}
+    \STATE \COMMENT{4. Nghịch đảo thay thế phi tuyến InvSubBytes}
     \FOR{$i = 0$ \TO $15$}
         \STATE $S[i] \leftarrow \text{InvS-Box}[S_{\text{inv}}[i]]$
     \ENDFOR
 \ENDFOR
-\STATE $P \leftarrow S \oplus K_0$ \COMMENT{Khôi phục bản rõ ban đầu}
+\STATE \COMMENT{Giai đoạn 2: Bước khôi phục bản rõ ngõ ra}
+\STATE $P \leftarrow S \oplus K_0$
 \STATE \textbf{return} $P$
 \end{algorithmic}
 \end{algorithm}
 
 \subsection{Lược đồ sinh khóa vòng (Key schedule)}
-Lược đồ khóa mở rộng khóa chính 128-bit $K_0 = [k_0, k_1, \dots, k_{15}]^\top \in \mathbb{F}_2^{128}$ thành 8 khóa con $K_1, \dots, K_8$ và trích xuất tham số gập khóa 8-bit $\mathit{k\_fold}$. Tuân thủ các chuẩn mực thiết kế mã khối hiện đại (như NIST FIPS 197 \cite{nist2001fips}), thuật toán tiếp nhận trực tiếp mảng 16 byte khóa chuẩn trong thời gian hằng số $O(1)$ mà không thực hiện vòng lặp gập nén tốn kém trong nhân xử lý. Toàn bộ khâu xử lý mật khẩu tùy ý của người dùng (passphrase có độ dài biến thiên) được phân tách (decouple) ra tầng ứng dụng thông qua các Hàm băm mật mã và Hàm dẫn xuất khóa chuyên dụng (Key Derivation Functions - KDF như HKDF-SHA256 theo RFC 5869 hoặc PBKDF2) để băm thành khóa chuẩn 128-bit trước khi đưa vào hàm thiết lập khóa. Cơ chế phân tách này vừa tăng tốc độ nạp khóa lên 95\% (giảm từ $\approx 150$ chu kỳ xuống còn 2--4 chu kỳ CPU), vừa bảo toàn entropy mật mã tuyệt đối cho khóa chính.
+Lược đồ khóa mở rộng khóa chính 128-bit $K_0 = [k_0, k_1, \dots, k_{15}]^\top \in \mathbb{F}_2^{128}$ thành 8 khóa con $K_1, \dots, K_8$ và trích xuất tham số gập khóa 8-bit $\mathit{k\_fold}$ (Hình~\ref{fig:key_schedule_vi}).
 
+\subsubsection{Cơ chế sinh khóa chính $K_0$ bằng hàm băm mật mã và KDF}
+Đối với các ứng dụng thực tế tiếp nhận mật khẩu người dùng (Passphrase có độ dài tùy ý), thuật toán tích hợp tiền xử lý mật mã thông qua hàm dẫn xuất khóa tiêu chuẩn (KDF) theo RFC 5869 (HKDF-SHA256) hoặc hàm băm SHA-256 an toàn:
+\begin{equation}
+    K_0 = \text{HKDF-Extract-and-Expand}(\text{Passphrase}, \text{Salt}, \text{info}, L=16)
+\end{equation}
+Hàm băm mật mã đóng vai trò như một bộ trích xuất và nén entropy (entropy extractor and compressor), chuyển hóa mọi chuỗi ký tự mật khẩu không đồng đều thành mảng khóa chuẩn 16 byte (128-bit) sở hữu phân phối ngẫu nhiên đồng đều tuyệt đối trước khi nạp vào bộ nhớ ngữ cảnh. Trong mô hình chuẩn NIST FIPS 197 \cite{nist2001fips}, khi đầu vào đã là khóa ngẫu nhiên 128-bit, thuật toán tiếp nhận trực tiếp $K_0$ trong thời gian $O(1)$ mà không phát sinh thêm chi phí tính toán.
+
+\subsubsection{Tích lũy gập khóa và chọn bảng hoán vị}
 Tham số $\mathit{k\_fold}$ tính bằng phép XOR tích lũy toàn bộ 16 byte khóa:
 \begin{equation}
     \mathit{k\_fold} = \bigoplus_{i=0}^{15} K_0[i]
@@ -407,6 +369,7 @@ Tại vòng $r \in \{1, \dots, 8\}$, chỉ số bảng quay $\text{tbl}_{\text{i
 \end{aligned}
 \end{equation}
 
+\subsubsection{Sinh khóa con đệ quy qua các vòng}
 Khóa con $K_r$ được sinh tuần tự qua phép dịch vòng byte, thay thế S-box và cộng hằng số vòng phân kỳ đơn điệu:
 \begin{equation}
 \begin{aligned}
@@ -419,7 +382,7 @@ với mọi $i \in \{0, \dots, 15\}$.
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=\columnwidth]{fig_key_schedule.png}
-\caption{Quy trình sinh khóa vòng của Rubik-4D: (1) Nạp trực tiếp khóa chính 128-bit theo chuẩn NIST FIPS 197; (2) Gập khóa $\mathit{k\_fold}$ chọn bảng hoán vị $SO(4)$ $\pi_{\text{tbl}_{\text{idx}}}$; (3) Sinh khóa con đệ quy qua các vòng $r = 1 \dots 8$ kết hợp phép dịch vòng byte, 16 hộp S-box AES song song và hằng số vòng $(r \times \text{0x1B})$.}
+\caption{Quy trình sinh khóa vòng của Rubik-4D: (1) Tiền xử lý mật khẩu tùy ý qua hàm băm/KDF HKDF-SHA256 (RFC 5869) tạo khóa chính $K_0$ 128-bit chuẩn; (2) Tích lũy gập khóa $\mathit{k\_fold}$ chọn bảng hoán vị $SO(4)$ $\pi_{\text{tbl}_{\text{idx}}}$; (3) Sinh khóa con đệ quy qua các vòng $r = 1 \dots 8$ kết hợp phép dịch vòng byte, 16 hộp S-box AES song song và hằng số vòng $(r \times \text{0x1B}) \bmod 256$.}
 \label{fig:key_schedule_vi}
 \end{figure}
 

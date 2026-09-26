@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
-from matplotlib.patches import FancyBboxPatch, ArrowStyle
+from matplotlib.patches import FancyBboxPatch, ArrowStyle, Circle, Rectangle
 from matplotlib.lines import Line2D
 import numpy as np
 import os
@@ -137,91 +137,191 @@ def generate_fig_tesseract():
     print(f"Generated: {out_path}")
 
 # ==============================================================================
-# FIGURE 2: Rubik-4D Overall Architecture & Round Pipeline
+# FIGURE 2: Rubik-4D Overall Architecture & Round Pipeline (AES Stage Breakdown, B&W Minimalist)
 # ==============================================================================
 def generate_fig_architecture():
-    fig, ax = plt.subplots(figsize=(8.5, 4.6), dpi=300)
-    ax.set_xlim(0, 10)
-    ax.set_ylim(0, 5.5)
+    fig, ax = plt.subplots(figsize=(11.5, 9.5), dpi=300)
+    ax.set_xlim(-1.2, 14.8)
+    ax.set_ylim(-0.2, 11.8)
     ax.axis('off')
 
-    def draw_box(x, y, w, h, title, subtitle, facecol, edgecol, textcol='black'):
-        box = FancyBboxPatch((x, y), w, h, boxstyle="round,pad=0.08,rounding_size=0.15",
-                             facecolor=facecol, edgecolor=edgecol, lw=1.6, zorder=2)
+    # Style helper: Minimalist B&W Box
+    def draw_box(x, y, w, h, text, subtext="", lw=1.2, ls='-'):
+        box = FancyBboxPatch((x, y), w, h, boxstyle="square,pad=0.0",
+                             facecolor="#FFFFFF", edgecolor="#000000", lw=lw, ls=ls, zorder=4)
         ax.add_patch(box)
-        ax.text(x + w/2, y + h*0.62, title, ha='center', va='center',
-                fontsize=9.5, fontweight='bold', color=textcol, zorder=3)
-        ax.text(x + w/2, y + h*0.28, subtitle, ha='center', va='center',
-                fontsize=8, color=textcol, zorder=3)
+        if subtext:
+            ax.text(x + w/2, y + h*0.62, text, ha='center', va='center',
+                    fontsize=9.0, fontweight='bold', color="#000000", zorder=5)
+            ax.text(x + w/2, y + h*0.28, subtext, ha='center', va='center',
+                    fontsize=7.5, color="#000000", zorder=5)
+        else:
+            ax.text(x + w/2, y + h/2, text, ha='center', va='center',
+                    fontsize=9.0, fontweight='bold', color="#000000", zorder=5)
 
-    # Input Block
-    draw_box(0.3, 2.2, 1.4, 1.0, "Plaintext Block P", "128-bit (16 Bytes)", "#ECEFF1", "#455A64")
+    def draw_circ_step(x, y, num_str, label_lines):
+        c = Circle((x, y), 0.28, facecolor='#FFFFFF', edgecolor='#000000', lw=1.3, zorder=6)
+        ax.add_patch(c)
+        ax.text(x, y, num_str, ha='center', va='center', fontsize=9.5, fontweight='bold', color='#000000', zorder=7)
+        if label_lines:
+            ax.text(x, y - 0.42, "\n".join(label_lines), ha='center', va='top',
+                    fontsize=7.5, fontweight='bold', color="#000000")
 
-    # Initial XOR with Round Key K0
-    ax.annotate("", xy=(2.3, 2.7), xytext=(1.7, 2.7),
-                arrowprops=dict(arrowstyle="->", lw=1.8, color="#37474F"))
-    circle_xor0 = patches.Circle((2.55, 2.7), 0.25, facecolor="#FFF9C4", edgecolor="#F57F17", lw=1.5, zorder=2)
-    ax.add_patch(circle_xor0)
-    ax.text(2.55, 2.7, r"$\oplus$", ha='center', va='center', fontsize=12, fontweight='bold', color="#E65100")
-    ax.annotate(r"Whitening $K_0$", xy=(2.55, 2.95), xytext=(2.55, 3.8),
-                arrowprops=dict(arrowstyle="->", lw=1.5, color="#E65100"),
-                ha='center', fontsize=8.5, fontweight='bold', color="#E65100")
+    # --------------------------------------------------------------------------
+    # TOP SECTION TITLES
+    # --------------------------------------------------------------------------
+    ax.text(2.1, 11.35, "(a) ENCRYPTION", fontsize=11, fontweight='bold', color='#000000', ha='center')
+    ax.text(6.8, 11.35, "KEY EXPANSION", fontsize=11, fontweight='bold', color='#000000', ha='center')
+    ax.text(11.5, 11.35, "(b) DECRYPTION", fontsize=11, fontweight='bold', color='#000000', ha='center')
 
-    # Round Loop Container
-    round_box = FancyBboxPatch((3.1, 0.6), 5.3, 4.2, boxstyle="round,pad=0.1,rounding_size=0.2",
-                               facecolor="#F8F9FA", edgecolor="#1976D2", lw=2.0, ls='--', zorder=1)
-    ax.add_patch(round_box)
-    ax.text(5.75, 4.5, r"$\mathbf{Iterative\; Round\; Function\; (Rounds\; r = 1 \dots 8)}$",
-            ha='center', fontsize=10.5, color="#0D47A1", fontweight='bold')
+    # --------------------------------------------------------------------------
+    # CENTER COLUMN: KEY EXPANSION (AES STYLE)
+    # --------------------------------------------------------------------------
+    # 1. Passphrase
+    draw_box(5.3, 10.2, 3.0, 0.65, "Passphrase", "Variable-length input")
+    ax.annotate("", xy=(6.8, 9.4), xytext=(6.8, 10.2),
+                arrowprops=dict(arrowstyle="->", lw=1.2, color="#000000"))
 
-    # Arrow entering round
-    ax.annotate("", xy=(3.3, 2.7), xytext=(2.8, 2.7),
-                arrowprops=dict(arrowstyle="->", lw=1.8, color="#37474F"))
+    # 2. HKDF / Hash
+    draw_box(5.1, 8.7, 3.4, 0.7, "HKDF-SHA256", "RFC 5869 KDF")
+    ax.annotate("", xy=(6.8, 7.9), xytext=(6.8, 8.7),
+                arrowprops=dict(arrowstyle="->", lw=1.2, color="#000000"))
 
-    # Stage 1: SubBytes
-    draw_box(3.4, 2.1, 1.5, 1.2, "1. SubBytes", "16 AES S-Boxes\n" + r"($p_{\max}=2^{-6}, d=7$)",
-             "#FFEBEE", "#D32F2F", "#B71C1C")
+    # 3. Master Key K0
+    draw_box(5.3, 7.2, 3.0, 0.7, r"Master Key $K_0$", "128-bit [127:0]")
+    ax.annotate("", xy=(6.8, 6.2), xytext=(6.8, 7.2),
+                arrowprops=dict(arrowstyle="->", lw=1.2, color="#000000"))
 
-    # Arrow 1->2
-    ax.annotate("", xy=(5.2, 2.7), xytext=(4.9, 2.7),
-                arrowprops=dict(arrowstyle="->", lw=1.8, color="#37474F"))
+    # 4. Key Expansion Block
+    draw_box(5.1, 4.7, 3.4, 1.5, "Key Expansion",
+             r"$K_r = \mathrm{SBox}(K_{r-1}) \oplus \mathrm{Rcon}_r$" + "\n" +
+             r"$\mathrm{tbl}_{\mathrm{idx}} = f(r, \bigoplus K_0)$")
 
-    # Stage 2: SO(4) Permutation
-    draw_box(5.2, 2.1, 1.6, 1.2, r"2. $SO(4)$ Rotation", "Tesseract Permutation\n" + r"$\pi_{\text{tbl}_{\text{idx}}}$ (192-B LUT)",
-             "#E0F2F1", "#00897B", "#004D40")
+    # --------------------------------------------------------------------------
+    # LEFT COLUMN: ENCRYPTION (AES 3-STAGE STRUCTURE)
+    # --------------------------------------------------------------------------
+    # Plaintext Input
+    draw_box(0.7, 10.2, 2.8, 0.65, "Plaintext", "128-bit [127:0]")
+    ax.annotate("", xy=(2.1, 9.5), xytext=(2.1, 10.2),
+                arrowprops=dict(arrowstyle="->", lw=1.2, color="#000000"))
 
-    # Arrow 2->3
-    ax.annotate("", xy=(7.1, 2.7), xytext=(6.8, 2.7),
-                arrowprops=dict(arrowstyle="->", lw=1.8, color="#37474F"))
+    # Stage 1: Initial Round (Key Whitening)
+    box_enc_s1 = Rectangle((0.4, 8.45), 3.4, 1.05, fill=False, edgecolor="#000000", lw=1.1, ls="--", zorder=2)
+    ax.add_patch(box_enc_s1)
+    draw_box(0.7, 8.65, 2.8, 0.65, "AddRoundKey", r"$S^{(0)} = P \oplus K_0$")
 
-    # Stage 3: ARX Diffusion
-    draw_box(7.1, 2.1, 1.1, 1.2, "3. ARX 32-bit", r"$\boxplus C, \lll n_k, \oplus$" + "\nRipple Diffusion",
-             "#FFF3E0", "#FB8C00", "#E65100")
+    draw_circ_step(-0.4, 9.15, "1", ["Initial", "Round"])
 
-    # Stage 4: AddRoundKey inside round
-    circle_xorr = patches.Circle((7.65, 1.2), 0.22, facecolor="#FFF9C4", edgecolor="#F57F17", lw=1.5, zorder=2)
-    ax.add_patch(circle_xorr)
-    ax.text(7.65, 1.2, r"$\oplus$", ha='center', va='center', fontsize=11, fontweight='bold', color="#E65100")
-    ax.annotate(r"Subkey $K_r$", xy=(7.65, 1.2), xytext=(6.3, 1.2),
-                arrowprops=dict(arrowstyle="->", lw=1.5, color="#E65100"),
-                ha='right', va='center', fontsize=8.5, fontweight='bold', color="#E65100")
+    # Wire from K0 to Enc Stage 1 AddRoundKey
+    ax.plot([5.3, 4.2, 4.2], [7.55, 7.55, 8.97], color="#000000", lw=1.1)
+    ax.annotate("", xy=(3.5, 8.97), xytext=(4.2, 8.97),
+                arrowprops=dict(arrowstyle="->", lw=1.1, color="#000000"))
+    ax.text(4.2, 8.2, r"$K_0$", fontsize=8, fontweight='bold', color="#000000", ha='center',
+            bbox=dict(boxstyle="square,pad=0.1", facecolor="#FFFFFF", edgecolor="none"))
 
-    # Path from ARX down to AddRoundKey
-    ax.plot([7.65, 7.65], [2.1, 1.42], color="#37474F", lw=1.8)
-    ax.annotate("", xy=(7.65, 1.42), xytext=(7.65, 1.6),
-                arrowprops=dict(arrowstyle="->", lw=1.8, color="#37474F"))
+    # Arrow Stage 1 -> Stage 2
+    ax.annotate("", xy=(2.1, 7.65), xytext=(2.1, 8.45),
+                arrowprops=dict(arrowstyle="->", lw=1.2, color="#000000"))
 
-    # Path from AddRoundKey exiting round or looping back
-    # Loop back arrow (for r < 8)
-    ax.plot([7.65, 7.65, 3.25, 3.25], [0.98, 0.8, 0.8, 2.7], color="#1976D2", lw=1.4, ls=":")
-    ax.annotate("", xy=(3.3, 2.7), xytext=(3.25, 2.5),
-                arrowprops=dict(arrowstyle="->", lw=1.4, color="#1976D2"))
-    ax.text(5.4, 0.9, r"Feedback for Rounds $r = 1 \dots 7$", fontsize=8, color="#1976D2", ha='center')
+    # Stage 2: Round Function (8 Rounds)
+    box_enc_s2 = Rectangle((0.4, 1.8), 3.4, 5.85, fill=False, edgecolor="#000000", lw=1.2, ls="--", zorder=2)
+    ax.add_patch(box_enc_s2)
 
-    # Exit arrow to Ciphertext (after Round 8)
-    ax.annotate("", xy=(9.0, 1.2), xytext=(7.87, 1.2),
-                arrowprops=dict(arrowstyle="->", lw=1.8, color="#37474F"))
-    draw_box(8.9, 0.7, 1.0, 1.0, "Ciphertext C", "128-bit Block", "#ECEFF1", "#455A64")
+    draw_circ_step(-0.4, 6.7, "2", ["Rounds", "1 to 8"])
+
+    # Round sub-operations (AES equivalent)
+    draw_box(0.7, 6.6, 2.8, 0.65, "SubBytes", "16 AES S-Boxes")
+    ax.annotate("", xy=(2.1, 5.95), xytext=(2.1, 6.6),
+                arrowprops=dict(arrowstyle="->", lw=1.1, color="#000000"))
+
+    draw_box(0.7, 5.3, 2.8, 0.65, "4D Permutation", r"$SO(4)$ Rotation ($\pi$)")
+    ax.annotate("", xy=(2.1, 4.65), xytext=(2.1, 5.3),
+                arrowprops=dict(arrowstyle="->", lw=1.1, color="#000000"))
+
+    draw_box(0.7, 4.0, 2.8, 0.65, "ARX Diffusion", "32-bit Ripple-Carry")
+    ax.annotate("", xy=(2.1, 3.35), xytext=(2.1, 4.0),
+                arrowprops=dict(arrowstyle="->", lw=1.1, color="#000000"))
+
+    draw_box(0.7, 2.7, 2.8, 0.65, "AddRoundKey", r"$S^{(r)} = S \oplus K_r$")
+
+    # Wire from Key Expansion to Enc Round AddRoundKey
+    ax.plot([5.1, 4.2, 4.2], [5.45, 5.45, 3.02], color="#000000", lw=1.1)
+    ax.annotate("", xy=(3.5, 3.02), xytext=(4.2, 3.02),
+                arrowprops=dict(arrowstyle="->", lw=1.1, color="#000000"))
+    ax.text(4.2, 4.25, r"$K_r, \pi$", fontsize=8, fontweight='bold', color="#000000", ha='center',
+            bbox=dict(boxstyle="square,pad=0.1", facecolor="#FFFFFF", edgecolor="none"))
+
+    # Arrow Stage 2 -> Stage 3
+    ax.annotate("", xy=(2.1, 1.15), xytext=(2.1, 1.8),
+                arrowprops=dict(arrowstyle="->", lw=1.2, color="#000000"))
+
+    # Stage 3: Output Generation
+    box_enc_s3 = Rectangle((0.4, 0.05), 3.4, 1.05, fill=False, edgecolor="#000000", lw=1.1, ls="--", zorder=2)
+    ax.add_patch(box_enc_s3)
+    draw_box(0.7, 0.25, 2.8, 0.65, "Ciphertext", "128-bit [127:0]")
+
+    draw_circ_step(-0.4, 0.6, "3", ["Output"])
+
+    # --------------------------------------------------------------------------
+    # RIGHT COLUMN: DECRYPTION (AES DUAL STRUCTURE)
+    # --------------------------------------------------------------------------
+    # Ciphertext Input
+    draw_box(10.1, 10.2, 2.8, 0.65, "Ciphertext", "128-bit [127:0]")
+    ax.annotate("", xy=(11.5, 7.25), xytext=(11.5, 10.2),
+                arrowprops=dict(arrowstyle="->", lw=1.2, color="#000000"))
+
+    # Stage 1: Inverse Rounds (8 Rounds: r = 8 down to 1)
+    box_dec_s1 = Rectangle((9.8, 1.8), 3.4, 5.85, fill=False, edgecolor="#000000", lw=1.2, ls="--", zorder=2)
+    ax.add_patch(box_dec_s1)
+
+    draw_circ_step(14.0, 6.7, "1", ["Inverse", "Rounds", "8 to 1"])
+
+    draw_box(10.1, 6.6, 2.8, 0.65, "AddRoundKey", r"$S \leftarrow S \oplus K_r$")
+
+    # Wire from Key Expansion to Dec Round AddRoundKey
+    ax.plot([8.5, 9.4, 9.4], [5.45, 5.45, 6.92], color="#000000", lw=1.1)
+    ax.annotate("", xy=(10.1, 6.92), xytext=(9.4, 6.92),
+                arrowprops=dict(arrowstyle="->", lw=1.1, color="#000000"))
+    ax.text(9.4, 6.18, r"$K_r$", fontsize=8, fontweight='bold', color="#000000", ha='center',
+            bbox=dict(boxstyle="square,pad=0.1", facecolor="#FFFFFF", edgecolor="none"))
+
+    ax.annotate("", xy=(11.5, 5.95), xytext=(11.5, 6.6),
+                arrowprops=dict(arrowstyle="->", lw=1.1, color="#000000"))
+
+    draw_box(10.1, 5.3, 2.8, 0.65, "Inv-ARX Diffusion", r"$\boxminus C$, Reverse Words")
+    ax.annotate("", xy=(11.5, 4.65), xytext=(11.5, 5.3),
+                arrowprops=dict(arrowstyle="->", lw=1.1, color="#000000"))
+
+    draw_box(10.1, 4.0, 2.8, 0.65, "Inv-4D Permutation", r"Inverse Rotation ($\pi^{-1}$)")
+    ax.annotate("", xy=(11.5, 3.35), xytext=(11.5, 4.0),
+                arrowprops=dict(arrowstyle="->", lw=1.1, color="#000000"))
+
+    draw_box(10.1, 2.7, 2.8, 0.65, "InvSubBytes", r"16 AES $\mathrm{S\text{-}Box}^{-1}$")
+
+    # Arrow Dec Stage 1 -> Dec Stage 2
+    ax.annotate("", xy=(11.5, 1.45), xytext=(11.5, 1.8),
+                arrowprops=dict(arrowstyle="->", lw=1.2, color="#000000"))
+
+    # Stage 2: Output Recovery (Final Inverse Whitening)
+    box_dec_s2 = Rectangle((9.8, 0.05), 3.4, 1.6, fill=False, edgecolor="#000000", lw=1.1, ls="--", zorder=2)
+    ax.add_patch(box_dec_s2)
+
+    draw_box(10.1, 0.95, 2.8, 0.55, "AddRoundKey", r"$P = S \oplus K_0$")
+
+    # Wire from K0 to Dec Stage 2 AddRoundKey
+    ax.plot([8.3, 9.4, 9.4], [7.55, 7.55, 1.22], color="#000000", lw=1.1)
+    ax.annotate("", xy=(10.1, 1.22), xytext=(9.4, 1.22),
+                arrowprops=dict(arrowstyle="->", lw=1.1, color="#000000"))
+    ax.text(9.4, 2.3, r"$K_0$", fontsize=8, fontweight='bold', color="#000000", ha='center',
+            bbox=dict(boxstyle="square,pad=0.1", facecolor="#FFFFFF", edgecolor="none"))
+
+    # Arrow AddRoundKey -> Plaintext
+    ax.annotate("", xy=(11.5, 0.65), xytext=(11.5, 0.95),
+                arrowprops=dict(arrowstyle="->", lw=1.1, color="#000000"))
+
+    draw_box(10.1, 0.15, 2.8, 0.5, "Plaintext", "128-bit [127:0]")
+
+    draw_circ_step(14.0, 0.9, "2", ["Plaintext", "Recovery"])
 
     plt.tight_layout()
     out_path = os.path.join(OUTPUT_DIR, 'fig_rubik4d_architecture.png')
@@ -230,64 +330,87 @@ def generate_fig_architecture():
     print(f"Generated: {out_path}")
 
 # ==============================================================================
-# FIGURE 3: Key Schedule Generation Flowchart
+# FIGURE 3: Key Schedule Generation Flowchart (B&W Minimalist)
 # ==============================================================================
 def generate_fig_key_schedule():
-    fig, ax = plt.subplots(figsize=(8.0, 4.2), dpi=300)
-    ax.set_xlim(0, 10)
-    ax.set_ylim(0, 5.0)
+    fig, ax = plt.subplots(figsize=(11.0, 4.6), dpi=300)
+    ax.set_xlim(-0.2, 12.6)
+    ax.set_ylim(-0.2, 5.2)
     ax.axis('off')
 
-    def draw_box(x, y, w, h, title, subtitle, facecol, edgecol, textcol='black'):
-        box = FancyBboxPatch((x, y), w, h, boxstyle="round,pad=0.08,rounding_size=0.15",
-                             facecolor=facecol, edgecolor=edgecol, lw=1.6, zorder=2)
+    def draw_box(x, y, w, h, title, subtitle="", lw=1.2, ls='-'):
+        box = FancyBboxPatch((x, y), w, h, boxstyle="square,pad=0.0",
+                             facecolor="#FFFFFF", edgecolor="#000000", lw=lw, ls=ls, zorder=3)
         ax.add_patch(box)
-        ax.text(x + w/2, y + h*0.62, title, ha='center', va='center',
-                fontsize=9, fontweight='bold', color=textcol, zorder=3)
-        ax.text(x + w/2, y + h*0.28, subtitle, ha='center', va='center',
-                fontsize=8, color=textcol, zorder=3)
+        if subtitle:
+            ax.text(x + w/2, y + h*0.62, title, ha='center', va='center',
+                    fontsize=8.8, fontweight='bold', color="#000000", zorder=4)
+            ax.text(x + w/2, y + h*0.28, subtitle, ha='center', va='center',
+                    fontsize=7.5, color="#000000", zorder=4)
+        else:
+            ax.text(x + w/2, y + h/2, title, ha='center', va='center',
+                    fontsize=8.8, fontweight='bold', color="#000000", zorder=4)
 
-    # Master Key Input
-    draw_box(0.3, 2.8, 1.8, 1.2, "Master Key K", "128-bit (16 Bytes)\nDirect NIST Model", "#E3F2FD", "#1565C0", "#0D47A1")
+    # 1. Passphrase Input
+    draw_box(0.0, 3.2, 1.8, 1.2, "Passphrase", "Variable-length\nCredentials")
 
-    # Branch 1: Key Folding to Table Selection
-    ax.plot([1.2, 1.2], [2.8, 1.5], color="#1565C0", lw=1.6)
-    ax.annotate("", xy=(2.0, 1.5), xytext=(1.2, 1.5),
-                arrowprops=dict(arrowstyle="->", lw=1.6, color="#1565C0"))
-    draw_box(2.0, 0.9, 2.2, 1.2, "Cumulative Key Folding", r"$k\_fold = \bigoplus_{i=0}^{15} K[i]$" + "\n" + r"$\text{tbl}_{\text{idx}} = k\_fold mod 12$",
-             "#E8F5E9", "#2E7D32", "#1B5E20")
+    # Arrow Passphrase -> KDF
+    ax.annotate("", xy=(2.2, 3.8), xytext=(1.8, 3.8),
+                arrowprops=dict(arrowstyle="->", lw=1.2, color="#000000"))
 
-    ax.annotate("", xy=(5.2, 1.5), xytext=(4.2, 1.5),
-                arrowprops=dict(arrowstyle="->", lw=1.6, color="#2E7D32"))
-    draw_box(5.2, 0.9, 2.4, 1.2, r"Table Selection $\pi_{\text{tbl}}$", "Selects 1 of 12 $SO(4)$\nRotation Configurations",
-             "#E0F2F1", "#00695C", "#004D40")
+    # 2. Cryptographic Hash / KDF
+    draw_box(2.2, 3.2, 1.9, 1.2, "HKDF-SHA256", "RFC 5869 KDF\nEntropy Extraction")
 
-    # Branch 2: Recursive Subkey Derivation
-    ax.annotate("", xy=(3.0, 3.4), xytext=(2.1, 3.4),
-                arrowprops=dict(arrowstyle="->", lw=1.6, color="#1565C0"))
-    draw_box(3.0, 2.8, 1.8, 1.2, "Byte Rotation", "Circular Shift by 3\n" + r"$K[(i+3) mod 16]$",
-             "#FFF3E0", "#E65100", "#BF360C")
+    # Arrow KDF -> Master Key K0
+    ax.annotate("", xy=(4.5, 3.8), xytext=(4.1, 3.8),
+                arrowprops=dict(arrowstyle="->", lw=1.2, color="#000000"))
 
-    ax.annotate("", xy=(5.5, 3.4), xytext=(4.8, 3.4),
-                arrowprops=dict(arrowstyle="->", lw=1.6, color="#E65100"))
-    draw_box(5.5, 2.8, 1.8, 1.2, "Non-Linear S-Boxes", "16 Parallel AES S-Boxes\n" + r"$\text{S-Box}(\cdot)$ over $\text{GF}(2^8)$",
-             "#FFEBEE", "#C62828", "#B71C1C")
+    # 3. Master Key K0
+    draw_box(4.5, 3.2, 1.8, 1.2, r"Master Key $K_0$", "128-bit [127:0]\nNIST Ingestion")
 
-    # Round Constant Addition
-    ax.annotate("", xy=(7.9, 3.4), xytext=(7.3, 3.4),
-                arrowprops=dict(arrowstyle="->", lw=1.6, color="#C62828"))
-    circle_xorc = patches.Circle((8.1, 3.4), 0.22, facecolor="#FFF9C4", edgecolor="#F57F17", lw=1.5, zorder=2)
+    # Branch 1: Key Folding (Downwards)
+    ax.plot([5.4, 5.4], [3.2, 1.6], color="#000000", lw=1.2)
+    ax.annotate("", xy=(6.0, 1.6), xytext=(5.4, 1.6),
+                arrowprops=dict(arrowstyle="->", lw=1.2, color="#000000"))
+
+    draw_box(6.0, 1.0, 2.4, 1.2, "Key Folding",
+             r"$k\_fold = \bigoplus_{i=0}^{15} K_0[i]$" + "\n" + r"$\mathrm{tbl}_{\mathrm{idx}} = f(r, k\_fold)$")
+
+    ax.annotate("", xy=(9.0, 1.6), xytext=(8.4, 1.6),
+                arrowprops=dict(arrowstyle="->", lw=1.2, color="#000000"))
+
+    draw_box(9.0, 1.0, 2.4, 1.2, r"Table Selection",
+             r"Active Table $\pi_{\mathrm{tbl}_{\mathrm{idx}}}$" + "\n" + r"1 of 12 $SO(4)$ (192-B LUT)")
+
+    # Branch 2: Recursive Subkey Derivation (Rightwards)
+    ax.annotate("", xy=(6.8, 3.8), xytext=(6.3, 3.8),
+                arrowprops=dict(arrowstyle="->", lw=1.2, color="#000000"))
+
+    draw_box(6.8, 3.2, 1.6, 1.2, "Byte Shift", "Circular Shift by 3\n" + r"$K[(i+3)\,\mathrm{mod}\,16]$")
+
+    ax.annotate("", xy=(8.9, 3.8), xytext=(8.4, 3.8),
+                arrowprops=dict(arrowstyle="->", lw=1.2, color="#000000"))
+
+    draw_box(8.9, 3.2, 1.6, 1.2, "SubBytes", r"16 AES S-Boxes" + "\n" + r"$\mathrm{GF}(2^8)$ Non-linear")
+
+    # Round Constant Addition (XOR)
+    circle_xorc = Circle((10.9, 3.8), 0.22, facecolor="#FFFFFF", edgecolor="#000000", lw=1.2, zorder=4)
     ax.add_patch(circle_xorc)
-    ax.text(8.1, 3.4, r"$\oplus$", ha='center', va='center', fontsize=11, fontweight='bold', color="#E65100")
-    ax.annotate(r"Round Constant: $(r \times \text{0x1B}) mod 256$", xy=(8.1, 3.62), xytext=(8.1, 4.4),
-                arrowprops=dict(arrowstyle="->", lw=1.4, color="#F57F17"),
-                ha='center', fontsize=8, fontweight='bold', color="#E65100")
+    ax.text(10.9, 3.8, r"$\oplus$", ha='center', va='center', fontsize=11, fontweight='bold', color="#000000", zorder=5)
+
+    ax.annotate("", xy=(10.68, 3.8), xytext=(10.5, 3.8),
+                arrowprops=dict(arrowstyle="->", lw=1.2, color="#000000"))
+
+    ax.annotate(r"$\mathrm{Rcon}_r = (r \times \mathrm{0x1B})\,\mathrm{mod}\,256$" + "\nRound Constant",
+                xy=(10.9, 4.02), xytext=(10.9, 4.75),
+                arrowprops=dict(arrowstyle="->", lw=1.1, color="#000000"),
+                ha='center', fontsize=7.5, fontweight='bold', color="#000000")
 
     # Output Subkey Kr
-    ax.annotate("", xy=(9.0, 3.4), xytext=(8.32, 3.4),
-                arrowprops=dict(arrowstyle="->", lw=1.6, color="#37474F"))
-    draw_box(8.9, 2.8, 1.0, 1.2, r"Subkey $K_r$", r"$r \in \{1 \dots 8\}$" + "\n128-bit",
-             "#ECEFF1", "#37474F", "#263238")
+    ax.annotate("", xy=(11.5, 3.8), xytext=(11.12, 3.8),
+                arrowprops=dict(arrowstyle="->", lw=1.2, color="#000000"))
+
+    draw_box(11.45, 3.2, 1.05, 1.2, r"Subkey $K_r$", r"$r = 1..8$" + "\n128-bit")
 
     plt.tight_layout()
     out_path = os.path.join(OUTPUT_DIR, 'fig_key_schedule.png')
