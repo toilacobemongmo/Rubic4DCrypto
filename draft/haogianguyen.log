@@ -1,9 +1,9 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.9.20)  24 SEP 2026 23:04
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.9.20)  26 SEP 2026 15:45
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**./draft/haogianguyen.tex
-(draft/haogianguyen.tex
+**./haogianguyen.tex
+(haogianguyen.tex
 LaTeX2e <2025-11-01>
 L3 programming layer <2025-12-24>
 (C:\Users\ghaob\AppData\Local\Programs\MiKTeX\tex/latex/base\article.cls
@@ -789,7 +789,7 @@ File: t1ptm.fd 2001/06/04 font definitions for T1/ptm.
 tex.def
 File: l3backend-pdftex.def 2025-10-09 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count346
-) (C:\Users\ghaob\Rubic4DCrypto\draft\haogianguyen.aux)
+) (haogianguyen.aux)
 \openout1 = `haogianguyen.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 33.
@@ -876,8 +876,7 @@ fg
 File: epstopdf-sys.cfg 2021/03/18 v2.0 Configuration of epstopdf for MiKTeX
 ))
 Package hyperref Info: Link coloring ON on input line 33.
- (C:\Users\ghaob\Rubic4DCrypto\draft\haogianguyen.out)
-(C:\Users\ghaob\Rubic4DCrypto\draft\haogianguyen.out)
+ (haogianguyen.out) (haogianguyen.out)
 \@outlinefile=\write4
 \openout4 = `haogianguyen.out'.
 
@@ -1111,140 +1110,151 @@ Underfull \hbox (badness 4229) in paragraph at lines 679--680
 []\T1/ptm/b/n/10 Asymmetric key fold-ing and per-mu-ta-tion de-
  []
 
+
+Underfull \hbox (badness 2205) in paragraph at lines 688--689
+[]\T1/ptm/b/n/10 Subkey deriva-tion dif-fer-en-tial bound: \T1/ptm/m/n/10 Even 
+if
+ []
+
+
+Underfull \hbox (badness 1655) in paragraph at lines 688--689
+\T1/ptm/m/n/10 an ad-ver-sary crafts a can-cel-la-tion pat-tern sat-is-fy-
+ []
+
 [7]
-Underfull \vbox (badness 10000) has occurred while \output is active []
+Underfull \vbox (badness 2662) has occurred while \output is active []
 
  [8]
-[9]
-Underfull \hbox (badness 4805) in paragraph at lines 924--925
+Underfull \hbox (badness 4805) in paragraph at lines 932--933
 \T1/ptm/m/n/10 for en-cryp-tion and $\OT1/ztmcm/m/n/10 157\OML/ztmcm/m/it/10 :\
 OT1/ztmcm/m/n/10 40 \OMS/ztmcm/m/n/10 ^^@ \OT1/ztmcm/m/n/10 167\OML/ztmcm/m/it/
 10 :\OT1/ztmcm/m/n/10 17$ \T1/ptm/m/n/10 MB/s ($\OT1/ztmcm/m/n/10 19\OML/ztmcm/
 m/it/10 :\OT1/ztmcm/m/n/10 50 \OMS/ztmcm/m/n/10 ^^@
  []
 
-<Lena_cryptanalysis_result.png, id=382, 537.207pt x 562.5015pt>
+<Lena_cryptanalysis_result.png, id=379, 537.207pt x 562.5015pt>
 File: Lena_cryptanalysis_result.png Graphic file (type png)
 <use Lena_cryptanalysis_result.png>
-Package pdftex.def Info: Lena_cryptanalysis_result.png  used on input line 934.
+Package pdftex.def Info: Lena_cryptanalysis_result.png  used on input line 942.
 
 (pdftex.def)             Requested size: 237.63522pt x 248.82321pt.
-<Baboon_cryptanalysis_result.png, id=384, 537.207pt x 562.5015pt>
+<Baboon_cryptanalysis_result.png, id=381, 537.207pt x 562.5015pt>
 File: Baboon_cryptanalysis_result.png Graphic file (type png)
 <use Baboon_cryptanalysis_result.png>
 Package pdftex.def Info: Baboon_cryptanalysis_result.png  used on input line 94
-0.
+8.
 (pdftex.def)             Requested size: 237.63522pt x 248.82321pt.
-
-Underfull \hbox (badness 10000) in paragraph at lines 1009--1009
+[9] [10]
+Underfull \hbox (badness 10000) in paragraph at lines 1017--1017
 |[]\T1/ptm/b/n/9 Comprehensive com-par-i-son with state-of-the-art
  []
 
 
-Underfull \hbox (badness 5316) in paragraph at lines 1034--1035
+Underfull \hbox (badness 5316) in paragraph at lines 1042--1043
 []\T1/ptm/b/n/10 Order-of-magnitude speedup ($\OT1/ztmcm/m/n/10 168\OMS/ztmcm/m
 /n/10 ^^B$ \T1/ptm/b/n/10 to $\OT1/ztmcm/m/n/10 670\OMS/ztmcm/m/n/10 ^^B$\T1/pt
 m/b/n/10 ):
  []
 
-[10]
-Underfull \hbox (badness 1102) in paragraph at lines 1036--1037
+
+Underfull \hbox (badness 1102) in paragraph at lines 1044--1045
 []\T1/ptm/b/n/10 Zero pre-ci-sion drift and finite-precision ro-bust-
  []
 
 
-Underfull \hbox (badness 1184) in paragraph at lines 1041--1042
+Underfull \hbox (badness 1184) in paragraph at lines 1049--1050
 \T1/ptm/m/n/10 This pa-per pre-sented the spec-i-fi-ca-tion, for-mal se-cu-rity
 
  []
 
-[11 <C:/Users/ghaob/Rubic4DCrypto/draft/Lena_cryptanalysis_result.png> <C:/User
-s/ghaob/Rubic4DCrypto/draft/Baboon_cryptanalysis_result.png>]
-Underfull \hbox (badness 2213) in paragraph at lines 1060--1061
+[11 <./Lena_cryptanalysis_result.png> <./Baboon_cryptanalysis_result.png>]
+Underfull \hbox (badness 2213) in paragraph at lines 1068--1069
 \T1/ptm/m/it/9 put. Inf. Sci.\T1/ptm/m/n/9 , vol. 34, no. 5, pp. 2000--2016, 20
 22,
  []
 
 
-Underfull \hbox (badness 2460) in paragraph at lines 1066--1067
+Underfull \hbox (badness 2460) in paragraph at lines 1074--1075
 []\T1/ptm/m/n/9 A. Nair, D. Dalal, and R. Man-grulkar, ``Colour im-
  []
 
 
-Underfull \hbox (badness 4193) in paragraph at lines 1066--1067
+Underfull \hbox (badness 4193) in paragraph at lines 1074--1075
 \T1/ptm/m/n/9 age en-cryp-tion al-go-rithm us-ing Ru-bik's cube scram-
  []
 
 
-Underfull \hbox (badness 2600) in paragraph at lines 1066--1067
+Underfull \hbox (badness 2600) in paragraph at lines 1074--1075
 \T1/ptm/m/n/9 bling with bitmap shuf-fling and frame ro-ta-tion,'' \T1/ptm/m/it
 /9 Cy-
  []
 
 
-Underfull \hbox (badness 2753) in paragraph at lines 1078--1079
+Underfull \hbox (badness 2753) in paragraph at lines 1086--1087
 []\T1/ptm/m/n/9 C. Beierle, A. Biryukov, L. Car-doso dos San-tos, J.
  []
 
 
-Underfull \hbox (badness 2384) in paragraph at lines 1078--1079
+Underfull \hbox (badness 2384) in paragraph at lines 1086--1087
 \T1/ptm/m/n/9 Q. Wang, ``Alzette: a 64-bit ARX-box (feat. CRAX
  []
 
 
-Underfull \hbox (badness 2653) in paragraph at lines 1078--1079
+Underfull \hbox (badness 2653) in paragraph at lines 1086--1087
 \T1/ptm/m/n/9 and TRAX),'' in \T1/ptm/m/it/9 Ad-vances in Cryp-tol-ogy -- CRYPT
 O
  []
 
 
-Underfull \hbox (badness 1024) in paragraph at lines 1081--1082
+Underfull \hbox (badness 1024) in paragraph at lines 1089--1090
 []\T1/ptm/m/n/9 H. Hadipour, S. Sadeghi, and M. Eichlseder, ``Find-ing
  []
 
 
-Underfull \hbox (badness 1762) in paragraph at lines 1081--1082
+Underfull \hbox (badness 1762) in paragraph at lines 1089--1090
 \T1/ptm/m/n/9 the im-pos-si-ble: au-to-mated search for full impossible-
  []
 
 
-Underfull \hbox (badness 1484) in paragraph at lines 1087--1088
+Underfull \hbox (badness 1484) in paragraph at lines 1095--1096
 \T1/ptm/m/it/9 -- The Ad-vanced En-cryp-tion Stan-dard\T1/ptm/m/n/9 , Springer-
 Verlag,
  []
 
 
-Underfull \hbox (badness 2521) in paragraph at lines 1096--1097
+Underfull \hbox (badness 2521) in paragraph at lines 1104--1105
 []\T1/ptm/m/n/9 R. Beaulieu, D. Shors, J. Smith, S. Treatman-Clark,
  []
 
 
-Underfull \hbox (badness 1552) in paragraph at lines 1096--1097
+Underfull \hbox (badness 1552) in paragraph at lines 1104--1105
 \T1/ptm/m/n/9 lightweight block ci-phers,'' in \T1/ptm/m/it/9 Proc. 52nd An-nua
 l De-
  []
 
-
-Underfull \hbox (badness 4441) in paragraph at lines 1126--1127
+[12]
+Underfull \hbox (badness 4441) in paragraph at lines 1134--1135
 []\T1/ptm/m/n/9 S.-J. Kim, K. Umeno, and A. Hasegawa, ``Cor-rec-
  []
 
-[12] (C:\Users\ghaob\Rubic4DCrypto\draft\haogianguyen.aux)
+[13
+
+] (haogianguyen.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2025-12-24>
  ***********
 Package rerunfilecheck Info: File `haogianguyen.out' has not changed.
-(rerunfilecheck)             Checksum: A8511CC97BFE48AF5AA22999DDA58383;7338.
+(rerunfilecheck)             Checksum: 6BE71BCADAA456677F5D0168C4A620F2;7515.
  ) 
 Here is how much of TeX's memory you used:
- 24904 strings out of 467871
- 464435 string characters out of 5418376
- 960056 words of memory out of 5000000
+ 24906 strings out of 467871
+ 464236 string characters out of 5418376
+ 960344 words of memory out of 5000000
  53143 multiletter control sequences out of 15000+600000
  715501 words of font info for 179 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 102i,16n,107p,1808b,975s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 102i,16n,107p,1802b,975s stack positions out of 10000i,1000n,20000p,200000b,200000s
  <C:\Users\ghaob\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ectt
 1000.pk> <C:\Users\ghaob\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi60
 0\ectt0900.pk><C:/Users/ghaob/AppData/Local/Programs/MiKTeX/fonts/type1/public/
@@ -1259,10 +1269,9 @@ AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm10.pfb><C
 Users/ghaob/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmb8a.pfb><C:/
 Users/ghaob/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmr8a.pfb><C:/
 Users/ghaob/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmri8a.pfb>
-Output written on C:\Users\ghaob\Rubic4DCrypto\draft\haogianguyen.pdf (12 pages
-, 5573444 bytes).
+Output written on haogianguyen.pdf (13 pages, 5576875 bytes).
 PDF statistics:
- 606 PDF objects out of 1000 (max. 8388607)
- 178 named destinations out of 1000 (max. 500000)
+ 617 PDF objects out of 1000 (max. 8388607)
+ 181 named destinations out of 1000 (max. 500000)
  255 words of extra memory for PDF output out of 10000 (max. 10000000)
 

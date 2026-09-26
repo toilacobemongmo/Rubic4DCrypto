@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.9.20)  23 SEP 2026 23:34
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.9.20)  26 SEP 2026 15:45
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1397,136 +1397,148 @@ Underfull \hbox (badness 4608) in paragraph at lines 415--417
  []
 
 [4] [5] [6] [7]
-Underfull \hbox (badness 1466) in paragraph at lines 779--780
+Underfull \hbox (badness 1466) in paragraph at lines 799--800
 []\T5/ptm/m/n/10 Rubik-4D M¢ hâa ^^_ìn khèi: $\OT1/ztmcm/m/n/10 323\OML/ztmcm/m
 /it/10 :\OT1/ztmcm/m/n/10 20$ \T5/ptm/m/n/10 chu ký/khèi
  []
 
 
-Underfull \hbox (badness 1199) in paragraph at lines 780--781
+Underfull \hbox (badness 1199) in paragraph at lines 800--801
 []\T5/ptm/m/n/10 Rubik-4D Gi£i m¢ ^^_ìn khèi: $\OT1/ztmcm/m/n/10 339\OML/ztmcm/
 m/it/10 :\OT1/ztmcm/m/n/10 51$ \T5/ptm/m/n/10 chu ký/khèi
  []
 
 
-Underfull \hbox (badness 2626) in paragraph at lines 786--787
+Underfull \hbox (badness 2626) in paragraph at lines 806--807
 \T5/ptm/m/n/10 ^^_èi vîi m¢ hâa v  $\OT1/ztmcm/m/n/10 157\OML/ztmcm/m/it/10 :\O
 T1/ztmcm/m/n/10 40 \OMS/ztmcm/m/n/10 ^^@ \OT1/ztmcm/m/n/10 167\OML/ztmcm/m/it/1
 0 :\OT1/ztmcm/m/n/10 17$ \T5/ptm/m/n/10 MB/s ($\OT1/ztmcm/m/n/10 19\OML/ztmcm/m
 /it/10 :\OT1/ztmcm/m/n/10 50 \OMS/ztmcm/m/n/10 ^^@
  []
 
-<Lena_cryptanalysis_result.png, id=321, 537.207pt x 562.5015pt>
+<Lena_cryptanalysis_result.png, id=324, 537.207pt x 562.5015pt>
 File: Lena_cryptanalysis_result.png Graphic file (type png)
 <use Lena_cryptanalysis_result.png>
-Package pdftex.def Info: Lena_cryptanalysis_result.png  used on input line 796.
+Package pdftex.def Info: Lena_cryptanalysis_result.png  used on input line 816.
 
 (pdftex.def)             Requested size: 237.63522pt x 248.82321pt.
-<Baboon_cryptanalysis_result.png, id=323, 537.207pt x 562.5015pt>
+<Baboon_cryptanalysis_result.png, id=326, 537.207pt x 562.5015pt>
 File: Baboon_cryptanalysis_result.png Graphic file (type png)
 <use Baboon_cryptanalysis_result.png>
-Package pdftex.def Info: Baboon_cryptanalysis_result.png  used on input line 80
+Package pdftex.def Info: Baboon_cryptanalysis_result.png  used on input line 82
 2.
 (pdftex.def)             Requested size: 237.63522pt x 248.82321pt.
-
-Underfull \hbox (badness 2393) in paragraph at lines 865--867
+[8]
+Underfull \hbox (badness 2393) in paragraph at lines 885--887
 \T5/ptm/m/n/10 Ký vång lþ thuy¸t ^^_èi vîi d¢y ng¨u nhi¶n 8-bit l 
  []
 
-[8] [9]
-Underfull \hbox (badness 1092) in paragraph at lines 910--911
+[9]
+Underfull \hbox (badness 1092) in paragraph at lines 930--931
 \T5/ptm/m/it/9 Sig-nal Pro-cess-ing (CMSP)\T5/ptm/m/n/9 , vol. 1, pp. 312--315,
  2011,
  []
 
-
-Underfull \hbox (badness 3039) in paragraph at lines 919--920
+[10 <./Lena_cryptanalysis_result.png> <./Baboon_cryptanalysis_result.png>]
+Underfull \hbox (badness 3039) in paragraph at lines 939--940
 \T5/ptm/m/it/9 put. Inf. Sci.\T5/ptm/m/n/9 , vol. 34, no. 5, pp. 2000--2016, 20
 22,
  []
 
-[10 <./Lena_cryptanalysis_result.png> <./Baboon_cryptanalysis_result.png>]
-Underfull \hbox (badness 3209) in paragraph at lines 925--926
+
+Underfull \hbox (badness 3209) in paragraph at lines 945--946
 []\T5/ptm/m/n/9 A. Nair, D. Dalal, and R. Man-grulkar, ``Colour im-
  []
 
 
-Underfull \hbox (badness 4181) in paragraph at lines 925--926
+Underfull \hbox (badness 4181) in paragraph at lines 945--946
 \T5/ptm/m/n/9 age en-cryp-tion al-go-rithm us-ing Ru-bik's cube scram-
  []
 
 
-Underfull \hbox (badness 2521) in paragraph at lines 925--926
+Underfull \hbox (badness 2521) in paragraph at lines 945--946
 \T5/ptm/m/n/9 bling with bitmap shuf-fling and frame ro-ta-tion,'' \T5/ptm/m/it
 /9 Cy-
  []
 
 
-Underfull \hbox (badness 3713) in paragraph at lines 937--938
+Underfull \hbox (badness 3713) in paragraph at lines 957--958
 []\T5/ptm/m/n/9 C. Beierle, A. Biryukov, L. Car-doso dos San-tos, J.
  []
 
 
-Underfull \hbox (badness 4556) in paragraph at lines 937--938
+Underfull \hbox (badness 4556) in paragraph at lines 957--958
 \T5/ptm/m/n/9 Q. Wang, ``Alzette: a 64-bit ARX-box (feat. CRAX
  []
 
 
-Underfull \hbox (badness 2626) in paragraph at lines 937--938
+Underfull \hbox (badness 2626) in paragraph at lines 957--958
 \T5/ptm/m/n/9 and TRAX),'' in \T5/ptm/m/it/9 Ad-vances in Cryp-tol-ogy -- CRYPT
 O
  []
 
 
-Underfull \hbox (badness 1418) in paragraph at lines 940--941
+Underfull \hbox (badness 1418) in paragraph at lines 960--961
 []\T5/ptm/m/n/9 H. Hadipour, S. Sadeghi, and M. Eichlseder, ``Find-ing
  []
 
 
-Underfull \hbox (badness 3158) in paragraph at lines 940--941
+Underfull \hbox (badness 3158) in paragraph at lines 960--961
 \T5/ptm/m/n/9 the im-pos-si-ble: au-to-mated search for full impossible-
  []
 
 
-Underfull \hbox (badness 1077) in paragraph at lines 943--944
+Underfull \hbox (badness 1077) in paragraph at lines 963--964
 \T5/ptm/m/it/9 vances in Cryp-tol-ogy -- ASI-ACRYPT 2016\T5/ptm/m/n/9 , LNCS, v
 ol.
  []
 
 
-Underfull \hbox (badness 3460) in paragraph at lines 952--953
+Underfull \hbox (badness 3460) in paragraph at lines 972--973
 []\T5/ptm/m/n/9 R. Beaulieu, D. Shors, J. Smith, S. Treatman-Clark,
  []
 
 
-Underfull \hbox (badness 1755) in paragraph at lines 952--953
+Underfull \hbox (badness 1755) in paragraph at lines 972--973
 \T5/ptm/m/n/9 lightweight block ci-phers,'' in \T5/ptm/m/it/9 Proc. 52nd An-nua
 l De-
  []
 
 
-Underfull \hbox (badness 1024) in paragraph at lines 976--977
+Underfull \hbox (badness 1024) in paragraph at lines 996--997
 []\T5/ptm/m/n/9 State Cryp-tog-ra-phy Ad-min-is-tra-tion of China, ``Ran-dom-
  []
 
 
-Underfull \hbox (badness 6188) in paragraph at lines 979--980
+Underfull \hbox (badness 6188) in paragraph at lines 999--1000
 []\T5/ptm/m/n/9 S.-J. Kim, K. Umeno, and A. Hasegawa, ``Cor-rec-
  []
 
-[11] (haogianguyen_vi.aux)
+[11] [12
+
+] (haogianguyen_vi.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2025-12-24>
  ***********
-Package rerunfilecheck Info: File `haogianguyen_vi.out' has not changed.
-(rerunfilecheck)             Checksum: 665C2D26643BAC87E6D6E3ACA109B2B6;7773.
+
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
+
+Package rerunfilecheck Warning: File `haogianguyen_vi.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+Package rerunfilecheck Info: Checksums for `haogianguyen_vi.out':
+(rerunfilecheck)             Before: 665C2D26643BAC87E6D6E3ACA109B2B6;7773
+(rerunfilecheck)             After:  66E45B6DC50609950017A4A534B4AF12;8227.
  ) 
 Here is how much of TeX's memory you used:
- 26378 strings out of 467871
- 490171 string characters out of 5418376
- 956384 words of memory out of 5000000
- 54619 multiletter control sequences out of 15000+600000
+ 26385 strings out of 467871
+ 490256 string characters out of 5418376
+ 950384 words of memory out of 5000000
+ 54620 multiletter control sequences out of 15000+600000
  712514 words of font info for 162 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  102i,16n,107p,2521b,943s stack positions out of 10000i,1000n,20000p,200000b,200000s
@@ -1546,9 +1558,9 @@ aob/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmri8a.pfb><C:/Users/g
 haob/AppData/Local/Programs/MiKTeX/fonts/type1/vntex/urwvn/utmri8v.pfb><C:/User
 s/ghaob/AppData/Local/Programs/MiKTeX/fonts/type1/vntex/vnr/vntt10.pfb><C:/User
 s/ghaob/AppData/Local/Programs/MiKTeX/fonts/type1/vntex/vnr/vntt9.pfb>
-Output written on haogianguyen_vi.pdf (11 pages, 5615377 bytes).
+Output written on haogianguyen_vi.pdf (12 pages, 5620062 bytes).
 PDF statistics:
- 495 PDF objects out of 1000 (max. 8388607)
- 159 named destinations out of 1000 (max. 500000)
+ 505 PDF objects out of 1000 (max. 8388607)
+ 165 named destinations out of 1000 (max. 500000)
  247 words of extra memory for PDF output out of 10000 (max. 10000000)
 

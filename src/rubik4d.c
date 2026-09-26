@@ -92,7 +92,12 @@ double rubik4d_calculate_entropy(const uint8_t *data, size_t len) {
 void rubik4d_key_setup(rubik4d_ctx *ctx, const uint8_t *key, size_t key_len) {
     rubik4d_init_tables();
     uint8_t master[16] = {0};
-    for (size_t i = 0; i < key_len; i++) master[i % 16] ^= key[i];
+    if (key_len == 16) {
+        memcpy(master, key, 16);
+    } else {
+        // Dự phòng cho đầu vào không chuẩn 128-bit
+        for (size_t i = 0; i < key_len; i++) master[i % 16] ^= key[i];
+    }
 
     uint8_t k_fold = 0;
     for (int i = 0; i < 16; i++) k_fold ^= master[i];
