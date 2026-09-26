@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 from matplotlib.patches import FancyBboxPatch, ArrowStyle
+from matplotlib.lines import Line2D
 import numpy as np
 import os
 
@@ -20,97 +21,114 @@ OUTPUT_DIR = os.path.dirname(os.path.abspath(__file__))
 # FIGURE 1: 4D Tesseract Geometric Projection & State Byte Mapping
 # ==============================================================================
 def generate_fig_tesseract():
-    fig = plt.figure(figsize=(7, 6), dpi=300)
-    ax = fig.add_subplot(111)
+    fig, ax = plt.subplots(figsize=(7.5, 6.6), dpi=300)
     ax.set_aspect('equal')
     ax.axis('off')
 
-    # Define 16 vertices of a 4D tesseract projected into 2D:
-    # Outer cube vertices (w = 0) and Inner cube vertices (w = 1)
-    # Using stereographic/isometric perspective:
-    scale_out = 2.4
-    scale_in = 1.15
-    center = (0, 0)
+    # Non-degenerate oblique perspective parameters
+    # Resolves all vertex overlaps (including B6 vs B15 and B1 vs B8)
+    s_out = 1.70
+    s_in = 0.82
+    kx = 0.60
+    ky = 0.22
 
     # 8 vertices for a cube: (x, y, z) in {-1, 1}^3 projected to 2D
-    # projection: X = x + 0.45*z, Y = y + 0.35*z
-    def project_cube(s, offset_x=0, offset_y=0):
+    # x: -1=left, +1=right
+    # y: -1=bottom, +1=top
+    # z: -1=front, +1=back (shifted by +kx*z, +ky*z)
+    def project_cube(s):
         coords = []
         for x in [-1, 1]:
             for y in [-1, 1]:
                 for z in [-1, 1]:
-                    X = (x + 0.45 * z) * s * 0.7 + offset_x
-                    Y = (y + 0.35 * z) * s * 0.7 + offset_y
+                    X = (x + kx * z) * s
+                    Y = (y + ky * z) * s
                     coords.append((X, Y))
         return coords
 
-    outer = project_cube(scale_out)
-    inner = project_cube(scale_in)
-    all_verts = outer + inner
+    outer = project_cube(s_out)
+    inner = project_cube(s_in)
 
-    # Edges within outer cube (12 edges)
-    # (x, y, z): indices 0:(-1,-1,-1), 1:(-1,-1,1), 2:(-1,1,-1), 3:(-1,1,1),
-    #            4:(1,-1,-1), 5:(1,-1,1), 6:(1,1,-1), 7:(1,1,1)
+    # 12 edges per cube
     cube_edges = [
-        (0, 1), (2, 3), (4, 5), (6, 7), # z-direction
-        (0, 2), (1, 3), (4, 6), (5, 7), # y-direction
-        (0, 4), (1, 5), (2, 6), (3, 7)  # x-direction
+        (0, 1), (2, 3), (4, 5), (6, 7), # depth (z-axis)
+        (0, 2), (1, 3), (4, 6), (5, 7), # vertical (y-axis)
+        (0, 4), (1, 5), (2, 6), (3, 7)  # horizontal (x-axis)
     ]
 
-    # Draw outer cube edges (Thick dark blue)
-    for u, v in cube_edges:
-        ax.plot([outer[u][0], outer[v][0]], [outer[u][1], outer[v][1]],
-                color='#1B365D', lw=1.8, zorder=2)
-
-    # Draw inner cube edges (Teal)
-    for u, v in cube_edges:
-        ax.plot([inner[u][0], inner[v][0]], [inner[u][1], inner[v][1]],
-                color='#008080', lw=1.6, zorder=2)
-
-    # Draw 8 connecting 4D hyper-edges between outer and inner cubes (Dashed purple)
+    # 1. Draw 8 connecting 4D hyper-edges (w-axis) - SOLID PURPLE LINES (ls='-')
+    # Connects outer cell (w=0) to inner cell (w=1)
     for i in range(8):
         ax.plot([outer[i][0], inner[i][0]], [outer[i][1], inner[i][1]],
-                color='#7B1FA2', lw=1.4, ls='--', alpha=0.85, zorder=1)
+                color='#8E24AA', lw=2.2, ls='-', alpha=0.9, zorder=2)
 
-    # Annotate 16 vertices with Byte indices B0 to B15 and binary coordinates
-    # Outer cube: B0..B7 (w = 0)
-    # Inner cube: B8..B15 (w = 1)
+    # 2. Draw outer cube edges (Dark Navy Blue)
+    for u, v in cube_edges:
+        ax.plot([outer[u][0], outer[v][0]], [outer[u][1], outer[v][1]],
+                color='#1B365D', lw=2.4, zorder=3)
+
+    # 3. Draw inner cube edges (Teal)
+    for u, v in cube_edges:
+        ax.plot([inner[u][0], inner[v][0]], [inner[u][1], inner[v][1]],
+                color='#00897B', lw=2.0, zorder=3)
+
+    # 4. Draw vertices with high-contrast colored nodes and bold white text
     for i in range(8):
-        # Outer
+        # Outer cube vertices B0..B7 (w = 0)
         px, py = outer[i]
-        ax.scatter(px, py, s=260, color='#1B365D', edgecolors='white', lw=1.5, zorder=4)
+        ax.scatter(px, py, s=320, color='#1B365D', edgecolors='#FFFFFF', lw=1.8, zorder=5)
         ax.text(px, py, f"$B_{{{i}}}$", color='white', ha='center', va='center',
-                fontsize=8.5, fontweight='bold', zorder=5)
-        # Inner
+                fontsize=9.5, fontweight='bold', zorder=6)
+
+        # Inner cube vertices B8..B15 (w = 1)
         qx, qy = inner[i]
-        ax.scatter(qx, qy, s=240, color='#C62828', edgecolors='white', lw=1.5, zorder=4)
+        ax.scatter(qx, qy, s=270, color='#C62828', edgecolors='#FFFFFF', lw=1.8, zorder=5)
         ax.text(qx, qy, f"$B_{{{i+8}}}$", color='white', ha='center', va='center',
-                fontsize=8.5, fontweight='bold', zorder=5)
+                fontsize=9.0, fontweight='bold', zorder=6)
 
-    # Draw illustration of SO(4) double rotation planes
-    # Plane 1: (X-Y) on outer face
-    arc1 = patches.Arc((-1.1, -1.0), 1.2, 1.2, angle=0, theta1=20, theta2=160,
-                       color='#D84315', lw=2.2, ls='-', zorder=6)
-    ax.add_patch(arc1)
-    ax.annotate(r"$\mathcal{P}_1: (X_0, X_1)$ Plane", xy=(-1.1, -0.4), xytext=(-2.3, -0.2),
-                arrowprops=dict(arrowstyle="->", color='#D84315', lw=1.5),
-                fontsize=9.5, fontweight='bold', color='#D84315',
-                bbox=dict(boxstyle="round,pad=0.2", facecolor='#FFF3E0', edgecolor='#FFB74D'))
+    # 5. Double rotation planes annotations (Clean placement outside vertices)
+    # Plane 1: (X0, X1) on front face
+    front_center = (-kx * s_out, -ky * s_out)
+    ax.annotate(r"$\mathcal{P}_1: (X_0, X_1)$ Plane" + "\n" + r"Front 2D Rotation $\circlearrowleft$",
+                xy=front_center, xytext=(-3.1, -0.1),
+                arrowprops=dict(arrowstyle="->", color='#D84315', lw=2.0,
+                                connectionstyle="arc3,rad=-0.15"),
+                fontsize=8.5, fontweight='bold', color='#BF360C', ha='center', va='center',
+                bbox=dict(boxstyle="round,pad=0.35", facecolor='#FFF3E0', edgecolor='#FFB74D', lw=1.2),
+                zorder=8)
 
-    # Plane 2: (Z-W) on inner/outer connecting face
-    arc2 = patches.Arc((0.6, 0.4), 1.0, 1.0, angle=45, theta1=30, theta2=180,
-                       color='#2E7D32', lw=2.2, ls='-', zorder=6)
-    ax.add_patch(arc2)
-    ax.annotate(r"$\mathcal{P}_2: (X_2, X_3)$ Plane", xy=(0.8, 0.9), xytext=(1.4, 1.3),
-                arrowprops=dict(arrowstyle="->", color='#2E7D32', lw=1.5),
-                fontsize=9.5, fontweight='bold', color='#2E7D32',
-                bbox=dict(boxstyle="round,pad=0.2", facecolor='#E8F5E9', edgecolor='#A5D6A7'))
+    # Plane 2: (X2, X3) on orthogonal hyperface (pointing to hyper-edge B7-B15)
+    hyper_pt = ((outer[7][0] + inner[7][0]) * 0.5, (outer[7][1] + inner[7][1]) * 0.5)
+    ax.annotate(r"$\mathcal{P}_2: (X_2, X_3)$ Plane" + "\n" + r"Hyperface Rotation $\circlearrowleft$",
+                xy=hyper_pt, xytext=(3.25, 0.45),
+                arrowprops=dict(arrowstyle="->", color='#2E7D32', lw=2.0,
+                                connectionstyle="arc3,rad=0.2"),
+                fontsize=8.5, fontweight='bold', color='#1B5E20', ha='center', va='center',
+                bbox=dict(boxstyle="round,pad=0.35", facecolor='#E8F5E9', edgecolor='#81C784', lw=1.2),
+                zorder=8)
 
-    # Title & Legend Box
-    ax.text(0, -2.45, r"16 State Bytes $B_0 \dots B_{15}$ Mapped to 16 Vertices of 4D Tesseract ($\{0, 1\}^4$)",
-            ha='center', fontsize=10.5, fontweight='bold', color='#1A237E')
-    ax.text(0, -2.75, r"Orthogonal Double Rotation: $\mathbb{R}^4 = \mathcal{P}_1 \oplus \mathcal{P}_2 \Rightarrow$ Zero Invariant Axis (No Fixed Points)",
-            ha='center', fontsize=9, style='italic', color='#37474F')
+    # 6. Top Legend Box
+    legend_elements = [
+        Line2D([0], [0], marker='o', color='#1B365D', label=r'Outer Cube ($w=0, B_0 \dots B_7$)',
+               markerfacecolor='#1B365D', markeredgecolor='white', markersize=9, lw=2.2),
+        Line2D([0], [0], marker='o', color='#00897B', label=r'Inner Cube ($w=1, B_8 \dots B_{15}$)',
+               markerfacecolor='#C62828', markeredgecolor='white', markersize=8.5, lw=2.0),
+        Line2D([0], [0], color='#8E24AA', lw=2.2, ls='-', label=r'4D Hyper-edges ($w$-axis)')
+    ]
+    leg = ax.legend(handles=legend_elements, loc='upper center', bbox_to_anchor=(0.5, 1.05),
+                    ncol=3, frameon=True, facecolor='#F8F9FA', edgecolor='#B0BEC5', fontsize=8.5,
+                    columnspacing=1.2, handletextpad=0.5)
+    leg.get_frame().set_linewidth(1.0)
+    leg.set_zorder(10)
+
+    # 7. Bottom Title & Mathematical Context Box
+    ax.text(0, -2.65, r"16 State Bytes $B_0 \dots B_{15}$ Mapped to 16 Vertices of 4D Tesseract ($\{0, 1\}^4$)",
+            ha='center', fontsize=10.5, fontweight='bold', color='#0D47A1')
+    ax.text(0, -2.95, r"Orthogonal Double Rotation: $\mathbb{R}^4 = \mathcal{P}_1 \oplus \mathcal{P}_2 \Rightarrow$ Zero Invariant Axis (No Fixed Points)",
+            ha='center', fontsize=9.0, style='italic', color='#37474F')
+
+    ax.set_xlim(-4.2, 4.2)
+    ax.set_ylim(-3.3, 2.7)
 
     plt.tight_layout()
     out_path = os.path.join(OUTPUT_DIR, 'fig_tesseract_4d.png')
