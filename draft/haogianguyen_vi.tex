@@ -99,15 +99,7 @@ Mặc dù trải qua ba thế hệ phát triển, toàn bộ 10 công trình d�
     \item \textbf{Hoàn toàn thiếu vắng chứng minh an toàn toán học:} 10/10 công trình chỉ đánh giá an toàn cảm tính qua các kiểm định thống kê hữu hạn (NPCR, UACI, entropy) trên vài bức ảnh mẫu, hoàn toàn không có mô hình chứng minh toán học hình thức về số hộp S-box tích cực và xác suất vi sai cực đại.
 \end{enumerate}
 
-Để khắc phục triệt để các hạn chế trên, chúng tôi đề xuất Rubik-4D—hệ mã khối đối xứng 128-bit với các cải tiến đột phá:
-\begin{itemize}
-    \item \textbf{Hình học nhóm Lie đa chiều ($SO(4)$):} Ánh xạ 16 byte trạng thái lên 16 đỉnh Tesseract 4 chiều ($2 \times 2 \times 2 \times 2$), khai thác phép quay kép trong nhóm $SO(4)$ phân tán dữ liệu đồng thời trên bốn chiều không gian mà không có trục quay bất biến.
-    \item \textbf{Giao thoa chặt chẽ SPN-ARX:} Kết hợp S-box AES trên $\text{GF}(2^8)$ ($\delta = 4$, bậc đại số $d=7$) với tầng khuếch tán ARX 32-bit lan truyền số nhớ, xác lập trạng thái thác lũ hoàn toàn chỉ trong 8 vòng lặp.
-    \item \textbf{Cận an toàn tự động MILP và chuẩn hóa nghiêm ngặt:} Cung cấp chứng minh toán học hình thức đầu tiên cho hệ mã họ Rubik ($P_{\text{diff}} \le 2^{-132}$ và $N_D \approx 2^{434}$), đồng thời vượt qua 1.000 tập NIST SP 800-22 và 10.000 mẫu GM/T 0005-2021 thực đo.
-    \item \textbf{Số nguyên thuần túy và thông lượng vượt trội:} Toàn bộ thuật toán thực thi bằng số nguyên thông qua bảng tra cứu tĩnh 192 byte $O(1)$ và thanh ghi CPU 32-bit, đạt thông lượng phần mềm ổn định $151.65$~MB/s (nhanh gấp 168 đến 670 lần so với các hệ mã Rubik cũ).
-\end{itemize}
-
-Bảng~\ref{tab:rubik_comparison_vi} tổng hợp so sánh định tính và cấu trúc giữa các thuật toán Rubik truyền thống, gần đây và Rubik-4D.
+Nhằm khắc phục triệt để các hạn chế trên, Rubik-4D tiếp cận hình học siêu lập phương 4 chiều không phải như một cơ chế xáo trộn điểm ảnh cảm tính, mà là một tầng hoán vị tuyến tính hoàn chỉnh bên trong kiến trúc mã khối SPN/ARX chuẩn mực. Bảng~\ref{tab:rubik_comparison_vi} tóm tắt so sánh cấu trúc và định tính giữa các nghiên cứu Rubik trước đây và Rubik-4D.
 
 \begin{table*}[t]
 \caption{So sánh định tính và cấu trúc giữa các thuật toán dựa trên Rubik và Rubik-4D}
@@ -125,27 +117,9 @@ Tầng khuếch tán liên từ & Xáo trộn bit kinh nghiệm & Ripple tổng 
 Cận an toàn tự động MILP & Không có & Không có & Không có & Đã chứng minh ($P_{\text{diff}} \le 2^{-132}$, $N_D \approx 2^{434}$) \\
 Phụ thuộc độ chính xác CPU & Dấu phẩy động & Dấu phẩy động & Dấu phẩy động & Số nguyên thuần túy (Bảng tra $O(1)$, không trôi sai số) \\
 Chuẩn mã khối hình thức & Chỉ xáo trộn ảnh & Chỉ xáo trộn ảnh & Chỉ xáo trộn ảnh & Mã khối SPN-ARX 128-bit (ECB/CBC/CTR) \\
+Thông lượng trên CPU x86-64 & $0.31$~MB/s & $0.67$~MB/s & $0.88$~MB/s & $\mathbf{151.65}$~\textbf{MB/s} ($> 170\times$ nhanh hơn) \\
 Kiểm định tính ngẫu nhiên & Quan sát trực quan & NIST SP 800-22 (Một phần) & Thị giác + Entropy & NIST SP 800-22 (187/188) + GM/T 0005 (17/18$^\dagger$) \\ \bottomrule
 \multicolumn{5}{@{}l@{}}{\footnotesize $^\dagger$Tỷ lệ pass 98.87\% trên bài test DFT vượt ngưỡng tiêu chuẩn; phân phối $P$-value là khiếm khuyết thống kê đã biết \cite{kim2004dft}.}
-\end{tabular}%
-}
-\end{table*}
-
-Bảng~\ref{tab:rubik_steps_comparison_vi} so sánh tường minh từng bước thực thi thuật toán của các sơ đồ đại diện qua ba thế hệ với Rubik-4D, làm nổi bật bước chuyển từ xáo trộn cảm quan sang mã khối toán học chuẩn mực.
-
-\begin{table*}[t]
-\caption{So sánh chi tiết các bước thực thi thuật toán giữa các nghiên cứu tiêu biểu qua các giai đoạn và Rubik-4D}
-\label{tab:rubik_steps_comparison_vi}
-\centering
-\small
-\resizebox{\textwidth}{!}{%
-\begin{tabular}{@{}lp{3.5cm}p{3.8cm}p{3.8cm}p{3.8cm}p{3.2cm}@{}}
-\toprule
-\textbf{Giai đoạn \& công trình} & \textbf{Bước 1: Khởi tạo \& cấu trúc} & \textbf{Bước 2: Hoán vị vị trí} & \textbf{Bước 3: Thay thế phi tuyến} & \textbf{Bước 4: Khuếch tán \& lan truyền} & \textbf{Độ phức tạp \& cận an toàn} \\ \midrule
-\textbf{Thế hệ 1 (2012)} \newline Loukhaoukha và cs \cite{loukhaoukha2012rubik} & Coi ảnh $M \times N$ là khối 3D $M \times N \times 3$; sinh 2 vector khóa $K_R, K_C$. & Dịch vòng các hàng điểm ảnh theo $K_R$; dịch vòng các cột theo $K_C$. & \textbf{Không có tầng phi tuyến} (chỉ dùng các phép toán tuyến tính trên $\mathbb{F}_2$). & Cộng XOR tích lũy giữa các hàng và cột kế tiếp: $I'(i,j) = I(i,j) \oplus K_R(i) \oplus K_C(j) \oplus I'(i-1,j)$. & $O(M \times N)$, $0.820$~s/ảnh; \newline Không có cận an toàn (dễ bị phá bởi CPA). \\ \midrule
-\textbf{Thế hệ 2 (2021)} \newline Zhu và cs (3D-BERC) \cite{zhu2021berc} & Phân rã byte ảnh thành 8 mặt phẳng bit, gom thành khối lập phương bit 3D $L \times L \times L$. & Xoay các lớp bit Rubik trên các mặt phẳng $XY, YZ, ZX$ theo chuỗi hỗn loạn. & Ánh xạ co kết hợp hoán vị vị trí bit (vẫn thiếu S-box Galois chuẩn). & Xáo trộn bit liên mặt phẳng kết hợp lan truyền tổng XOR giữa các lát cắt bit. & $O(L^3)$ bit-level, $0.380$~s/ảnh; \newline Chỉ kiểm định thực nghiệm. \\ \midrule
-\textbf{Thế hệ 3 (2024)} \newline Nair và cs \cite{nair2024rubik} & Chia ảnh màu RGB thành các khối ma trận bitmap con $8 \times 8$. & Xáo trộn Rubik 3D trên kênh màu kết hợp quay ma trận khung ảnh $90^\circ, 180^\circ, 270^\circ$. & Ánh xạ hỗn loạn Logistic hoán đổi giá trị mức điểm ảnh. & Trộn bitmap xen kẽ giữa các khối lân cận theo chuỗi hỗn loạn. & $O(M \times N)$, $0.290$~s/ảnh; \newline Không có cận chứng minh toán học. \\ \midrule
-\textbf{Đề xuất (2026)} \newline \textbf{Rubik-4D} & Ánh xạ 16 byte vào 16 đỉnh Tesseract 4D $\{0, 1\}^4$; làm trắng khóa $S \leftarrow P \oplus K_0$. & \textbf{Phép quay kép trực giao nhóm Lie $SO(4)$ không có trục quay bất biến ($O(1)$ LUT).} & \textbf{Hộp S-box AES trên $\text{GF}(2^8)$ ($\delta = 4, d = 7$) triệt tiêu tính tuyến tính.} & \textbf{Khuếch tán lan truyền số nhớ ARX 32-bit ($\boxplus C \to \lll n \to \oplus$) + cộng khóa vòng $K_r$.} & \textbf{$O(1)$ per block, $1.73$~ms/ảnh ($148.23$~MB/s); \newline Cận MILP: $P_{\text{diff}} \le 2^{-132}$, $N_D \approx 2^{434}$.} \\ \bottomrule
 \end{tabular}%
 }
 \end{table*}
@@ -190,6 +164,13 @@ Mỗi chỉ số byte $i \in \{0, \dots, 15\}$ được ánh xạ đơn ánh lê
 \begin{equation}
     i = (x \ll 3) \mid (y \ll 2) \mid (z \ll 1) \mid w
 \end{equation}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\columnwidth]{fig_tesseract_4d.png}
+\caption{Mô hình hình học siêu lập phương 4 chiều (Tesseract, $\{0, 1\}^4$) của Rubik-4D. 16 byte trạng thái $B_0 \dots B_{15}$ được ánh xạ đơn ánh lên 16 đỉnh tọa độ. Phép quay kép trực giao trong nhóm Lie $SO(4)$ tác động đồng thời trên hai mặt phẳng trực giao (ví dụ $\mathcal{P}_1$ và $\mathcal{P}_2$), không để lại bất kỳ trục quay bất biến nào và đảm bảo xáo trộn tọa độ toàn diện.}
+\label{fig:tesseract_4d_vi}
+\end{figure}
 
 \subsection{Quy trình thực thi hàm vòng}
 Trước khi bước vào các vòng lặp, trạng thái trải qua bước làm trắng khóa ban đầu:
@@ -434,6 +415,13 @@ Khóa con $K_r$ được sinh tuần tự qua phép dịch vòng byte, thay th�
 \end{equation}
 với mọi $i \in \{0, \dots, 15\}$.
 
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\columnwidth]{fig_key_schedule.png}
+\caption{Quy trình sinh khóa vòng của Rubik-4D: (1) Nạp trực tiếp khóa chính 128-bit theo chuẩn NIST FIPS 197; (2) Gập khóa $\mathit{k\_fold}$ chọn bảng hoán vị $SO(4)$ $\pi_{\text{tbl}_{\text{idx}}}$; (3) Sinh khóa con đệ quy qua các vòng $r = 1 \dots 8$ kết hợp phép dịch vòng byte, 16 hộp S-box AES song song và hằng số vòng $(r \times \text{0x1B})$.}
+\label{fig:key_schedule_vi}
+\end{figure}
+
 \subsection{Chứng minh an toàn toán học}
 \label{subsec:proofs}
 
@@ -472,6 +460,13 @@ Bảng~\ref{tab:diff_results_vi} chỉ ra rằng qua 8 vòng mã hóa, Rubik-4D 
     P_{\text{diff}} \le 2^{-132} < 2^{-128}
 \end{equation}
 Vì xác suất vết vi sai cực đại nhỏ hơn ngưỡng vét cạn toàn bộ không gian khóa ($2^{-128}$), Rubik-4D miễn nhiễm hoàn toàn trước các đòn tấn công vi sai tiêu chuẩn.
+
+\begin{figure*}[htbp]
+\centering
+\includegraphics[width=0.92\textwidth]{fig_avalanche_diffusion.png}
+\caption{Động học khuếch tán và cận an toàn toán học MILP của Rubik-4D: (a) Tỷ lệ lật bit hiệu ứng thác lũ (SAC) dưới sự thay đổi 1 bit bản rõ và 1 bit khóa, hội tụ nhanh chóng về tâm phân phối nhị thức lý tưởng ($50\%$) trong 3 vòng lặp; (b) Cận dưới số hộp S-box tích cực tìm kiếm bằng bộ giải MILP qua các vòng $1 \dots 8$, vượt qua ngưỡng an toàn vi sai 128-bit tại Vòng 8 ($N_{\text{active}} = 22 \implies P_{\text{diff}} \le 2^{-132} < 2^{-128}$).}
+\label{fig:avalanche_diffusion_vi}
+\end{figure*}
 
 \subsubsection{Thám mã tuyến tính bằng MILP}
 Đặt $\Gamma X_{r, i} \in \{0, 1\}$ là mặt nạ chọn lọc tuyến tính tại byte $i$ của vòng $r$. Hộp S-box AES có độ lệch tuyến tính cực đại $\epsilon_{\max} = 2^{-3}$ \cite{daemen2002design}. Áp dụng Bổ đề Piling-up của Matsui \cite{matsui1993linear}, độ lệch tuyến tính tổng thể $\epsilon_{\text{total}}$ qua $N_{\text{linear}}$ S-box kích hoạt bị chặn bởi:
@@ -803,7 +798,14 @@ Chu kỳ xung nhịp phần cứng trên mỗi byte (cycles per byte - cpb) đư
     \item Speck-128 Đơn khối: $93.12$~chu kỳ/khối ($5.82$~cpb).
 \end{itemize}
 
-Như trình bày trong Bảng~\ref{tab:benchmarks_all_vi}, Rubik-4D duy trì thông lượng ổn định từ $142.57 - 148.52$~MB/s ($21.94 - 22.86$~cpb) đối với mã hóa và $157.40 - 167.17$~MB/s ($19.50 - 20.71$~cpb) đối với giải mã (thông lượng trung bình toàn tải đạt $151.65$~MB/s), nhanh hơn từ $+20.3\%$ đến $+35.4\%$ so với AES-128 triển khai phần mềm ($118.05 - 123.49$~MB/s, $26.39 - 27.61$~cpb). Simon-128 và Rubik-4D đạt tốc độ tương đương nhau khi không có tăng tốc phần cứng vì Simon tận dụng thanh ghi 64-bit với 6 lệnh ALU cơ bản mỗi vòng (không truy cập bộ nhớ), trong khi Rubik-4D thay thế phép nhân ma trận Galois tốn kém của AES bằng phép tra bảng hoán vị $SO(4)$ $O(1)$ và tầng ARX 32-bit tốc độ cao.
+Như trình bày trong Bảng~\ref{tab:benchmarks_all_vi} và Hình~\ref{fig:benchmark_charts_vi}, Rubik-4D duy trì thông lượng ổn định từ $142.57 - 148.52$~MB/s ($21.94 - 22.86$~cpb) đối với mã hóa và $157.40 - 167.17$~MB/s ($19.50 - 20.71$~cpb) đối với giải mã (thông lượng trung bình toàn tải đạt $151.65$~MB/s), nhanh hơn từ $+20.3\%$ đến $+35.4\%$ so với AES-128 triển khai phần mềm ($118.05 - 123.49$~MB/s, $26.39 - 27.61$~cpb). Simon-128 và Rubik-4D đạt tốc độ tương đương nhau khi không có tăng tốc phần cứng vì Simon tận dụng thanh ghi 64-bit với 6 lệnh ALU cơ bản mỗi vòng (không truy cập bộ nhớ), trong khi Rubik-4D thay thế phép nhân ma trận Galois tốn kém của AES bằng phép tra bảng hoán vị $SO(4)$ $O(1)$ và tầng ARX 32-bit tốc độ cao.
+
+\begin{figure*}[htbp]
+\centering
+\includegraphics[width=0.92\textwidth]{fig_benchmark_charts.png}
+\caption{Đánh giá đối chuẩn hiệu năng phần mềm giữa các nguyên thủy mật mã trên bộ vi xử lý Intel Core i3-13100F @ 3.40~GHz: (a) Thông lượng xử lý dữ liệu thực tế (MB/s) trên các tệp tải lên tới 20~MB; (b) Độ trễ thực thi lõi đơn khối đo bằng chu kỳ xung nhịp CPU trên byte (cpb), trong đó Rubik-4D ($20.20$~cpb) nhanh hơn AES-128 phần mềm ($26.23$~cpb) $23.0\%$.}
+\label{fig:benchmark_charts_vi}
+\end{figure*}
 
 \subsection{Phân tích mật mã ảnh (Image cryptanalysis)}
 \label{subsec:image_crypt_vi}

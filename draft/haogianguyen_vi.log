@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.9.20)  26 SEP 2026 15:45
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.9.20)  26 SEP 2026 16:27
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1301,245 +1301,202 @@ aob/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/vntex/t5.enc}{C:/Users/ghaob/
 AppData/Local/Programs/MiKTeX/fonts/enc/dvips/base/8r.enc}
 
 
-] [2]
+]
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <8> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 131.
-
-Underfull \hbox (badness 3108) in paragraph at lines 150--150
-\T5/ptm/m/n/9 c°c m∞t phØng $\OML/ztmcm/m/it/9 XY; YZ; ZX$
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 150--150
-[]|$\OML/ztmcm/m/it/9 O\OT1/ztmcm/m/n/9 (\OML/ztmcm/m/it/9 L[]\OT1/ztmcm/m/n/9 
-)$ \T5/ptm/m/n/9 bit-level,
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 150--150
-\T5/ptm/m/n/9 Chø ki∫m ^^_‡nh th¸c
- []
-
-
-Underfull \hbox (badness 1082) in paragraph at lines 150--150
-\T5/ptm/m/n/9 m†u k∏t hÒp quay ma tr™n
- []
-
-
-Underfull \hbox (badness 3039) in paragraph at lines 150--150
-[]|\T5/ptm/m/n/9 Ånh x§ hÈn lo§n Lo-gis-tic
- []
-
-
-Underfull \hbox (badness 7168) in paragraph at lines 150--150
-\T5/ptm/m/n/9 KhÊng c‚ c™n ch˘ng
- []
-
-
-Underfull \hbox (badness 2142) in paragraph at lines 150--150
-[]|\T5/ptm/b/n/9 Ph≤p quay k≤p tr¸c giao
- []
-
-
-Underfull \hbox (badness 1997) in paragraph at lines 150--150
-\T5/ptm/b/n/9 trˆc quay bßt bi∏n ($\OML/ztmcm/m/it/9 O\OT1/ztmcm/m/n/9 (1)$
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 150--150
-[]|$\OML/ztmcm/m/it/9 O\OT1/ztmcm/m/n/9 (1)$ \T5/ptm/b/n/9 per block,
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 150--150
-\OT1/ztmcm/m/n/9 1\OML/ztmcm/m/it/9 :\OT1/ztmcm/m/n/9 73$ \T5/ptm/b/n/9 ms/£nh
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 150--150
-\T5/ptm/b/n/9 C™n MILP:
- []
-
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 124.
+ [2]
+<fig_tesseract_4d.png, id=181, 436.029pt x 429.2838pt>
+File: fig_tesseract_4d.png Graphic file (type png)
+<use fig_tesseract_4d.png>
+Package pdftex.def Info: fig_tesseract_4d.png  used on input line 170.
+(pdftex.def)             Requested size: 238.29184pt x 234.60678pt.
 Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
-put line 202.
+put line 183.
 
-Underfull \hbox (badness 1648) in paragraph at lines 204--206
+Underfull \hbox (badness 1648) in paragraph at lines 185--187
 []\T5/ptm/b/n/10 ^^^¶u v†o: \T5/ptm/m/n/10 KhËi b£n r„ $\OML/ztmcm/m/it/10 P$ \
 T5/ptm/m/n/10 (128-bit), sË v·ng $\OML/ztmcm/m/it/10 R \OT1/ztmcm/m/n/10 = 8$\T
 5/ptm/m/n/10 ,
  []
 
 
-Underfull \hbox (badness 1571) in paragraph at lines 204--206
+Underfull \hbox (badness 1571) in paragraph at lines 185--187
 \T5/ptm/m/n/10 kh‚a chΩnh $\OML/ztmcm/m/it/10 K[]$\T5/ptm/m/n/10 , t™p kh‚a v·n
 g $\OMS/ztmcm/m/n/10 f\OML/ztmcm/m/it/10 K[]; [] ; K[]\OMS/ztmcm/m/n/10 g$\T5/p
 tm/m/n/10 , h¨ng sË
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 204--206
+Underfull \hbox (badness 10000) in paragraph at lines 185--187
 \T5/ptm/b/n/10 ^^^¶u ra: \T5/ptm/m/n/10 KhËi b£n m¢ $\OML/ztmcm/m/it/10 C[]$ \T
 5/ptm/m/n/10 (128-
  []
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 328.
+(hyperref)                removing `math shift' on input line 309.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 328.
+(hyperref)                removing `math shift' on input line 309.
 
-[3]
-Underfull \hbox (badness 4608) in paragraph at lines 415--417
+[3 <./fig_tesseract_4d.png>] [4]
+Underfull \hbox (badness 4608) in paragraph at lines 396--398
 \T5/ptm/m/n/10 L˜Òc ^^_Á kh‚a m rÎng kh‚a chΩnh 128-bit $\OML/ztmcm/m/it/10 K[
 ] \OT1/ztmcm/m/n/10 =
  []
 
-[4] [5] [6] [7]
-Underfull \hbox (badness 1466) in paragraph at lines 799--800
+<fig_key_schedule.png, id=235, 570.933pt x 296.307pt>
+File: fig_key_schedule.png Graphic file (type png)
+<use fig_key_schedule.png>
+Package pdftex.def Info: fig_key_schedule.png  used on input line 420.
+(pdftex.def)             Requested size: 238.29184pt x 123.67043pt.
+[5 <./fig_key_schedule.png>]
+<fig_avalanche_diffusion.png, id=284, 607.068pt x 252.945pt>
+File: fig_avalanche_diffusion.png Graphic file (type png)
+<use fig_avalanche_diffusion.png>
+Package pdftex.def Info: fig_avalanche_diffusion.png  used on input line 466.
+(pdftex.def)             Requested size: 455.47066pt x 189.77776pt.
+ [6] [7 <./fig_avalanche_diffusion.png>]
+Underfull \hbox (badness 1466) in paragraph at lines 794--795
 []\T5/ptm/m/n/10 Rubik-4D M¢ h‚a ^^_Ïn khËi: $\OT1/ztmcm/m/n/10 323\OML/ztmcm/m
 /it/10 :\OT1/ztmcm/m/n/10 20$ \T5/ptm/m/n/10 chu k˝/khËi
  []
 
-
-Underfull \hbox (badness 1199) in paragraph at lines 800--801
+[8]
+Underfull \hbox (badness 1199) in paragraph at lines 795--796
 []\T5/ptm/m/n/10 Rubik-4D Gi£i m¢ ^^_Ïn khËi: $\OT1/ztmcm/m/n/10 339\OML/ztmcm/
 m/it/10 :\OT1/ztmcm/m/n/10 51$ \T5/ptm/m/n/10 chu k˝/khËi
  []
 
 
-Underfull \hbox (badness 2626) in paragraph at lines 806--807
-\T5/ptm/m/n/10 ^^_Ëi vÓi m¢ h‚a v† $\OT1/ztmcm/m/n/10 157\OML/ztmcm/m/it/10 :\O
-T1/ztmcm/m/n/10 40 \OMS/ztmcm/m/n/10 ^^@ \OT1/ztmcm/m/n/10 167\OML/ztmcm/m/it/1
-0 :\OT1/ztmcm/m/n/10 17$ \T5/ptm/m/n/10 MB/s ($\OT1/ztmcm/m/n/10 19\OML/ztmcm/m
-/it/10 :\OT1/ztmcm/m/n/10 50 \OMS/ztmcm/m/n/10 ^^@
+Underfull \hbox (badness 1014) in paragraph at lines 801--802
+\OT1/ztmcm/m/n/10 22\OML/ztmcm/m/it/10 :\OT1/ztmcm/m/n/10 86$ \T5/ptm/m/n/10 cp
+b) ^^_Ëi vÓi m¢ h‚a v† $\OT1/ztmcm/m/n/10 157\OML/ztmcm/m/it/10 :\OT1/ztmcm/m/n
+/10 40 \OMS/ztmcm/m/n/10 ^^@ \OT1/ztmcm/m/n/10 167\OML/ztmcm/m/it/10 :\OT1/ztmc
+m/m/n/10 17$ \T5/ptm/m/n/10 MB/s
  []
 
-<Lena_cryptanalysis_result.png, id=324, 537.207pt x 562.5015pt>
+<fig_benchmark_charts.png, id=341, 605.6226pt x 260.4129pt>
+File: fig_benchmark_charts.png Graphic file (type png)
+<use fig_benchmark_charts.png>
+Package pdftex.def Info: fig_benchmark_charts.png  used on input line 805.
+(pdftex.def)             Requested size: 455.47066pt x 195.85753pt.
+<Lena_cryptanalysis_result.png, id=342, 537.207pt x 562.5015pt>
 File: Lena_cryptanalysis_result.png Graphic file (type png)
 <use Lena_cryptanalysis_result.png>
-Package pdftex.def Info: Lena_cryptanalysis_result.png  used on input line 816.
+Package pdftex.def Info: Lena_cryptanalysis_result.png  used on input line 818.
 
 (pdftex.def)             Requested size: 237.63522pt x 248.82321pt.
-<Baboon_cryptanalysis_result.png, id=326, 537.207pt x 562.5015pt>
+<Baboon_cryptanalysis_result.png, id=343, 537.207pt x 562.5015pt>
 File: Baboon_cryptanalysis_result.png Graphic file (type png)
 <use Baboon_cryptanalysis_result.png>
 Package pdftex.def Info: Baboon_cryptanalysis_result.png  used on input line 82
-2.
+4.
 (pdftex.def)             Requested size: 237.63522pt x 248.82321pt.
-[8]
-Underfull \hbox (badness 2393) in paragraph at lines 885--887
+[9] [10 <./fig_benchmark_charts.png> <./Lena_cryptanalysis_result.png> <./Baboo
+n_cryptanalysis_result.png>]
+Underfull \hbox (badness 2393) in paragraph at lines 887--889
 \T5/ptm/m/n/10 K˝ vÂng l˛ thuy∏t ^^_Ëi vÓi d¢y ng®u nhi∂n 8-bit l†
  []
 
-[9]
-Underfull \hbox (badness 1092) in paragraph at lines 930--931
+[11]
+Underfull \hbox (badness 1092) in paragraph at lines 932--933
 \T5/ptm/m/it/9 Sig-nal Pro-cess-ing (CMSP)\T5/ptm/m/n/9 , vol. 1, pp. 312--315,
  2011,
  []
 
-[10 <./Lena_cryptanalysis_result.png> <./Baboon_cryptanalysis_result.png>]
-Underfull \hbox (badness 3039) in paragraph at lines 939--940
+
+Underfull \hbox (badness 3039) in paragraph at lines 941--942
 \T5/ptm/m/it/9 put. Inf. Sci.\T5/ptm/m/n/9 , vol. 34, no. 5, pp. 2000--2016, 20
 22,
  []
 
 
-Underfull \hbox (badness 3209) in paragraph at lines 945--946
+Underfull \hbox (badness 3209) in paragraph at lines 947--948
 []\T5/ptm/m/n/9 A. Nair, D. Dalal, and R. Man-grulkar, ``Colour im-
  []
 
 
-Underfull \hbox (badness 4181) in paragraph at lines 945--946
+Underfull \hbox (badness 4181) in paragraph at lines 947--948
 \T5/ptm/m/n/9 age en-cryp-tion al-go-rithm us-ing Ru-bik's cube scram-
  []
 
 
-Underfull \hbox (badness 2521) in paragraph at lines 945--946
+Underfull \hbox (badness 2521) in paragraph at lines 947--948
 \T5/ptm/m/n/9 bling with bitmap shuf-fling and frame ro-ta-tion,'' \T5/ptm/m/it
 /9 Cy-
  []
 
 
-Underfull \hbox (badness 3713) in paragraph at lines 957--958
+Underfull \hbox (badness 3713) in paragraph at lines 959--960
 []\T5/ptm/m/n/9 C. Beierle, A. Biryukov, L. Car-doso dos San-tos, J.
  []
 
 
-Underfull \hbox (badness 4556) in paragraph at lines 957--958
+Underfull \hbox (badness 4556) in paragraph at lines 959--960
 \T5/ptm/m/n/9 Q. Wang, ``Alzette: a 64-bit ARX-box (feat. CRAX
  []
 
 
-Underfull \hbox (badness 2626) in paragraph at lines 957--958
+Underfull \hbox (badness 2626) in paragraph at lines 959--960
 \T5/ptm/m/n/9 and TRAX),'' in \T5/ptm/m/it/9 Ad-vances in Cryp-tol-ogy -- CRYPT
 O
  []
 
 
-Underfull \hbox (badness 1418) in paragraph at lines 960--961
+Underfull \hbox (badness 1418) in paragraph at lines 962--963
 []\T5/ptm/m/n/9 H. Hadipour, S. Sadeghi, and M. Eichlseder, ``Find-ing
  []
 
 
-Underfull \hbox (badness 3158) in paragraph at lines 960--961
+Underfull \hbox (badness 3158) in paragraph at lines 962--963
 \T5/ptm/m/n/9 the im-pos-si-ble: au-to-mated search for full impossible-
  []
 
 
-Underfull \hbox (badness 1077) in paragraph at lines 963--964
+Underfull \hbox (badness 1077) in paragraph at lines 965--966
 \T5/ptm/m/it/9 vances in Cryp-tol-ogy -- ASI-ACRYPT 2016\T5/ptm/m/n/9 , LNCS, v
 ol.
  []
 
 
-Underfull \hbox (badness 3460) in paragraph at lines 972--973
+Underfull \hbox (badness 3460) in paragraph at lines 974--975
 []\T5/ptm/m/n/9 R. Beaulieu, D. Shors, J. Smith, S. Treatman-Clark,
  []
 
 
-Underfull \hbox (badness 1755) in paragraph at lines 972--973
+Underfull \hbox (badness 1755) in paragraph at lines 974--975
 \T5/ptm/m/n/9 lightweight block ci-phers,'' in \T5/ptm/m/it/9 Proc. 52nd An-nua
 l De-
  []
 
-
-Underfull \hbox (badness 1024) in paragraph at lines 996--997
+[12]
+Underfull \hbox (badness 1024) in paragraph at lines 998--999
 []\T5/ptm/m/n/9 State Cryp-tog-ra-phy Ad-min-is-tra-tion of China, ``Ran-dom-
  []
 
 
-Underfull \hbox (badness 6188) in paragraph at lines 999--1000
+Underfull \hbox (badness 6188) in paragraph at lines 1001--1002
 []\T5/ptm/m/n/9 S.-J. Kim, K. Umeno, and A. Hasegawa, ``Cor-rec-
  []
 
-[11] [12
+[13
 
 ] (haogianguyen_vi.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2025-12-24>
  ***********
-
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
-
-Package rerunfilecheck Warning: File `haogianguyen_vi.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `haogianguyen_vi.out':
-(rerunfilecheck)             Before: 665C2D26643BAC87E6D6E3ACA109B2B6;7773
-(rerunfilecheck)             After:  66E45B6DC50609950017A4A534B4AF12;8227.
+Package rerunfilecheck Info: File `haogianguyen_vi.out' has not changed.
+(rerunfilecheck)             Checksum: 66E45B6DC50609950017A4A534B4AF12;8227.
  ) 
 Here is how much of TeX's memory you used:
- 26385 strings out of 467871
- 490256 string characters out of 5418376
- 950384 words of memory out of 5000000
- 54620 multiletter control sequences out of 15000+600000
- 712514 words of font info for 162 fonts, out of 8000000 for 9000
+ 26424 strings out of 467871
+ 491291 string characters out of 5418376
+ 944855 words of memory out of 5000000
+ 54654 multiletter control sequences out of 15000+600000
+ 713621 words of font info for 163 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  102i,16n,107p,2521b,943s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <C:/Users/ghaob/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/
@@ -1549,18 +1506,20 @@ ublic/amsfonts/cm/cmr10.pfb><C:/Users/ghaob/AppData/Local/Programs/MiKTeX/fonts
 /type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/ghaob/AppData/Local/Programs/MiK
 TeX/fonts/type1/public/amsfonts/symbols/msam10.pfb><C:/Users/ghaob/AppData/Loca
 l/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm10.pfb><C:/Users/ghao
-b/AppData/Local/Programs/MiKTeX/fonts/type1/urw/symbol/usyr.pfb><C:/Users/ghaob
-/AppData/Local/Programs/MiKTeX/fonts/type1/urw/symbol/usyr.pfb><C:/Users/ghaob/
-AppData/Local/Programs/MiKTeX/fonts/type1/vntex/urwvn/utmb8v.pfb><C:/Users/ghao
-b/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmr8a.pfb><C:/Users/ghao
-b/AppData/Local/Programs/MiKTeX/fonts/type1/vntex/urwvn/utmr8v.pfb><C:/Users/gh
-aob/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmri8a.pfb><C:/Users/g
-haob/AppData/Local/Programs/MiKTeX/fonts/type1/vntex/urwvn/utmri8v.pfb><C:/User
-s/ghaob/AppData/Local/Programs/MiKTeX/fonts/type1/vntex/vnr/vntt10.pfb><C:/User
-s/ghaob/AppData/Local/Programs/MiKTeX/fonts/type1/vntex/vnr/vntt9.pfb>
-Output written on haogianguyen_vi.pdf (12 pages, 5620062 bytes).
+b/AppData/Local/Programs/MiKTeX/fonts/type1/public/rsfs/rsfs10.pfb><C:/Users/gh
+aob/AppData/Local/Programs/MiKTeX/fonts/type1/urw/symbol/usyr.pfb><C:/Users/gha
+ob/AppData/Local/Programs/MiKTeX/fonts/type1/urw/symbol/usyr.pfb><C:/Users/ghao
+b/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmb8a.pfb><C:/Users/ghao
+b/AppData/Local/Programs/MiKTeX/fonts/type1/vntex/urwvn/utmb8v.pfb><C:/Users/gh
+aob/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmr8a.pfb><C:/Users/gh
+aob/AppData/Local/Programs/MiKTeX/fonts/type1/vntex/urwvn/utmr8v.pfb><C:/Users/
+ghaob/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmri8a.pfb><C:/Users
+/ghaob/AppData/Local/Programs/MiKTeX/fonts/type1/vntex/urwvn/utmri8v.pfb><C:/Us
+ers/ghaob/AppData/Local/Programs/MiKTeX/fonts/type1/vntex/vnr/vntt10.pfb><C:/Us
+ers/ghaob/AppData/Local/Programs/MiKTeX/fonts/type1/vntex/vnr/vntt9.pfb>
+Output written on haogianguyen_vi.pdf (13 pages, 6292592 bytes).
 PDF statistics:
- 505 PDF objects out of 1000 (max. 8388607)
- 165 named destinations out of 1000 (max. 500000)
- 247 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 532 PDF objects out of 1000 (max. 8388607)
+ 169 named destinations out of 1000 (max. 500000)
+ 275 words of extra memory for PDF output out of 10000 (max. 10000000)
 

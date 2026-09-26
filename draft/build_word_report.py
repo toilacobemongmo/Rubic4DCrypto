@@ -394,6 +394,22 @@ def create_report():
         "triệt tiêu hoàn toàn bất kỳ trục bất động nào. Nhờ đó, một bước xoay 4D duy nhất làm xáo trộn toạ độ trên toàn bộ 4 chiều không gian."
     )
 
+    def add_figure_with_caption(img_path, caption_text, width_inches=5.5):
+        if os.path.exists(img_path):
+            p_img = doc.add_paragraph()
+            p_img.alignment = WD_ALIGN_PARAGRAPH.CENTER
+            p_img.paragraph_format.space_before = Pt(10)
+            doc.add_picture(img_path, width=Inches(width_inches))
+            p_cap = doc.add_paragraph()
+            p_cap.alignment = WD_ALIGN_PARAGRAPH.CENTER
+            p_cap.paragraph_format.space_after = Pt(12)
+            r_cap = p_cap.add_run(caption_text)
+            r_cap.font.italic = True
+            r_cap.font.size = Pt(10.5)
+            r_cap.font.bold = True
+
+    add_figure_with_caption("draft/fig_tesseract_4d.png", "Hình 2.1: Mô hình hình học siêu lập phương 4 chiều (Tesseract) và phép xoay kép SO(4)")
+
     add_custom_heading("2.2. Đặc tả các tầng biến đổi trong một vòng mã hóa", 2)
     doc.add_paragraph(
         "Một vòng mã hóa thứ r (r ∈ {1, ..., 8}) của Rubik-4D là sự kết hợp tuần tự của 4 tầng biến đổi toán học chặt chẽ:"
@@ -439,6 +455,8 @@ def create_report():
         "4. Tầng cộng khóa vòng (AddRoundKey): Trạng thái sau tầng ARX được thực hiện phép XOR với khóa con tương ứng K_r."
     )
 
+    add_figure_with_caption("draft/fig_rubik4d_architecture.png", "Hình 2.2: Sơ đồ luồng xử lý chi tiết một vòng mã hóa và giải mã của Rubik-4D")
+
     add_custom_heading("2.3. Lịch trình khóa và hàm gấp bất đối xứng (Key Schedule)", 2)
     doc.add_paragraph(
         "Nhằm tuân thủ các chuẩn mực quốc tế như NIST FIPS 197, Rubik-4D tiếp nhận trực tiếp khóa chính 128-bit "
@@ -452,6 +470,8 @@ def create_report():
         "thông qua hàm gấp khóa phi tuyến k_fold: hoán vị vị trí kết hợp XOR chéo và cộng hằng số vòng r. Tính bất đối xứng giữa các vòng "
         "ngăn chặn hoàn toàn tính chu kỳ của dãy khóa."
     )
+
+    add_figure_with_caption("draft/fig_key_schedule.png", "Hình 2.3: Quy trình hàm sinh khóa vòng Rubik-4D")
 
     # =========================================================================
     # CHƯƠNG 3: CHỨNG MINH ĐỘ AN TOÀN TOÁN HỌC VÀ THÁM MÃ (MILP)
@@ -544,6 +564,8 @@ def create_report():
         "Theo Bổ đề xếp chồng của Matsui (Piling-up Lemma), độ lệch tuyến tính tổng thể ε ≤ 2^-217. Khối lượng bản rõ yêu cầu để "
         "phá mã lên tới N_D ≈ ε^-2 ≈ 2^434, vượt xa giới hạn vật lý 2^128 của mọi siêu máy tính."
     )
+
+    add_figure_with_caption("draft/fig_avalanche_diffusion.png", "Hình 3.1: Động học hiệu ứng thác lũ SAC và cận dưới số hộp S-box tích cực MILP")
 
     add_custom_heading("3.3. Đánh giá tính kháng thám mã vi sai khóa liên quan (Related-Key) hai chiều", 2)
     doc.add_paragraph(
@@ -688,6 +710,8 @@ def create_report():
     doc.add_paragraph("• Thông lượng giải mã (Decryption Throughput): Đạt 167.17 MB/s (tương ứng ~17.69 chu kỳ CPU / byte).")
     doc.add_paragraph("• Bộ nhớ RAM yêu cầu: Chỉ 192 byte cho 12 bảng tra cứu tĩnh, hoàn toàn nằm trong L1 Cache của CPU.")
     doc.add_paragraph("• Độ chính xác nền tảng: 100% sử dụng số nguyên 32-bit, đảm bảo đồng nhất kết quả giữa kiến trúc x86 và ARM, không bị sai số dấu phẩy động.")
+
+    add_figure_with_caption("draft/fig_benchmark_charts.png", "Hình 4.3: Đánh giá đối chuẩn thông lượng Throughput (MB/s) và chu kỳ CPU (cpb)")
 
     add_custom_heading("4.4. Bảng so sánh toàn diện với các công trình liên quan", 2)
 

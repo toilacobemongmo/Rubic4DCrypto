@@ -96,11 +96,14 @@ Rubik-inspired cryptography evolved through three distinct waves:
 
 Mainstream block ciphers took an entirely different route: lightweight ARX and MILP solvers. At CRYPTO 2020, Beierle et al. \cite{beierle2020alzette} built Alzette, demonstrating rapid diffusion via modular carries. At EUROCRYPT 2023, Hadipour et al. \cite{hadipour2023impossible} automated impossible-differential proofs through MILP. Xiang et al. \cite{xiang2016milp} pioneered similar optimization for division property attacks at ASIACRYPT 2016.
 
-Looking closely at earlier Rubik-inspired proposals reveals three recurring pitfalls (Fig.~\ref{fig:rubik4d_architecture}(a)). First, these algorithms merely reorder pixel coordinates rather than evaluating genuine iterative block rounds. Without nonlinear S-boxes over Galois fields, the entire transformation remains affine over $\mathbb{F}_2$, leaving the cipher fragile against differential pairs and plaintext recovery. Second, authors routinely judge security through ad-hoc visual metrics---such as NPCR, UACI, and Shannon entropy on arbitrary images---without establishing mathematical lower bounds on active components against differential \cite{mouha2011differential} or linear attacks \cite{matsui1993linear}. Third, heavy reliance on chaotic maps or quantum walks causes severe computational bottlenecks ($< 1$~MB/s) and produces rounding discrepancies when compiled across distinct processor architectures.
+Looking closely at earlier Rubik-inspired proposals reveals three recurring cryptographic and architectural deficiencies:
+\begin{enumerate}
+    \item \textbf{Absence of non-linear Galois field operations:} Prior designs manipulate coordinates via circular shifts and XOR operations over $\mathbb{F}_2$. Because the underlying transformations remain affine, chosen-plaintext adversaries can readily decouple permutation vectors from keystream masks.
+    \item \textbf{Floating-point degradation and latency overhead:} Deploying continuous chaotic maps or quantum walks introduces finite-precision drift across heterogeneous hardware architectures (such as x86 vs. ARM) and restricts throughput below $1.0$~MB/s.
+    \item \textbf{Lack of verifiable cryptanalytic margins:} Prior authors evaluated security primarily through heuristic image statistics (NPCR, UACI, and Shannon entropy), omitting automated branch-and-bound proofs against differential \cite{mouha2011differential} and linear cryptanalysis \cite{matsui1993linear}.
+\end{enumerate}
 
-To overcome these problems, Rubik-4D takes a fundamentally different path (Fig.~\ref{fig:rubik4d_architecture}(b)). We design a 128-bit block cipher that blends 4D hypercube permutations with a 32-bit ARX network. Rather than rotating faces in 3D, our cipher arranges the 16 state bytes across the vertices of a 4D tesseract. Using precomputed lookup tables, the diffusion layer evaluates $SO(4)$ double rotations, mixing all four spatial dimensions simultaneously without invariant axes. Nonlinearity comes from AES S-boxes over $\text{GF}(2^8)$ ($\delta = 4$, degree $d=7$), while a word-level modular carry ripple guarantees rapid diffusion across words. This combination produces full avalanche in just 8 rounds (compared to 32 in Speck and 68 in Simon). Furthermore, by framing the cipher's differential propagation as an integer program, our MILP solver mathematically proves that 8 rounds activate at least 22 S-boxes, yielding a differential bound of $P_{\text{diff}} \le 2^{-132}$ and linear bound of $N_D \approx 2^{434}$. Finally, because all operations execute through 32-bit integer arithmetic and cache-resident tables, the software runs at $151$~MB/s without floating-point inaccuracies.
-
-Table~\ref{tab:rubik_comparison} summarizes a qualitative and structural comparison between conventional Rubik-based cryptographic designs and the proposed Rubik-4D cipher.
+To overcome these structural limitations, Rubik-4D conceptualizes the four-dimensional hypercube not as an empirical pixel scrambler, but as a formal linear permutation layer within an SPN/ARX block cipher architecture. Table~\ref{tab:rubik_comparison} summarizes the architectural comparison between prior Rubik-inspired proposals and Rubik-4D.
 
 \begin{table*}[t]
 \caption{Qualitative and structural comparison between conventional Rubik-inspired ciphers and Rubik-4D}
@@ -112,33 +115,15 @@ Table~\ref{tab:rubik_comparison} summarizes a qualitative and structural compari
 \toprule
 \textbf{Architectural metric} & \textbf{Loukhaoukha (2012) \cite{loukhaoukha2012rubik}} & \textbf{Zhu et al. (2021) \cite{zhu2021berc}} & \textbf{Nair et al. (2024) \cite{nair2024rubik}} & \textbf{Rubik-4D (Proposed)} \\ \midrule
 Geometric dimensionality & 3D spatial ($M \times N \times 3$) & 3D Bit-Level ($M \times N \times 8$) & 3D Spatial ($M \times N \times 3$) & 4D hypercube tesseract ($2 \times 2 \times 2 \times 2$) \\
-Mathematical lie group & Discrete face cycles & Discrete bit rotations & Face shift + shuffling & Special orthogonal group $SO(4)$ \\
-Non-linear substitution layer & None (XOR only) & None (Bit permutation) & Dynamic chaos logistic & AES S-Box\\
-Inter-word diffusion layer & Heuristic bit-shuffling & XOR-sum ripple & Frame/cyclic shift & 32-bit ARX Modular \\
+Mathematical Lie group & Discrete face cycles & Discrete bit rotations & Face shift + shuffling & Special orthogonal group $SO(4)$ \\
+Non-linear substitution layer & None (XOR only) & None (Bit permutation) & Dynamic chaos logistic & AES S-Box ($\delta=4, d=7$ over $\text{GF}(2^8)$) \\
+Inter-word diffusion layer & Heuristic bit-shuffling & XOR-sum ripple & Frame/cyclic shift & 32-bit ARX modular carry-ripple \\
 Automated MILP security bounds & None & None & None & Proven ($P_{\text{diff}} \le 2^{-132}$, $N_D \approx 2^{434}$) \\
-Hardware precision dependency & floating-Point & floating-Point & floating-Point & Integer only \\
-Formal cipher standard & Image scrambler only & Image scrambler only & Image scrambler only & Block Cipher \\
-Standard randomness validation & Empirical visual Only & NIST SP 800-22 (Subset) & Visual + entropy & NIST SP 800-22 (187/188) + GM/T 0005 (17/18$^\dagger$) \\ \bottomrule
+Hardware precision dependency & Floating-point chaos & Floating-point chaos & Floating-point chaos & Pure 32-bit integer arithmetic \\
+Formal cipher standard & Image scrambler only & Image scrambler only & Image scrambler only & 128-bit symmetric block cipher \\
+Throughput on x86-64 CPU & $0.31$~MB/s & $0.67$~MB/s & $0.88$~MB/s & $\mathbf{151.65}$~\textbf{MB/s} ($> 170\times$ speedup) \\
+Standard randomness validation & Empirical visual only & NIST SP 800-22 (Subset) & Visual + entropy & NIST SP 800-22 (187/188) + GM/T 0005 (17/18$^\dagger$) \\ \bottomrule
 \multicolumn{5}{@{}l@{}}{\footnotesize $^\dagger$DFT test pass rate 98.87\% exceeds threshold; distribution $P$-value anomaly is a documented test statistic bias \cite{kim2004dft}.}
-\end{tabular}%
-}
-\end{table*}
-
-Table~\ref{tab:rubik_steps_comparison} provides a step-by-step algorithmic pipeline comparison between representative Rubik cryptographic schemes across each developmental era and the proposed Rubik-4D cipher.
-
-\begin{table*}[t]
-\caption{Step-by-step algorithmic execution comparison between representative Rubik schemes across generations and Rubik-4D}
-\label{tab:rubik_steps_comparison}
-\centering
-\small
-\resizebox{\textwidth}{!}{%
-\begin{tabular}{@{}lp{3.5cm}p{3.8cm}p{3.8cm}p{3.8cm}p{3.2cm}@{}}
-\toprule
-\textbf{Generation \& scheme} & \textbf{Step 1: Init \& partition} & \textbf{Step 2: Spatial permutation} & \textbf{Step 3: Non-linear substitution} & \textbf{Step 4: Inter-word diffusion} & \textbf{Complexity \& security} \\ \midrule
-\textbf{First gen (2012)} \newline Loukhaoukha et al. \cite{loukhaoukha2012rubik} & Format $M \times N$ image as 3D cube $M \times N \times 3$; generate key vectors $K_R, K_C$. & Circularly roll rows left/right by $K_R$; circularly shift columns up/down by $K_C$. & \textbf{None} (Strictly linear arithmetic over $\mathbb{F}_2$). & Cumulative XOR diffusion across adjacent rows/columns: $I'(i,j) = I(i,j) \oplus K_R(i) \oplus K_C(j) \oplus I'(i-1,j)$. & $O(M \times N)$, $0.820$~s/image; \newline No formal bounds (vulnerable to CPA). \\ \midrule
-\textbf{Second gen (2021)} \newline Zhu et al.\cite{zhu2021berc} & Decompose bytes into 8 bit-planes; assemble 3D binary cube $L \times L \times L$. & Rotate bit slices on $XY, YZ, ZX$ coordinate planes via chaotic indices. & Contraction mapping and bit-position shuffling (lacks Galois S-box). & Inter-plane bit scrambling combined with cumulative XOR sum across bit slices. & $O(L^3)$ bit-level, $0.380$~s/image; \newline Empirical testing only. \\ \midrule
-\textbf{Third gen (2024)} \newline Nair et al. \cite{nair2024rubik} & Partition color channels into $8 \times 8$ bitmap submatrices. & 3D Rubik scrambling across color channels + frame rotation ($90^\circ, 180^\circ, 270^\circ$). & Dynamic chaotic Logistic mapping for pixel-level value permutation. & Adjacent bitmap block interleaved blending driven by chaotic map. & $O(M \times N)$, $0.290$~s/image; \newline No mathematical provable bounds. \\ \midrule
-\textbf{Proposed (2026)} \newline \textbf{Rubik-4D} & Map 16 bytes to 16 vertices of 4D Tesseract $\{0, 1\}^4$; initial key whitening $S \leftarrow P \oplus K_0$. & Double orthogonal rotation in Lie group $SO(4)$ without invariant axes ($O(1)$ LUT). & AES S-Box over $\text{GF}(2^8)$ ($\delta = 4, d = 7$) eliminates algebraic linearity. & 32-bit ARX carry-ripple diffusion ($\boxplus C \to \lll n \to \oplus$) + round subkey addition $K_r$.& $O(1)$ per block, $1.73$~ms/image ($148.23$~MB/s); \newline MILP bounds: $P_{\text{diff}} \le 2^{-132}$, $N_D \approx 2^{434}$. \\ \bottomrule
 \end{tabular}%
 }
 \end{table*}
@@ -184,7 +169,14 @@ Each byte index $i \in \{0, \dots, 15\}$ is mapped to a unique vertex coordinate
     i = (x \ll 3) \mid (y \ll 2) \mid (z \ll 1) \mid w
 \end{equation}
 
-% ================= FIGURE 1: ARCHITECTURE COMPARISON DIAGRAM =================
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\columnwidth]{fig_tesseract_4d.png}
+\caption{Geometric representation of the Rubik-4D 128-bit internal state over a four-dimensional hypercube (tesseract, $\{0, 1\}^4$). State bytes $B_0 \dots B_{15}$ are mapped to 16 distinct vertices. Discrete double orthogonal rotations from Lie group $SO(4)$ act simultaneously across pairs of orthogonal 2D planes (e.g., $\mathcal{P}_1$ and $\mathcal{P}_2$), avoiding invariant axes and ensuring full coordinate mixing.}
+\label{fig:tesseract_4d}
+\end{figure}
+
+% ================= FIGURE 2: ARCHITECTURE COMPARISON DIAGRAM =================
 \begin{figure*}[htbp]
 \centering
 \begin{tikzpicture}[
@@ -436,6 +428,13 @@ Subkeys $K_r$ ($r \in \{1, \dots, 8\}$) are derived sequentially via circular sh
 \end{equation}
 for all $i \in \{0, \dots, 15\}$.
 
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\columnwidth]{fig_key_schedule.png}
+\caption{Rubik-4D key schedule execution pipeline: (1) Direct 128-bit master key ingestion under NIST FIPS 197; (2) Master key folding $\mathit{k\_fold}$ mapping to the active $SO(4)$ permutation table $\pi_{\text{tbl}_{\text{idx}}}$; (3) Recursive subkey derivation across rounds $r = 1 \dots 8$ via 3-byte circular rotation, 16 parallel AES S-boxes, and round-dependent constant injection.}
+\label{fig:key_schedule}
+\end{figure}
+
 \subsection{Mathematical security proofs}
 \label{subsec:proofs}
 
@@ -621,6 +620,13 @@ Round 8 & 22 & $4 \rightarrow 2 \rightarrow 2 \rightarrow 6 \rightarrow 3 \right
 \end{tikzpicture}
 \caption{Visualization of the optimal 8-round differential characteristic trail for Rubik-4D obtained by MILP solver. Each $4 \times 4$ grid represents the 16-byte state, where shaded red squares designate active S-boxes. The cascade demonstrates that the cumulative active S-box lower bound reaches $N_{\text{active}} = 22$, bounding the maximum differential probability to $P_{\text{diff}} \le 2^{-132}$.}
 \label{fig:diff_trail}
+\end{figure*}
+
+\begin{figure*}[htbp]
+\centering
+\includegraphics[width=0.92\textwidth]{fig_avalanche_diffusion.png}
+\caption{Diffusion dynamics and MILP security lower bounds of Rubik-4D: (a) Avalanche bit-flip ratio under 1-bit plaintext and 1-bit key modifications, demonstrating rapid convergence to the theoretical Strict Avalanche Criterion (SAC) binomial center ($50\%$) within 3 rounds; (b) Cumulative active S-box lower bound scan obtained via branch-and-cut MILP solver across rounds $1 \dots 8$, surpassing the 128-bit differential security margin at round 8 ($N_{\text{active}} = 22 \implies P_{\text{diff}} \le 2^{-132} < 2^{-128}$).}
+\label{fig:avalanche_diffusion}
 \end{figure*}
 
 Because the maximum differential trail probability falls strictly below the exhaustive key-search threshold ($2^{-128}$), Rubik-4D provably resists standard differential attacks under the Markov cipher model.
@@ -929,7 +935,14 @@ As detailed in Table~\ref{tab:avalanche_combined}, input bit differences rapidly
 \label{subsec:perf_benchmarks}
 Hardware clock cycles per byte (cpb) were measured directly using the x86 instruction \texttt{\_\_rdtsc()} before and after block processing loops. In single-block core execution latency benchmarks ($1,000,000$ iterations), Rubik-4D achieves $323.20$~cycles/block ($20.20$~cpb) for encryption and $339.51$~cycles/block ($21.22$~cpb) for decryption, comparable to Simon-128 ($319.02$~cycles, $19.94$~cpb), outperforming software AES-128 \cite{nist2001fips} ($419.73$~cycles, $26.23$~cpb) by $23.0\%$, and trailing only the minimal ARX primitive Speck-128 ($93.12$~cycles, $5.82$~cpb).
 
-As shown in Table~\ref{tab:benchmarks_all}, Rubik-4D achieves sustained throughput of $142.57 - 148.52$~MB/s ($21.94 - 22.86$~cpb) for encryption and $157.40 - 167.17$~MB/s ($19.50 - 20.71$~cpb) for decryption (averaging $151.65$~MB/s), consistently outperforming software AES-128 \cite{nist2001fips} ($118.05 - 123.49$~MB/s, $26.39 - 27.61$~cpb) by $+20.3\%$ to $+35.4\%$. Simon-128 and Rubik-4D achieve comparable latency because Simon operates directly on 64-bit registers with zero memory lookups, whereas Rubik-4D eliminates costly Galois field multiplications by leveraging $O(1)$ $SO(4)$ hypercube permutations and 32-bit ARX carry-ripple diffusion.
+As shown in Table~\ref{tab:benchmarks_all} and Fig.~\ref{fig:benchmark_charts}, Rubik-4D achieves sustained throughput of $142.57 - 148.52$~MB/s ($21.94 - 22.86$~cpb) for encryption and $157.40 - 167.17$~MB/s ($19.50 - 20.71$~cpb) for decryption (averaging $151.65$~MB/s), consistently outperforming software AES-128 \cite{nist2001fips} ($118.05 - 123.49$~MB/s, $26.39 - 27.61$~cpb) by $+20.3\%$ to $+35.4\%$. Simon-128 and Rubik-4D achieve comparable latency because Simon operates directly on 64-bit registers with zero memory lookups, whereas Rubik-4D eliminates costly Galois field multiplications by leveraging $O(1)$ $SO(4)$ hypercube permutations and 32-bit ARX carry-ripple diffusion.
+
+\begin{figure*}[htbp]
+\centering
+\includegraphics[width=0.92\textwidth]{fig_benchmark_charts.png}
+\caption{Comparative software performance evaluation across symmetric cryptographic primitives on Intel Core i3-13100F @ 3.40~GHz: (a) Sustained processing throughput (MB/s) across payloads up to 20~MB; (b) Single-block core execution latency measured in CPU clock cycles per byte (cpb), where Rubik-4D ($20.20$~cpb) outperforms software AES-128 ($26.23$~cpb) by $23.0\%$.}
+\label{fig:benchmark_charts}
+\end{figure*}
 
 \subsection{Image cryptanalysis and statistical validation}
 \label{subsec:image_crypt}
