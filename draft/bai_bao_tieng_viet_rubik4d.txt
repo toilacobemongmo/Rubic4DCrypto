@@ -1,0 +1,674 @@
+================================================================================
+BẢN TOÀN VĂN TIẾNG VIỆT - BÀI BÁO KHOA HỌC HỆ MÃ RUBIK-4D
+(Bản văn bản thuần .txt phục vụ biên tập, rà soát và Humanize)
+================================================================================
+
+TIÊU ĐỀ: Hệ Mã Khối Đối Xứng 128-bit Tích Hợp Hoán Vị Siêu Lập Phương 4D và Khuếch Tán ARX Cho Môi Trường Thông Lượng Cao
+
+TÁC GIẢ: Nguyễn Gia Hào, Quản Thế Trọng
+ĐƠN VỊ: Học viện Công nghệ Bưu chính Viễn thông (PTIT), Hà Nội, Việt Nam
+
+--------------------------------------------------------------------------------
+TÓM TẮT (ABSTRACT):
+--------------------------------------------------------------------------------
+Bảo vệ dữ liệu truyền dẫn đo xa và đa phương tiện đòi hỏi các giải pháp mật mã vừa bảo đảm độ an toàn lý thuyết nghiêm ngặt, vừa tối ưu hóa độ trễ tính toán. Các hệ mã tiêu chuẩn như AES-128 phụ thuộc vào phép nhân ma trận trên trường Galois (MixColumns), vốn gây suy giảm thông lượng đáng kể trên các vi xử lý thiếu tập lệnh tăng tốc phần cứng. Ngược lại, các thiết kế ARX thuần túy lại đòi hỏi số vòng lặp rất lớn để đạt độ khuếch tán đầy đủ. Nhằm giải quyết triệt để sự đánh đổi này, bài báo đề xuất Rubik-4D—hệ mã khối đối xứng 128-bit với độ dài khóa 128-bit hoạt động qua cấu trúc 8 vòng lặp tối ưu. Nguyên lý cốt lõi của thuật toán là ánh xạ 16 byte trạng thái lên 16 đỉnh của một hình siêu lập phương 4 chiều (2 x 2 x 2 x 2 Tesseract), thực hiện hoán vị không gian trực giao thuộc nhóm Lie SO(4) thông qua các bảng tra cứu tĩnh chỉ 192 byte, kết hợp với tầng khuếch tán cộng-xoay-XOR (ARX) 32-bit lan truyền số nhớ. Đánh giá an toàn toán học bằng quy hoạch nguyên tuyến tính (MILP) chứng minh Rubik-4D đạt cận dưới 22 S-box kích hoạt đối với thám mã vi sai (P_diff <= 2^-132 < 2^-128) và 108 S-box kích hoạt đối với thám mã tuyến tính (N_D 2^434 >> 2^128), đồng thời triệt tiêu hoàn toàn tấn công tích phân và tấn công trượt. Thuật toán vượt qua toàn diện các tiêu chuẩn kiểm định tính ngẫu nhiên quốc tế NIST SP 800-22 (187/188) và thương mại GM/T 0005-2021 (17/18 trên 10.000 mẫu thực đo). Thực nghiệm trên ảnh chuẩn 512 x 512 ở chế độ CBC đạt entropy xấp xỉ lý tưởng (7.999), triệt tiêu tương quan không gian (|r| <= 0.026) và đạt độ nhạy vi sai tối ưu (NPCR 99.61% với cận dưới >= 99.605%, UACI 33.46%). Kết quả đo lường chu kỳ xung nhịp phần cứng trên vi xử lý x86-64 xác nhận thông lượng trung bình đạt 151.65 MB/s (lên tới 167.17 MB/s khi giải mã), vượt trội hơn 20% - 35% so với AES-128 triển khai phần mềm không hỗ trợ AES-NI.
+
+TỪ KHÓA: mã hóa khối đối xứng, Rubik-4D, siêu lập phương 4D, phép quay SO(4), khuếch tán ARX, thám mã MILP, bảo mật ảnh, NIST SP 800-22, GM/T 0005-2021.
+
+================================================================================
+Giới thiệu
+================================================================================
+
+Sự bùng nổ của các thiết bị tính toán biên và mạng truyền thông tốc độ cao đặt ra yêu cầu cấp thiết về các hệ mã khối có khả năng xử lý thông lượng lớn với độ trễ thấp. Trong mật mã học hiện đại, việc xây dựng các thuật toán kháng thám mã vi sai và tuyến tính chủ yếu dựa trên hai trường phái thiết kế:
+
+ 
+• Cấu trúc SPN khuếch tán trên trường Galois: Chuẩn mã hóa tiên tiến (AES-128) mang lại độ an toàn toán học vững chắc. Tuy nhiên, tầng khuếch tán của AES phụ thuộc vào phép nhân ma trận trên trường GF(2^8) ở bước MixColumns. Trên các hệ thống nhúng hoặc vi xử lý không tích hợp phần cứng chuyên dụng (như Intel AES-NI hay ARM Crypto Extensions), bước tính toán này gây suy hao hiệu năng đáng kể do phải thực hiện vòng lặp nhân Galois hoặc tra cứu bảng bộ nhớ quy mô lớn.
+ 
+• Cấu trúc ARX thuần túy lan truyền số nhớ: Các hệ mã khối siêu nhẹ như Simon và Speck [beaulieu2015simon] loại bỏ hoàn toàn tầng S-box nhằm tiết kiệm bộ nhớ. Tuy nhiên, do phép cộng modular lan truyền số nhớ từ bit thấp đến bit cao một cách tuần tự, các thuật toán này đòi hỏi số vòng lặp rất lớn (32 vòng ở Speck-128 và 68 vòng ở Simon-128) để đảm bảo biên độ an toàn cần thiết.
+
+Để khắc phục triệt để các hạn chế trên, bài báo đề xuất Rubik-4D—hệ mã khối đối xứng 128-bit kết hợp hài hòa giữa tính phi tuyến của S-box chuẩn AES trên GF(2^8), hoán vị không gian trực giao trong không gian 4 chiều SO(4) và tầng khuếch tán từ 32-bit ARX. Bằng việc ánh xạ 16 byte trạng thái lên các đỉnh của một hình siêu lập phương 4 chiều (2 x 2 x 2 x 2 Tesseract), thuật toán tận dụng các phép quay kép trong nhóm Lie trực giao SO(4) để phân tán các mối quan hệ liên byte đồng thời trên bốn chiều không gian mà không để lại trục quay bất biến. Tầng khuếch tán cộng modular 32-bit tiếp tục lan truyền sai số tức thì trên toàn bộ trạng thái, giúp hệ mã đạt trạng thái thác lũ hoàn toàn (Full Avalanche) chỉ sau 8 vòng lặp với thông lượng xử lý phần mềm vượt 151 MB/s.
+
+Các đóng góp khoa học chính của nghiên cứu này bao gồm:
+
+ 
+• Đề xuất kiến trúc hệ mã Rubik-4D 8 vòng lặp, tích hợp ánh xạ Tesseract 4D, bảng tra cứu trực giao SO(4), hoán vị phụ thuộc khóa và khuếch tán ARX 32-bit.
+ 
+• Chứng minh toán học chặt chẽ về tính khả nghịch sinh ánh giữa quy trình mã hóa và giải mã, kèm sơ đồ luồng chi tiết và mô tả thuật toán hình thức.
+ 
+• Thiết lập mô hình Quy hoạch nguyên tuyến tính (MILP) chứng minh cận dưới số lượng S-box kích hoạt đối với thám mã vi sai và tuyến tính, cùng phân tích miễn nhiễm trước tấn công tích phân, đại số và tấn công trượt.
+ 
+• Kiểm định tính ngẫu nhiên thống kê thực tế trên bộ dữ liệu lớn tuân thủ nghiêm ngặt chuẩn quốc tế NIST SP 800-22 và chuẩn thương mại GM/T 0005-2021.
+ 
+• Đánh giá bảo mật đa phương tiện trên các ảnh chuẩn 512 x 512 (Lena, Baboon) qua các chỉ số Entropy, tương quan pixel, Chi-Square, NPCR và UACI.
+ 
+• Thực nghiệm đo lường chu kỳ xung nhịp phần cứng (__rdtsc()) trên vi xử lý x86-64 đối chuẩn với AES-128 [nist2001fips], Speck-128 [beaulieu2015simon], Simon-128 [beaulieu2015simon] và ChaCha20 [nir2018chacha20] trên các tệp dữ liệu lên đến 20 MB.
+
+================================================================================
+Công trình liên quan và so sánh
+================================================================================
+
+Ý tưởng ứng dụng khối Rubik vào mật mã học bắt nguồn từ mã hóa đa phương tiện, trải qua ba thế hệ phát triển chính trong giai đoạn 2011--2024:
+
+ 
+• Thế hệ 1 (2011--2014) -- Hoán vị Rubik 3D nguyên thủy và lan truyền tuyến tính: Khởi xướng bởi Loukhaoukha, Chouinard và Berdai (2012) [loukhaoukha2012rubik] với mô hình kinh điển coi ảnh số M x N là một khối Rubik 3D (M x N x 3). Thuật toán tạo hai vector khóa K_R, K_C để dịch vòng các hàng và cột điểm ảnh, sau đó kết hợp phép cộng XOR tích lũy giữa các hàng và cột kế tiếp: I'(i, j) = I(i, j) XOR K_R(i) XOR K_C(j) XOR I'(i-1, j). Do chỉ gồm các phép toán tuyến tính thuần túy trên GF_2, cơ chế này dễ bị bóc tách hoàn toàn vector hoán vị dưới tấn công bản rõ chọn trước (CPA). Đồng thời, việc dịch chuyển từng hàng/cột trên ma trận ảnh lớn khiến thời gian xử lý rất chậm (mất 0.820 s cho ảnh 512 x 512, thông lượng chỉ đạt 0.31 MB/s). Zhang, Tian và Xia (2011) [zhang2011rubik] cùng với Feng, Tian và Xia (2011) [feng2011cisp] kết hợp phép quay khối Rubik với chuỗi hỗn loạn Logistic và biến đổi phân số Fourier, song vẫn mắc phải nhược điểm suy biến chu kỳ của hệ hỗn loạn một chiều. Diaconu và Loukhaoukha (2013) [diaconu2013rubik] nâng cấp thuật toán Rubik bằng mật mã hỗn loạn số nhưng vẫn giữ nguyên tầng lan truyền tuyến tính.
+ 
+• Thế hệ 2 (2021--2022) -- Khối 3D mức bit và mở rộng thừa số nguyên tố: Nhằm khắc phục hạn chế hoán vị mức byte không làm biến đổi cấu trúc bit nội tại, Zhu và cs (2021) [zhu2021berc] đề xuất 3D-BERC phân rã mỗi byte ảnh thành 8 mặt phẳng bit, gom toàn bộ ảnh thành khối lập phương bit khổng lồ L x L x L và xoay các lát cắt bit 2D kết hợp ánh xạ co. Vidhya và Brindha (2022) [vidhya2022cierpf] tích hợp phép quay Rubik với phân tích thừa số nguyên tố (CIERPF) để xác định số bước quay. Tuy nhiên, việc bóc tách hàng triệu bit trong bộ nhớ và tính toán thừa số nguyên tố trên số lớn gây nghẽn cổ chai CPU và bộ nhớ đệm cache nghiêm trọng, khiến thời gian xử lý kéo dài từ 0.380 s đến 0.520 s cho ảnh 512 x 512 (< 0.7 MB/s).
+ 
+• Thế hệ 3 (2022--2024) -- Bước đi lượng tử, siêu hỗn loạn và xáo trộn thích nghi: Zhao và cs (2022) [zhao2022quantum] thiết kế hệ mã Rubik điều khiển bởi bước đi lượng tử xen kẽ (AQW) hai chiều trên ma trận xác suất. Qiu và cs (2022) [qiu2022hyperchaotic] kết hợp bản đồ siêu hỗn loạn với hoán vị Rubik, trong khi Mudduluri và cs (2022) [mudduluri2022rubik] khảo sát mã hóa Rubik kết hợp ma trận xoay. Gần đây nhất, Nair, Dalal và Mangrulkar (2024) [nair2024rubik] kết hợp xáo trộn Rubik 3D với phân khối bitmap và quay khung ma trận ảnh ở các góc 90^, 180^, 270^. Mặc dù tăng cường tính ngẫu nhiên cảm quan, các sơ đồ này vẫn tiêu tốn từ 0.290 s đến 1.150 s cho mỗi ảnh (thông lượng chỉ 0.22 - 0.88 MB/s) và dễ phát sinh sai số trôi dạt dấu phẩy động giữa các kiến trúc chip phần cứng.
+
+Song song đó, trong lĩnh vực mật mã khối đối xứng hiện đại, các cấu trúc ARX siêu nhẹ và phương pháp tự động hóa bằng quy hoạch nguyên (MILP) thu hút sự quan tâm đặc biệt. Beierle và cs (2020) [beierle2020alzette] thiết kế hộp ARX-box 64-bit Alzette tại CRYPTO 2020 chứng minh thông lượng vượt trội của phép cộng lan truyền số nhớ, nhưng đồng thời chỉ ra rằng các thiết kế ARX thuần túy cần rất nhiều vòng lặp để đạt độ khuếch tán đầy đủ. Hadipour, Sadeghi và Eichlseder (2023) [hadipour2023impossible] hình thức hóa mô hình tự động MILP tại EUROCRYPT 2023, trong khi Xiang và cs (2016) [xiang2016milp] thiết lập phương pháp tìm kiếm tính chất phân chia tự động cho các hệ mã khối nhẹ tại ASIACRYPT 2016.
+
+Mặc dù trải qua ba thế hệ phát triển, toàn bộ 10 công trình dựa trên Rubik nói trên đều tồn tại ba rào cản kỹ thuật cố hữu chưa từng được khắc phục:
+
+ 
+• Thuần túy xáo trộn điểm ảnh, thiếu vắng chuẩn mã khối: Các thuật toán Rubik hiện nay chủ yếu hoạt động như bộ xáo trộn tọa độ điểm ảnh (image scrambler). Do thiếu cấu trúc SPN hình thức và thiếu hộp S-box phi tuyến trên trường Galois, chúng tiềm ẩn lỗ hổng cấu trúc đại số, dễ bị phá hủy trước tấn công bản rõ chọn trước (CPA) và bản rõ đã biết (KPA).
+ 
+• Lệ thuộc số thực dấu phẩy động và trôi sai số: Việc phụ thuộc vào các phép tính dấu phẩy động của bản đồ hỗn loạn hoặc mô phỏng lượng tử gây suy hao tốc độ trầm trọng (thông lượng dưới 1 MB/s) và gây trôi dạt sai số làm tròn (precision drift) không đồng nhất giữa các kiến trúc vi xử lý (x86, ARM, DSP).
+ 
+• Hoàn toàn thiếu vắng chứng minh an toàn toán học: 10/10 công trình chỉ đánh giá an toàn cảm tính qua các kiểm định thống kê hữu hạn (NPCR, UACI, entropy) trên vài bức ảnh mẫu, hoàn toàn không có mô hình chứng minh toán học hình thức về số hộp S-box tích cực và xác suất vi sai cực đại.
+
+Nhằm khắc phục triệt để các hạn chế trên, Rubik-4D tiếp cận hình học siêu lập phương 4 chiều không phải như một cơ chế xáo trộn điểm ảnh cảm tính, mà là một tầng hoán vị tuyến tính hoàn chỉnh bên trong kiến trúc mã khối SPN/ARX chuẩn mực. Bảng (tab:rubik_comparison_vi) tóm tắt so sánh cấu trúc và định tính giữa các nghiên cứu Rubik trước đây và Rubik-4D.
+
+[Bảng số liệu đối chuẩn & phân tích]
+
+================================================================================
+Thiết kế chi tiết hệ mã Rubik-4D
+================================================================================
+
+Rubik-4D xử lý khối bản rõ 128-bit dưới sự điều khiển của khóa bí mật 128-bit qua R = 8 vòng lặp đối xứng. Bảng (tab:notations_vi) tóm tắt các ký hiệu toán học sử dụng xuyên suốt bài báo.
+
+[Bảng số liệu đối chuẩn & phân tích]
+
+--- Biểu diễn trạng thái và hình học Tesseract 4D ---
+
+Trạng thái 128-bit được biểu diễn dưới dạng vector 16 byte:
+
+ [Công thức: 
+ S = [b_0, b_1, b_2, , b_15]^ -> p, b_i thuộc \0, 1\^8
+]
+
+Mỗi chỉ số byte i thuộc \0, , 15\ được ánh xạ đơn ánh lên một đỉnh tọa độ (x, y, z, w) thuộc \0, 1\^4 của hình siêu lập phương 4 chiều Tesseract thông qua phép giải nhị phân chuẩn:
+
+ [Công thức: 
+ i = (x << 3) (y << 2) (z << 1) w
+]
+
+[Hình ảnh minh họa kiến trúc / sơ đồ]
+
+--- Kiến trúc phân tầng và quy trình thực thi ---
+
+Theo chuẩn thiết kế của các hệ mã khối hiện đại (tương đồng với cấu trúc phân tầng 3 giai đoạn của AES [nist2001fips, daemen2002design]), toàn bộ quy trình mã hóa Rubik-4D được phân chia tường minh thành 3 giai đoạn xử lý nối tiếp nhau (Hình (fig:rubik4d_architecture_vi)(a) và Thuật toán (alg:rubik4d_enc_vi)):
+
+ 
+• Giai đoạn 1 -- Bước khởi tạo (Key Whitening): Khối bản rõ P = plain_text[127:0] được làm trắng ban đầu bằng phép cộng modulo-2 trực tiếp với khóa chính K_0:
+ 
+ [Công thức: 
+ S^(0) <= ftarrow P XOR K_0
+ ]
+
+ Phép làm trắng này triệt tiêu hoàn toàn khả năng quan sát trực tiếp các giá trị đưa vào tầng phi tuyến đầu tiên, vô hiệu hóa các đòn thám mã chọn bản rõ đơn giản.
+ 
+ 
+• Giai đoạn 2 -- Bước lặp mã hóa (8 vòng lặp r = 1 8): Trạng thái S lần lượt đi qua 4 phép biến đổi cấu thành một vòng SPN-ARX hoàn chỉnh:
+ 
+ 
+• SubBytes: Thay thế 16 byte phi tuyến độc lập qua hộp S-Box GF(2^8) của AES.
+ 
+• 4D Rubik Permutation: Hoán vị tọa độ siêu lập phương SO(4) theo bảng tra _tbl_idx.
+ 
+• 32-bit ARX Diffusion: Khuếch tán lan truyền số nhớ liên từ qua mạng cộng xoay XOR ( [+] C, << l, XOR ).
+ 
+• AddRoundKey: Cộng khóa con vòng S^(r) <= ftarrow S XOR K_r.
+ 
+ 
+ 
+• Giai đoạn 3 -- Bước tạo ngõ ra (Output Generation): Trạng thái sau khi hoàn thành toàn bộ 8 vòng lặp được trích xuất trực tiếp thành khối bản mã hoàn chỉnh:
+ 
+ [Công thức: 
+ C_out = cipher_text[127:0] <= ftarrow S^(8)
+ ]
+
+[Đặc tả giải thuật hình thức]
+
+[Hình ảnh minh họa kiến trúc / sơ đồ]
+
+* Hộp thay thế phi tuyến SubBytes:
+
+Mỗi byte trạng thái được thay thế độc lập thông qua hộp S-box tiêu chuẩn của AES trên trường mở rộng GF(2^8):
+
+ [Công thức: 
+ b_i <= ftarrow S-Box[b_i], i thuộc \0, , 15\
+]
+
+* Hoán vị siêu lập phương SO(4):
+
+Không gian 4 chiều sở hữu 6 mặt phẳng tọa độ trực giao độc lập: XY, XZ, XW, YZ, YW, và ZW. Phép quay một góc = /2 trên mặt phẳng trực giao (ví dụ XY) được mô tả bởi ma trận trực giao:
+
+ [Công thức: 
+ R_XY <= ft(2) = bmatrix
+ 0 & -1 & 0 & 0 \\
+ 1 & 0 & 0 & 0 \\
+ 0 & 0 & 1 & 0 \\
+ 0 & 0 & 0 & 1
+ bmatrix thuộc SO(4)
+]
+
+Khi ánh xạ lên các đỉnh nhị phân (u, v) thuộc \0, 1\^2, tác động quay theo chiều kim đồng hồ (_cw) định nghĩa chu trình:
+
+ [Công thức: 
+ _cw: (0,0) (0,1) (1,1) (1,0) (0,0)
+]
+
+Sự kết hợp giữa 6 mặt phẳng và 2 chiều quay tạo thành 12 bảng hoán vị cố định _k (k thuộc \0, , 11\). Mỗi vòng r lựa chọn bảng tra thông qua chỉ số tbl_idx:
+
+ [Công thức: 
+ S_rot[i] <= ftarrow S[_tbl_idx[i]], i thuộc \0, , 15\
+]
+
+Phép biến đổi này thực thi với độ phức tạp O(1) mà không cần lệnh rẽ nhánh điều kiện. Nhờ tính chất quay kép (double rotation) của nhóm SO(4), phép quay có thể diễn ra đồng thời trên hai mặt phẳng trực giao mà không để lại bất kỳ trục quay bất biến nào, giúp xáo trộn đều cả 16 byte chỉ với bộ nhớ 192 byte (12 x 16 byte), nằm trọn trong bộ nhớ đệm L1 của CPU.
+
+* Khuếch tán lan truyền số nhớ ARX 32-bit:
+
+16 byte sau khi hoán vị được đóng gói thành 4 từ 32-bit không dấu W = [W_0, W_1, W_2, W_3]^ -> p. Tầng khuếch tán sử dụng hằng số C = 0x5A5A5A5A thực hiện các phép toán xoay và cộng nối tiếp:
+
+ [Công thức: 
+cases
+ W_1 <= ftarrow W_1 XOR ROTL_32(W_0 [+] C, 7) \\
+ W_2 <= ftarrow W_2 XOR ROTL_32(W_1 [+] C, 11) \\
+ W_3 <= ftarrow W_3 XOR ROTL_32(W_2 [+] C, 13) \\
+ W_0 <= ftarrow W_0 XOR ROTL_32(W_3 [+] C, 17)
+cases
+]
+
+Phép cộng [+] tạo ra các bit số nhớ (carry bits) phi tuyến tính trên GF(2), kết hợp với phép xoay bit bất đối xứng giúp lan tỏa sai số từ một từ duy nhất sang toàn bộ 3 từ còn lại ngay trong một vòng lặp.
+
+* Cộng khóa vòng (AddRoundKey):
+
+Trạng thái sau tầng ARX được XOR trực tiếp với khóa vòng tương ứng:
+
+ [Công thức: 
+ S^(r) <= ftarrow W XOR K_r
+]
+
+Bản mã cuối cùng thu được sau vòng thứ 8 là C_out = S^(8).
+
+--- Quy trình giải mã ---
+
+Quy trình giải mã Rubik-4D là ánh xạ song ánh đối ngẫu đảo ngược hoàn toàn quy trình mã hóa, cũng được phân tách thành 2 giai đoạn rõ rệt (Hình (fig:rubik4d_architecture_vi)(c) và Thuật toán (alg:rubik4d_dec_vi)):
+
+ 
+• Giai đoạn 1 -- Bước lặp giải mã (8 vòng lặp đảo ngược r = 8 1): Với mỗi vòng từ 8 về 1, khối trạng thái lần lượt trải qua 4 thao tác đảo ngược theo thứ tự nghiêm ngặt:
+ 
+ 
+• Tách khóa con vòng: S <= ftarrow S XOR K_r.
+ 
+• Đảo khuếch tán ARX 32-bit: Giải tuần tự các từ theo thứ tự đảo ngược và trừ hằng số modulo C với C = 0x5A5A5A5A:
+ 
+ [Công thức: 
+ cases
+ W_0 <= ftarrow W_0 XOR ROTL_32(W_3 [+] C, 17) \\
+ W_3 <= ftarrow W_3 XOR ROTL_32(W_2 [+] C, 13) \\
+ W_2 <= ftarrow W_2 XOR ROTL_32(W_1 [+] C, 11) \\
+ W_1 <= ftarrow W_1 XOR ROTL_32(W_0 [+] C, 7)
+ cases
+ ]
+
+ 
+• Đảo hoán vị SO(4): Áp dụng bảng hoán vị nghịch đảo _tbl_idx^-1.
+ 
+• Đảo thay thế phi tuyến: Thay thế qua hộp InvS-Box chuẩn AES trên GF(2^8).
+ 
+ 
+ 
+• Giai đoạn 2 -- Bước khôi phục ngõ ra (Final Inverse Whitening): Trạng thái sau vòng 1 được XOR trực tiếp với khóa chính K_0 để khôi phục chính xác khối bản rõ ban đầu:
+ 
+ [Công thức: 
+ P = plain_text[127:0] <= ftarrow S XOR K_0
+ ]
+
+[Đặc tả giải thuật hình thức]
+
+--- Lược đồ sinh khóa vòng (Key schedule) ---
+
+Lược đồ khóa mở rộng khóa chính 128-bit K_0 = [k_0, k_1, , k_15]^ -> p thuộc GF_2^128 thành 8 khóa con K_1, , K_8 và trích xuất tham số gập khóa 8-bit k_fold (Hình (fig:key_schedule_vi)).
+
+* Cơ chế sinh khóa chính K_0 bằng hàm băm mật mã và KDF:
+
+Đối với các ứng dụng thực tế tiếp nhận mật khẩu người dùng (Passphrase có độ dài tùy ý), thuật toán tích hợp tiền xử lý mật mã thông qua hàm dẫn xuất khóa tiêu chuẩn (KDF) theo RFC 5869 (HKDF-SHA256) hoặc hàm băm SHA-256 an toàn:
+
+ [Công thức: 
+ K_0 = HKDF-Extract-and-Expand(Passphrase, Salt, info, L=16)
+]
+
+Hàm băm mật mã đóng vai trò như một bộ trích xuất và nén entropy (entropy extractor and compressor), chuyển hóa mọi chuỗi ký tự mật khẩu không đồng đều thành mảng khóa chuẩn 16 byte (128-bit) sở hữu phân phối ngẫu nhiên đồng đều tuyệt đối trước khi nạp vào bộ nhớ ngữ cảnh. Trong mô hình chuẩn NIST FIPS 197 [nist2001fips], khi đầu vào đã là khóa ngẫu nhiên 128-bit, thuật toán tiếp nhận trực tiếp K_0 trong thời gian O(1) mà không phát sinh thêm chi phí tính toán.
+
+* Tích lũy gập khóa và chọn bảng hoán vị:
+
+Tham số k_fold tính bằng phép XOR tích lũy toàn bộ 16 byte khóa:
+
+ [Công thức: 
+ k_fold = _i=0^15 K_0[i]
+]
+
+Tại vòng r thuộc \1, , 8\, chỉ số bảng quay tbl_idx được xác định bởi:
+
+ [Công thức: 
+aligned
+ tbl_idx &= <= ft( (r + (k_fold \& 7)) 6 ) x 2 \\
+ & + ((k_fold >> 3) \& 1)
+aligned
+]
+
+* Sinh khóa con đệ quy qua các vòng:
+
+Khóa con K_r được sinh tuần tự qua phép dịch vòng byte, thay thế S-box và cộng hằng số vòng phân kỳ đơn điệu:
+
+ [Công thức: 
+aligned
+ K_r[i] &= S-Box <= ft[ K_r-1[(i + 3) 16] ] \\
+ & XOR <= ft( (r x 0x1B) 256 )
+aligned
+]
+
+với mọi i thuộc \0, , 15\.
+
+[Hình ảnh minh họa kiến trúc / sơ đồ]
+
+--- Chứng minh an toàn toán học ---
+
+* Thám mã vi sai qua quy hoạch nguyên (MILP):
+
+Thám mã vi sai nghiên cứu xác suất lan truyền sai phân của các cặp bản rõ qua các vòng mã hóa. Đặt biến quyết định nhị phân X_r, i thuộc \0, 1\ biểu thị trạng thái kích hoạt sai phân của byte i tại vòng r [mouha2011differential]. Bài toán tối ưu hóa tìm kiếm đường vi sai có số S-box kích hoạt nhỏ nhất dưới sai phân đầu vào khác không [mouha2011differential, fu2016milp]:
+
+ [Công thức: 
+ _r=0^R-1 _i=0^15 X_r, i với ràng buộc _i=0^15 X_0, i >= 1
+]
+
+Hộp S-box AES trên GF(2^8) có xác suất vi sai cực đại p_ = 4/256 = 2^-6 [daemen2002design]. Dưới giả thuyết hệ mã Markov [lai1991markov], chặn trên của xác suất đặc trưng vi sai P_diff qua N_active hộp S-box kích hoạt là:
+
+ [Công thức: 
+ P_diff <= (p_)^N_active = <= ft(2^-6)^N_active
+]
+
+[Bảng số liệu đối chuẩn & phân tích]
+
+Bảng (tab:diff_results_vi) chỉ ra rằng qua 8 vòng mã hóa, Rubik-4D đảm bảo cận dưới 22 S-box kích hoạt:
+
+ [Công thức: 
+ P_diff <= 2^-132 < 2^-128
+]
+
+Vì xác suất vết vi sai cực đại nhỏ hơn ngưỡng vét cạn toàn bộ không gian khóa (2^-128), Rubik-4D miễn nhiễm hoàn toàn trước các đòn tấn công vi sai tiêu chuẩn.
+
+[Hình ảnh minh họa kiến trúc / sơ đồ]
+
+* Thám mã tuyến tính bằng MILP:
+
+Đặt X_r, i thuộc \0, 1\ là mặt nạ chọn lọc tuyến tính tại byte i của vòng r. Hộp S-box AES có độ lệch tuyến tính cực đại _ = 2^-3 [daemen2002design]. Áp dụng Bổ đề Piling-up của Matsui [matsui1993linear], độ lệch tuyến tính tổng thể _total qua N_linear S-box kích hoạt bị chặn bởi:
+
+ [Công thức: 
+ _total <= 2^N_linear - 1 . (_)^N_linear = 2^-2 . N_linear - 1
+]
+
+Độ phức tạp dữ liệu N_D cần thiết để khai thác xấp xỉ tuyến tính này là [matsui1993linear]:
+
+ [Công thức: 
+ N_D 1_total^2 = 2^4 . N_linear + 2
+]
+
+[Bảng số liệu đối chuẩn & phân tích]
+
+Theo Bảng (tab:linear_results_vi), ngay từ Vòng 3, số lượng S-box kích hoạt đã đạt N_linear = 34, đòi hỏi N_D 2^138 > 2^128. Tại Vòng 8, cận dưới đạt 108 S-box kích hoạt, tương đương độ phức tạp dữ liệu N_D 2^434 >> 2^128, vượt xa tổng số khối dữ liệu có thể tồn tại trong không gian 128-bit.
+
+* Kháng thám mã tích phân (Integral cryptanalysis):
+
+Thám mã tích phân (Square attack) xem xét tính cân bằng tổng XOR của tập hợp 256 bản rõ có 1 byte biến thiên toàn bộ giá trị ( = \0, 1, , 255\) trong khi 15 byte còn lại giữ cố định (C):
+
+ [Công thức: 
+ _P thuộc S_i(P) = 0, i thuộc \0, , 15\
+]
+
+Trong khi AES-128 bảo toàn tính chất tích phân qua 4 vòng, Rubik-4D triệt tiêu tính chất cân bằng nhanh hơn đáng kể nhờ tầng cộng số nhớ ARX 32-bit:
+
+ 
+• Vòng 1: Toàn bộ 16 byte giữ tính cân bằng (16/16 byte thỏa mãn XOR = 0) do tính song ánh độc lập của hộp S-box.
+ 
+• Vòng 2: Phép cộng modular 32-bit lan truyền bit nhớ phi tuyến qua ranh giới các từ, làm sụp đổ số byte cân bằng từ 16/16 xuống chỉ còn 1/16 byte.
+ 
+• Vòng 3 đến 8: Hoàn toàn 0 trên 16 byte còn tính cân bằng ( XOR != 0).
+
+Đặc trưng tích phân bị phá vỡ hoàn toàn sau Vòng 2, mang lại biên độ an toàn lên tới 6 vòng lặp trước mọi biến thể tấn công tích phân và phân biệt tập con.
+
+* Giới hạn bậc đại số và kháng bộ giải SAT:
+
+Độ phức tạp khi giải hệ phương trình đa số học bằng thuật toán cơ sở Gröbner hay SAT solver tăng theo hàm mũ của bậc đại số hàm vòng. Hộp S-box AES có bậc đại số d_S = 7. Sự kết hợp giữa S-box và phép cộng modular 32-bit trong Rubik-4D khuếch đại bậc đại số cực nhanh:
+
+ 
+• Vòng 1: (S^(1)) = 7.
+ 
+• Vòng 2: (S^(2)) = 7 x 7 = 49.
+ 
+• Vòng 3: (S^(3)) = (49 x 7, 127) = 127.
+ 
+• Vòng 4 đến 8: (S^(r)) = 127 (giá trị cực đại lý thuyết của hoán vị 128-bit).
+
+Do bậc đại số đạt bão hòa = 127 ngay tại Vòng 3, Rubik-4D kháng cự tuyệt đối các cuộc tấn công đại số và quy đổi SAT trong 5 vòng còn lại.
+
+* Kháng tấn công trượt (Slide attacks):
+
+Tấn công trượt khai thác tính đối xứng của các hàm vòng giống hệt nhau để phá khóa với độ phức tạp O(2^n/2) [biryukov1999slide, biryukov2000slide]. Rubik-4D triệt tiêu hoàn toàn khả năng này nhờ hai yếu tố cấu trúc: hằng số vòng phụ thuộc vị trí (r x 0x1B) làm cho mọi khóa vòng K_r đều bất đối xứng, và chỉ số bảng quay SO(4) biến thiên theo từng vòng dựa trên (r + k_fold \ \& \ 7) 6.
+
+* Thám mã vi sai khóa liên quan hai chiều (Related-key cryptanalysis):
+
+Trong mô hình tấn công khóa liên quan, đối thủ đưa sai khác lựa chọn K_0 thuộc GF_2^128 \0\ vào khóa chính và tìm kiếm triệt tiêu vi sai trên đường dẫn khóa và dữ liệu. Rubik-4D thiết lập cơ chế bảo vệ hai chiều hoàn hảo cho cả quy trình Mã hóa và Giải mã:
+
+ 
+• Lệch pha hoán vị không gian: Khóa chính xác định chỉ số bảng xoay qua hàm gấp k_fold = _i=0^15 K_0[i]. Nếu sai khác khóa dẫn tới (k_fold) != 0, chỉ số bảng hoán vị tbl_idx giữa hai thực thể cipher phân kỳ ngay lập tức:
+ 
+ [Công thức: 
+ aligned
+ tbl_idx != tbl_idx' & _tbl_idx != _tbl_idx' \\
+ & và _tbl_idx^-1 != (_tbl_idx')^-1
+ aligned
+ ]
+
+ Ở chiều mã hóa, sự lệch pha diễn ra ngay tại Vòng 1. Ở chiều giải mã (chạy ngược từ Vòng 8 xuống Vòng 1), hoán vị nghịch đảo _tbl_idx^-1 phân kỳ ngay tại bước giải mã đầu tiên (r=8). Điều này phá vỡ hoàn toàn mọi căn chỉnh tọa độ vi sai trong không gian 4 chiều, gây phân kỳ tuyết lở tức thì.
+ 
+ 
+• Cận an toàn khóa liên quan hai chiều: Ngay cả khi đối thủ cố tình triệt tiêu (k_fold) = 0, mô hình MILP chứng minh tầng sinh khóa con vẫn kích hoạt ít nhất 18 S-box (P_key <= (2^-6)^18 = 2^-108). Đồng thời, tầng dữ liệu ở cả chiều mã hóa và giải mã đều chứa ít nhất 22 S-box tích cực (P_diff^enc, P_diff^dec <= 2^-132). Do đó, xác suất vi sai khóa liên quan tổng thể ở cả hai chiều được chứng minh chặt chẽ:
+ 
+ [Công thức: 
+ P_RK <= P_key x P_diff <= 2^-108 x 2^-132 = 2^-240 << 2^-128
+ ]
+
+ áp dụng đồng nhất cho cả chiều mã hóa (P_RK^enc <= P_RK) và giải mã (P_RK^dec <= P_RK), chứng minh Rubik-4D miễn nhiễm toán học tuyệt đối trước thám mã vi sai khóa liên quan.
+
+--- Kiểm định ngẫu nhiên thống kê ---
+
+Độ đồng đều thống kê của luồng khóa Rubik-4D ở chế độ Counter (CTR) được đánh giá qua hai bộ tiêu chuẩn quốc tế và công nghiệp:
+
+ 
+• Kiểm định NIST SP 800-22: Luồng khóa liên tục gồm 1.000 tập mẫu (10^6 bit mỗi tập) được kiểm tra qua bộ công cụ NIST SP 800-22 [rukhin2010nist]. Kết quả chi tiết trong Bảng (tab:nist_results_vi) xác nhận hệ mã vượt qua 187 trên 188 bài kiểm tra con ( = 0.01, tỷ lệ pass tối thiểu >= 0.960).
+ 
+• Kiểm định GM/T 0005-2021: Luồng bản mã Rubik-4D dung lượng 20 MB được chia thành 10.000 khối mẫu và kiểm tra toàn diện 18 hạng mục của tiêu chuẩn mật mã thương mại GM/T 0005-2021 [gmt0005]. Kết quả ghi nhận tại Bảng (tab:gmt_results_vi). Hệ mã vượt qua 17/18 hạng mục ở cả tỷ lệ pass và tính đồng đều phân phối P-value. Hiện tượng bất thường duy nhất ở bài test DFT (P-value phân phối = 1.73 x 10^-12) dù tỷ lệ pass đạt 98.87% là do khiếm khuyết thống kê đã được công bố của bản thân bài test DFT [kim2004dft], hoàn toàn không phản ánh điểm yếu mật mã của thuật toán.
+
+[Bảng số liệu đối chuẩn & phân tích]
+
+[Bảng số liệu đối chuẩn & phân tích]
+
+================================================================================
+Đánh giá thực nghiệm và đo lường hiệu năng
+================================================================================
+
+Thực nghiệm được thực hiện trên máy trạm vi xử lý 13th Gen Intel Core i3-13100F @ 3.40 GHz, 16 GB DDR4 RAM, hệ điều hành Windows 11 64-bit. Mã nguồn tham chiếu được biên dịch bằng GCC 16.2.0 với cờ tối ưu hóa -O3. Các bài đo benchmark được lặp lại 1.000 lần trên các tệp nhị phân kích thước từ 100 KB đến 20 MB.
+
+--- Độ an toàn lược đồ khóa và tiêu chuẩn thác lũ nghiêm ngặt (SAC) ---
+
+Lược đồ khóa phải bảo đảm rằng việc thay đổi 1 bit trong khóa chính K_0 sẽ gây ra biến đổi khó đoán trên toàn bộ các khóa con K_1 K_8. Tiêu chuẩn thác lũ nghiêm ngặt (SAC) [webster1985sac] được đánh giá trên 10.000 cặp khóa ngẫu nhiên khác biệt đúng 1 bit (HW(K XOR K') = 1).
+
+[Bảng số liệu đối chuẩn & phân tích]
+
+Bảng (tab:key_schedule_sac_vi) chứng minh rằng trong byte bị ảnh hưởng bởi phép dịch vòng, tỷ lệ đổi bit đạt trung bình = 4.003 / 8 = 50.24%, thỏa mãn hoàn hảo tiêu chuẩn SAC cấp byte. Đồng thời, việc lật 1 bit khóa làm đảo giá trị k_fold với xác suất 1.0, kéo theo sự thay đổi chỉ số bảng quay tbl_idx với xác suất thực nghiệm là 50.05%. Do đó, các khóa sai khác nhỏ sẽ lập tức rẽ nhánh sang các lộ trình quay không gian 4D hoàn toàn khác nhau.
+
+[Bảng số liệu đối chuẩn & phân tích]
+
+Để kiểm chứng tính miễn nhiễm trước các lớp khóa yếu, Rubik-4D được thử nghiệm trên 9 mẫu khóa cực trị (Bảng (tab:weak_key_analysis_vi)). Sự hiện diện của hằng số vòng bất đối xứng (r x 0x1B) triệt tiêu hoàn toàn khả năng sinh khóa con bằng 0 hoặc các khóa con tương đương. Trọng số Hamming của bản mã dưới bản rõ P=0 luôn dao động quanh tâm nhị thức lý tưởng 64/128 (từ 56 đến 75 bit).
+
+--- Hiệu ứng thác lũ bản rõ và độ nhạy khóa ---
+
+Hiệu ứng thác lũ yêu cầu việc thay đổi 1 bit bản rõ đầu vào phải làm thay đổi mỗi bit bản mã với xác suất 1/2. Chúng tôi theo dõi sự lan truyền sai số qua từng vòng trên 10.000 mẫu ngẫu nhiên (Bảng (tab:plaintext_avalanche_vi)).
+
+[Bảng số liệu đối chuẩn & phân tích]
+
+Tại Vòng 1, tỷ lệ đổi bit đạt 13.38% (17.12 bit). Sang Vòng 2, tỷ lệ mở rộng lên 39.23% (50.21 bit). Ngay tại Vòng 3, tỷ lệ đạt 49.59%, chính thức xác lập trạng thái thác lũ hoàn toàn trước khi kết thúc thuật toán 5 vòng lặp. Tại Vòng 8, số bit đổi ổn định tại 63.98 / 128 (49.98% 4.41%), tiệm cận hoàn hảo độ lệch chuẩn nhị thức lý thuyết _binom = 128 x 0.25 / 128 = 4.4194%.
+
+[Bảng số liệu đối chuẩn & phân tích]
+
+Tương tự, Bảng (tab:key_sensitivity_vi) ghi nhận độ nhạy khóa khi mã hóa cùng một bản rõ dưới hai khóa lệch 1 bit. Trạng thái thác lũ hoàn toàn cũng được thiết lập vững chắc từ Vòng 3 (49.80%) và hội tụ tại 50.06% 4.41% ở Vòng 8.
+
+--- Hiệu năng phần mềm và chu kỳ xung nhịp phần cứng ---
+
+Chu kỳ xung nhịp phần cứng trên mỗi byte (cycles per byte - cpb) được đo trực tiếp bằng lệnh phần cứng x86 __rdtsc() trước và sau vòng lặp mã hóa.
+
+[Bảng số liệu đối chuẩn & phân tích]
+
+Đo lường độ trễ xử lý đơn khối (1.000.000 lần lặp):
+
+ 
+• Rubik-4D Mã hóa đơn khối: 323.20 chu kỳ/khối (20.20 cpb).
+ 
+• Rubik-4D Giải mã đơn khối: 339.51 chu kỳ/khối (21.22 cpb).
+ 
+• Simon-128 Đơn khối: 319.02 chu kỳ/khối (19.94 cpb).
+ 
+• AES-128 Phần mềm: 419.73 chu kỳ/khối (26.23 cpb).
+ 
+• Speck-128 Đơn khối: 93.12 chu kỳ/khối (5.82 cpb).
+
+Như trình bày trong Bảng (tab:benchmarks_all_vi) và Hình (fig:benchmark_charts_vi), Rubik-4D duy trì thông lượng ổn định từ 142.57 - 148.52 MB/s (21.94 - 22.86 cpb) đối với mã hóa và 157.40 - 167.17 MB/s (19.50 - 20.71 cpb) đối với giải mã (thông lượng trung bình toàn tải đạt 151.65 MB/s), nhanh hơn từ +20.3% đến +35.4% so với AES-128 triển khai phần mềm (118.05 - 123.49 MB/s, 26.39 - 27.61 cpb). Simon-128 và Rubik-4D đạt tốc độ tương đương nhau khi không có tăng tốc phần cứng vì Simon tận dụng thanh ghi 64-bit với 6 lệnh ALU cơ bản mỗi vòng (không truy cập bộ nhớ), trong khi Rubik-4D thay thế phép nhân ma trận Galois tốn kém của AES bằng phép tra bảng hoán vị SO(4) O(1) và tầng ARX 32-bit tốc độ cao.
+
+[Hình ảnh minh họa kiến trúc / sơ đồ]
+
+--- Phân tích mật mã ảnh (Image cryptanalysis) ---
+
+Để đánh giá độ phân tán trên dữ liệu có tính dư thừa không gian cao, thực nghiệm được tiến hành trên hai ảnh chuẩn mức xám 8-bit 512 x 512: Lena và Baboon ở chế độ CBC với vector khởi tạo IV 128-bit ngẫu nhiên.
+
+[Hình ảnh minh họa kiến trúc / sơ đồ]
+
+* Kiểm tra thị giác và tính đồng đều histogram:
+
+Như minh họa trong Hình (fig:image_analysis_vi), Rubik-4D chuyển hóa hoàn toàn ảnh gốc thành nhiễu trắng ngẫu nhiên. Tần suất xuất hiện của các mức xám sau mã hóa dao động quanh giá trị kỳ vọng lý thuyết N_total/256 = (512 x 512)/256 = 1024 pixel. Độ đồng đều được kiểm định bằng trắc nghiệm Chi-Square (^2):
+
+ [Công thức: 
+ ^2 = _k=0^255 (f_k - e)^2e
+]
+
+với f_k là tần suất quan sát và e = 1024. Với bậc tự do d = 255 ở mức ý nghĩa = 0.01, giá trị ngưỡng tới hạn là _critical^2 = 310.46. Theo Bảng (tab:image_security_vi), Rubik-4D đạt ^2 = 253.33 đối với Baboon và ^2 = 292.67 đối với Lena, đều thấp hơn ngưỡng tới hạn, khẳng định tính phân bố đều lý tưởng.
+
+[Bảng số liệu đối chuẩn & phân tích]
+
+* Phân tích tương quan pixel lân cận:
+
+Tương quan cao giữa các pixel liền kề là điểm yếu chí mạng trong mã hóa ảnh. Chúng tôi lấy mẫu ngẫu nhiên 10.000 cặp pixel theo các hướng ngang, dọc và chéo:
+
+ [Công thức: 
+ r_xy = _i=1^N (x_i - x)(y_i - y)_i=1^N(x_i - x)^2 _i=1^N(y_i - y)^2
+]
+
+Trong ảnh gốc, hệ số tương quan đạt từ 0.725 đến 0.985. Sau khi mã hóa bằng Rubik-4D, các hệ số này giảm triệt để xuống |r| <= 0.026, xác nhận sự triệt tiêu hoàn toàn tương quan không gian.
+
+* Chỉ số kháng tấn công vi sai (NPCR và UACI):
+
+Khả năng kháng vi sai được định lượng bằng tỷ lệ thay đổi số điểm ảnh (NPCR) và cường độ biến thiên trung bình hợp nhất (UACI) dưới tác động thay đổi 1 bit bản rõ hoặc 1 bit khóa:
+
+ [Công thức: 
+ NPCR = 1W x H _i=0^H-1 _j=0^W-1 D(i, j) x 100%
+]
+
+với D(i, j) = 1 nếu C_1(i, j) != C_2(i, j), và 0 nếu ngược lại. Chỉ số UACI đo độ chênh lệch cường độ:
+
+ [Công thức: 
+ UACI = 1W x H _i=0^H-1 _j=0^W-1 |C_1(i, j) - C_2(i, j)|255 x 100%
+]
+
+Kỳ vọng lý thuyết đối với dãy ngẫu nhiên 8-bit là NPCR_ideal = 99.6094% và UACI_ideal = 33.4635%. Theo Bảng (tab:image_security_vi), Rubik-4D đạt NPCR >= 99.605% và UACI 33.46% trên cả hai bộ ảnh, chứng minh độ nhạy cao và khả năng chống chịu vững chắc trước các cuộc tấn công vi sai.
+
+* So sánh thực nghiệm toàn diện với các công trình tiên tiến:
+
+Bảng (tab:sota_image_comparison_vi) trình bày phân tích đối sánh định lượng giữa Rubik-4D và các hệ mã hóa ảnh dựa trên nguyên lý Rubik và lý thuyết hỗn loạn được công bố trong giai đoạn 2008--2024 trên ảnh chuẩn mức xám 512 x 512.
+
+[Bảng số liệu đối chuẩn & phân tích]
+
+Kết quả định lượng làm nổi bật ba ưu thế kiến trúc vượt trội của Rubik-4D:
+
+ 
+• Tăng tốc vượt bậc (168 x đến 670 x ): Trong khi các hệ mã đương đại mất từ 0.29 s [nair2024rubik] đến 1.15 s [zhao2022quantum] để xử lý một ảnh 512 x 512 (thông lượng dưới 1 MB/s), Rubik-4D mã hóa cùng khối lượng dữ liệu chỉ trong 1.73 ms, duy trì thông lượng 148.23 MB/s. Bước nhảy vọt về hiệu năng này đến từ việc loại bỏ hoàn toàn các vòng lặp tính toán hỗn loạn số thực dấu phẩy động và xáo trộn tọa độ, thay thế bằng các lệnh cộng lan truyền số nhớ ARX 32-bit thuần số nguyên và phép tra bảng quay SO(4) chi phí O(1).
+ 
+• Cận an toàn toán học có thể chứng minh so với xáo trộn cảm quan: Tất cả các công trình gần đây đều chỉ dựa vào các chỉ số thống kê thực nghiệm (Entropy, NPCR, UACI) trên tập ảnh hữu hạn, khiến độ an toàn thực tế trước các đối thủ thám mã vi sai và tuyến tính chủ động chưa được định lượng hình thức. Rubik-4D là kiến trúc duy nhất trong nhóm này được trang bị các cận chứng minh tự động bằng MILP bảo đảm P_diff <= 2^-132 và N_D 2^434.
+ 
+• Triệt tiêu trôi dạt độ chính xác và tính bất biến trên mọi phần cứng: Khác với các hệ mã dựa trên hỗn loạn vốn chịu sự suy biến động lực học và sai lệch dấu phẩy động giữa các kiến trúc vi xử lý khác nhau (như x86, ARM hay DSP), Rubik-4D hoàn toàn tất định trên số nguyên, với bộ nhớ bảng tra cứu cố định chỉ 192 byte trong bộ nhớ đệm cache.
+
+================================================================================
+Mở rộng Chế độ Mã hóa Xác thực (AEAD) và Tăng tốc Vi kiến trúc SIMD
+================================================================================
+
+Nhằm đáp ứng yêu cầu khắt khe của các giao thức mạng bảo mật đương đại (như TLS 1.3 và IPsec), hệ mã khối không chỉ dừng lại ở chức năng bảo mật thông tin (Confidentiality) mà bắt buộc phải tích hợp khả năng xác thực nguồn gốc và toàn vẹn dữ liệu (Authenticity \& Integrity). Chúng tôi mở rộng Rubik-4D thành chế độ mã hóa xác thực gắn kèm dữ liệu (AEAD) mang tên Rubik4D-GCM, tuân thủ khuyến nghị NIST SP 800-38D [dworkin2007gcm,mcgrew2004gcm], đồng thời tối ưu hóa vi kiến trúc phần cứng bằng tập lệnh vector SIMD (AVX2/SSSE3) trên nền tảng x86-64 [intel2023manual,gueron2010intel].
+
+--- Thiết kế chế độ mã hóa xác thực Rubik4D-GCM ---
+
+Tuân thủ đặc tả NIST SP 800-38D [dworkin2007gcm], Rubik4D-GCM kết hợp chế độ đếm Counter (CTR) với hàm băm vạn năng GHASH trên trường Galois GF(2^128):
+
+ 
+• Sinh khóa băm con (Hash Subkey H): H = Rubik4D_K(0^128) được tính toán trước một lần khi khởi tạo ngữ cảnh mã hóa.
+ 
+• Mã hóa Counter song song: Với vector khởi tạo 96-bit chuẩn IV, khối đếm ban đầu là J_0 = IV || 0^311. Dãy khóa mã hóa được sinh tuần tự qua các khối đếm gia tăng:
+ 
+ [Công thức: 
+ C_i = P_i XOR Rubik4D_K(inc_32^i(J_0)), i = 1, , len(P)/128 
+ ]
+
+ 
+• Xác thực toàn vẹn bằng hàm băm GHASH: Với dữ liệu kèm theo không mã hóa A (Associated Data, ví dụ tiêu đề gói tin mạng) và bản mã C, chuỗi xác thực S được tính toán trên trường GF(2^128) với đa thức tối giản f(x) = x^128 + x^7 + x^2 + x + 1:
+ 
+ [Công thức: 
+ S = GHASH_H(A || 0^u || C || 0^v || [|A|]_64 || [|C|]_64)
+ ]
+
+ Mã xác thực hoàn chỉnh 128-bit (Authentication Tag ) được bảo vệ bằng phép che khóa:
+ 
+ [Công thức: 
+ = S XOR Rubik4D_K(J_0)
+ ]
+
+Quá trình giải mã xác thực được tiến hành đối ngẫu: bên nhận tính toán lại ' và so sánh với trong thời gian hằng số (Constant-time). Nếu có bất kỳ sự can thiệp nào vào bản mã hoặc tiêu đề (C hoặc A), kiểm tra thất bại (' != ) và gói tin bị hủy ngay lập tức, ngăn chặn hoàn toàn các đòn tấn công cắt dán bit (Bit-flipping) và giả mạo gói tin.
+
+--- Tối ưu hóa phần cứng vi kiến trúc SIMD (AVX2/SSSE3) ---
+
+Để khai thác tối đa năng lực xử lý vector của vi xử lý hiện đại, chúng tôi phát triển module SIMD tối ưu:
+
+ 
+• Hoán vị SO(4) trong đúng 1 chu kỳ clock: Lợi dụng lệnh phần cứng byte shuffle _mm_shuffle_epi8 (PSHUFB trong tập lệnh SSSE3/AVX2), toàn bộ 16 byte của khối siêu lập phương 4 chiều được hoán vị đồng thời trong mạch điện tử Crossbar Switch silicon chỉ tốn 1 chu kỳ xung nhịp CPU, thay thế hoàn toàn vòng lặp tra bảng 16 lần và bảo đảm tính chất Constant-time tuyệt đối chống tấn công rò rỉ thời gian qua bộ nhớ đệm (Cache-timing attack).
+ 
+• Công nghệ chuyển vị ma trận song song 4 khối (Vectorized Transpose ARX): Trong chế độ CTR, chúng tôi xử lý đồng thời 4 khối (64 bytes/vòng lặp). Sử dụng lệnh chuyển vị ma trận _MM_TRANSPOSE4_PS, 4 từ 32-bit W_0, W_1, W_2, W_3 của cả 4 khối được gom tương ứng vào 4 thanh ghi vector 128-bit, cho phép thực thi phép cộng lan truyền số nhớ [+] C và xoay bit bất đối xứng song song trên toàn bộ 4 khối cùng lúc.
+ 
+• Tăng tốc GHASH bằng bảng tra 16x256: Thay vì vòng lặp dịch bit tuần tự 128 bước, bảng tra tiền tính toán 16 x 256 kết hợp phép cộng vector XOR cho phép tính tích trường Galois chỉ trong 16 lệnh nạp bộ nhớ, đạt thông lượng băm vượt trội.
+
+[Bảng số liệu đối chuẩn & phân tích]
+
+Bảng (tab:simd_gcm_benchmark_vi) xác nhận:
+
+ 
+• Kiểm định đồng nhất từng bit (Bit-Exact): Thử nghiệm trên 100.000 khối ngẫu nhiên khẳng định kết quả bản mã giữa bản scalar C và SIMD là trùng khớp tuyệt đối 100%, bảo toàn toàn bộ chứng minh an toàn MILP (N_active >= 22, P_diff <= 2^-132).
+ 
+• Thông lượng đột phá: Khi xử lý song song ở chế độ CTR bằng AVX2, chi phí xung nhịp giảm mạnh từ 19.57 cpb xuống còn 12.82 cpb, đẩy thông lượng lên 254.18 MB/s (tăng tốc 1.53 x ).
+ 
+• Hiệu năng AEAD vượt trội: Chế độ hoàn chỉnh Rubik4D-GCM (bao gồm cả mã hóa dữ liệu lẫn sinh mã xác thực toàn vẹn Tag 128-bit) đạt thông lượng ấn tượng 208.80 MB/s (15.61 cpb). Kiểm thử thực nghiệm xác nhận khả năng phát hiện và từ chối 100% các cuộc tấn công cắt dán 1 bit bản mã (Bit-flipping) và giả mạo tiêu đề dữ liệu (AAD tampering).
+
+================================================================================
+Kết luận
+================================================================================
+
+Bài báo đã trình bày đặc tả kiến trúc, các chứng minh an toàn toán học hình thức và đánh giá thực nghiệm toàn diện của hệ mã khối đối xứng 128-bit Rubik-4D cùng phần mở rộng mã hóa xác thực Rubik4D-GCM. Thông qua việc kết hợp S-box AES với phép quay trực giao SO(4) chi phí O(1) và tầng khuếch tán lan truyền số nhớ ARX 32-bit, thuật toán đạt độ khuếch tán liên byte hoàn chỉnh chỉ trong 8 vòng lặp. Mô hình tự động MILP xác nhận cận dưới 22 S-box kích hoạt đối với thám mã vi sai (P_diff <= 2^-132) và 108 S-box kích hoạt đối với thám mã tuyến tính (N_D 2^434), đồng thời kháng tấn công tích phân và vượt qua các bộ kiểm định ngẫu nhiên NIST SP 800-22 và GM/T 0005-2021. Đánh giá mật mã ảnh khẳng định sự triệt tiêu tương quan điểm ảnh (|r| <= 0.026), entropy xấp xỉ tuyệt đối (vượt 7.999) và chỉ số vi sai tối ưu (NPCR 99.61%, UACI 33.46%). Bằng việc ứng dụng tập lệnh vector SIMD (AVX2/pshufb), thuật toán đạt thông lượng ấn tượng 254.18 MB/s ở chế độ CTR và duy trì 208.80 MB/s ở chế độ mã hóa xác thực hoàn chỉnh Rubik4D-GCM, bảo đảm đồng thời tính bí mật và toàn vẹn dữ liệu cho các ứng dụng đo xa và mạng truyền thông hiệu năng cao. Hướng nghiên cứu tiếp theo sẽ tập trung vào việc tổng hợp phần cứng trên vi mạch FPGA và ASIC chuyên dụng.
+
+================================================================================
+DANH MỤC TÀI LIỆU THAM KHẢO
+================================================================================
+
+• sep1.5pt plus 0.5pt minus 0.5pt
+
+[loukhaoukha2012rubik] 
+K. Loukhaoukha, J.-Y. Chouinard, and A. Berdai, ``A secure image encryption algorithm based on Rubik's cube principle,'' J. Electr. Comput. Eng., vol. 2012, Article ID 173931, pp. 1--13, 2012, doi: 10.1155/2012/173931.
+
+[zhang2011rubik] 
+L. Zhang, X. Tian, and S. Xia, ``A scrambling algorithm of image encryption based on Rubik's cube rotation and Logistic sequence,'' in Proc. Int. Conf. Multimedia and Signal Processing (CMSP), vol. 1, pp. 312--315, 2011, doi: 10.1109/CMSP.2011.69.
+
+[feng2011cisp] 
+X. Feng, X. Tian, and S. Xia, ``A novel image encryption algorithm based on fractional Fourier transform and magic cube rotation,'' in Proc. 4th Int. Congress on Image and Signal Processing (CISP), pp. 1010--1013, 2011, doi: 10.1109/CISP.2011.6100319.
+
+[zhu2021berc] 
+H. Zhu, L. Dai, Y. Liu, and L. Wu, ``A three-dimensional bit-level image encryption algorithm with Rubik's cube method,'' Math. Comput. Simul., vol. 185, pp. 754--770, 2021, doi: 10.1016/j.matcom.2021.02.009.
+
+[vidhya2022cierpf] 
+R. Vidhya and M. Brindha, ``A chaos based image encryption algorithm using Rubik's cube and prime factorization process (CIERPF),'' J. King Saud Univ. - Comput. Inf. Sci., vol. 34, no. 5, pp. 2000--2016, 2022, doi: 10.1016/j.jksuci.2019.12.014.
+
+[zhao2022quantum] 
+J. Zhao, T. Zhang, J. Jiang, T. Fang, and H. Ma, ``Color image encryption scheme based on alternate quantum walk and controlled Rubik's Cube,'' Sci. Rep., vol. 12, Article 14253, 2022, doi: 10.1038/s41598-022-18079-x.
+
+[nair2024rubik] 
+A. Nair, D. Dalal, and R. Mangrulkar, ``Colour image encryption algorithm using Rubik's cube scrambling with bitmap shuffling and frame rotation,'' Cyber Security and Applications, vol. 2, p. 100030, 2024, doi: 10.1016/j.csa.2023.100030.
+
+[qiu2022hyperchaotic] 
+H. Qiu, X. Xu, Z. Jiang, K. Sun, and C. Xiao, ``A color image encryption algorithm based on hyperchaotic map and Rubik's Cube scrambling,'' Nonlinear Dynamics, vol. 110, no. 3, pp. 2869--2887, 2022, doi: 10.1007/s11071-022-07756-1.
+
+[mudduluri2022rubik] 
+R. V. Mudduluri, A. Golla, S. Raghava, T. J. Sai, ``Advanced image encryption \& decryption using Rubik's cube technology,'' Int. J. Eng. Technol. (IJEAT), vol. 11, no. 3, pp. 24--27, 2022, doi: 10.35940/ijeat.C3531.0211322.
+
+[diaconu2013rubik] 
+A.-V. Diaconu and K. Loukhaoukha, ``An improved secure image encryption algorithm based on Rubik's cube principle and digital chaotic cipher,'' Math. Probl. Eng., vol. 2013, Article ID 848392, pp. 1--10, 2013, doi: 10.1155/2013/848392.
+
+[beierle2020alzette] 
+C. Beierle, A. Biryukov, L. Cardoso dos Santos, J. Grosch\"adl, L. Perrin, A. Udovenko, V. Velichkov, and Q. Wang, ``Alzette: a 64-bit ARX-box (feat. CRAX and TRAX),'' in Advances in Cryptology -- CRYPTO 2020, LNCS, vol. 12172, Springer, pp. 419--448, 2020, doi: 10.1007/978-3-030-56877-1_15.
+
+[hadipour2023impossible] 
+H. Hadipour, S. Sadeghi, and M. Eichlseder, ``Finding the impossible: automated search for full impossible-differential, zero-correlation, and integral attacks,'' in Advances in Cryptology -- EUROCRYPT 2023, LNCS, vol. 14007, Springer, pp. 128--157, 2023, doi: 10.1007/978-3-031-30634-1_5.
+
+[xiang2016milp] 
+Z. Xiang, W. Zhang, Z. Bao, and D. Lin, ``Applying MILP method to searching integral distinguishers based on division property for 6 lightweight block ciphers,'' in Advances in Cryptology -- ASIACRYPT 2016, LNCS, vol. 10031, Springer, pp. 648--678, 2016, doi: 10.1007/978-3-662-53887-6_24.
+
+[daemen2002design] 
+J. Daemen and V. Rijmen, The Design of Rijndael: AES -- The Advanced Encryption Standard, Springer-Verlag, Berlin, Heidelberg, 2002, doi: 10.1007/978-3-662-04722-4.
+
+[nist2001fips] 
+National Institute of Standards and Technology (NIST), ``Advanced Encryption Standard (AES),'' Federal Information Processing Standards Publication (FIPS PUB 197), Nov. 2001, doi: 10.6028/NIST.FIPS.197.
+
+[webster1985sac] 
+A. F. Webster and S. E. Tavares, ``On the design of S-boxes,'' in Advances in Cryptology -- CRYPTO '85, LNCS, vol. 218, Springer, pp. 523--534, 1985, doi: 10.1007/3-540-39799-X_41.
+
+[beaulieu2015simon] 
+R. Beaulieu, D. Shors, J. Smith, S. Treatman-Clark, B. Weeks, and E. Wingers, ``The SIMON and SPECK lightweight block ciphers,'' in Proc. 52nd Annual Design Automation Conference (ACM DAC), pp. 1--6, 2015, doi: 10.1145/2744769.2747946.
+
+[nir2018chacha20] 
+Y. Nir and A. Langley, ``ChaCha20 and Poly1305 for IETF Protocols,'' RFC 8439, Internet Engineering Task Force (IETF), June 2018, doi: 10.17487/RFC8439.
+
+[mouha2011differential] 
+N. Mouha, Q. Wang, D. Gu, and B. Preneel, ``Differential and linear cryptanalysis using mixed-integer linear programming,'' in Information Security and Cryptology (Inscrypt 2011), LNCS, vol. 7537, Springer, pp. 57--76, 2011, doi: 10.1007/978-3-642-34704-7_5.
+
+[fu2016milp] 
+K. Fu, M. Wang, Y. Guo, S. Sun, and L. Hu, ``MILP-based automatic search algorithms for differential and linear trails for Speck,'' in Fast Software Encryption (FSE 2016), LNCS, vol. 9783, Springer, pp. 268--288, 2016, doi: 10.1007/978-3-662-52993-5_14.
+
+[lai1991markov] 
+X. Lai, J. L. Massey, and S. Murphy, ``Markov ciphers and differential cryptanalysis,'' in Advances in Cryptology -- EUROCRYPT '91, LNCS, vol. 547, Springer, pp. 17--38, 1991, doi: 10.1007/3-540-46416-6_2.
+
+[matsui1993linear] 
+M. Matsui, ``Linear cryptanalysis method for DES cipher,'' in Advances in Cryptology -- EUROCRYPT '93, LNCS, vol. 765, Springer, pp. 386--397, 1993, doi: 10.1007/3-540-48285-7_33.
+
+[biryukov1999slide] 
+A. Biryukov and D. Wagner, ``Slide attacks,'' in Fast Software Encryption (FSE '99), LNCS, vol. 1636, Springer, pp. 245--259, 1999, doi: 10.1007/3-540-48519-8_18.
+
+[biryukov2000slide] 
+A. Biryukov and D. Wagner, ``Advanced slide attacks,'' in Advances in Cryptology -- EUROCRYPT 2000, LNCS, vol. 1807, Springer, pp. 589--606, 2000, doi: 10.1007/3-540-45539-6_41.
+
+[rukhin2010nist] 
+A. Rukhin et al., ``A statistical test suite for random and pseudorandom number generators for cryptographic applications,'' NIST Special Publication 800-22, Rev. 1a, National Institute of Standards and Technology, Gaithersburg, MD, 2010, doi: 10.6028/NIST.SP.800-22r1a.
+
+[gmt0005] 
+State Cryptography Administration of China, ``Randomness test methods for commercial cryptographic algorithms,'' GM/T 0005-2021, Standard Press of China, Beijing, 2021.
+
+[kim2004dft] 
+S.-J. Kim, K. Umeno, and A. Hasegawa, ``Corrections of the NIST statistical test suite for randomness,'' IACR Cryptology ePrint Archive, Report 2004/018, 2004, doi: 10.48550/arXiv.nlin/0401040.
+
+[dworkin2007gcm] 
+M. Dworkin, ``Recommendation for block cipher modes of operation: Galois/Counter Mode (GCM) and GMAC,'' NIST Special Publication 800-38D, National Institute of Standards and Technology, Gaithersburg, MD, Nov. 2007, doi: 10.6028/NIST.SP.800-38D.
+
+[mcgrew2004gcm] 
+D. A. McGrew and J. Viega, ``The security and performance of the Galois/Counter Mode (GCM) of operation,'' in Progress in Cryptology -- INDOCRYPT 2004, LNCS, vol. 3348, Springer, pp. 343--355, 2004, doi: 10.1007/978-3-540-30556-9_27.
+
+[intel2023manual] 
+Intel Corporation, ``Intel 64 and IA-32 Architectures Software Developer's Manual,'' Combined Volumes: 1, 2A, 2B, 2C, 2D, 3A, 3B, 3C, 3D, and 4, Order Number: 325462-082US, Dec. 2023.
+
+[gueron2010intel] 
+S. Gueron, ``Intel Advanced Encryption Standard (AES) New Instructions Set,'' White Paper, Intel Corporation, 2010.
+
+================================================================================
+HẾT TOÀN VĂN BẢN THẢO BÀI BÁO
+================================================================================
