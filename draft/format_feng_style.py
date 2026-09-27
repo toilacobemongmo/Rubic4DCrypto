@@ -1,4 +1,10 @@
-================================================================================
+"""
+Rewrite Vietnamese manuscript into the crisp, direct, step-by-step IEEE conference style
+matching 'A Novel Image Encryption Algorithm Based On Fractional Fourier Transform and Magic Cube Rotation' (Feng et al.)
+"""
+
+def generate_clean_text():
+    text = """================================================================================
 BẢN TOÀN VĂN TIẾNG VIỆT - HỆ MÃ KHỐI ĐỐI XỨNG RUBIK-4D
 (Hành văn theo phong cách chuẩn mực IEEE: trực diện, súc tích, từng bước rõ ràng)
 ================================================================================
@@ -212,3 +218,10 @@ TÀI LIỆU THAM KHẢO (REFERENCES)
 [30] Intel Corporation, "Intel 64 and IA-32 Architectures Software Developer's Manual," Combined Volumes 1-4, Order Number: 325462, Dec. 2023.
 [31] S. Gueron, "Intel Advanced Encryption Standard (AES) New Instructions Set," White Paper, Intel Corporation, 2010.
 ================================================================================
+"""
+    with open('draft/bai_bao_tieng_viet_rubik4d.txt', 'w', encoding='utf-8') as f:
+        f.write(text.strip())
+    print("Successfully rewritten bai_bao_tieng_viet_rubik4d.txt in Feng et al. CISP style!")
+
+if __name__ == '__main__':
+    generate_clean_text()
