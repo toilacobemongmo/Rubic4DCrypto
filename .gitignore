@@ -2,3 +2,7 @@
 benchmark_data/
 __pycache__/
 *.pyc
+*.aux
+*.log
+*.out
+tests/bin/*.exe
