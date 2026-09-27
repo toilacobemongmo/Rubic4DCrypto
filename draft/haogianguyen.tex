@@ -91,7 +91,7 @@ Rubik-inspired cryptography evolved through three distinct waves:
 \begin{enumerate}
     \item First wave (2011--2014) --- Coordinate shifts and XOR chains: Loukhaoukha et al. \cite{loukhaoukha2012rubik} started this thread. They folded an $M \times N$ picture into an $M \times N \times 3$ cube, rolled rows and columns with keystream vectors, and chained cumulative XOR additions: $I'(i, j) = I(i, j) \oplus K_R(i) \oplus K_C(j) \oplus I'(i-1, j)$. But every step collapses into linear operations over $\mathbb{F}_2$. A chosen-plaintext attacker easily unpacks the scrambling vectors. Per-pixel manipulation also crawls ($0.82$~s per image, roughly $0.31$~MB/s). Follow-up schemes by Zhang et al. \cite{zhang2011rubik} and Feng et al. \cite{feng2011cisp} glued 1D Logistic maps or Fourier steps onto the cube, yet dynamical degradation plagued their trajectories. Diaconu and Loukhaoukha \cite{diaconu2013rubik} enlarged the key room with digital chaos, leaving the linear core untouched.
     \item Second wave (2021--2022) --- Bit-level grids and arithmetic rules: Shuffling whole bytes leaves inner bit patterns intact. Zhu et al. \cite{zhu2021berc} countered this with 3D-BERC. They sliced pixels into 8 bit planes, stacked them into a binary cube, and spun 2D slices. Vidhya and Brindha \cite{vidhya2022cierpf} tapped large prime factorization (CIERPF) to pick rotation angles. Even so, scattering individual bits across RAM thrashes CPU caches. Throughput stalls under $0.7$~MB/s.
-    \item Third wave (2022--2024) --- Quantum walks, hyperchaos, and frame twists: Zhao et al. \cite{zhao2022quantum} linked 2D quantum walks with Rubik permutations in \textit{Scientific Reports}. Qiu et al. \cite{qiu2022hyperchaotic} turned to 4D hyperchaotic loops. Nair et al. \cite{nair2024rubik} blended cube scrambling with bitmap frames and fixed rotations ($90^\circ, 180^\circ$). These tricks disrupt picture pixels. But they still crawl ($0.22$--$0.88$~MB/s), drift between x86 and ARM floating-point units, and lack proven attack bounds.
+    \item Third wave (2022--2024) --- Quantum walks, hyperchaos, and frame twists: Zhao et al. \cite{zhao2022quantum} linked 2D quantum walks with Rubik permutations in \textit{Scientific Reports}. Qiu et al. \cite{qiu2022hyperchaotic} turned to 4D hyperchaotic loops, while Mudduluri et al. \cite{mudduluri2022rubik} explored transform-based matrix rotations. Nair et al. \cite{nair2024rubik} blended cube scrambling with bitmap frames and fixed rotations ($90^\circ, 180^\circ$). These tricks disrupt picture pixels. But they still crawl ($0.22$--$0.88$~MB/s), drift between x86 and ARM floating-point units, and lack proven attack bounds.
 \end{enumerate}
 
 Mainstream block ciphers took an entirely different route: lightweight ARX and MILP solvers. At CRYPTO 2020, Beierle et al. \cite{beierle2020alzette} built Alzette, demonstrating rapid diffusion via modular carries. At EUROCRYPT 2023, Hadipour et al. \cite{hadipour2023impossible} automated impossible-differential proofs through MILP. Xiang et al. \cite{xiang2016milp} pioneered similar optimization for division property attacks at ASIACRYPT 2016.
@@ -1020,10 +1020,10 @@ The quantitative findings highlight three decisive architectural advantages of R
 \section{Authenticated Encryption Extension (AEAD) and SIMD Hardware Acceleration}
 \label{sec:aead_simd}
 
-To meet the rigorous integrity and authenticity requirements of modern communication security protocols (such as TLS 1.3 and IPsec), a standalone block cipher must be elevated to provide Authenticated Encryption with Associated Data (AEAD). We formulate \textbf{Rubik4D-GCM}, coupling Rubik-4D in Counter (CTR) mode with universal polynomial hashing over Galois field $\text{GF}(2^{128})$ (GHASH) under NIST SP 800-38D \cite{nist2001fips}, and engineer microarchitectural SIMD vectorization (AVX2/SSSE3) on x86-64.
+To meet the rigorous integrity and authenticity requirements of modern communication security protocols (such as TLS 1.3 and IPsec), a standalone block cipher must be elevated to provide Authenticated Encryption with Associated Data (AEAD). We formulate \textbf{Rubik4D-GCM}, coupling Rubik-4D in Counter (CTR) mode with universal polynomial hashing over Galois field $\text{GF}(2^{128})$ (GHASH) under NIST SP 800-38D \cite{dworkin2007gcm,mcgrew2004gcm}, and engineer microarchitectural SIMD vectorization (AVX2/SSSE3) on x86-64 \cite{intel2023manual,gueron2010intel}.
 
 \subsection{Rubik4D-GCM authenticated encryption design}
-Conforming to NIST SP 800-38D, Rubik4D-GCM operates across three deterministic steps:
+Conforming to NIST SP 800-38D \cite{dworkin2007gcm}, Rubik4D-GCM operates across three deterministic steps:
 \begin{enumerate}
     \item \textbf{Hash subkey generation:} The subkey $H = \text{Rubik4D}_K(0^{128})$ is precomputed once during cipher context initialization.
     \item \textbf{Counter mode keystream evaluation:} For standard 96-bit initialization vector $IV$, pre-counter block $J_0 = IV \mathbin{\Vert} 0^{31}1$ initializes the keystream generation:
@@ -1162,6 +1162,18 @@ State Cryptography Administration of China, ``Randomness test methods for commer
 
 \bibitem{kim2004dft}
 S.-J. Kim, K. Umeno, and A. Hasegawa, ``Corrections of the NIST statistical test suite for randomness,'' \textit{IACR Cryptology ePrint Archive}, Report 2004/018, 2004, doi:~\href{https://doi.org/10.48550/arXiv.nlin/0401040}{10.48550/arXiv.nlin/0401040}.
+
+\bibitem{dworkin2007gcm}
+M. Dworkin, ``Recommendation for block cipher modes of operation: Galois/Counter Mode (GCM) and GMAC,'' \textit{NIST Special Publication 800-38D}, National Institute of Standards and Technology, Gaithersburg, MD, Nov. 2007, doi:~\href{https://doi.org/10.6028/NIST.SP.800-38D}{10.6028/NIST.SP.800-38D}.
+
+\bibitem{mcgrew2004gcm}
+D. A. McGrew and J. Viega, ``The security and performance of the Galois/Counter Mode (GCM) of operation,'' in \textit{Progress in Cryptology -- INDOCRYPT 2004}, LNCS, vol. 3348, Springer, pp. 343--355, 2004, doi:~\href{https://doi.org/10.1007/978-3-540-30556-9_27}{10.1007/978-3-540-30556-9\_27}.
+
+\bibitem{intel2023manual}
+Intel Corporation, ``Intel 64 and IA-32 Architectures Software Developer's Manual,'' Combined Volumes: 1, 2A, 2B, 2C, 2D, 3A, 3B, 3C, 3D, and 4, Order Number: 325462-082US, Dec. 2023.
+
+\bibitem{gueron2010intel}
+S. Gueron, ``Intel Advanced Encryption Standard (AES) New Instructions Set,'' White Paper, Intel Corporation, 2010.
 
 \end{thebibliography}
 

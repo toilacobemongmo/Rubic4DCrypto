@@ -77,7 +77,7 @@ Các đóng góp khoa học chính của nghiên cứu này bao gồm:
     \item Thiết lập mô hình Quy hoạch nguyên tuyến tính (MILP) chứng minh cận dưới số lượng S-box kích hoạt đối với thám mã vi sai và tuyến tính, cùng phân tích miễn nhiễm trước tấn công tích phân, đại số và tấn công trượt.
     \item Kiểm định tính ngẫu nhiên thống kê thực tế trên bộ dữ liệu lớn tuân thủ nghiêm ngặt chuẩn quốc tế NIST SP 800-22 và chuẩn thương mại GM/T 0005-2021.
     \item Đánh giá bảo mật đa phương tiện trên các ảnh chuẩn $512 \times 512$ (Lena, Baboon) qua các chỉ số Entropy, tương quan pixel, Chi-Square, NPCR và UACI.
-    \item Thực nghiệm đo lường chu kỳ xung nhịp phần cứng (`\_\_rdtsc()`) trên vi xử lý x86-64 đối chuẩn với AES-128, Speck-128, Simon-128 và ChaCha20 trên các tệp dữ liệu lên đến $20$~MB.
+    \item Thực nghiệm đo lường chu kỳ xung nhịp phần cứng (\texttt{\_\_rdtsc()}) trên vi xử lý x86-64 đối chuẩn với AES-128 \cite{nist2001fips}, Speck-128 \cite{beaulieu2015simon}, Simon-128 \cite{beaulieu2015simon} và ChaCha20 \cite{nir2018chacha20} trên các tệp dữ liệu lên đến $20$~MB.
 \end{itemize}
 
 \section{Công trình liên quan và so sánh}
@@ -87,7 +87,7 @@ Các đóng góp khoa học chính của nghiên cứu này bao gồm:
 \begin{itemize}
     \item \textbf{Thế hệ 1 (2011--2014) -- Hoán vị Rubik 3D nguyên thủy và lan truyền tuyến tính:} Khởi xướng bởi Loukhaoukha, Chouinard và Berdai (2012) \cite{loukhaoukha2012rubik} với mô hình kinh điển coi ảnh số $M \times N$ là một khối Rubik 3D ($M \times N \times 3$). Thuật toán tạo hai vector khóa $K_R, K_C$ để dịch vòng các hàng và cột điểm ảnh, sau đó kết hợp phép cộng XOR tích lũy giữa các hàng và cột kế tiếp: $I'(i, j) = I(i, j) \oplus K_R(i) \oplus K_C(j) \oplus I'(i-1, j)$. Do chỉ gồm các phép toán tuyến tính thuần túy trên $\mathbb{F}_2$, cơ chế này dễ bị bóc tách hoàn toàn vector hoán vị dưới tấn công bản rõ chọn trước (CPA). Đồng thời, việc dịch chuyển từng hàng/cột trên ma trận ảnh lớn khiến thời gian xử lý rất chậm (mất $0.820$~s cho ảnh $512 \times 512$, thông lượng chỉ đạt $0.31$~MB/s). Zhang, Tian và Xia (2011) \cite{zhang2011rubik} cùng với Feng, Tian và Xia (2011) \cite{feng2011cisp} kết hợp phép quay khối Rubik với chuỗi hỗn loạn Logistic và biến đổi phân số Fourier, song vẫn mắc phải nhược điểm suy biến chu kỳ của hệ hỗn loạn một chiều. Diaconu và Loukhaoukha (2013) \cite{diaconu2013rubik} nâng cấp thuật toán Rubik bằng mật mã hỗn loạn số nhưng vẫn giữ nguyên tầng lan truyền tuyến tính.
     \item \textbf{Thế hệ 2 (2021--2022) -- Khối 3D mức bit và mở rộng thừa số nguyên tố:} Nhằm khắc phục hạn chế hoán vị mức byte không làm biến đổi cấu trúc bit nội tại, Zhu và cs (2021) \cite{zhu2021berc} đề xuất 3D-BERC phân rã mỗi byte ảnh thành 8 mặt phẳng bit, gom toàn bộ ảnh thành khối lập phương bit khổng lồ $L \times L \times L$ và xoay các lát cắt bit 2D kết hợp ánh xạ co. Vidhya và Brindha (2022) \cite{vidhya2022cierpf} tích hợp phép quay Rubik với phân tích thừa số nguyên tố (CIERPF) để xác định số bước quay. Tuy nhiên, việc bóc tách hàng triệu bit trong bộ nhớ và tính toán thừa số nguyên tố trên số lớn gây nghẽn cổ chai CPU và bộ nhớ đệm cache nghiêm trọng, khiến thời gian xử lý kéo dài từ $0.380$~s đến $0.520$~s cho ảnh $512 \times 512$ ($< 0.7$~MB/s).
-    \item \textbf{Thế hệ 3 (2022--2024) -- Bước đi lượng tử, siêu hỗn loạn và xáo trộn thích nghi:} Zhao và cs (2022) \cite{zhao2022quantum} thiết kế hệ mã Rubik điều khiển bởi bước đi lượng tử xen kẽ (AQW) hai chiều trên ma trận xác suất. Qiu và cs (2022) \cite{qiu2022hyperchaotic} kết hợp bản đồ siêu hỗn loạn với hoán vị Rubik. Gần đây nhất, Nair, Dalal và Mangrulkar (2024) \cite{nair2024rubik} kết hợp xáo trộn Rubik 3D với phân khối bitmap và quay khung ma trận ảnh ở các góc $90^\circ, 180^\circ, 270^\circ$. Mặc dù tăng cường tính ngẫu nhiên cảm quan, các sơ đồ này vẫn tiêu tốn từ $0.290$~s đến $1.150$~s cho mỗi ảnh (thông lượng chỉ $0.22 - 0.88$~MB/s) và dễ phát sinh sai số trôi dạt dấu phẩy động giữa các kiến trúc chip phần cứng.
+    \item \textbf{Thế hệ 3 (2022--2024) -- Bước đi lượng tử, siêu hỗn loạn và xáo trộn thích nghi:} Zhao và cs (2022) \cite{zhao2022quantum} thiết kế hệ mã Rubik điều khiển bởi bước đi lượng tử xen kẽ (AQW) hai chiều trên ma trận xác suất. Qiu và cs (2022) \cite{qiu2022hyperchaotic} kết hợp bản đồ siêu hỗn loạn với hoán vị Rubik, trong khi Mudduluri và cs (2022) \cite{mudduluri2022rubik} khảo sát mã hóa Rubik kết hợp ma trận xoay. Gần đây nhất, Nair, Dalal và Mangrulkar (2024) \cite{nair2024rubik} kết hợp xáo trộn Rubik 3D với phân khối bitmap và quay khung ma trận ảnh ở các góc $90^\circ, 180^\circ, 270^\circ$. Mặc dù tăng cường tính ngẫu nhiên cảm quan, các sơ đồ này vẫn tiêu tốn từ $0.290$~s đến $1.150$~s cho mỗi ảnh (thông lượng chỉ $0.22 - 0.88$~MB/s) và dễ phát sinh sai số trôi dạt dấu phẩy động giữa các kiến trúc chip phần cứng.
 \end{itemize}
 
 Song song đó, trong lĩnh vực mật mã khối đối xứng hiện đại, các cấu trúc ARX siêu nhẹ và phương pháp tự động hóa bằng quy hoạch nguyên (MILP) thu hút sự quan tâm đặc biệt. Beierle và cs (2020) \cite{beierle2020alzette} thiết kế hộp ARX-box 64-bit Alzette tại CRYPTO 2020 chứng minh thông lượng vượt trội của phép cộng lan truyền số nhớ, nhưng đồng thời chỉ ra rằng các thiết kế ARX thuần túy cần rất nhiều vòng lặp để đạt độ khuếch tán đầy đủ. Hadipour, Sadeghi và Eichlseder (2023) \cite{hadipour2023impossible} hình thức hóa mô hình tự động MILP tại EUROCRYPT 2023, trong khi Xiang và cs (2016) \cite{xiang2016milp} thiết lập phương pháp tìm kiếm tính chất phân chia tự động cho các hệ mã khối nhẹ tại ASIACRYPT 2016.
@@ -884,10 +884,10 @@ Kết quả định lượng làm nổi bật ba ưu thế kiến trúc vượt 
 \section{Mở rộng Chế độ Mã hóa Xác thực (AEAD) và Tăng tốc Vi kiến trúc SIMD}
 \label{sec:aead_simd_vi}
 
-Nhằm đáp ứng yêu cầu khắt khe của các giao thức mạng bảo mật đương đại (như TLS 1.3 và IPsec), hệ mã khối không chỉ dừng lại ở chức năng bảo mật thông tin (Confidentiality) mà bắt buộc phải tích hợp khả năng xác thực nguồn gốc và toàn vẹn dữ liệu (Authenticity \& Integrity). Chúng tôi mở rộng Rubik-4D thành chế độ mã hóa xác thực gắn kèm dữ liệu (AEAD) mang tên \textbf{Rubik4D-GCM}, đồng thời tối ưu hóa vi kiến trúc phần cứng bằng tập lệnh SIMD (AVX2/SSSE3) trên nền tảng x86-64.
+Nhằm đáp ứng yêu cầu khắt khe của các giao thức mạng bảo mật đương đại (như TLS 1.3 và IPsec), hệ mã khối không chỉ dừng lại ở chức năng bảo mật thông tin (Confidentiality) mà bắt buộc phải tích hợp khả năng xác thực nguồn gốc và toàn vẹn dữ liệu (Authenticity \& Integrity). Chúng tôi mở rộng Rubik-4D thành chế độ mã hóa xác thực gắn kèm dữ liệu (AEAD) mang tên \textbf{Rubik4D-GCM}, tuân thủ khuyến nghị NIST SP 800-38D \cite{dworkin2007gcm,mcgrew2004gcm}, đồng thời tối ưu hóa vi kiến trúc phần cứng bằng tập lệnh vector SIMD (AVX2/SSSE3) trên nền tảng x86-64 \cite{intel2023manual,gueron2010intel}.
 
 \subsection{Thiết kế chế độ mã hóa xác thực Rubik4D-GCM}
-Tuân thủ đặc tả NIST SP 800-38D \cite{nist2001fips}, Rubik4D-GCM kết hợp chế độ đếm Counter (CTR) với hàm băm vạn năng GHASH trên trường Galois $\text{GF}(2^{128})$:
+Tuân thủ đặc tả NIST SP 800-38D \cite{dworkin2007gcm}, Rubik4D-GCM kết hợp chế độ đếm Counter (CTR) với hàm băm vạn năng GHASH trên trường Galois $\text{GF}(2^{128})$:
 \begin{enumerate}
     \item \textbf{Sinh khóa băm con (Hash Subkey $H$):} $H = \text{Rubik4D}_K(0^{128})$ được tính toán trước một lần khi khởi tạo ngữ cảnh mã hóa.
     \item \textbf{Mã hóa Counter song song:} Với vector khởi tạo 96-bit chuẩn $IV$, khối đếm ban đầu là $J_0 = IV \mathbin{\Vert} 0^{31}1$. Dãy khóa mã hóa được sinh tuần tự qua các khối đếm gia tăng:
@@ -997,6 +997,9 @@ A. F. Webster and S. E. Tavares, ``On the design of S-boxes,'' in \textit{Advanc
 \bibitem{beaulieu2015simon} 
 R. Beaulieu, D. Shors, J. Smith, S. Treatman-Clark, B. Weeks, and E. Wingers, ``The SIMON and SPECK lightweight block ciphers,'' in \textit{Proc. 52nd Annual Design Automation Conference (ACM DAC)}, pp. 1--6, 2015, doi:~\href{https://doi.org/10.1145/2744769.2747946}{10.1145/2744769.2747946}.
 
+\bibitem{nir2018chacha20}
+Y. Nir and A. Langley, ``ChaCha20 and Poly1305 for IETF Protocols,'' \textit{RFC 8439}, Internet Engineering Task Force (IETF), June 2018, doi:~\href{https://doi.org/10.17487/RFC8439}{10.17487/RFC8439}.
+
 \bibitem{mouha2011differential} 
 N. Mouha, Q. Wang, D. Gu, and B. Preneel, ``Differential and linear cryptanalysis using mixed-integer linear programming,'' in \textit{Information Security and Cryptology (Inscrypt 2011)}, LNCS, vol. 7537, Springer, pp. 57--76, 2011, doi:~\href{https://doi.org/10.1007/978-3-642-34704-7_5}{10.1007/978-3-642-34704-7\_5}.
 
@@ -1023,6 +1026,18 @@ State Cryptography Administration of China, ``Randomness test methods for commer
 
 \bibitem{kim2004dft}
 S.-J. Kim, K. Umeno, and A. Hasegawa, ``Corrections of the NIST statistical test suite for randomness,'' \textit{IACR Cryptology ePrint Archive}, Report 2004/018, 2004, doi:~\href{https://doi.org/10.48550/arXiv.nlin/0401040}{10.48550/arXiv.nlin/0401040}.
+
+\bibitem{dworkin2007gcm}
+M. Dworkin, ``Recommendation for block cipher modes of operation: Galois/Counter Mode (GCM) and GMAC,'' \textit{NIST Special Publication 800-38D}, National Institute of Standards and Technology, Gaithersburg, MD, Nov. 2007, doi:~\href{https://doi.org/10.6028/NIST.SP.800-38D}{10.6028/NIST.SP.800-38D}.
+
+\bibitem{mcgrew2004gcm}
+D. A. McGrew and J. Viega, ``The security and performance of the Galois/Counter Mode (GCM) of operation,'' in \textit{Progress in Cryptology -- INDOCRYPT 2004}, LNCS, vol. 3348, Springer, pp. 343--355, 2004, doi:~\href{https://doi.org/10.1007/978-3-540-30556-9_27}{10.1007/978-3-540-30556-9\_27}.
+
+\bibitem{intel2023manual}
+Intel Corporation, ``Intel 64 and IA-32 Architectures Software Developer's Manual,'' Combined Volumes: 1, 2A, 2B, 2C, 2D, 3A, 3B, 3C, 3D, and 4, Order Number: 325462-082US, Dec. 2023.
+
+\bibitem{gueron2010intel}
+S. Gueron, ``Intel Advanced Encryption Standard (AES) New Instructions Set,'' White Paper, Intel Corporation, 2010.
 
 \end{thebibliography}
 

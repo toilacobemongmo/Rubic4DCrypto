@@ -889,7 +889,11 @@ def create_report():
         "[12] N. Mouha, Q. Wang, D. Gu, and B. Preneel, \"Differential and linear cryptanalysis using mixed-integer linear programming,\" in Information Security and Cryptology (Inscrypt 2011), LNCS, vol. 7537, Springer, pp. 57–76, 2011.",
         "[13] M. Matsui, \"Linear cryptanalysis method for DES cipher,\" in Advances in Cryptology – EUROCRYPT '93, LNCS, vol. 765, Springer, pp. 386–397, 1993.",
         "[14] A. Rukhin et al., \"A statistical test suite for random and pseudorandom number generators for cryptographic applications,\" NIST Special Publication 800-22, Rev. 1a, Apr. 2010.",
-        "[15] State Cryptography Administration of China, \"Randomness test methods for commercial cryptographic algorithms,\" GM/T 0005-2021, Standard Press of China, Beijing, 2021."
+        "[15] State Cryptography Administration of China, \"Randomness test methods for commercial cryptographic algorithms,\" GM/T 0005-2021, Standard Press of China, Beijing, 2021.",
+        "[16] M. Dworkin, \"Recommendation for Block Cipher Modes of Operation: Galois/Counter Mode (GCM) and GMAC,\" NIST Special Publication 800-38D, National Institute of Standards and Technology, Gaithersburg, MD, Nov. 2007.",
+        "[17] D. A. McGrew and J. Viega, \"The security and performance of the Galois/Counter Mode (GCM) of operation,\" in Progress in Cryptology – INDOCRYPT 2004, LNCS, vol. 3348, Springer, pp. 343–355, 2004.",
+        "[18] Intel Corporation, \"Intel 64 and IA-32 Architectures Software Developer's Manual,\" Combined Volumes: 1, 2A, 2B, 2C, 2D, 3A, 3B, 3C, 3D, and 4, Order Number: 325462, Dec. 2023.",
+        "[19] S. Gueron, \"Intel Advanced Encryption Standard (AES) New Instructions Set,\" White Paper, Intel Corporation, 2010."
     ]
 
     for ref in refs:
